@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>קבע פגישה · עסקת הקרקע במתחם H — הקרן להשבחת הון ונכסים בע"מ מקבוצת תום הרוש</title>
+<meta name="robots" content="noindex"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+:root{
+  --bg:#F6F7F9; --gray:#ECEEF1; --card:#FFFFFF; --dark:#0f1216; --dark2:#181c22;
+  --ink:#0f1216; --muted:rgba(15,18,22,.60); --faint:rgba(15,18,22,.42);
+  --line:rgba(15,18,22,.10); --line-r:rgba(194,21,28,.20); --dline:rgba(255,255,255,.12);
+  --accent:#C2151C; --accent2:#7F0224; --green:#157a3a; --gold:#B8892B;
+  --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);
+  --tint:rgba(194,21,28,.055); --tintg:rgba(21,122,58,.07);
+  --sh:0 14px 44px rgba(16,16,16,.10); --sh-sm:0 6px 20px rgba(16,16,16,.07); --wa:#25d366;
+  --rad:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:'Heebo','Assistant','Segoe UI',sans-serif;color:var(--ink);background:var(--bg);line-height:1.7;overflow-x:clip}
+.wrap{max-width:840px;margin:0 auto;padding:0 20px}
+img{max-width:100%;display:block}
+.arw{width:36px;height:11px;stroke:currentColor;stroke-width:1.5;fill:none;flex:0 0 auto;stroke-linecap:round;stroke-linejoin:round}
+/* section backgrounds for rhythm */
+.sec{padding:52px 0}
+.sec-gray{background:var(--gray)}
+.sec-dark{background:var(--dark);color:#fff}
+.sec-tint{background:linear-gradient(180deg,transparent,var(--tint),transparent)}
+.sec-tintg{background:linear-gradient(180deg,transparent,var(--tintg),transparent)}
+/* header */
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:.3s}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
+header img{height:42px}
+.h-cta{display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:13.5px;padding:9px 17px;border-radius:11px;box-shadow:0 6px 18px rgba(194,21,28,.28);transition:.16s}
+.h-cta:hover{transform:translateY(-1px)}
+.h-cta .arw{width:24px}
+/* hero */
+.hero{position:relative;text-align:center;overflow:hidden;isolation:isolate;color:#fff}
+.hero-bg{position:absolute;inset:0;z-index:-1}
+.hero-bg img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,17,22,.34),rgba(14,17,22,.18) 45%,rgba(14,17,22,.52))}
+.hero-inner{padding:72px 0 58px;background:radial-gradient(ellipse 92% 76% at 50% 44%,rgba(8,10,14,.48),transparent 72%)}
+.hero h1{text-shadow:0 2px 30px rgba(0,0,0,.6),0 1px 4px rgba(0,0,0,.45)}
+.hero .sub{text-shadow:0 1px 14px rgba(0,0,0,.5)}
+.hero .eyebrow{text-shadow:none}
+.hero .eyebrow{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff}
+.hero h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.4)}
+.hero .hl{background:linear-gradient(135deg,#ff6167,#ff9a45);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .hl-g{color:#63e487}
+.hero .sub{color:rgba(255,255,255,.92)}
+.hero .note{color:rgba(255,255,255,.76)}
+.trustband{background:#fff;border-bottom:1px solid var(--line);padding:22px 0}
+/* hero with VSL (hot, no bg image) */
+.hero-v{position:relative;text-align:center;padding:46px 0 34px;background:radial-gradient(ellipse 70% 60% at 76% -12%,rgba(194,21,28,.10),transparent 60%),radial-gradient(ellipse 60% 50% at 8% 112%,rgba(21,122,58,.07),transparent 55%),var(--bg)}
+.hero-v h1{color:var(--ink);text-shadow:none;font-size:40px;line-height:1.14;margin-bottom:14px}
+.hero-v .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-v .sub-v{font-size:17.5px;color:var(--muted);max-width:600px;margin:0 auto 24px;font-weight:500}
+.vsl{max-width:720px;margin:0 auto 24px;background:#0f1216;border-radius:20px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:var(--sh);position:relative;overflow:hidden;cursor:pointer;border:1px solid var(--line)}
+.vsl::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(194,21,28,.22),transparent 60%)}
+.vsl .play{position:relative;width:72px;height:72px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 10px 30px rgba(194,21,28,.5);transition:.2s}
+.vsl:hover .play{transform:scale(1.08)}
+.vsl .play::after{content:'';border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent #fff;margin-right:-4px}
+.vsl .vt{position:relative;font-weight:800;font-size:18px}
+.vsl small{position:relative;opacity:.72;font-size:13px;margin-top:5px}
+.hero-v .note-v{font-size:13.5px;color:var(--faint);margin-top:12px}
+@media(max-width:600px){.hero-v h1{font-size:29px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line-r);color:var(--accent);font-weight:800;font-size:12.5px;letter-spacing:.02em;padding:7px 16px;border-radius:30px;margin-bottom:18px;box-shadow:var(--sh-sm)}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+h1{font-size:39px;font-weight:900;line-height:1.15;letter-spacing:-.02em;margin-bottom:16px}
+.hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hl-g{color:var(--green)}
+.hero .sub{font-size:18px;color:rgba(255,255,255,.95);max-width:610px;margin:0 auto 26px;font-weight:500;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--grad);color:#fff;text-decoration:none;border:none;cursor:pointer;font-family:inherit;font-size:18px;font-weight:800;padding:17px 36px;border-radius:15px;box-shadow:0 12px 32px rgba(194,21,28,.34);transition:.18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(194,21,28,.46)}
+.btn .arw{width:40px}
+.hero .note{font-size:13.5px;color:rgba(255,255,255,.85);margin-top:13px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.fail .fi lottie-player,.jtl-lot lottie-player{width:100%;height:100%}
+.tl-lot{width:58px;height:58px;margin:0 auto 8px;position:relative;z-index:2}
+/* trust bar */
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.trust .t{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px 10px;box-shadow:var(--sh-sm)}
+.trust .v{font-size:24px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.trust .l{font-size:12px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.4}
+/* section headers */
+.kicker{text-align:center;color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.06em;margin-bottom:8px}
+.sec-dark .kicker{color:#ff6b6b}
+.sec-t{font-size:31px;font-weight:900;text-align:center;line-height:1.2;letter-spacing:-.01em;margin-bottom:10px}
+.sec-sub{text-align:center;color:var(--muted);max-width:610px;margin:0 auto 30px;font-size:16px}
+.sec-dark .sec-sub{color:rgba(255,255,255,.62)}
+/* thought bubble (problem) */
+.think{max-width:660px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px 30px 26px;box-shadow:var(--sh);position:relative;font-size:19px;line-height:1.8;color:#2a2f36;font-weight:500}
+.think::after{content:'';position:absolute;bottom:-16px;right:60px;width:30px;height:30px;background:#fff;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.think .lead-in{display:block;color:var(--accent);font-weight:800;font-size:15px;margin-bottom:12px;letter-spacing:.01em}
+.think .dots{display:flex;gap:6px;margin-top:16px}
+.think .dots i{width:8px;height:8px;border-radius:50%;background:var(--line-r)}
+.think-foot{text-align:center;margin-top:34px;font-size:17px;font-weight:700;color:var(--ink)}
+.think-foot b{color:var(--accent)}
+/* fails grid */
+.fails{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fail{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--sh-sm);transition:.2s}
+.fail:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+.fail .fi{width:66px;height:66px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.fail .fi svg{width:24px;height:24px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fail b{display:block;font-size:17px;margin-bottom:5px}
+.fail p{color:var(--muted);font-size:14.5px;line-height:1.65}
+/* JET scroll-fill timeline */
+.jtl{position:relative;padding-right:60px;max-width:680px;margin:0 auto}
+.jtl-line{position:absolute;right:29px;top:8px;bottom:8px;width:4px;background:var(--line-r);border-radius:4px}
+.sec-dark .jtl-line{background:rgba(255,255,255,.14)}
+.jtl-fill{position:absolute;right:29px;top:8px;width:4px;background:var(--grad);border-radius:4px;height:0}
+.jtl-item{position:relative;margin-bottom:22px}
+.jtl-item:last-child{margin-bottom:0}
+.jtl-node{position:absolute;right:-46px;top:0;width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid var(--line-r);display:flex;align-items:center;justify-content:center;transition:.35s;color:var(--faint);font-weight:900;font-size:18px}
+.sec-dark .jtl-node{background:#fff;border-color:rgba(194,21,28,.4)}
+.sec-dark .jtl-item.on .jtl-node{background:#fff;border-color:rgba(194,21,28,.95);color:var(--accent);box-shadow:0 0 24px rgba(194,21,28,.55),0 8px 20px rgba(0,0,0,.4)}
+.jtl-node lottie-player{width:32px;height:32px}
+.jtl-item.on .jtl-node{border-color:transparent;background:var(--grad);color:#fff;box-shadow:0 8px 22px rgba(194,21,28,.4);transform:scale(1.06)}
+.jtl-node svg{width:22px;height:22px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.jtl-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--sh-sm);transition:.4s cubic-bezier(.2,.7,.2,1);opacity:.5;transform:translateX(12px)}
+.sec-dark .jtl-card{background:linear-gradient(180deg,#1c222c,#12161d);border:1px solid rgba(255,255,255,.13);box-shadow:0 12px 34px rgba(0,0,0,.5)}
+.sec-dark .jtl-item.on .jtl-card{border-color:rgba(194,21,28,.55);box-shadow:0 16px 46px rgba(0,0,0,.6),0 0 26px rgba(194,21,28,.20)}
+.jtl-item.on .jtl-card{opacity:1;transform:none;box-shadow:var(--sh);border-color:var(--line-r)}
+.jtl-card h4{font-size:18px;font-weight:800;margin-bottom:5px}
+.jtl-card p{color:var(--muted);font-size:14.7px}
+.sec-dark .jtl-card p{color:rgba(255,255,255,.66)}
+/* value proof timeline (horizontal) */
+.tl{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px 24px 24px;box-shadow:var(--sh);position:relative;overflow:hidden;max-width:720px;margin:0 auto}
+.tl-track{display:flex;justify-content:space-between;position:relative;margin:20px 0 0}
+.tl-track::before{content:'';position:absolute;top:29px;right:6%;left:6%;height:4px;background:var(--line-r);border-radius:4px;opacity:.5}
+.tl-track::after{content:'';position:absolute;top:29px;right:6%;height:4px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--green));border-radius:4px;width:0;transition:width 1.6s ease}
+.tl.on .tl-track::after{width:88%}
+.tl-pt{position:relative;z-index:2;text-align:center;flex:1}
+.tl-pt .dot{width:42px;height:42px;border-radius:50%;background:#fff;border:4px solid var(--accent);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);box-shadow:0 4px 12px rgba(194,21,28,.2)}
+.tl-pt.g .dot{border-color:var(--green);color:var(--green)}
+.tl-pt .y{font-size:12.5px;color:var(--faint);font-weight:700}
+.tl-pt .p{font-size:18px;font-weight:900;margin-top:3px}
+.tl-note{text-align:center;margin-top:20px;font-size:15px;color:var(--muted)}
+.tl-note b{color:var(--green)}
+/* value 3-cards (was timeline) */
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:760px;margin:0 auto}
+.vcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 16px;text-align:center;box-shadow:var(--sh-sm);transition:.2s}
+.vcard:hover{transform:translateY(-3px);box-shadow:var(--sh);border-color:var(--line-r)}
+.vcard lottie-player{width:76px;height:76px;margin:0 auto 10px}
+.vcard .y{font-size:12.5px;color:var(--faint);font-weight:700}
+.vcard .p{font-size:23px;font-weight:900;margin-top:4px;color:var(--ink)}
+.vcard .p span{font-size:12px;font-weight:600;color:var(--muted)}
+.vcard.g .p{color:var(--green)}
+@media(max-width:600px){
+  .vgrid{grid-template-columns:1fr;gap:11px}
+  .vcard{display:flex;align-items:center;gap:16px;text-align:right;padding:16px 18px}
+  .vcard lottie-player{margin:0;flex:0 0 auto;width:62px;height:62px}
+  .vcard .p{font-size:20px}
+}
+/* testimonials */
+.revs{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 16px;-webkit-overflow-scrolling:touch}
+.revs::-webkit-scrollbar{height:6px}.revs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:6px}
+.revs img{scroll-snap-align:center;flex:0 0 78%;max-width:340px;height:auto;background:#fff;border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.4);cursor:zoom-in;object-fit:contain}
+@media(min-width:720px){.revs img{flex-basis:32%}}
+/* stories */
+.stories{display:flex;flex-direction:column;align-items:center;position:relative}
+.story{position:sticky;width:100%;max-width:640px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 -4px 24px rgba(16,16,16,.08),0 16px 44px rgba(16,16,16,.12);margin-bottom:44px}
+.stories .story:nth-child(1){top:92px}
+.stories .story:nth-child(2){top:110px}
+.stories .story:nth-child(3){top:128px}
+.stories .story:last-child{margin-bottom:0}
+@media(max-width:600px){.story{padding:22px;margin-bottom:34px}.stories .story:nth-child(1){top:78px}.stories .story:nth-child(2){top:92px}.stories .story:nth-child(3){top:106px}}
+.story .top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.story .av{width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;flex:0 0 auto}
+.story .nm{font-weight:800;font-size:17px}.story .ro{font-size:13px;color:var(--faint)}
+.story .big{background:var(--tintg);border:1px solid rgba(21,122,58,.18);color:var(--green);font-weight:900;font-size:15px;border-radius:12px;padding:9px 14px;display:inline-block;margin:4px 0 12px}
+.story p{font-size:15.5px;color:var(--ink);line-height:1.75}.story p b{color:var(--accent)}
+/* tom */
+.tom{display:grid;grid-template-columns:1fr 240px;gap:28px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--sh)}
+.tom img{width:100%;border-radius:16px;object-fit:contain;background:linear-gradient(160deg,#faf2f2,#fff)}
+.tom h3{font-size:23px;font-weight:900;margin-bottom:10px}
+.tom h3 span{color:var(--accent)}
+.tom p{color:var(--muted);font-size:15.5px;margin-bottom:9px}.tom p b{color:var(--ink)}
+.tom .sig{color:var(--green);font-weight:800;font-size:15.5px;margin-top:4px}
+@media(max-width:620px){.tom{grid-template-columns:1fr;text-align:center}.tom img{max-width:230px;margin:0 auto}}
+/* faq */
+.faq details{background:#fff;border:1px solid var(--line);border-radius:15px;margin-bottom:11px;box-shadow:var(--sh-sm);overflow:hidden;transition:.2s}
+.faq details[open]{border-color:var(--line-r);box-shadow:var(--sh)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:800;font-size:16.5px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pl{width:26px;height:26px;flex:0 0 auto;border-radius:8px;background:var(--tint);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;transition:.25s}
+.faq details[open] summary .pl{transform:rotate(45deg)}
+.faq .a{padding:0 20px 18px;color:var(--muted);font-size:15px;line-height:1.7}
+/* convert (survey-language, inviting) */
+.join-card{max-width:520px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px 30px;box-shadow:var(--sh);text-align:center}
+.join-card .kicker{margin-bottom:6px}
+.join-card h2{font-size:26px;font-weight:900;margin-bottom:10px}
+.join-card p{color:var(--muted);font-size:16px;margin-bottom:22px}
+.jfield{text-align:right;margin-bottom:8px}
+.jfield label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}
+.jfield input{width:100%;background:#fff;border:1.6px solid var(--line);border-radius:13px;padding:15px;font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:.16s}
+.jfield input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.jfield input.err{border-color:var(--accent)}
+.jerr{color:var(--accent);font-size:12.5px;font-weight:700;min-height:16px;text-align:right;margin:4px 0 10px}
+.join-card .btn{width:100%}
+.join-card .note{font-size:13px;color:var(--faint);margin-top:14px}
+/* calendar embed (hot) */
+.cal-wrap{background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:var(--sh);overflow:hidden;max-width:760px;margin:0 auto}
+.cal-wrap iframe{width:100%;height:660px;border:0;border-radius:12px;display:block}
+@media(max-width:560px){.cal-wrap iframe{height:600px}}
+/* footer */
+footer{background:var(--dark);color:rgba(255,255,255,.66);padding:34px 0 26px;text-align:center}
+footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;border-radius:13px;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.foot-title{font-size:15px;font-weight:700;color:rgba(255,255,255,.85);max-width:440px;margin:0 auto 12px;line-height:1.55}
+.social{display:flex;justify-content:center;gap:10px;margin:2px 0 18px}
+.social a{width:48px;height:48px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.social a:hover{transform:translateY(-3px) scale(1.07)}
+.social lottie-player{width:100%;height:100%}
+.social svg{width:20px;height:20px;fill:#fff}
+.disc{font-size:12.5px;line-height:1.65;max-width:640px;margin:0 auto}
+.disc b{color:#ff6b6b}
+.foot-links{margin-top:12px;font-size:12.5px}
+.foot-links a{color:rgba(255,255,255,.55);text-decoration:underline;margin:0 8px}
+.copy{font-size:11.5px;color:rgba(255,255,255,.4);margin-top:12px}
+/* lightbox + float */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.lb.on{display:flex}.lb img{max-width:96vw;max-height:92vh;border-radius:10px}
+.lb .x{position:absolute;top:18px;left:18px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:24px;cursor:pointer}
+.float{position:fixed;left:0;right:0;bottom:0;z-index:55;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 16px;transform:translateY(120%);transition:.35s;box-shadow:0 -6px 24px rgba(16,16,16,.1)}
+.float.on{transform:translateY(0)}
+.float a{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:16px;padding:14px;border-radius:13px;max-width:820px;margin:0 auto;box-shadow:0 8px 22px rgba(194,21,28,.32)}
+.float a .arw{width:34px}
+.rv{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media(max-width:600px){
+  h1{font-size:29px}.hero .sub{font-size:16px}.sec-t{font-size:24px}
+  .trust{grid-template-columns:1fr 1fr}.fails{grid-template-columns:1fr}
+  .tl-pt .p{font-size:14px}.tl-pt .dot{width:34px;height:34px;font-size:12px}
+  .think{font-size:16.5px;padding:24px}.join-card h2{font-size:22px}
+}
+
+/* google reviews gallery */
+.rgal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+@media(max-width:720px){.rgal{grid-template-columns:repeat(2,1fr);gap:12px}}
+.rgal .rev{width:100%;height:auto;display:block;object-fit:contain;background:#fff;border-radius:12px;border:1px solid rgba(255,255,255,.18);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05),0 0 22px rgba(255,255,255,.13);cursor:zoom-in;transition:transform .2s ease,box-shadow .2s ease}
+.rgal .rev:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.6),0 0 30px rgba(255,255,255,.22)}
+.rgal .rev.hid{display:none}
+.rgal-more{text-align:center;margin-top:26px}
+.rgal-btn{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.26);color:#fff;font-family:inherit;font-weight:800;font-size:16px;padding:14px 32px;border-radius:100px;cursor:pointer;transition:.16s}
+.rgal-btn:hover{background:rgba(255,255,255,.16);transform:translateY(-1px)}
+
+.story .av img{width:100%!important;height:100%!important;object-fit:cover;border-radius:50%;display:block;max-width:none!important}
+.story .av{overflow:hidden}
+</style>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+</head>
+<body>
+<header id="hdr"><div class="wrap">
+  <img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע"מ מקבוצת תום הרוש"/>
+  <a class="h-cta" href="#join" onclick="scrollJoin(event)">קבע פגישה <svg class="arw" viewBox="0 0 36 11"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a>
+</div></header>
+
+<!-- HERO (VSL) -->
+<div class="hero-v"><div class="wrap">
+  <span class="eyebrow"><span class="dot"></span>עסקת קרקע · מתחם H · קדימה־צורן</span>
+  <h1><span class="pgreet"></span>כבר הבנת את ההזדמנות.<br>נשאר רק לוודא שזו <span class="hl">עסקה עם גב</span>.</h1>
+  <p class="sub-v">צפה בסרטון הקצר של תום על העסקה, ואז נקבע 30 דקות לעבור יחד על כל פרט, מספר וביטחון.</p>
+  <div class="vsl rv"><div class="play"></div><div class="vt">תום מסביר את העסקה</div><small>הסרטון יתווסף בקרוב</small></div>
+  <a class="btn" href="#join" onclick="scrollJoin(event)">קבע פגישה עכשיו <svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
+  <div class="note-v">שיחת התאמה של 30 דקות · בזום או פרונטלי · ללא התחייבות</div>
+</div></div>
+<div class="trustband"><div class="wrap">
+  <div class="trust">
+    <div class="t rv"><div class="v" data-count="16">0</div><div class="l">שנות ניסיון בנדל"ן</div></div>
+    <div class="t rv"><div class="v" data-count="1000" data-suffix="+">0</div><div class="l">יחידות דיור שנמסרו</div></div>
+    <div class="t rv"><div class="v" data-count="1000" data-suffix="+">0</div><div class="l">רוכשים קיבלו מפתח</div></div>
+    <div class="t rv"><div class="v">בכתב</div><div class="l">התחייבות לרכישה חוזרת</div></div>
+  </div>
+</div></div>
+
+<!-- WHY NOW (hot) -->
+<section class="sec sec-gray"><div class="wrap">
+  <div class="kicker">למה דווקא עכשיו</div>
+  <div class="sec-t rv">חלון הכניסה פתוח. אבל לא לאורך זמן.</div>
+  <div class="sec-sub rv">זה שלב פרי־סייל. המחיר היום הוא הנמוך במסלול, והמחזור הנוכחי מוגבל.</div>
+  <div class="fails">
+    <div class="fail rv"><div class="fi"><lottie-player src="/lot-why-price.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b>המחיר עולה עם התכנון</b><p>צפי שמרני של 35 עד 50 אחוז בכל שנת תכנון. מי שנכנס מוקדם נהנה מהפער הגדול ביותר.</p></div>
+    <div class="fail rv"><div class="fi"><lottie-player src="/lot-cert1.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b>ודאות בכתב, לא הבטחה</b><p>התחייבות לרכישה חוזרת, שמאי חתום וליווי עורכי דין. אתה נכנס עם גב מלא.</p></div>
+    <div class="fail rv"><div class="fi"><lottie-player src="/lot-why-limited.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b>המחזור הנוכחי מוגבל</b><p>מספר היחידות בסבב הזה מצומצם, וההקצאה לפי סדר הגעה. שיחה עכשיו שומרת לך מקום.</p></div>
+    <div class="fail rv"><div class="fi"><lottie-player src="/lot-why-tom.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b>תום מלווה אותך אישית</b><p>לא פלטפורמה אנונימית. תום עומד מאחורי כל עסקה בשמו המלא, ומחבר אליך עוד לפני החוזים.</p></div>
+  </div>
+</div></section>
+
+<!-- PLANNING TIMELINE (hot) -->
+<section class="sec sec-tint"><div class="wrap">
+  <div class="kicker">המסלול התכנוני, בשקיפות מלאה</div>
+  <div class="sec-t rv">מ־2,000 ל־3,700 ש"ח למטר. הנה בדיוק איך.</div>
+  <div class="sec-sub rv">לא תחזית. תיעוד ההתקדמות, שלב אחר שלב, מגובה בהערכות שמאי לאורך הדרך.</div>
+  <div class="jtl" data-jet>
+    <div class="jtl-line"></div><div class="jtl-fill"></div>
+    <div class="jtl-item"><div class="jtl-node">1</div><div class="jtl-card"><h4>דצמבר 2024 · שינוי ייעוד</h4><p>הקרקע שינתה ייעוד מחקלאית ל<b>עירוב שימושים</b> (דיור מוגן, מסחר, תעשייה ומגורים). לא הבטחה לדירה, אלא קרקע שלעירייה יש אינטרס לקדם מהר יותר משאר הקרקעות באזור.</p></div></div>
+    <div class="jtl-item"><div class="jtl-node">2</div><div class="jtl-card"><h4>תחילת 2025 · פתיחת פרי־סייל</h4><p>התחלנו למכור יחידות קרקע ב־<b>2,000 עד 2,300 ש"ח למטר</b>. שלב הכניסה הזול ביותר במסלול.</p></div></div>
+    <div class="jtl-item"><div class="jtl-node">3</div><div class="jtl-card"><h4>אמצע 2025 · אישור התכנית הכוללנית</h4><p>אושרה התכנית הכוללנית, וההתקדמות התכנונית מעלה את הערך משמעותית. לפי הערכות שמאי חדשות המחיר עלה ל־<b>2,500 ש"ח למטר</b>.</p></div></div>
+    <div class="jtl-item"><div class="jtl-node">4</div><div class="jtl-card"><h4>סוף 2025 · 3,300 ש"ח למטר</h4><p>השמאים העריכו את המחיר ב־<b>3,300 ש"ח למטר</b>. אנחנו ממשיכים למכור, והחלקות מוגבלות בכמות.</p></div></div>
+    <div class="jtl-item"><div class="jtl-node"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></div><div class="jtl-card"><h4>היום · 3,700 ש"ח למטר</h4><p>המחיר כבר עומד על <b>3,700 ש"ח למטר</b>, וממשיך לעלות ככל שהתכנון מתקדם. <b style="color:var(--accent)">כניסה עכשיו מבטיחה יתרון רווח משמעותי יותר, ככל שהפער גדל.</b></p></div></div>
+  </div>
+  <div class="tl-note rv" style="text-align:center;margin:24px auto 0;font-size:15.5px;color:var(--muted);max-width:660px">זו עסקה פיננסית. השאלה אינה מתי בונים, אלא מתי התכנון מתקדם. <b style="color:var(--ink)">אפשר למכור בכל שלב ולהרוויח מהדרך</b>, וכל שלב תכנוני מעלה את הערך.</div>
+</div></section>
+
+<!-- TESTIMONIALS (dark) -->
+<section class="sec sec-dark"><div class="wrap">
+  <div class="kicker">לקוחות מספרים</div>
+  <div class="sec-t rv">תשמעו מה יש למשקיעים וללקוחות שלנו להגיד</div>
+  <div class="sec-sub rv">ביקורות אמיתיות מגוגל, בשמות מלאים. דירוג 5.0 כוכבים.</div>
+  <div class="rgal rv">
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-1.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-2.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-3.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-4.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-5.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-6.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-7.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-8.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-9.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-10.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-11.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-12.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-13.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-14.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-15.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-16.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-17.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-18.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-19.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-20.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-21.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-22.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-23.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-24.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-25.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-26.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-27.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+  </div>
+  <div class="rgal-more" id="rgalMore"><button class="rgal-btn" onclick="showMoreRevs()">הצג עוד ביקורות</button></div>
+</div></section>
+
+<!-- CERTAINTY (dark JET timeline) -->
+<section class="sec sec-dark" style="background:radial-gradient(ellipse 70% 55% at 50% 22%,rgba(194,21,28,.16),transparent 62%),linear-gradient(180deg,#141922,#0f1216)"><div class="wrap">
+  <div class="kicker">הביטחון שלך</div>
+  <div class="sec-t rv">כאן ההבטחה הופכת לוודאות</div>
+  <div class="sec-sub rv">ארבע שכבות שמגנות על הכסף שלך. הכל בכתב, הכל בדוק.</div>
+  <div class="jtl" data-jet>
+    <div class="jtl-line"></div><div class="jtl-fill"></div>
+    <div class="jtl-item"><div class="jtl-node"><lottie-player src="/lot-cert1.json" background="transparent" speed="1" autoplay loop></lottie-player></div><div class="jtl-card"><h4>התחייבות בכתב לרכישה חוזרת</h4><p>אם לא תמצא קונה, אנחנו מוכרים עבורך תוך 90 יום. ואם לא הצלחנו, קונים ממך חזרה בתוספת ריבית. הסיכון מוסר מהשולחן.</p></div></div>
+    <div class="jtl-item"><div class="jtl-node"><lottie-player src="/lot-cert2.json" background="transparent" speed="1" autoplay loop></lottie-player></div><div class="jtl-card"><h4>שמאי חתום ועורכי דין</h4><p>הערכת שמאי חתומה, ליווי משפטי מלא, וכספים בנאמנות עו״ד עד להשלמה. בדיוק כמו רכישת דירה.</p></div></div>
+    <div class="jtl-item"><div class="jtl-node"><lottie-player src="/lot-cert3.json" background="transparent" speed="1" autoplay loop></lottie-player></div><div class="jtl-card"><h4>תכנית שאושרה על ידי המדינה</h4><p>הקרקע בתוך תכנית מאושרת מדצמבר 2024, עם זכויות בנייה. לא "שדה חקלאי", אלא נכס עם מסלול תכנוני אמיתי.</p></div></div>
+    <div class="jtl-item"><div class="jtl-node"><lottie-player src="/lot-cert4.json" background="transparent" speed="1" autoplay loop></lottie-player></div><div class="jtl-card"><h4>אדם אחד אחראי מולך, בשמו המלא</h4><p>לא פלטפורמה אנונימית. תום הרוש עומד מאחורי כל עסקה, מלווה אותך אישית, ומחבר אליך עוד לפני שמוציאים חוזים.</p></div></div>
+  </div>
+</div></section>
+
+<!-- STORIES -->
+<section class="sec sec-tintg"><div class="wrap">
+  <div class="kicker">זה קרה באמת</div>
+  <div class="sec-t rv">משקיעים כמוך, שכבר עשו את הצעד</div>
+  <div class="sec-sub rv">שלושה סיפורים אמיתיים. גלול לגלות.</div>
+  <div class="stories rv">
+    <div class="story">
+      <div class="top"><div class="av"><img src="https://tom-harush.co.il/wp-content/uploads/story-tamar.png" alt="תמר"/></div><div><div class="nm">תמר, בת 44</div><div class="ro">משקיעה, נכנסה בפרי־סייל</div></div></div>
+      <div class="big">140,000 ש"ח, בלי לגעת בכסף</div>
+      <p>תמר נכנסה איתנו בשלב הפרי־סייל ורכשה קרקע ב־<b>230,000 ש"ח</b>, כשהמחיר היה 2,300 ש"ח למטר. לאחרונה, כשרצתה להוסיף עוד 70 מטר, ישבנו יחד בפגישה אצל השמאי. שם נפל לה האסימון: ההערכה כבר עמדה על <b>3,700 ש"ח</b> למטר, כלומר הקרקע שלה שווה היום <b>370,000 ש"ח</b>. הכסף שלה עשה כ־140,000 ש"ח, בלי שנגעה בו.</p>
+    </div>
+    <div class="story">
+      <div class="top"><div class="av"><img src="https://tom-harush.co.il/wp-content/uploads/story-dani-orit.png" alt="דני ואורית"/></div><div><div class="nm">דני ואורית</div><div class="ro">חלמו על בית ליד אגם בפורטוגל</div></div></div>
+      <div class="big">החלום חזר לשולחן</div>
+      <p>לדני ואורית היה חלום לעבור לגור ליד אגם בפורטוגל, אבל ה־<b>400,000 ש"ח</b> שחסכו פשוט לא הספיקו. במקום להשאיר אותם נשחקים בבנק, הם הכניסו אותם לקרקע במודל שלנו. לפי מסלול ההשבחה, בעוד כמה שנות תכנון הסכום צפוי לצמוח משמעותית. <b>הכסף עובד עכשיו, במקום לחכות.</b></p>
+    </div>
+    <div class="story">
+      <div class="top"><div class="av"><img src="https://tom-harush.co.il/wp-content/uploads/story-moshe.png" alt="משה"/></div><div><div class="nm">משה, בן 61</div><div class="ro">פנסיונר, חיפש ביטחון לילדים</div></div></div>
+      <div class="big">ישן טוב בלילה</div>
+      <p>משה פדה קרן השתלמות ולא רצה "להמר" בשוק ההון. מה שסגר לו את העסקה היה דווקא <b>ההתחייבות בכתב</b>: לדעת שאם ירצה אפשר למכור, ואם לא, קונים ממנו חזרה. הוא נכנס עם 50 מטר בלבד, לפי התקציב, בלי הלוואות. "בפעם הראשונה", אמר, "הכסף שלי עובד, ואני עדיין ישן טוב בלילה".</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- TOM (first person) -->
+<section class="sec"><div class="wrap">
+  <div class="tom rv">
+    <div>
+      <div class="kicker" style="text-align:right;margin-bottom:6px">הפנים של העסקה</div>
+      <h3>אני <span>תום הרוש</span></h3>
+      <p>כ־16 שנה שאני חי ונושם נדל"ן: השקעות, תיווך, יזמות והתחדשות עירונית ברמת גן, גבעתיים, תל אביב והשרון. אני מוביל בערכי אמון, שקיפות ויושרה, ומאמין בחיבור כן בין אנשים עוד לפני שמוציאים חוזים.</p>
+      <p>יחד עם השותפים יזמנו, הקמנו ומסרנו מעל <b>1,000 יחידות דיור</b>, ומעל <b>1,000 רוכשים</b> כבר קיבלו מאיתנו מפתח לנכס שלהם.</p>
+      <div class="sig">אני עולה בעצמי לכל שיחה. זו לא חברה אנונימית.</div>
+    </div>
+    <img class="lbx" src="https://tom-harush.co.il/wp-content/uploads/%D7%A2%D7%99%D7%A6%D7%95%D7%91-%D7%9C%D7%9C%D7%90-%D7%A9%D7%9D-17.png" alt="תום הרוש" loading="lazy"/>
+  </div>
+</div></section>
+
+<!-- FAQ -->
+<section class="sec sec-gray"><div class="wrap faq">
+  <div class="kicker">לגופו של עניין</div>
+  <div class="sec-t rv">השאלות שמפרידות בין מי שנכנס למי שמפספס</div>
+  <div class="sec-sub rv">הנה התשובות הישרות, בגובה העיניים, בלי מכירה.</div>
+  <div class="rv">
+  <details open><summary>מה בדיוק אני קונה בקרקע בעירוב שימושים? <span class="pl">+</span></summary><div class="a">אתה קונה זכויות בקרקע שכבר שינתה ייעוד לעירוב שימושים: מגורים, מסחר, תעשייה ודיור מוגן. ההקצאה הסופית נקבעת בתכנית המפורטת ובשומת השמאי, והערך נגזר מהזכויות, לא מסוג היחידה. לעירייה אינטרס לקדם קרקע בעירוב שימושים מהר יותר משאר הקרקעות באזור.</div></details>
+  <details><summary>על מה מבוססות הערכות השמאי, ולמה שאסמוך עליהן? <span class="pl">+</span></summary><div class="a">שמאי מוסמך, על בסיס עסקאות השוואה באזור ושלב התכנון. אנחנו נראה לך את השומות עצמן. המחיר עלה מ־2,000 עד 2,300 ל־3,700 ש"ח למטר בתוך כשנה, כל שלב מגובה בשומה. שקיפות מלאה, בלי אותיות קטנות.</div></details>
+  <details><summary>מה אופק האקזיט, ואיך הנזילות? <span class="pl">+</span></summary><div class="a">הקרקע נרשמת על שמך בטאבו. אפשר למכור בכל שלב תכנוני, בדרך כלל ברווח מול מחיר הרכישה. אופק אופייני לאקזיט משמעותי הוא כ־5 עד 7 שנים, אבל התזמון בשליטתך המלאה, ואתה מרוויח מהדרך.</div></details>
+  <details><summary>מה הסיכון התכנוני, ומה אם התכנון נתקע? <span class="pl">+</span></summary><div class="a">כל השקעה כרוכה בסיכון, ומחובתנו לומר זאת. עם זאת, הייעוד כבר שונה בדצמבר 2024, יש תכנית מאושרת ואינטרס עירוני ברור. ובכל מקרה, ההתחייבות בכתב לרכישה חוזרת מסירה את סיכון הנזילות מהשולחן שלך.</div></details>
+  <details><summary>במה זה שונה מעסקאות קרקע אחרות שכבר ראיתי? <span class="pl">+</span></summary><div class="a">שלושה דברים: הייעוד כבר שונה (לא ספקולציה על הפשרה עתידית), התחייבות בכתב לרכישה חוזרת, ואדם אחד אחראי מולך בשמו המלא. לא פלטפורמה אנונימית ולא הבטחה על הנייר.</div></details>
+  <details><summary>ומה לגבי מיסוי? <span class="pl">+</span></summary><div class="a">כמו בכל עסקת נדל"ן יש היבטי מס: מס רכישה בכניסה, ומס שבח במכירה. נעבור על התמונה המלאה בשיחה, ומומלץ ללוות את זה עם יועץ המס שלך. הכל גלוי ומחושב מראש.</div></details>
+  </div>
+</div></section>
+
+<!-- BOOKING (hot — calendar only, no exits) -->
+<section class="sec" id="join"><div class="wrap">
+  <div class="kicker">הצעד האחרון</div>
+  <div class="sec-t rv"><span class="pgreet"></span>בחר את המועד שנוח לך</div>
+  <div class="sec-sub rv">30 דקות עם תום. נעבור יחד על כל הפרטים, המספרים והביטחונות, ותחליט בראש שקט. בזום או פרונטלי.</div>
+  <div class="cal-wrap rv" onclick="pxSchedule()">
+    <div style="width:100%;height:100%;min-height:680px;overflow:auto" id="cal-inline"></div>
+  </div>
+  <script>
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "kadima", {origin:"https://app.cal.com"});
+  // Prefill name+email from the TOP url (survey passes them), so the booking + webhook tie to this lead. Works inside the Elementor iframe.
+  var _tqs; try{ _tqs = window.top.location.search; }catch(e){ _tqs = location.search; }
+  var _tp = new URLSearchParams(_tqs||''), _pf = new URLSearchParams();
+  if(_tp.get('email')) _pf.set('email', _tp.get('email'));
+  if(_tp.get('name'))  _pf.set('name',  _tp.get('name'));
+  var _calLink = "tomharush/פגישת-התאמה-קדימה-צורן" + (_pf.toString() ? ('?' + _pf.toString()) : '');
+  Cal.ns["kadima"]("inline", { elementOrSelector:"#cal-inline", config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"}, calLink: _calLink });
+  Cal.ns["kadima"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#C2151C"},"dark":{"cal-brand":"#C2151C"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  // Free alternative to Cal's paid "redirect on booking": on success, send the visitor to our branded thank-you.
+  Cal.ns["kadima"]("on", { action: "bookingSuccessful", callback: function(){ setTimeout(function(){ try{ window.top.location.href = "/tnxhpage/"; }catch(e){ location.href = "/tnxhpage/"; } }, 900); } });
+  </script>
+</div></section>
+
+<footer>
+  <img class="flogo" src="/logo.png" alt="הקרן להשבחת הון ונכסים בע"מ מקבוצת תום הרוש"/>
+  <div class="foot-title">אפשר לדבר איתנו בכל דרך, חפשו אותנו גם ברשתות החברתיות</div>
+  <div class="social">
+    <a href="https://wa.me/972522707706" target="_blank" aria-label="וואטסאפ"><lottie-player src="/lot-s-wa.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+    <a href="tel:*9211" aria-label="חיוג *9211"><lottie-player src="/lot-s-phone.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+    <a href="https://www.instagram.com/tom_harush/" target="_blank" aria-label="אינסטגרם"><lottie-player src="/lot-s-ig.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+    <a href="https://www.facebook.com/appartmentforsaleinramatgan" target="_blank" aria-label="פייסבוק"><lottie-player src="/lot-s-fb.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+  </div>
+  <div class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b><br>יש ודאות מלאה לבנייה, אך הקרקע בשלב תכנוני (פרי־סייל) ואינה מאושרת לבנייה מיידית ברגע השיווק. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.</div>
+  <div class="foot-links"><a href="/privacy-kadima/">מדיניות פרטיות</a></div>
+  <div class="copy">© הקרן להשבחת הון ונכסים בע"מ מקבוצת תום הרוש · הבית לעסקאות נדל"ן וקרקע</div>
+</footer>
+
+<div class="lb" id="lb" onclick="closeLb()"><button class="x" onclick="closeLb()">×</button><img id="lbimg" src="" alt=""/></div>
+<div class="float" id="float"><a href="#join" onclick="scrollJoin(event)">קבע פגישה עכשיו <svg class="arw" viewBox="0 0 34 11"><path d="M33 5.5H3M9 1.5 3 5.5l6 4"/></svg></a></div>
+
+<script>
+const PIXEL_ID='1002428386157716';
+const SMOOVE_WEBHOOK='__SMOOVE_WEBHOOK__';
+const THANKYOU='/tnxhpage/';
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init',PIXEL_ID);fbq('track','PageView');fbq('track','ViewContent',{content_name:'hot_page',temperature:'hot'});
+let _sch=false;function pxSchedule(){if(_sch)return;_sch=true;try{fbq('track','Schedule',{content_name:'hot_page',temperature:'hot'});}catch(e){}}
+function scrollJoin(e){if(e)e.preventDefault();document.getElementById('join').scrollIntoView({behavior:'smooth'});}
+// lightbox
+document.querySelectorAll('.lbx').forEach(img=>img.addEventListener('click',()=>{document.getElementById('lbimg').src=img.src;document.getElementById('lb').classList.add('on');}));
+function closeLb(){document.getElementById('lb').classList.remove('on');}
+// reveal
+const io=new IntersectionObserver((es)=>{es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// count up
+function countUp(el){const t=+el.dataset.count,suf=el.dataset.suffix||'';let st=performance.now(),d=1400;function f(now){let p=Math.min((now-st)/d,1);p=1-Math.pow(1-p,3);el.textContent=Math.round(t*p).toLocaleString()+suf;if(p<1)requestAnimationFrame(f);}requestAnimationFrame(f);}
+const cio=new IntersectionObserver((es)=>{es.forEach(x=>{if(x.isIntersecting){countUp(x.target);cio.unobserve(x.target);}})},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+// horizontal proof timeline fill
+const tio=new IntersectionObserver((es)=>{es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');tio.unobserve(x.target);}})},{threshold:.4});
+const tl=document.getElementById('tl');if(tl)tio.observe(tl);
+// JET scroll-fill timelines
+function initJet(el){
+  const fill=el.querySelector('.jtl-fill'), items=[...el.querySelectorAll('.jtl-item')];
+  function upd(){
+    const r=el.getBoundingClientRect(), center=window.innerHeight*0.55, total=el.offsetHeight;
+    let filled=Math.min(Math.max(center-r.top,0),total);
+    fill.style.height=filled+'px';
+    items.forEach(it=>{const nr=it.querySelector('.jtl-node').getBoundingClientRect();it.classList.toggle('on',nr.top<center);});
+  }
+  window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);upd();
+}
+document.querySelectorAll('[data-jet]').forEach(initJet);
+// float + header
+const fl=document.getElementById('float'),join=document.getElementById('join');
+window.addEventListener('scroll',()=>{const y=scrollY;fl.classList.toggle('on',y>700&&(join.getBoundingClientRect().top>window.innerHeight));document.getElementById('hdr').style.boxShadow=y>10?'0 4px 20px rgba(16,16,16,.07)':'none';});
+</script>
+<script>(function(){try{var nm=new URLSearchParams(location.search).get('name');if(nm){nm=nm.trim().split(/\s+/)[0];if(nm)document.querySelectorAll('.pgreet').forEach(function(el){el.textContent=nm+', ';});}}catch(e){}})();</script>
+<script>function showMoreRevs(){document.querySelectorAll('.rgal .rev.hid').forEach(function(el){el.classList.remove('hid');});var m=document.getElementById('rgalMore');if(m)m.style.display='none';}</script>
+</body>
+</html>
