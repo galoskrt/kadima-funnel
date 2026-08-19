@@ -279,6 +279,10 @@ function submitLead(){
   // Unique lead id → idempotency (dedupe retries) + ties the lead across Sehel / dashboard / follow-up
   const leadId = (window.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(16).slice(2));
   window.__lid = leadId; window.__email = email; window.__name = name;
+  // Meta cookies for server-side CAPI matching (fbp always; fbc from cookie or fbclid).
+  const _ck = n => { const m = document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; };
+  const _fbclid = new URLSearchParams(location.search).get('fbclid');
+  let _fbc = _ck('_fbc'); if (!_fbc && _fbclid) _fbc = 'fb.1.' + Date.now() + '.' + _fbclid;
   const payload = {
     lead_id: leadId,
     name, phone, email,
@@ -286,10 +290,11 @@ function submitLead(){
     q_a: buildQA(),
     answers: Object.fromEntries(Object.entries(answers).map(([k,v])=>[k,v.label])),
     utm, ref_url: location.href, ts: new Date().toISOString(),
-    source: utm.source || 'שאלון'
+    source: utm.source || 'שאלון',
+    fbp: _ck('_fbp') || undefined, fbc: _fbc || undefined
   };
-  // Fire pixel Lead (with temperature so Meta can optimize on quality)
-  px('Lead', {content_name:'survey', temperature:temp, value: temp==='hot'?2:1, currency:'ILS'});
+  // Fire pixel Lead with eventID=leadId so the server-side CAPI Lead (same id) is DEDUPED, not double-counted.
+  try{ if(window.fbq) fbq('track','Lead', {content_name:'survey', temperature:temp, value: temp==='hot'?2:1, currency:'ILS'}, {eventID: leadId}); }catch(e){}
   pxc('SurveyComplete', {temperature:temp, score:score()});
 
   // Always keep a local copy first — zero loss even offline / Worker down.
