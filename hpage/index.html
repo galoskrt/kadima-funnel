@@ -437,7 +437,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
   Cal.ns["kadima"]("inline", { elementOrSelector:"#cal-inline", config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"}, calLink: _calLink });
   Cal.ns["kadima"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#C2151C"},"dark":{"cal-brand":"#C2151C"}},"hideEventTypeDetails":false,"layout":"month_view"});
   // Free alternative to Cal's paid "redirect on booking": on success, send the visitor to our branded thank-you.
-  Cal.ns["kadima"]("on", { action: "bookingSuccessful", callback: function(){ setTimeout(function(){ try{ window.top.location.href = "/tnxhpage/"; }catch(e){ location.href = "/tnxhpage/"; } }, 900); } });
+  Cal.ns["kadima"]("on", { action: "bookingSuccessful", callback: function(){ try{ showInterstitial(); }catch(e){} setTimeout(function(){ try{ window.top.location.href = "/tnxhpage/"; }catch(e){ location.href = "/tnxhpage/"; } }, 1600); } });
   </script>
 </div></section>
 
@@ -457,6 +457,25 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 
 <div class="lb" id="lb" onclick="closeLb()"><button class="x" onclick="closeLb()">×</button><img id="lbimg" src="" alt=""/></div>
 <div class="float" id="float"><a href="#join" onclick="scrollJoin(event)">קבע פגישה עכשיו <svg class="arw" viewBox="0 0 34 11"><path d="M33 5.5H3M9 1.5 3 5.5l6 4"/></svg></a></div>
+
+<style>
+.interstitial{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;background:rgba(10,10,10,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .26s ease}
+.interstitial.on{display:flex;opacity:1}
+.int-card{background:#fff;border-radius:24px;box-shadow:0 22px 64px rgba(16,16,16,.30);width:min(400px,88vw);padding:38px 30px 34px;text-align:center;animation:intPop .42s cubic-bezier(.2,.8,.2,1)}
+@keyframes intPop{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+.int-spin{width:56px;height:56px;margin:0 auto 20px;border-radius:50%;border:5px solid rgba(194,21,28,.15);border-top-color:#C2151C;animation:intSpin .8s linear infinite}
+@keyframes intSpin{to{transform:rotate(360deg)}}
+.int-title{font-size:23px;font-weight:900;margin-bottom:9px;background:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.int-sub{font-size:15px;font-weight:600;color:rgba(10,10,10,.6);line-height:1.6}
+</style>
+<div class="interstitial" id="interstitial" aria-hidden="true"><div class="int-card">
+  <div class="int-spin"></div>
+  <div class="int-title">מעולה, הפגישה נקבעה</div>
+  <div class="int-sub">עוד לא סיימנו. אנחנו מעבירים אותך עכשיו&nbsp;לפרטים האחרונים.<br>אל תסגרו את&nbsp;החלון.</div>
+</div></div>
+<script>
+function showInterstitial(){var el=document.getElementById('interstitial');if(el){el.classList.add('on');el.setAttribute('aria-hidden','false');}}
+</script>
 
 <script>
 const PIXEL_ID='1002428386157716';

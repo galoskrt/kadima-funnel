@@ -454,6 +454,26 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 <div class="lb" id="lb" onclick="closeLb()"><button class="x" onclick="closeLb()">✕</button><img id="lbimg" src="" alt=""/></div>
 <div class="float" id="float"><a href="#join" onclick="scrollJoin(event)">קבל את המידע המלא על העסקה <svg class="arw" viewBox="0 0 34 11"><path d="M33 5.5H3M9 1.5 3 5.5l6 4"/></svg></a></div>
 
+<style>
+.interstitial{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;background:rgba(10,10,10,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .26s ease}
+.interstitial.on{display:flex;opacity:1}
+.int-card{background:#fff;border-radius:24px;box-shadow:0 22px 64px rgba(16,16,16,.30);width:min(400px,88vw);padding:38px 30px 34px;text-align:center;animation:intPop .42s cubic-bezier(.2,.8,.2,1)}
+@keyframes intPop{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+.int-spin{width:56px;height:56px;margin:0 auto 20px;border-radius:50%;border:5px solid rgba(194,21,28,.15);border-top-color:#C2151C;animation:intSpin .8s linear infinite}
+@keyframes intSpin{to{transform:rotate(360deg)}}
+.int-title{font-size:23px;font-weight:900;margin-bottom:9px;background:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.int-sub{font-size:15px;font-weight:600;color:rgba(10,10,10,.6);line-height:1.6}
+</style>
+<div class="interstitial" id="interstitial" aria-hidden="true"><div class="int-card">
+  <div class="int-spin"></div>
+  <div class="int-title">רגע, עוד לא סיימנו</div>
+  <div class="int-sub">אנחנו מעבירים אותך עכשיו לשלב&nbsp;הבא.<br>אל תסגרו את&nbsp;החלון.</div>
+</div></div>
+
+<script>
+function showInterstitial(){var el=document.getElementById('interstitial');if(el){el.classList.add('on');el.setAttribute('aria-hidden','false');}}
+</script>
+
 <script>
 const PIXEL_ID='1002428386157716';
 const SMOOVE_WEBHOOK='__SMOOVE_WEBHOOK__';
@@ -468,9 +488,10 @@ function subscribeCold(){
   if(!validEmail(email)){err.textContent='נא למלא מייל תקין';inp.classList.add('err');return;}
   err.textContent='';inp.classList.remove('err');pxSubscribe('email');
   const payload={email,temperature:'cold',source:'cold_page',ts:new Date().toISOString()};
+  showInterstitial();
   if(SMOOVE_WEBHOOK&&SMOOVE_WEBHOOK.indexOf('__')!==0){fetch(SMOOVE_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(()=>{});}
   else{try{const q=JSON.parse(localStorage.getItem('th_subs')||'[]');q.push(payload);localStorage.setItem('th_subs',JSON.stringify(q));}catch(e){}}
-  location.href=THANKYOU;
+  setTimeout(function(){location.href=THANKYOU;},1500);
 }
 // lightbox
 document.querySelectorAll('.lbx').forEach(img=>img.addEventListener('click',()=>{document.getElementById('lbimg').src=img.src;document.getElementById('lb').classList.add('on');}));
