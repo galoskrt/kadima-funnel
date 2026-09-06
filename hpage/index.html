@@ -58,12 +58,20 @@ header img{height:42px}
 .hero-v .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .hero-v .sub-v{font-size:17.5px;color:var(--muted);max-width:600px;margin:0 auto 24px;font-weight:500}
 .vsl{max-width:720px;margin:0 auto 24px;background:#0f1216;border-radius:20px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:var(--sh);position:relative;overflow:hidden;cursor:pointer;border:1px solid var(--line)}
-.vsl::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(194,21,28,.22),transparent 60%)}
+.vsl-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 26%;z-index:0}
+.vsl::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,18,22,.28),rgba(15,18,22,.66));z-index:1}
+.vsl .play,.vsl .vt,.vsl small{z-index:2}
 .vsl .play{position:relative;width:72px;height:72px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 10px 30px rgba(194,21,28,.5);transition:.2s}
 .vsl:hover .play{transform:scale(1.08)}
 .vsl .play::after{content:'';border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent #fff;margin-right:-4px}
-.vsl .vt{position:relative;font-weight:800;font-size:18px}
-.vsl small{position:relative;opacity:.72;font-size:13px;margin-top:5px}
+.vsl .vt{position:relative;font-weight:800;font-size:18px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.vsl small{position:relative;opacity:.9;font-size:13px;margin-top:5px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+/* vertical-VSL modal (reels plays big only on click; page footprint stays the 16:9 card) */
+.vmodal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(6,7,10,.93);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:16px}
+.vmodal.on{display:flex}
+.vmodal-video{height:min(84vh,860px);width:auto;max-width:94vw;aspect-ratio:9/16;background:#000;border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.6);display:block}
+.vmodal-x{position:absolute;top:16px;left:16px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.16);border:none;color:#fff;font-size:22px;cursor:pointer;z-index:2;transition:.16s}
+.vmodal-x:hover{background:rgba(255,255,255,.28)}
 .hero-v .note-v{font-size:13.5px;color:var(--faint);margin-top:12px}
 @media(max-width:600px){.hero-v h1{font-size:29px}}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line-r);color:var(--accent);font-weight:800;font-size:12.5px;letter-spacing:.02em;padding:7px 16px;border-radius:30px;margin-bottom:18px;box-shadow:var(--sh-sm)}
@@ -262,7 +270,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
   <span class="eyebrow"><span class="dot"></span>קרקע מופשרת לבנייה · מתחם H · קדימה־צורן</span>
   <h1><span class="pgreet"></span>כבר הבנת את ההזדמנות.<br>נשאר רק לוודא שזו <span class="hl">עסקה עם&nbsp;גב</span>.</h1>
   <p class="sub-v">לאחר צפייה בסרטון הקצר, בו תום מרחיב על ההזדמנות, נקבע 30 דקות לעבוד יחד על כל פרט, מספר וביטחון.</p>
-  <div class="vsl rv"><div class="play"></div><div class="vt">תום מסביר את העסקה</div><small>הסרטון יתווסף בקרוב</small></div>
+  <div class="vsl rv" onclick="openVsl()" role="button" tabindex="0" aria-label="נגן את הסרטון של תום"><img class="vsl-cover" src="/vsl-poster.jpg" alt="תום הרוש מסביר את העסקה"/><div class="play"></div><div class="vt">תום מסביר את העסקה</div><small>2 דקות · לחצו&nbsp;לצפייה</small></div>
   <a class="btn" href="#join" onclick="scrollJoin(event)">לקביעת פגישה עכשיו <svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
   <div class="note-v">שיחת התאמה של 30 דקות · בזום או פרונטלי · ללא התחייבות</div>
 </div></div>
@@ -316,7 +324,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 <section class="sec sec-dark"><div class="wrap">
   <div class="kicker">לקוחות מספרים</div>
   <div class="sec-t rv">תשמעו מה יש למשקיעים וללקוחות שלנו להגיד</div>
-  <div class="sec-sub rv" style="text-align:center"><span style="display:inline-flex;flex-direction:column;align-items:center;gap:5px"><span dir="ltr" style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:30px;letter-spacing:-.5px"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></span><span dir="ltr" style="display:flex;align-items:center;gap:9px"><span style="color:#FBBC05;font-size:24px;letter-spacing:3px">★★★★★</span><b style="font-size:22px;color:#fff">5.0</b></span><span style="font-size:13.5px;color:rgba(255,255,255,.72)">מבוסס על ביקורות גוגל</span></span></div>
+  <div class="sec-sub rv" style="text-align:center"><span style="display:inline-flex;align-items:center;gap:5px"><span style="display:flex;flex-direction:column;align-items:center;gap:4px"><span dir="ltr" style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:30px;letter-spacing:-.5px"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></span><span dir="ltr" style="display:flex;align-items:center;gap:9px"><span style="color:#FBBC05;font-size:24px;letter-spacing:3px">★★★★★</span><b style="font-size:22px;color:#fff">5.0</b></span><span style="font-size:13.5px;color:rgba(255,255,255,.72)">מבוסס על ביקורות גוגל</span></span></span></div>
   <div class="rgal rv">
     <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-1.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
     <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-2.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
@@ -516,5 +524,19 @@ window.addEventListener('scroll',()=>{const y=scrollY;fl.classList.toggle('on',y
 </script>
 <script>(function(){try{var nm=new URLSearchParams(location.search).get('name');if(nm){nm=nm.trim().split(/\s+/)[0];if(nm)document.querySelectorAll('.pgreet').forEach(function(el){el.textContent=nm+', ';});}}catch(e){}})();</script>
 <script>function showMoreRevs(){document.querySelectorAll('.rgal .rev.hid').forEach(function(el){el.classList.remove('hid');});var m=document.getElementById('rgalMore');if(m)m.style.display='none';}</script>
+
+<!-- VSL vertical-video modal -->
+<div class="vmodal" id="vslModal" onclick="vslBackdrop(event)">
+  <button class="vmodal-x" onclick="closeVsl()" aria-label="סגור">✕</button>
+  <video id="vslVideo" class="vmodal-video" playsinline controls preload="none" poster="/vsl-poster.jpg">
+    <source src="/vsl.mp4" type="video/mp4">
+  </video>
+</div>
+<script>
+function openVsl(){var m=document.getElementById('vslModal'),v=document.getElementById('vslVideo');m.classList.add('on');document.body.style.overflow='hidden';try{v.currentTime=0;v.play();}catch(e){}}
+function closeVsl(){var m=document.getElementById('vslModal'),v=document.getElementById('vslVideo');m.classList.remove('on');document.body.style.overflow='';try{v.pause();}catch(e){}}
+function vslBackdrop(e){if(e.target&&e.target.id==='vslModal')closeVsl();}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVsl();});
+</script>
 </body>
 </html>
