@@ -538,6 +538,19 @@ function openVsl(){var m=document.getElementById('vslModal'),v=document.getEleme
 function closeVsl(){var m=document.getElementById('vslModal'),v=document.getElementById('vslVideo');m.classList.remove('on');document.body.style.overflow='';try{v.pause();}catch(e){}}
 function vslBackdrop(e){if(e.target&&e.target.id==='vslModal')closeVsl();}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVsl();});
+// VSL watch tracking → worker (tied to this lead via ?lid=). Reports the max % watched so the dashboard shows how warm the lead is.
+(function(){
+  var v=document.getElementById('vslVideo'); if(!v) return;
+  var lid=''; try{ lid=new URLSearchParams((window.top&&window.top.location.search)||location.search).get('lid')||''; }catch(e){ try{lid=new URLSearchParams(location.search).get('lid')||'';}catch(_){} }
+  if(!lid) return;
+  var HOOK='https://tom-funnel.tom-harush.workers.dev/vsl-progress', maxPct=0, lastSent=0;
+  function send(pct){ pct=Math.round(pct); if(pct<=lastSent||pct<=0) return; lastSent=pct; var body=JSON.stringify({lead_id:lid,pct:pct}); try{ if(navigator.sendBeacon) navigator.sendBeacon(HOOK,new Blob([body],{type:'application/json'})); else fetch(HOOK,{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:body}); }catch(e){} }
+  v.addEventListener('timeupdate',function(){ if(!v.duration||!isFinite(v.duration))return; var p=v.currentTime/v.duration*100; if(p>maxPct)maxPct=p; [25,50,75,95].forEach(function(x){ if(maxPct>=x&&lastSent<x)send(x); }); });
+  v.addEventListener('ended',function(){ send(100); });
+  v.addEventListener('pause',function(){ send(maxPct); });
+  document.addEventListener('visibilitychange',function(){ if(document.hidden)send(maxPct); });
+  window.addEventListener('pagehide',function(){ send(maxPct); });
+})();
 </script>
 </body>
 </html>
