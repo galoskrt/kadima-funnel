@@ -262,7 +262,7 @@ function score(){ return QUESTIONS.filter(q=>q.scored).reduce((s,q)=> s + (answe
 function temperature(){ return score() >= HOT_MIN ? 'hot' : 'cold'; }
 
 // ═══════════ SUBMIT ═══════════
-function validPhone(p){ const d=(p||'').replace(/\D/g,''); return d.length>=9 && d.length<=11; }
+function validPhone(p){ let d=(p||'').replace(/\D/g,''); if(d.startsWith('972')) d='0'+d.slice(3); return /^05\d{8}$/.test(d); }
 function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e||''); }
 function submitLead(){
   const name=document.getElementById('fName').value.trim();
@@ -273,7 +273,7 @@ function submitLead(){
   const iN=document.getElementById('fName'), iP=document.getElementById('fPhone'), iE=document.getElementById('fEmail');
   eN.textContent=''; eP.textContent=''; eE.textContent=''; iN.classList.remove('err'); iP.classList.remove('err'); iE.classList.remove('err');
   if(!name){ eN.textContent='נא למלא שם'; iN.classList.add('err'); ok=false; }
-  if(!validPhone(phone)){ eP.textContent='נא למלא מספר טלפון תקין'; iP.classList.add('err'); ok=false; }
+  if(!validPhone(phone)){ eP.textContent='מספר נייד לא תקין. צריך 10 ספרות שמתחילות ב־05'; iP.classList.add('err'); ok=false; }
   if(!validEmail(email)){ eE.textContent='נא למלא אימייל תקין'; iE.classList.add('err'); ok=false; }
   if(!ok) return;
 
