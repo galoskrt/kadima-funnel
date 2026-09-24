@@ -428,12 +428,10 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
   <div class="rv" style="text-align:center;font-weight:900;font-size:clamp(22px,6.4vw,30px);line-height:1.2;color:var(--ink);margin-bottom:24px;max-width:560px;margin-inline:auto">קרקע לא קונים לפי הבטחות. <span style="color:var(--accent)">קונים לפי&nbsp;נתונים.</span></div>
   <div class="join-card rv">
     <div class="kicker">כמעט שם</div>
-    <h2><span class="pgreet"></span>רוצה להמשיך ללמוד&nbsp;בקצב&nbsp;שלך?</h2>
-    <p>משאירים כאן מייל ומקבלים גישה לקהילת המשקיעים: תכנים, נתונים ותשובות אמיתיות. וכשיתאים לך, בשיחה קצרה ואישית וללא שום התחייבות נפרוש בפניך את כל הנתונים בשקיפות מלאה. יוצאים משם עם תשובות, לא עם עוד שאלות.</p>
-    <div class="jfield"><label>אימייל</label><input id="cEmail" type="email" placeholder="name@example.com" inputmode="email"/></div>
-    <div class="jerr" id="cErr"></div>
-    <button class="btn" onclick="subscribeCold()">לקבלת גישה לקהילת המשקיעים <svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
-    <div class="note">🔒 הפרטים שלך נשמרים מאובטח ולא מועברים לאף גורם שלישי</div>
+    <h2><span class="pgreet"></span>רוצים להמשיך ללמוד&nbsp;בקצב&nbsp;שלכם?</h2>
+    <p>הצטרפו לקהילת המשקיעים שלנו בוואטסאפ: תכנים, נתונים ותשובות אמיתיות, בלי התחייבות. וכשיתאים לכם, בשיחה קצרה ואישית נפרוש בפניכם את כל הנתונים בשקיפות מלאה.</p>
+    <button class="btn" onclick="joinCommunity()">להצטרפות לקהילת המשקיעים <svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
+    <div class="note">קהילה שקטה. מצטרפים, מתעדכנים, ויוצאים מתי שרוצים.</div>
   </div>
 </div></section>
 
@@ -476,22 +474,19 @@ function showInterstitial(){var el=document.getElementById('interstitial');if(el
 
 <script>
 const PIXEL_ID='1002428386157716';
-const SMOOVE_WEBHOOK='__SMOOVE_WEBHOOK__';
-const THANKYOU='/tnxcpage/';
+const WORKER_URL='https://tom-funnel.tom-harush.workers.dev';
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init',PIXEL_ID);fbq('track','PageView');fbq('track','ViewContent',{content_name:'cold_page',temperature:'cold'});
-let _sub=false;function pxSubscribe(v){if(_sub)return;_sub=true;try{fbq('track','Subscribe',{content_name:'cold_page',temperature:'cold',via:v||'email'});}catch(e){}}
-function scrollJoin(e){if(e)e.preventDefault();document.getElementById('join').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('cEmail').focus(),500);}
-function validEmail(x){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x||'');}
-function subscribeCold(){
-  const email=document.getElementById('cEmail').value.trim(), err=document.getElementById('cErr'), inp=document.getElementById('cEmail');
-  if(!validEmail(email)){err.textContent='נא למלא מייל תקין';inp.classList.add('err');return;}
-  err.textContent='';inp.classList.remove('err');pxSubscribe('email');
-  const payload={email,temperature:'cold',source:'cold_page',ts:new Date().toISOString()};
+let _sub=false;function pxSubscribe(v){if(_sub)return;_sub=true;try{fbq('track','Subscribe',{content_name:'cold_page',temperature:'cold',via:v||'community'});}catch(e){}}
+function scrollJoin(e){if(e)e.preventDefault();document.getElementById('join').scrollIntoView({behavior:'smooth'});}
+function joinCommunity(){
+  pxSubscribe('community');
+  let lid='';try{lid=new URLSearchParams(location.search).get('lid')||'';}catch(e){}
+  // מדידה מחוברת: הליד סיים את הפעולה האחרונה במשפך (כלל ברזל, גל 24/09). לא חוסם את המעבר לקהילה.
+  if(lid){var body=JSON.stringify({lead_id:lid,event:'community_click'});try{if(navigator.sendBeacon)navigator.sendBeacon(WORKER_URL+'/event',new Blob([body],{type:'text/plain;charset=UTF-8'}));else fetch(WORKER_URL+'/event',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:body});}catch(e){}}
   showInterstitial();
-  if(SMOOVE_WEBHOOK&&SMOOVE_WEBHOOK.indexOf('__')!==0){fetch(SMOOVE_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(()=>{});}
-  else{try{const q=JSON.parse(localStorage.getItem('th_subs')||'[]');q.push(payload);localStorage.setItem('th_subs',JSON.stringify(q));}catch(e){}}
-  setTimeout(function(){location.href=THANKYOU;},1500);
+  var url='/join/'+(lid?('?lid='+encodeURIComponent(lid)+'&t=cold'):'');
+  setTimeout(function(){location.href=url;},1100);
 }
 // lightbox
 document.querySelectorAll('.lbx').forEach(img=>img.addEventListener('click',()=>{document.getElementById('lbimg').src=img.src;document.getElementById('lb').classList.add('on');}));

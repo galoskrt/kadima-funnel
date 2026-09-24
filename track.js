@@ -82,6 +82,40 @@
   else hook();
   setInterval(hook, 4000);
 
+  /* ── זמן שהייה ועומק/מהירות גלילה, בדפי הנחיתה בלבד ──────────────────
+     כלל ברזל (גל 24/09): לדעת אם ליד קרא לעומק או דפדף ונטש. נמדד פר ליד
+     דרך ה-lid שב-URL, נשלח ל-/page-behavior. תוספתי בלבד, לא חוסם דבר. */
+  function beacon(path, obj){
+    try {
+      var body = JSON.stringify(obj);
+      if(navigator.sendBeacon) navigator.sendBeacon(W + path, new Blob([body], { type:'text/plain;charset=UTF-8' }));
+      else fetch(W + path, { method:'POST', body: body, keepalive:true });
+    } catch(e){}
+  }
+  var PG = location.pathname.indexOf('/cpage') > -1 ? 'cold'
+         : location.pathname.indexOf('/hpage') > -1 ? 'hot' : '';
+  var LID = ''; try { LID = new URLSearchParams(location.search).get('lid') || ''; } catch(e){}
+  var maxScroll = 0, activeSec = 0, ttbSec = 0, scrolls = 0, tStart = Date.now();
+  function scrollPct(){
+    try {
+      var de = document.documentElement, bd = document.body;
+      var sh = Math.max(de.scrollHeight, bd ? bd.scrollHeight : 0);
+      var vp = window.innerHeight || de.clientHeight;
+      if(sh <= vp) return 100;
+      var y = window.pageYOffset || de.scrollTop || 0;
+      return Math.min(100, Math.round((y + vp) / sh * 100));
+    } catch(e){ return 0; }
+  }
+  if(PG){
+    addEventListener('scroll', function(){
+      scrolls++;
+      var d = scrollPct(); if(d > maxScroll) maxScroll = d;
+      if(maxScroll >= 90 && !ttbSec) ttbSec = Math.round((Date.now() - tStart) / 1000);
+    }, { passive:true });
+    setInterval(function(){ if(!document.hidden) activeSec++; }, 1000);
+    setTimeout(function(){ var d = scrollPct(); if(d > maxScroll) maxScroll = d; }, 400);
+  }
+
   function flush(){
     if(!stepSent && (maxStep || atContact)){
       stepSent = true;
@@ -91,6 +125,14 @@
       fx('vsl', { vsl: { played:1, pct: vid.pct, secs: Math.round(vid.secs),
                          len: Math.round(vid.len), done: vid.done } });
       vid.on = false;
+    }
+    /* התנהגות בדף הנחיתה, פר ליד */
+    if(PG && LID && (maxScroll || activeSec)){
+      beacon('/page-behavior', {
+        lead_id: LID, page: PG,
+        beh: { maxScroll: maxScroll, activeSec: activeSec, ttbSec: ttbSec, scrolls: scrolls },
+        vsl: (PG === 'hot' && (vid.pct || vid.secs)) ? { pct: vid.pct, secs: Math.round(vid.secs), len: Math.round(vid.len), done: vid.done } : null
+      });
     }
   }
   addEventListener('pagehide', flush);
