@@ -137,6 +137,7 @@ h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;
     <div class="qtitle">מעולה. לאן להעביר לך את המידע המלא על העסקה?</div>
     <div class="field"><label>שם מלא</label><input id="fName" type="text" placeholder="השם שלך" autocomplete="name"/><div class="err-msg" id="eName"></div></div>
     <div class="field"><label>טלפון נייד</label><input id="fPhone" type="tel" placeholder="050-0000000" autocomplete="tel" inputmode="numeric"/><div class="err-msg" id="ePhone"></div></div>
+    <div class="field"><label>אימייל</label><input id="fEmail" type="email" placeholder="name@example.com" autocomplete="email" inputmode="email"/><div class="err-msg" id="eEmail"></div></div>
     <button class="btn" id="submitBtn" onclick="submitLead()"><span style="line-height:1.35">קבלת המידע שמותאם לי <span style="white-space:nowrap">לפי השאלון</span></span> <span class="arw">▸</span></button>
     <div class="trust"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> הפרטים שלך נשמרים מאובטח ולא מועברים לאף גורם שלישי</div>
   </div>
@@ -275,26 +276,28 @@ function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e||''); }
 function submitLead(){
   const name=document.getElementById('fName').value.trim();
   const phone=document.getElementById('fPhone').value.trim();
+  const email=document.getElementById('fEmail').value.trim();
   let ok=true;
-  const eN=document.getElementById('eName'), eP=document.getElementById('ePhone');
-  const iN=document.getElementById('fName'), iP=document.getElementById('fPhone');
-  eN.textContent=''; eP.textContent=''; iN.classList.remove('err'); iP.classList.remove('err');
+  const eN=document.getElementById('eName'), eP=document.getElementById('ePhone'), eE=document.getElementById('eEmail');
+  const iN=document.getElementById('fName'), iP=document.getElementById('fPhone'), iE=document.getElementById('fEmail');
+  eN.textContent=''; eP.textContent=''; eE.textContent=''; iN.classList.remove('err'); iP.classList.remove('err'); iE.classList.remove('err');
   if(!name){ eN.textContent='נא למלא שם'; iN.classList.add('err'); ok=false; }
   if(!validPhone(phone)){ eP.textContent='מספר נייד לא תקין. צריך 10 ספרות שמתחילות ב־05'; iP.classList.add('err'); ok=false; }
+  if(!validEmail(email)){ eE.textContent='נא למלא אימייל תקין'; iE.classList.add('err'); ok=false; }
   if(!ok) return;
 
   const btn=document.getElementById('submitBtn'); btn.disabled=true; btn.textContent='שולח...';
   const temp = temperature();
   // Unique lead id → idempotency (dedupe retries) + ties the lead across Sehel / dashboard / follow-up
   const leadId = (window.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(16).slice(2));
-  window.__lid = leadId; window.__name = name;
+  window.__lid = leadId; window.__email = email; window.__name = name;
   // Meta cookies for server-side CAPI matching (fbp always; fbc from cookie or fbclid).
   const _ck = n => { const m = document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; };
   const _fbclid = new URLSearchParams(location.search).get('fbclid');
   let _fbc = _ck('_fbc'); if (!_fbc && _fbclid) _fbc = 'fb.1.' + Date.now() + '.' + _fbclid;
   const payload = {
     lead_id: leadId,
-    name, phone,
+    name, phone, email,
     temperature: temp, score: score(),
     q_a: buildQA(),
     answers: Object.fromEntries(Object.entries(answers).map(([k,v])=>[k,v.label])),
