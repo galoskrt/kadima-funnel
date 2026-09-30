@@ -116,6 +116,12 @@
     setTimeout(function(){ var d = scrollPct(); if(d > maxScroll) maxScroll = d; }, 400);
   }
 
+  /* ── ספירת כניסות/חזרות לדף (גל 30/09) ────────────────────────────────
+     כל טעינת דף של ליד עם lid נספרת פעם אחת. ליד שחוזר לדף לבד (למשל אחרי
+     ששלחנו לו שוב את הקישור) הוא אות כוונה חזק. נשלח מיד בטעינה, לא ביציאה,
+     כי הוא לא תלוי בשהייה. הצפייה של הצוות בדף נפתחת בלי lid ולכן לא נספרת. */
+  if(PG && LID){ beacon('/page-behavior', { lead_id: LID, page: PG, visit: 1 }); }
+
   function flush(){
     if(!stepSent && (maxStep || atContact)){
       stepSent = true;
