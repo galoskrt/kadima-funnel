@@ -261,8 +261,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 <style>
 /* הוכחות מתחם H (גל 12/10): מסמכים אמיתיים, ברזולוציה מלאה, לחיצה פותחת את המקור */
 .proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:880px;margin:26px auto 0}
-.proof-card{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;text-decoration:none;color:var(--ink);box-shadow:var(--sh);transition:transform .25s ease}
-.proof-card:hover{transform:translateY(-3px)}
+.proof-card{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;color:var(--ink);box-shadow:var(--sh)}
 .proof-card img{width:100%;height:auto;aspect-ratio:16/10;object-fit:contain;object-position:center;border-radius:10px;border:1px solid var(--line);background:#f6f7f9;display:block}
 .proof-card span{font-size:14.5px;line-height:1.5;text-wrap:pretty}
 .proof-card b{color:var(--accent)}
@@ -334,10 +333,9 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
   </div>
   <div class="tl-note rv" style="text-align:center;margin:24px auto 0;font-size:15.5px;color:var(--muted);max-width:660px">זו עסקה פיננסית. השאלה אינה מתי בונים, אלא מתי התכנון מתקדם. <b style="color:var(--ink)">אפשר למכור בכל שלב ולהרוויח מהדרך</b>, וכל שלב תכנוני מעלה את הערך.</div>
   <div class="proof rv">
-    <a class="proof-card" href="https://mavat.iplan.gov.il/SV4/1/4000249059/310" target="_blank" rel="noopener"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"><span>ראו בעצמכם באתר מינהל התכנון: <b>תכנית <span dir="ltr" style="white-space:nowrap;unicode-bidi:isolate">457-0112086</span>, אושרה ב־18.12.2024</b></span></a>
-    <a class="proof-card" href="/proof/plan-cover.jpg" target="_blank" rel="noopener"><img src="/proof/plan-cover.jpg" alt="שער הוראות התכנית הכוללנית קדימה צורן 457-0112086" loading="lazy"><span>הוראות התכנית הכוללנית של קדימה צורן. <b>המתחם שלנו מופיע בה כמתחם H</b></span></a>
+    <div class="proof-card"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"><span>מתוך אתר מינהל התכנון: <b>תכנית <span dir="ltr" style="white-space:nowrap;unicode-bidi:isolate">457-0112086</span>, אושרה ב־18.12.2024</b></span></div>
+    <div class="proof-card"><img src="/proof/plan-cover.jpg" alt="שער הוראות התכנית הכוללנית קדימה צורן 457-0112086" loading="lazy"><span>הוראות התכנית הכוללנית של קדימה צורן. <b>המתחם שלנו מופיע בה כמתחם H</b></span></div>
   </div>
-  <div class="proof-hint rv">לחיצה על כל מסמך פותחת אותו בגודל מלא</div>
 </div></section>
 
 <!-- TESTIMONIALS (dark) -->
@@ -386,13 +384,13 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
     <div class="jtl-line"></div><div class="jtl-fill"></div>
     <div class="jtl-item"><div class="jtl-node"><lottie-player src="/lot-cert1.json" background="transparent" speed="1" autoplay loop></lottie-player></div><div class="jtl-card"><h4>התחייבות בכתב לרכישה חוזרת</h4><p>אם לא תמצא קונה, אנחנו מוכרים עבורך תוך 90 יום. ואם לא הצלחנו, קונים ממך חזרה בתוספת ריבית. הסיכון מוסר מהשולחן.</p></div></div>
     <div class="jtl-item"><div class="jtl-node"><lottie-player src="/lot-cert2.json" background="transparent" speed="1" autoplay loop></lottie-player></div><div class="jtl-card"><h4>שמאי חתום ועורכי דין</h4><p>הערכת שמאי חתומה, ליווי משפטי מלא, וכספים בנאמנות עו״ד עד להשלמה. בדיוק כמו רכישת דירה.</p></div></div>
-    <div class="jtl-item"><div class="jtl-node"><lottie-player src="/lot-cert3.json" background="transparent" speed="1" autoplay loop></lottie-player></div><div class="jtl-card"><h4>תכנית שאושרה על ידי המדינה</h4><p>היום זה שדה. בתכנית הכוללנית שאושרה בדצמבר 2024 הוא כבר מיועד למגורים, מסחר ותעסוקה, וזה המסלול התכנוני שמעלה את הערך בכל&nbsp;שלב.</p><a class="proof-link" href="https://mavat.iplan.gov.il/SV4/1/4000249059/310" target="_blank" rel="noopener">לראות את האישור באתר מינהל התכנון</a><a class="proof-thumb" href="https://mavat.iplan.gov.il/SV4/1/4000249059/310" target="_blank" rel="noopener"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"></a></div></div>
+    <div class="jtl-item"><div class="jtl-node"><lottie-player src="/lot-cert3.json" background="transparent" speed="1" autoplay loop></lottie-player></div><div class="jtl-card"><h4>תכנית שאושרה על ידי המדינה</h4><p>היום זה שדה. בתכנית הכוללנית שאושרה בדצמבר 2024 הוא כבר מיועד למגורים, מסחר ותעסוקה, וזה המסלול התכנוני שמעלה את הערך בכל&nbsp;שלב.</p><div class="proof-thumb"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"></div></div></div>
     <div class="jtl-item"><div class="jtl-node"><lottie-player src="/lot-cert4.json" background="transparent" speed="1" autoplay loop></lottie-player></div><div class="jtl-card"><h4>אדם אחד אחראי מולך, בשמו המלא</h4><p>לא פלטפורמה אנונימית. תום הרוש עומד מאחורי כל עסקה, מלווה אותך אישית, ומחבר אליך עוד לפני שמוציאים חוזים.</p></div></div>
   </div>
 
   <div class="proof rv">
-    <a class="proof-card" href="/proof/location-in-h.jpg" target="_blank" rel="noopener"><img src="/proof/location-in-h.jpg" alt="מיקום החלקה בתחומי התכנית במתחם H, מתוך הערכת השמאי" loading="lazy"><span>מיקום החלקה בתוך מתחם H, <b>מתוך הערכת השמאי</b></span></a>
-    <a class="proof-card" href="/proof/subcompounds-map.jpg" target="_blank" rel="noopener"><img src="/proof/subcompounds-map.jpg" alt="מפת מתחמי התכנון של קדימה צורן" loading="lazy"><span>מתחמי התכנון של קדימה צורן. <b>מתחם H, במרכז היישוב</b></span></a>
+    <div class="proof-card"><img src="/proof/location-in-h.jpg" alt="מיקום החלקה בתחומי התכנית במתחם H, מתוך הערכת השמאי" loading="lazy"><span>מיקום החלקה בתוך מתחם H, <b>מתוך הערכת השמאי</b></span></div>
+    <div class="proof-card"><img src="/proof/subcompounds-map.jpg" alt="מפת מתחמי התכנון של קדימה צורן" loading="lazy"><span>מתחמי התכנון של קדימה צורן. <b>מתחם H, במרכז היישוב</b></span></div>
   </div>
 </div></section>
 
