@@ -28,8 +28,31 @@
   var SRC = detectSrc();
   window.THG_SRC = SRC;
 
+  /* רימרקטינג מול ראשי (גל 12/10). מודעות הרימרקטינג מגיעות עם
+     utm_campaign=rmk, ובלי הפרדה מי שחוזר לשאלון נראה כמו נוטש חדש.
+     known = כבר שלח ליד מהמכשיר הזה (העותק המקומי שנשמר בשליחה). */
+  var CAMP_KEY = 'thg_camp';
+  function detectCamp(){
+    try {
+      var q = new URLSearchParams(location.search);
+      if(q.get('fbclid') || q.get('utm_campaign') || q.get('utm_source')){
+        var v = /rmk|remarket|retarget/i.test(q.get('utm_campaign') || '') ? 'rmk' : 'main';
+        localStorage.setItem(CAMP_KEY, JSON.stringify({ v:v, at:Date.now() }));
+        return v;
+      }
+      var s = JSON.parse(localStorage.getItem(CAMP_KEY) || 'null');
+      if(s && Date.now() - s.at < 30*86400000) return s.v;
+    } catch(e){}
+    return SRC === 'paid' ? 'main' : '';
+  }
+  var CAMP = detectCamp();
+  var KNOWN = 0;
+  try { KNOWN = JSON.parse(localStorage.getItem('th_leads') || '[]').length ? 1 : 0; } catch(e){}
+
   function fx(stage, extra){
     var b = { stage: stage, src: SRC };
+    if(CAMP) b.camp = CAMP;
+    if(KNOWN) b.known = 1;
     if(extra) for(var k in extra) b[k] = extra[k];
     var body = JSON.stringify(b);
     try {
