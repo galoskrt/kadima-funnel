@@ -116,7 +116,8 @@
     } catch(e){}
   }
   var PG = location.pathname.indexOf('/cpage') > -1 ? 'cold'
-         : location.pathname.indexOf('/hpage') > -1 ? 'hot' : '';
+         : location.pathname.indexOf('/hpage') > -1 ? 'hot'
+         : location.pathname.indexOf('/info') > -1 ? 'info' : '';   /* דף המידע מההודעה המיידית (גל 13/10) */
   var LID = ''; try { LID = new URLSearchParams(location.search).get('lid') || ''; } catch(e){}
   var maxScroll = 0, activeSec = 0, ttbSec = 0, scrolls = 0, tStart = Date.now();
   function scrollPct(){
@@ -167,5 +168,6 @@
   addEventListener('pagehide', flush);
   addEventListener('visibilitychange', function(){ if(document.hidden) flush(); });
   /* רשת ביטחון למי שהדפדפן שלו לא הספיק לשלוח ביציאה */
-  setTimeout(function(){ fx('view'); }, 800);
+  /* דף המידע (מההודעה המיידית) הוא לא חלק ממשפך השאלון: לא סופרים אותו כביקור במונים */
+  if (PG !== 'info') setTimeout(function(){ fx('view'); }, 800);
 })();
