@@ -2,58 +2,127 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>המידע שהבטחנו · העסקה במתחם H, קדימה צורן · קבוצת תום הרוש</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>המידע שהבטחתי לך · מתחם H, קדימה צורן · קבוצת תום הרוש</title>
 <meta name="robots" content="noindex"/>
+<meta name="theme-color" content="#C2151C"/>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap');
-:root{--bg:#F6F7F9;--ink:#0f1216;--muted:rgba(15,18,22,.62);--line:rgba(15,18,22,.10);--accent:#C2151C;--accent2:#7F0224;
- --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);--sh:0 14px 44px rgba(16,16,16,.10);--wa:#25d366}
+:root{--bg:#F6F7F9;--ink:#0f1216;--muted:rgba(15,18,22,.62);--line:rgba(15,18,22,.09);--accent:#C2151C;--accent2:#7F0224;--green:#157a3a;--gold:#B8892B;
+ --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);--sh:0 12px 34px rgba(16,16,16,.09);--r:20px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Heebo','Segoe UI',sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;overflow-x:clip}
-.wrap{max-width:760px;margin:0 auto;padding:0 18px}
-header{background:#fff;border-bottom:1px solid var(--line);padding:14px 0;text-align:center}
-header img{height:54px;margin:0 auto;display:block}
-.hero{padding:30px 0 6px;text-align:center}
-.eyebrow{display:inline-block;background:#fff;border:1px solid rgba(194,21,28,.2);color:var(--accent);font-weight:800;font-size:13px;padding:6px 16px;border-radius:30px}
-h1{font-size:30px;line-height:1.2;font-weight:900;margin:14px 0 0;text-wrap:balance}
-h1 span{color:var(--accent)}
-.card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--sh);padding:26px 22px;margin:22px 0 0}
-.card p{font-size:17px;margin:0 0 14px;text-wrap:pretty}
-.card p:last-child{margin-bottom:0}
-h2{font-size:23px;font-weight:900;text-align:center;margin:40px 0 4px}
-.sub{text-align:center;color:var(--muted);font-size:15px}
-.proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0 0}
-.proof-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:0 6px 20px rgba(16,16,16,.07)}
-.proof-card img{width:100%;aspect-ratio:16/10;object-fit:contain;background:#f6f7f9;border-radius:10px;border:1px solid var(--line);display:block}
-.proof-card figcaption{font-size:14px;line-height:1.5;margin-top:8px;text-wrap:pretty}
-.proof-card b{color:var(--accent)}
-.cta{margin:36px 0 0;text-align:center}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;width:100%;max-width:440px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:19px;padding:17px 22px;border-radius:999px;box-shadow:0 12px 28px rgba(162,12,34,.32)}
-.btn svg{width:34px;height:11px;stroke:#fff;stroke-width:1.6;fill:none}
-.wa{display:inline-block;margin-top:14px;color:var(--ink);font-weight:700;font-size:15.5px;text-decoration:none;border-bottom:2px solid var(--wa)}
-footer{margin:46px 0 0;background:#fff;border-top:1px solid var(--line);padding:26px 18px 30px;text-align:center;font-size:12.5px;color:var(--muted)}
-footer .disc{max-width:640px;margin:0 auto 10px;line-height:1.6}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo','Segoe UI',sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:clip;padding-bottom:84px}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+header{background:#fff;border-bottom:1px solid var(--line);padding:10px 0}
+header .wrap{display:flex;align-items:center;justify-content:center}
+header img{height:40px}
+/* פתיחה */
+.hero{padding:22px 0 8px}
+.by{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.by img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.14)}
+.by b{display:block;font-size:15px;line-height:1.2}
+.by span{font-size:13px;color:var(--muted)}
+.tag{display:inline-block;background:#fff;border:1px solid rgba(194,21,28,.22);color:var(--accent);font-weight:800;font-size:12.5px;padding:5px 13px;border-radius:30px;margin-bottom:10px}
+h1{font-size:27px;line-height:1.22;font-weight:900;text-wrap:balance}
+h1 em{display:block;font-style:normal;color:var(--accent);margin-top:4px}
+/* עובדות */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:20px 0 0}
+.fact{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center;box-shadow:0 4px 14px rgba(16,16,16,.05)}
+.fact i{display:flex;width:38px;height:38px;border-radius:12px;margin:0 auto 7px;align-items:center;justify-content:center}
+.f1 i{background:rgba(21,122,58,.1);color:var(--green)} .f2 i{background:rgba(194,21,28,.08);color:var(--accent)} .f3 i{background:rgba(184,137,43,.12);color:var(--gold)}
+.fact b{display:block;font-size:17px;font-weight:900;line-height:1.15;white-space:nowrap}
+.fact span{display:block;font-size:12px;color:var(--muted);line-height:1.35;margin-top:3px}
+/* זווית אישית */
+.ang{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:20px 18px;margin:16px 0 0;border-top:4px solid var(--accent)}
+.ang-t{font-size:18px;font-weight:900;margin-bottom:8px}
+.ang p{font-size:16.5px;text-wrap:pretty}
+.ang-f{margin-top:10px;font-weight:800;color:var(--accent)}
+.cmp{border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:14px}
+.cmp-h,.cmp-r{display:grid;grid-template-columns:62px 1fr 1fr}
+.cmp-h span{padding:9px 8px;font-weight:800;font-size:13px;background:#f6f7f9}
+.cmp-h span:last-child{background:var(--accent);color:#fff}
+.cmp-r span{padding:10px 8px;border-top:1px solid var(--line);line-height:1.35}
+.cmp-k{font-weight:800;color:var(--muted);font-size:12.5px}
+.cmp-a{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(194,21,28,.45)}
+.cmp-b{font-weight:800;background:rgba(21,122,58,.06)}
+.steps{list-style:none;display:grid;gap:10px}
+.steps li{display:flex;gap:12px;align-items:flex-start;font-size:16px}
+.steps b{flex:none;width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px}
+/* מודל היציאה */
+.exit{background:var(--ink);color:#fff;border-radius:var(--r);padding:20px 18px;margin:16px 0 0;position:relative;overflow:hidden}
+.exit:after{content:"";position:absolute;inset:auto -30px -60px auto;width:160px;height:160px;border-radius:50%;background:rgba(21,122,58,.35);filter:blur(30px)}
+.exit .sign{display:inline-flex;align-items:center;gap:8px;background:#157a3a;color:#fff;font-weight:900;font-size:13px;padding:6px 12px;border-radius:8px;margin-bottom:10px}
+.exit h2{font-size:20px;line-height:1.3;margin-bottom:6px}
+.exit p{font-size:15.5px;color:rgba(255,255,255,.86);position:relative;z-index:1;text-wrap:pretty}
+.exit p b{color:#fff}
+/* תום */
+.tom{display:flex;gap:14px;align-items:center;background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:14px;margin:16px 0 0}
+.tom img{width:96px;height:120px;object-fit:cover;object-position:top;border-radius:14px;flex:none}
+.tom p{font-size:15.5px;font-weight:700;line-height:1.45}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chips span{font-size:12px;font-weight:700;background:#f6f7f9;border:1px solid var(--line);border-radius:30px;padding:3px 9px;white-space:nowrap}
+/* מסמכים */
+h3{font-size:20px;font-weight:900;margin:28px 0 2px}
+.hint{font-size:13px;color:var(--muted)}
+.docs{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 16px 6px;margin:0 -16px;scrollbar-width:none}
+.docs::-webkit-scrollbar{display:none}
+.doc{flex:0 0 78%;max-width:340px;scroll-snap-align:center;background:#fff;border-radius:16px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(16,16,16,.07);padding:9px}
+.doc img{width:100%;aspect-ratio:4/3;object-fit:contain;background:#f6f7f9;border-radius:10px;display:block}
+.doc figcaption{padding:8px 4px 2px;font-size:14px;line-height:1.4}
+.doc small{display:block;font-size:11.5px;color:var(--muted);font-weight:700}
+.doc b{color:var(--accent)}
+/* קריאה לפעולה */
+.cta{text-align:center;margin:28px 0 0;background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:22px 18px}
+.cta h4{font-size:19px;font-weight:900;margin-bottom:4px}
+.cta p{font-size:15px;color:var(--muted);margin-bottom:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:18px;padding:16px 20px;border-radius:999px;box-shadow:0 10px 24px rgba(162,12,34,.3)}
+.arw{width:32px;height:11px;stroke:#fff;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.wa{display:inline-flex;align-items:center;gap:6px;margin-top:12px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none;border-bottom:2px solid #25d366}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));transform:translateY(110%);transition:transform .3s ease}
+.sticky.on{transform:none}
+.sticky .btn{max-width:520px;margin:0 auto;padding:14px 18px;font-size:17px}
+footer{margin:34px 0 0;padding:22px 16px 26px;text-align:center;font-size:12px;color:var(--muted);border-top:1px solid var(--line);background:#fff}
+footer .disc{max-width:600px;margin:0 auto 8px;line-height:1.6}
 footer a{color:inherit}
-@media(max-width:620px){h1{font-size:25px}.proof{grid-template-columns:1fr}.card{padding:22px 18px}.card p{font-size:16.5px}}
+@media(min-width:700px){h1{font-size:34px}.doc{flex-basis:46%}body{padding-bottom:0}.sticky{display:none}}
 </style>
 </head>
 <body>
-<header><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/></header>
+<header><div class="wrap"><img src="/logo.png" alt="קבוצת תום הרוש"/></div></header>
 <main class="wrap">
   <section class="hero">
-    <span class="eyebrow">המידע שהבטחתי לך</span>
-    <h1 id="h1">העסקה בקדימה צורן, <span>על&nbsp;הנייר</span></h1>
+    <div class="by"><img src="/media/tom-face.jpg" alt="תום הרוש"/><div><b>תום הרוש</b><span>קבוצת תום הרוש · 16 שנה בנדל״ן</span></div></div>
+    <span class="tag">המידע שהבטחתי לך</span>
+    <h1 id="h1"><span id="h1a"></span><em id="h1b"></em></h1>
+    <div class="facts">
+      <div class="fact f1"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></i><b>אושרה</b><span>התוכנית הכוללנית, דצמבר&nbsp;2024</span></div>
+      <div class="fact f2"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></i><b>3,700&nbsp;ש״ח</b><span>למ״ר, בדיוק השווי שקבע&nbsp;השמאי</span></div>
+      <div class="fact f3"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></i><b>מתחם H</b><span>בלב קדימה צורן, כ־10&nbsp;ק״מ&nbsp;מהים</span></div>
+    </div>
   </section>
-  <article class="card" id="para"><p>להתחיל להתעניין בהשקעות מרגיש לפעמים כמו לשתות מזרנוק של כבאים: כולם מסבירים, כולם בטוחים, ואף אחד לא מראה מסמך.</p><p>אז הנה לך עסקה פיננסית פשוטה שמוצגת בגובה העיניים. קונים חלק מקרקע כשהיא עוד בשלב תכנוני. התכנון מתקדם, ובכל שלב שהקרקע מתקרבת לבנייה, צפי ההשבחה עולה.</p><p>אצלנו הקרקע במרכז קדימה צורן, מהווה חלק נרחב בתוך תוכנית כוללנית שאושרה בדצמבר 2024, והמחיר הוא בדיוק השווי ששמאי מוסמך קבע: 3,700 ש״ח למטר. לא צריך מיליונים ולא משכנתא.<br>אנו מספקים מודל יציאה שקוף ובטוח, עם תנאים שכתובים מראש בחוזה. אז אולי גם זה נשמע לך כמו הבטחה שיווקית, אבל בפגישה נציג לך בדיוק איך אנחנו מתחייבים לך על זה בכתב.<br>הגב שלנו מלווה כל עסקה והשם שלנו הולך לפנינו.</p><p>למטה ריכזתי את המסמכים עצמם. בסיום הקריאה שלך, אשמח לשמוע מה הכי בולט לך.<br>(אפשר לכתוב לי בוואטסאפ)</p></article>
-  <h2>המסמכים מאחורי העסקה</h2>
-  <p class="sub">כל מה שכתוב למעלה, מהמקור עצמו</p>
-  <div class="proof"><figure class="proof-card"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אושרה ב־18.12.2024" loading="lazy"><figcaption>מתוך אתר מינהל התכנון: <b>תכנית 457-0112086, אושרה ב־18.12.2024</b></figcaption></figure><figure class="proof-card"><img src="/proof/plan-cover.jpg" alt="שער הוראות התכנית הכוללנית קדימה צורן 457-0112086" loading="lazy"><figcaption>הוראות התכנית הכוללנית של קדימה צורן. <b>המתחם שלנו מופיע בה כמתחם H</b></figcaption></figure><figure class="proof-card"><img src="/proof/location-in-h.jpg" alt="מיקום החלקה בתחומי התכנית במתחם H, מתוך הערכת השמאי" loading="lazy"><figcaption>מיקום החלקה בתוך מתחם H, <b>מתוך הערכת השמאי</b></figcaption></figure><figure class="proof-card"><img src="/proof/subcompounds-map.jpg" alt="מפת מתחמי התכנון של קדימה צורן" loading="lazy"><figcaption>מתחמי התכנון של קדימה צורן. <b>מתחם H, במרכז היישוב</b></figcaption></figure></div>
-  <div class="cta">
-    <a class="btn" id="go" href="/cpage/">לדף האישי שלך <svg viewBox="0 0 34 11"><path d="M33 5.5H3M9 1.5 3 5.5l6 4"/></svg></a><br>
-    <a class="wa" href="https://wa.me/972522707706" target="_blank" rel="noopener">או לכתוב לי בוואטסאפ</a>
-  </div>
+  <div id="angle"></div>
+  <section class="exit">
+    <span class="sign"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4h3a2 2 0 0 1 2 2v14"/><path d="M2 20h3"/><path d="M13 20h9"/><path d="M10 12v.01"/><path d="M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z"/></svg> יציאה</span>
+    <h2>"מה יקרה אם ארצה&nbsp;לצאת?"</h2>
+    <p>כמו בקניון, אצלנו יש שלטי יציאה בכל מקום. <b>יש לנו מודל יציאה שקוף וברור, עם התחייבות בכתב מצדנו לרכישה חוזרת.</b> כל התנאים כתובים מראש בחוזה, ובפגישה עוברים עליהם יחד, סעיף אחרי&nbsp;סעיף.</p>
+  </section>
+  <section class="tom">
+    <img src="/media/tom-portrait.jpg" alt="תום הרוש" loading="lazy"/>
+    <div><p>הגב שלנו מלווה כל עסקה, והשם שלנו הולך&nbsp;לפנינו.</p>
+      <div class="chips"><span>שם מלא וטלפון שעונה</span><span>קהילה של אלפי משקיעים</span><span>שמאי ועורך דין מקרקעין</span></div></div>
+  </section>
+  <h3>המסמכים מאחורי העסקה</h3>
+  <p class="hint">כל מה שכתוב למעלה, מהמקור עצמו. החליקו&nbsp;לצד.</p>
+  <div class="docs"><figure class="doc"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון" loading="lazy"><figcaption><small>אתר מינהל התכנון</small><span>תכנית 457-0112086, <b>אושרה ב־18.12.2024</b></span></figcaption></figure><figure class="doc"><img src="/proof/plan-cover.jpg" alt="הוראות התכנית הכוללנית" loading="lazy"><figcaption><small>הוראות התכנית הכוללנית</small><span>המתחם שלנו מופיע בה <b>כמתחם H</b></span></figcaption></figure><figure class="doc"><img src="/proof/location-in-h.jpg" alt="מתוך הערכת השמאי" loading="lazy"><figcaption><small>מתוך הערכת השמאי</small><span>מיקום החלקה <b>בתוך מתחם H</b></span></figcaption></figure><figure class="doc"><img src="/proof/subcompounds-map.jpg" alt="מפת מתחמי התכנון" loading="lazy"><figcaption><small>מפת מתחמי התכנון</small><span>מתחם H, <b>במרכז היישוב</b></span></figcaption></figure></div>
+  <section class="cta" id="cta">
+    <h4 id="ctaH">השלב הבא: שיחה קצרה איתי</h4>
+    <p id="ctaP">בלי מצגות ובלי לחץ. השאלות שלך והמספרים על&nbsp;השולחן.</p>
+    <a class="btn" id="go" href="/cpage/">לדף האישי שלך <svg class="arw" viewBox="0 0 34 11" aria-hidden="true"><path d="M33 5.5H3M9 1.5 3 5.5l6 4"/></svg></a>
+    <a class="wa" href="https://wa.me/972522707706" target="_blank" rel="noopener"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> או לכתוב לי בוואטסאפ</a>
+  </section>
 </main>
+<div class="sticky" id="sticky"><a class="btn" id="go2" href="/cpage/">לדף האישי שלך <svg class="arw" viewBox="0 0 34 11" aria-hidden="true"><path d="M33 5.5H3M9 1.5 3 5.5l6 4"/></svg></a></div>
 <footer>
   <div class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b><br>יש ודאות מלאה לבנייה, אך הקרקע עדיין בשלבי תכנון ואינה מאושרת לבנייה מיידית ברגע השיווק. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.</div>
   <div><a href="/privacy-kadima/">מדיניות פרטיות</a></div>
@@ -61,16 +130,21 @@ footer a{color:inherit}
   <div style="margin-top:8px;font-size:10.5px;opacity:.55"><a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a> · © כל הזכויות שמורות</div>
 </footer>
 <script>
-/* הפסקה לפי תשובה 1 (a), שם פרטי (n), והדף האישי לפי טמפרטורה (t), עם lid למדידה. */
-var PARA = {"investor": "<p>הזדמנות טובה לא נמדדת בכמה רועש מוכרים אותה, אלא בכמה מסמכים עומדים מאחוריה.</p><p>אז נתחיל מהמסמכים. התוכנית הכוללנית של קדימה צורן אושרה בדצמבר 2024, והקרקע שלנו יושבת בלב מתחם H, במרכז היישוב. שמאי מקרקעין מוסמך העריך אותה ביוני 2026 לפי תקן 22, והשווי שקבע זהה בדיוק למחיר הכניסה שלנו: 3,700 ש״ח למטר. כלומר, משקיעים לפי השווי של הקרקע היום, כשהמחיר עדיין נמוך וכל שלב תכנוני שמתקדם מעלה את צפי ההשבחה, לפי הערכות השמאי.</p><p>אם שאלת את עצמך על &quot;מה יקרה אם ארצה לצאת מההשקעה?&quot;.<br>אז כמו בקניון אנחנו מציגים שלטי יציאה בכל מקום.<br>אנו מספקים מודל יציאה שקוף ובטוח, עם תנאים שכתובים מראש בחוזה. אולי זה נשמע לך כמו הבטחה שיווקית, אבל בפגישה נציג לך בדיוק איך אנחנו מתחייבים לך על זה בכתב.<br>הגב שלנו מלווה כל עסקה והשם שלנו הולך לפנינו.</p><p>למטה ריכזתי את המסמכים עצמם. בסיום הקריאה שלך, אשמח לשמוע מה הכי בולט לך.<br>(אפשר לכתוב לי בוואטסאפ)</p>", "idle_money": "<p>כסף שיושב בעו״ש לא באמת נח. הוא נמס לאט, כמו קוביית קרח שנשכחה על השיש באוגוסט, ואף אחד לא שולח על זה התראה.</p><p>סימנת שיש לך כסף כזה, ובשביל זה בדיוק בנינו את העסקה בקדימה צורן: להעביר הון קיים, בלי משכנתא ובלי חוב, לקרקע בתוך תוכנית כוללנית שאושרה בדצמבר 2024. המחיר, 3,700 ש״ח למטר, הוא בדיוק השווי ששמאי מקרקעין מוסמך קבע ביוני 2026.</p><p>אם שאלת את עצמך על &quot;מה יקרה אם ארצה לצאת מההשקעה?&quot;.<br>אז כמו בקניון, אנחנו מציגים שלטי יציאה בכל מקום.<br>אנו מספקים מודל יציאה שקוף ובטוח, עם תנאים שכתובים מראש בחוזה. אולי זה נשמע לך כמו הבטחה שיווקית, אבל בפגישה נציג לך בדיוק איך אנחנו מתחייבים לך על זה בכתב.<br>הגב שלנו מלווה כל עסקה והשם שלנו הולך לפנינו.</p><p>למטה ריכזתי את המסמכים עצמם. בסיום הקריאה שלך, אשמח לשמוע מה הכי בולט לך.<br>(אפשר לכתוב לי בוואטסאפ)</p>", "apartment": "<p>מי ששקל דירה להשקעה כבר מכיר את החבילה: משכנתא לשלושים שנה, שוכרים, ודוד שמש שמחליט להתפוצץ בדיוק בליל שבת.</p><p>קרקע עובדת אחרת. נכנסים מהון קיים, בלי משכנתא, בלי שוכרים ובלי תיקונים, במחיר של 3,700 ש״ח למטר, השווי ששמאי מקרקעין מוסמך קבע ביוני 2026.</p><p>הקרקע שלנו במרכז קדימה צורן, בתוך תוכנית כוללנית שאושרה בדצמבר 2024, ממש ליד שכונה חדשה של אלף יחידות דיור. ולמי שחושב כבר עכשיו על היציאה, אנו מספקים מודל יציאה שקוף ובטוח, עם תנאים שכתובים מראש בחוזה. אולי זה נשמע לך כמו הבטחה שיווקית, אבל בפגישה נציג לך בדיוק איך אנחנו מתחייבים לך על זה בכתב.<br>הגב שלנו מלווה כל עסקה והשם שלנו הולך לפנינו.</p><p>למטה ריכזתי את המסמכים, כדי להשוות את ההשקעה הזו לדירה על הנייר.<br>לפי מספרים, לא לפי תחושה.</p>", "beginner": "<p>להתחיל להתעניין בהשקעות מרגיש לפעמים כמו לשתות מזרנוק של כבאים: כולם מסבירים, כולם בטוחים, ואף אחד לא מראה מסמך.</p><p>אז הנה לך עסקה פיננסית פשוטה שמוצגת בגובה העיניים. קונים חלק מקרקע כשהיא עוד בשלב תכנוני. התכנון מתקדם, ובכל שלב שהקרקע מתקרבת לבנייה, צפי ההשבחה עולה.</p><p>אצלנו הקרקע במרכז קדימה צורן, מהווה חלק נרחב בתוך תוכנית כוללנית שאושרה בדצמבר 2024, והמחיר הוא בדיוק השווי ששמאי מוסמך קבע: 3,700 ש״ח למטר. לא צריך מיליונים ולא משכנתא.<br>אנו מספקים מודל יציאה שקוף ובטוח, עם תנאים שכתובים מראש בחוזה. אז אולי גם זה נשמע לך כמו הבטחה שיווקית, אבל בפגישה נציג לך בדיוק איך אנחנו מתחייבים לך על זה בכתב.<br>הגב שלנו מלווה כל עסקה והשם שלנו הולך לפנינו.</p><p>למטה ריכזתי את המסמכים עצמם. בסיום הקריאה שלך, אשמח לשמוע מה הכי בולט לך.<br>(אפשר לכתוב לי בוואטסאפ)</p>"};
+var C = {"investor": {"h1a": "הזדמנות טובה לא נמדדת בכמה רועש מוכרים אותה,", "h1b": "אלא בכמה מסמכים עומדים מאחוריה.", "angle": "<div class=\"ang\"><div class=\"ang-t\">למה דווקא עכשיו</div><p>משקיעים לפי השווי של הקרקע היום, כשהמחיר עדיין נמוך, וכל שלב תכנוני שמתקדם מעלה את צפי ההשבחה, לפי הערכות השמאי.</p></div>"}, "idle_money": {"h1a": "כסף שיושב בעו״ש לא באמת נח.", "h1b": "הוא נמס לאט, כמו קוביית קרח שנשכחה על השיש באוגוסט.", "angle": "<div class=\"ang\"><div class=\"ang-t\">בשביל זה בדיוק בנינו את העסקה</div><p>להעביר הון קיים, בלי משכנתא ובלי חוב, לקרקע בתוך תוכנית כוללנית שאושרה בדצמבר 2024. המחיר הוא בדיוק השווי ששמאי מקרקעין מוסמך קבע.</p></div>"}, "apartment": {"h1a": "מי ששקל דירה להשקעה כבר מכיר את החבילה:", "h1b": "משכנתא לשלושים שנה, שוכרים, ודוד שמש שמחליט להתפוצץ בדיוק בליל שבת.", "angle": "<div class=\"ang\"><div class=\"ang-t\">קרקע עובדת אחרת</div><div class=\"cmp\"><div class=\"cmp-h\"><span></span><span>דירה להשקעה</span><span>קרקע במתחם H</span></div><div class=\"cmp-r\"><span class=\"cmp-k\">מימון</span><span class=\"cmp-a\">משכנתא לשלושים שנה</span><span class=\"cmp-b\">מהון קיים, בלי משכנתא</span></div><div class=\"cmp-r\"><span class=\"cmp-k\">ניהול</span><span class=\"cmp-a\">שוכרים ותיקונים</span><span class=\"cmp-b\">בלי שוכרים ובלי תיקונים</span></div><div class=\"cmp-r\"><span class=\"cmp-k\">מחיר</span><span class=\"cmp-a\">מה שהשוק מבקש</span><span class=\"cmp-b\">3,700 ש״ח למ״ר, השווי שקבע השמאי</span></div></div><p class=\"ang-f\">לפי מספרים, לא לפי תחושה.</p></div>"}, "beginner": {"h1a": "להתחיל להתעניין בהשקעות מרגיש לפעמים כמו לשתות מזרנוק של כבאים.", "h1b": "כולם מסבירים, כולם בטוחים, ואף אחד לא מראה מסמך.", "angle": "<div class=\"ang\"><div class=\"ang-t\">אז הנה זה, פשוט ובגובה העיניים</div><ol class=\"steps\"><li><b>1</b><span>קונים חלק מקרקע כשהיא עוד בשלב תכנוני.</span></li><li><b>2</b><span>התכנון מתקדם, שלב אחרי שלב.</span></li><li><b>3</b><span>בכל שלב שהקרקע מתקרבת לבנייה, צפי ההשבחה עולה.</span></li></ol><p class=\"ang-f\">לא צריך מיליונים ולא משכנתא.</p></div>"}};
 (function(){
-  var q = new URLSearchParams(location.search);
-  var a = q.get('a'), n = (q.get('n') || '').trim().split(/\s+/)[0].slice(0, 24), lid = q.get('lid') || '', t = q.get('t');
-  if (PARA[a]) document.getElementById('para').innerHTML = PARA[a];
-  if (n) { var h = document.getElementById('h1'); h.textContent = n + ', '; var s = document.createElement('span'); s.textContent = 'זה מה שהבטחתי לך'; h.appendChild(s); }
-  var page = t === 'hot' ? '/hpage/' : '/cpage/';
-  var p = new URLSearchParams(); if (lid) p.set('lid', lid); if (n) p.set('name', n); if (t) p.set('t', t);
-  document.getElementById('go').href = page + (p.toString() ? '?' + p.toString() : '');
+  var q = new URLSearchParams(location.search), a = C[q.get('a')] ? q.get('a') : 'beginner', t = q.get('t'), lid = q.get('lid') || '';
+  var c = C[a];
+  document.getElementById('h1a').textContent = c.h1a;
+  document.getElementById('h1b').textContent = c.h1b;
+  document.getElementById('angle').innerHTML = c.angle;
+  var hot = t === 'hot', p = new URLSearchParams(); if (lid) p.set('lid', lid); if (t) p.set('t', t);
+  var url = (hot ? '/hpage/' : '/cpage/') + (p.toString() ? '?' + p.toString() : '');
+  ['go', 'go2'].forEach(function(id){ var el = document.getElementById(id); el.href = url; if (hot) el.firstChild.textContent = 'לקביעת שיחה ביומן '; });
+  if (!hot) { document.getElementById('ctaH').textContent = 'כל התמונה, במקום אחד'; document.getElementById('ctaP').textContent = 'הסרטון, הקהילה וכל הפרטים, בקצב שלך.'; }
+  /* הכפתור הקבוע מופיע אחרי הפתיחה, ונעלם כשהכפתור הראשי על המסך */
+  var st = document.getElementById('sticky'), hero = document.querySelector('.hero'), cta = document.getElementById('cta');
+  function upd(){ var hb = hero.getBoundingClientRect().bottom, cr = cta.getBoundingClientRect(); st.classList.toggle('on', hb < 0 && !(cr.top < innerHeight && cr.bottom > 0)); }
+  addEventListener('scroll', upd, { passive: true }); upd();
 })();
 const PIXEL_ID='1002428386157716';
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
