@@ -108,6 +108,7 @@ h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;
 .disc{text-align:center;font-size:11.5px;color:var(--muted);margin-top:18px;padding-top:12px;border-top:1px solid var(--line);line-height:1.5}
 .disc b{color:var(--accent);font-weight:800}
 .opt .mc{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-top:3px}
+.sub,.qtitle,.hint,.opt .txt{text-wrap:pretty}
 .hint{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.5}
 @media(max-width:440px){
   .card{padding:22px 18px 16px;border-radius:20px}
@@ -226,13 +227,14 @@ function pxc(event, params){ try{ if(window.fbq) fbq('trackCustom', event, param
 function qAt(i){ if(i===0) return Q_MOTIVE; if(i===1) return Q_BRANCH[pickIdx.b1 ?? 0]; if(i===2) return Q_WHEN; return Q_MONEY; }
 
 /* ═══════════ פתיחה ═══════════ */
+function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל) (?=\S)/g,'$1$2\u00a0'); const i=t.lastIndexOf(' '); return i>0 ? t.slice(0,i)+'\u00a0'+t.slice(i+1) : t; }
 document.getElementById('cEyebrow').textContent = COPY.eyebrow;
 document.getElementById('cH1').innerHTML = COPY.B1;
-document.getElementById('cSub').textContent = COPY.B2;
+document.getElementById('cSub').textContent = glue(COPY.B2);
 document.getElementById('cCta').textContent = COPY.B3;
 document.getElementById('cTrust').innerHTML = COPY.trust.map(t=>'<span>'+t+'</span>').join('<span class="dot"></span>');
-document.getElementById('cCapTitle').textContent = COPY.C1;
-document.getElementById('cPhoneHint').textContent = COPY.C2;
+document.getElementById('cCapTitle').textContent = glue(COPY.C1);
+document.getElementById('cPhoneHint').textContent = glue(COPY.C2);
 document.getElementById('cCapCta').textContent = COPY.C3;
 
 /* ═══════════ רינדור שאלה ═══════════ */

@@ -288,6 +288,8 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 .pts .ic svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:3}
 .pts .q{background:rgba(194,21,28,.05);border-radius:14px;padding:10px}
 .callp{margin-top:16px;font-size:16.5px;font-weight:700;line-height:1.6}
+.numline[hidden]{display:none!important}
+.res p,.pts li,.callp,.sec-sub,.stamp b,.faq .a{text-wrap:pretty}
 .numline{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:15px}
 .numline b{direction:ltr;unicode-bidi:isolate;font-size:17px}
 .btn2{display:inline-flex;align-items:center;gap:6px;border:1.6px solid #C2151C;color:#C2151C;background:#fff;border-radius:12px;padding:10px 14px;font-weight:800;font-family:inherit;font-size:15px;cursor:pointer;text-decoration:none}
@@ -595,7 +597,8 @@ const COPY = {
 (function(){
   const q = new URLSearchParams(location.search), num = (k, max) => { const v = parseInt(q.get(k), 10); return (v >= 0 && v < max) ? v : null; };
   const m = num('m', 4), b = num('b', 3), k = num('k', 3);
-  const set = (id, t) => { const e = document.getElementById(id); if (e) e.textContent = t; };
+  function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל) (?=\S)/g,'$1$2\u00a0'); const i=t.lastIndexOf(' '); return i>0 ? t.slice(0,i)+'\u00a0'+t.slice(i+1) : t; }
+  const set = (id, t) => { const e = document.getElementById(id); if (e) e.textContent = glue(t); };
   set('dH1', COPY.D1);
   set('dP1', m === null ? COPY.P1[0] : COPY.P1[m]);
   let p2 = null;
