@@ -47,12 +47,15 @@
   }
   var CAMP = detectCamp();
   var KNOWN = 0;
+  /* גרסה B (גל 15/10): כל דף תחת /b/ נספר במונים נפרדים לגמרי, כדי ש־A ו־B לא יתערבבו */
+  var VAR = /^\/b(\/|$)/.test(location.pathname) ? 'b' : '';
   try { KNOWN = JSON.parse(localStorage.getItem('th_leads') || '[]').length ? 1 : 0; } catch(e){}
 
   function fx(stage, extra){
     var b = { stage: stage, src: SRC };
     if(CAMP) b.camp = CAMP;
     if(KNOWN) b.known = 1;
+    if(VAR) b.v = VAR;
     if(extra) for(var k in extra) b[k] = extra[k];
     var body = JSON.stringify(b);
     try {
@@ -115,7 +118,8 @@
       else fetch(W + path, { method:'POST', body: body, keepalive:true });
     } catch(e){}
   }
-  var PG = location.pathname.indexOf('/cpage') > -1 ? 'cold'
+  var PG = location.pathname.indexOf('/b/p') > -1 ? 'b'
+         : location.pathname.indexOf('/cpage') > -1 ? 'cold'
          : location.pathname.indexOf('/hpage') > -1 ? 'hot'
          : location.pathname.indexOf('/info') > -1 ? 'info' : '';   /* דף המידע מההודעה המיידית (גל 13/10) */
   var LID = ''; try { LID = new URLSearchParams(location.search).get('lid') || ''; } catch(e){}
@@ -161,7 +165,7 @@
       beacon('/page-behavior', {
         lead_id: LID, page: PG,
         beh: { maxScroll: maxScroll, activeSec: activeSec, ttbSec: ttbSec, scrolls: scrolls },
-        vsl: (PG === 'hot' && (vid.pct || vid.secs)) ? { pct: vid.pct, secs: Math.round(vid.secs), len: Math.round(vid.len), done: vid.done } : null
+        vsl: ((PG === 'hot' || PG === 'b') && (vid.pct || vid.secs)) ? { pct: vid.pct, secs: Math.round(vid.secs), len: Math.round(vid.len), done: vid.done } : null
       });
     }
   }

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>אבחון אישי · מתחם H · הקרן להשבחת הון ונכסים בע"מ מקבוצת תום הרוש</title>
+<meta name="robots" content="noindex"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap');
+:root{
+  --bg:#F7F7F7; --card:#FFFFFF; --ink:#0a0a0a; --muted:rgba(10,10,10,.55);
+  --line:rgba(194,21,28,.16); --line2:rgba(194,21,28,.30);
+  --accent:#C2151C; --accent2:#7F0224;
+  --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);
+  --tint:rgba(194,21,28,.06); --tint2:rgba(194,21,28,.12);
+  --shadow:0 10px 40px rgba(16,16,16,.10); --ok:#157a3a;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Heebo','Assistant','Segoe UI',sans-serif;color:var(--ink);
+  background:radial-gradient(ellipse at 70% -10%,rgba(194,21,28,.10) 0%,transparent 55%),
+             radial-gradient(ellipse at 10% 110%,rgba(127,2,36,.07) 0%,transparent 50%),var(--bg);
+  min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 16px 56px;overflow-x:hidden;
+}
+.card{
+  background:var(--card);border-radius:24px;box-shadow:var(--shadow);
+  width:min(520px,92vw);margin:0 auto;padding:26px 24px 28px;position:relative;overflow:hidden;flex-shrink:0;
+}
+.brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px}
+.brand img{height:52px;width:auto;object-fit:contain}
+/* progress */
+.prog{height:6px;border-radius:20px;background:var(--tint2);overflow:hidden;margin:0 0 20px}
+.prog>i{display:block;height:100%;width:0;border-radius:20px;background:var(--grad);transition:width .45s cubic-bezier(.4,0,.2,1)}
+/* screens */
+.screen{display:none;animation:slideIn .38s cubic-bezier(.2,.7,.2,1)}
+.screen.active{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:translateX(0)}}
+.step-label{font-size:12px;font-weight:800;color:var(--accent);letter-spacing:.04em;margin-bottom:8px;text-transform:uppercase}
+h1{font-size:27px;font-weight:900;line-height:1.25;margin-bottom:10px}
+h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:22px}
+.qtitle{font-size:21px;font-weight:800;line-height:1.35;margin-bottom:18px}
+/* options */
+.opt{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:right;
+  background:#fff;border:1.6px solid var(--line);border-radius:15px;padding:16px 16px;
+  margin-bottom:11px;cursor:pointer;font-family:inherit;font-size:16px;font-weight:600;color:var(--ink);
+  transition:.16s;position:relative;
+}
+.opt:hover{border-color:var(--line2);background:var(--tint);transform:translateY(-1px)}
+.opt:active{transform:scale(.99)}
+.card .opt,.card .opt:hover,.card .opt:focus,.card .opt:active,.card .opt .txt{color:var(--ink)}
+.opt .tick{
+  width:24px;height:24px;border-radius:50%;border:2px solid var(--line2);flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;transition:.16s;
+}
+.opt.sel{border-color:var(--accent);background:var(--tint);box-shadow:0 4px 16px rgba(194,21,28,.14)}
+.opt.sel .tick{background:var(--grad);border-color:transparent}
+.opt.sel .tick::after{content:'';width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translateY(-1px)}
+.opt .txt{flex:1}
+/* button */
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  background:var(--grad);color:#fff;border:none;border-radius:14px;padding:16px;
+  font-family:inherit;font-size:17px;font-weight:800;cursor:pointer;
+  box-shadow:0 8px 26px rgba(194,21,28,.30);transition:.16s;margin-top:6px;
+}
+.card .btn,.card .btn:hover,.card .btn:focus{color:#fff}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(194,21,28,.42)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn .arw{font-size:18px;transform:scaleX(-1)}
+.trust{text-align:center;font-size:13px;color:var(--muted);margin-top:14px;display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap}
+.trust b{color:var(--ink)}
+.dot{width:4px;height:4px;border-radius:50%;background:var(--line2)}
+.trust svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;vertical-align:-2px;flex:0 0 auto}
+/* form */
+.field{margin-bottom:13px;text-align:right}
+.field label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px;letter-spacing:.02em}
+.field input{
+  width:100%;background:#fff;border:1.6px solid var(--line);border-radius:13px;padding:14px 15px;
+  font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:.16s;
+}
+.field input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.field input.err{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.12)}
+.field input[type=tel]{direction:ltr;text-align:right}
+.err-msg{color:var(--accent);font-size:12px;font-weight:700;margin-top:4px;min-height:15px}
+/* loading */
+.spin{width:44px;height:44px;border:4px solid var(--tint2);border-top-color:var(--accent);border-radius:50%;animation:sp 1s linear infinite;margin:24px auto 18px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.load-txt{text-align:center;font-size:17px;font-weight:800}
+.load-sub{text-align:center;font-size:14px;color:var(--muted);margin-top:6px}
+/* טוען בעולם הקרקעות: מגרש בקו כחול־הדפס, קו מדידה סורק, וערך שעולה מלמטה */
+.landload{width:96px;height:96px;margin:26px auto 18px;position:relative}
+.landload .plot{position:absolute;inset:0;border:2px dashed var(--accent);border-radius:11px;overflow:hidden;background:var(--tint2)}
+.landload .fill{position:absolute;left:0;right:0;bottom:0;height:12%;background:linear-gradient(180deg,rgba(194,21,28,.12),rgba(194,21,28,.5));animation:thgGrow 1.7s ease-in-out infinite}
+.landload .scan{position:absolute;left:0;right:0;height:2px;background:var(--accent);box-shadow:0 0 10px 1px var(--accent);animation:thgScan 1.7s ease-in-out infinite}
+.landload .pin{position:absolute;top:50%;left:50%;width:10px;height:10px;border-radius:50% 50% 50% 0;background:var(--accent);transform:translate(-50%,-70%) rotate(-45deg);animation:thgPin 1.7s ease-in-out infinite}
+@keyframes thgGrow{0%,100%{height:12%}50%{height:78%}}
+@keyframes thgScan{0%{top:3px;opacity:.25}50%{top:86%;opacity:1}100%{top:3px;opacity:.25}}
+@keyframes thgPin{0%,100%{transform:translate(-50%,-70%) rotate(-45deg)}50%{transform:translate(-50%,-95%) rotate(-45deg)}}
+/* back */
+.back{background:transparent;border:none;color:var(--muted);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:6px 0;margin-bottom:6px;display:none}
+.back:hover{color:var(--accent)}
+.back.show{display:inline-flex;align-items:center;gap:5px}
+/* disclaimer */
+.disc{text-align:center;font-size:11.5px;color:var(--muted);margin-top:18px;padding-top:12px;border-top:1px solid var(--line);line-height:1.5}
+.disc b{color:var(--accent);font-weight:800}
+.opt .mc{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-top:3px}
+.hint{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.5}
+@media(max-width:440px){
+  .card{padding:22px 18px 16px;border-radius:20px}
+  h1{font-size:24px}.qtitle{font-size:19px}.opt{font-size:15px;padding:14px}
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand"><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/></div>
+  <div class="prog"><i id="progBar"></i></div>
+  <button class="back" id="backBtn" onclick="goBack()">‹ חזרה</button>
+
+  <!-- פתיחה (B1, B2, B3) -->
+  <div class="screen active" data-screen="0">
+    <div class="step-label" id="cEyebrow"></div>
+    <h1 id="cH1"></h1>
+    <div class="sub" id="cSub"></div>
+    <button class="btn" onclick="start()"><span id="cCta"></span> <span class="arw">▸</span></button>
+    <div class="trust" id="cTrust"></div>
+  </div>
+
+  <div id="qMount"></div>
+
+  <!-- מסך הפרטים (C1, C2, C3) -->
+  <div class="screen" data-screen="capture">
+    <div class="step-label">האבחון שלך</div>
+    <div class="qtitle" id="cCapTitle"></div>
+    <div class="field"><label for="fName">שם מלא</label><input id="fName" type="text" placeholder="השם שלך" autocomplete="name"/><div class="err-msg" id="eName"></div></div>
+    <div class="field"><label for="fPhone">טלפון נייד</label><input id="fPhone" type="tel" placeholder="050-0000000" autocomplete="tel" inputmode="numeric"/><div class="hint" id="cPhoneHint"></div><div class="err-msg" id="ePhone"></div></div>
+    <div class="field"><label for="fEmail">אימייל</label><input id="fEmail" type="email" placeholder="name@example.com" autocomplete="email" inputmode="email"/><div class="err-msg" id="eEmail"></div></div>
+    <button class="btn" id="submitBtn" onclick="submitLead()"><span id="cCapCta"></span> <span class="arw">▸</span></button>
+  </div>
+
+  <div class="screen" data-screen="done">
+    <div class="landload"><div class="plot"><span class="fill"></span><span class="scan"></span></div><span class="pin"></span></div>
+    <div class="load-txt">מרכיבים את האבחון שלך</div>
+    <div class="load-sub">מהתשובות שסימנת</div>
+  </div>
+
+  <div class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b></div>
+</div>
+<script>
+/* ═══════════ גרסה B · שאלון אבחון מסתעף (גל 15/10) ═══════════
+   כל הקופי מרוכז ב-COPY, לפי המזהים של שולחן הקופי (B1, C2...). כשגל בוחר נוסח, מחליפים רק כאן.
+   השאלה הראשונה היא המניע, השנייה מסתעפת לפי המניע, ושתיים אחרונות לכולם.
+   התשובה למניע נשמרת גם בערך הקנוני של A (answers.q4), כדי שהרצפים ודף המידע ימשיכו לעבוד. */
+const COPY = {
+  eyebrow: 'אבחון אישי · מתחם H · קדימה צורן',
+  B1: 'לפני שמדברים על קרקע, מאבחנים את <span class="hl">הציפיות שלך</span>.',
+  B2: 'לכל משקיע יש צורך אישי אחר. ארבע שאלות קצרות, ובסופן תשובה אישית: איפה יש התאמה לצורך האישי שלך, ומה עוד עליך לבדוק.',
+  B3: 'לגלות מה הכסף שלי יכול להשיג כאן',
+  trust: ['4 שאלות', 'פחות מדקה', 'אבחון אישי'],
+  C1: 'האבחון שלך מוכן. נשאר רק לדעת למי הוא שייך.',
+  C2: 'לטלפון הזה מגיע החלק שאי אפשר לכתוב במסך.',
+  C3: 'לחשיפת האבחון שלי',
+};
+const WORKER_URL = 'https://tom-funnel.tom-harush.workers.dev/lead';
+const RESULT_URL = '/b/p/';
+const PIXEL_ID   = '1002428386157716';
+const HOT_MIN    = 4;
+const VARIANT    = 'b';
+
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+if(PIXEL_ID){ fbq('init', PIXEL_ID); fbq('track','PageView'); }
+
+/* ═══════════ השאלות ═══════════
+   canon = הנוסח הקנוני של A לשאלה 4 (הרצפים בוחרים לפיו את המשפט האישי). */
+const Q_MOTIVE = { key:'b1', title:'כשהכסף שלך יוצא לעבוד, מה הכי חשוב לך?', options:[
+  {t:'ודאות וביטחון', mc:'שכל מספר יהיה מגובה במסמך', canon:'ודאות וביטחון'},
+  {t:'להבין לעומק לפני החלטה', mc:'לראות הכל, בלי חלקים חסרים', canon:'להבין לעומק לפני החלטה'},
+  {t:'תשואה גבוהה', mc:'שהכסף יגדל, ולא רק ישמור על ערכו', canon:'תשואה גבוהה'},
+  {t:'רף כניסה נמוך', mc:'להתחיל בלי לשים את כל הכסף', canon:'רף כניסה נמוך'},
+]};
+/* v = נקודות לניקוד (0 עד 2) */
+const Q_BRANCH = [
+  { key:'b2', title:'השקעה עם תשואה גבוהה יותר, אבל עם פחות ודאות: זה מתאים לך?', options:[
+    {t:'לא. ודאות קודמת לכל', mc:'השקעה מדויקת לטווח הארוך', v:1},
+    {t:'גם וגם', mc:'השקעה שתניב רווח בריא, עם מסמכים וגיבוי', v:2},
+    {t:'תלוי כמה גבוהה', v:1}]},
+  { key:'b2', title:'מה הדבר הראשון שהיית רוצה לראות במו עיניך?', options:[
+    {t:'את התוכנית ואת שלבי התכנון', v:2},
+    {t:'איך בדיוק נקבע המחיר', v:2},
+    {t:'מה קורה אם ארצה לצאת', v:1}]},
+  { key:'b2', title:'לכמה זמן הכסף הזה יכול לצאת לעבוד?', options:[
+    {t:'עד 3 שנים', v:0},
+    {t:'3 עד 7 שנים', v:2},
+    {t:'גם יותר, אם זה נכון', v:2}]},
+  { key:'b2', title:'איך נוח לך להתחיל?', options:[
+    {t:'בסכום קטן, ולראות איך זה מתקדם', v:1},
+    {t:'מהלך אחד משמעותי', v:2},
+    {t:'עוד לא החלטתי', v:0}]},
+];
+/* canon = הנוסח הקנוני של A לשאלה 2 (מתי), כדי שהדוח והאותות שלו ימשיכו לעבוד */
+const Q_WHEN = { key:'b3', title:'מתי נכון לך להתחיל?', options:[
+  {t:'כבר עכשיו', v:2, canon:'מיד, אני מוכן להתקדם'},
+  {t:'בחודשים הקרובים', v:1, canon:'בחודשים הקרובים'},
+  {t:'רק בודקים בשלב הזה', v:0, canon:'רק בודק אפשרויות בשלב זה'}]};
+const Q_MONEY = { key:'b4', title:'הכסף כבר זמין?', options:[
+  {t:'כן, יושב ומחכה', v:2},
+  {t:'חלק כן, חלק בדרך', v:1},
+  {t:'עוד לא', v:0}]};
+
+/* ═══════════ מצב ═══════════ */
+const pickIdx = { b1:null, b2:null, b3:null, b4:null };
+let idx = 0;
+const TOTAL = 4;
+const utm = readUTM();
+function topSearch(){ try{ return window.top.location.search || location.search; }catch(e){ return location.search; } }
+function readUTM(){
+  const p = new URLSearchParams(topSearch()); const g = k => p.get(k) || '';
+  return { source:g('utm_source'), campaign:g('utm_campaign'), medium:g('utm_medium'), content:g('utm_content'), term:g('utm_term'),
+    ad_id:g('ad_id'), adset_id:g('adset_id'), campaign_id:g('campaign_id'), fbclid:g('fbclid'), ref:document.referrer||'', variant:VARIANT };
+}
+function pxc(event, params){ try{ if(window.fbq) fbq('trackCustom', event, params||{}); }catch(e){} }
+function qAt(i){ if(i===0) return Q_MOTIVE; if(i===1) return Q_BRANCH[pickIdx.b1 ?? 0]; if(i===2) return Q_WHEN; return Q_MONEY; }
+
+/* ═══════════ פתיחה ═══════════ */
+document.getElementById('cEyebrow').textContent = COPY.eyebrow;
+document.getElementById('cH1').innerHTML = COPY.B1;
+document.getElementById('cSub').textContent = COPY.B2;
+document.getElementById('cCta').textContent = COPY.B3;
+document.getElementById('cTrust').innerHTML = COPY.trust.map(t=>'<span>'+t+'</span>').join('<span class="dot"></span>');
+document.getElementById('cCapTitle').textContent = COPY.C1;
+document.getElementById('cPhoneHint').textContent = COPY.C2;
+document.getElementById('cCapCta').textContent = COPY.C3;
+
+/* ═══════════ רינדור שאלה ═══════════ */
+const mount = document.getElementById('qMount');
+for(let i=0;i<TOTAL;i++){ const s=document.createElement('div'); s.className='screen'; s.dataset.screen='q'+i; mount.appendChild(s); }
+function renderQ(i){
+  const q = qAt(i), s = document.querySelector(`[data-screen="q${i}"]`);
+  const sel = pickIdx[q.key];
+  s.innerHTML = `<div class="step-label">שאלה ${i+1} מתוך ${TOTAL}</div><div class="qtitle">${q.title}</div>
+    <div class="opts">${q.options.map((o,j)=>`<button class="opt${sel===j?' sel':''}" onclick="pick(${i},${j})"><span class="tick"></span><span class="txt">${o.t}${o.mc?'<span class="mc">'+o.mc+'</span>':''}</span></button>`).join('')}</div>`;
+}
+
+/* ═══════════ ניווט ═══════════ */
+function screens(){ return document.querySelectorAll('.screen'); }
+function show(name){
+  if(window.THG_STEP) window.THG_STEP(idx, name==='capture');
+  screens().forEach(s => s.classList.toggle('active', s.dataset.screen===String(name)));
+  document.getElementById('backBtn').classList.toggle('show', idx>0 && name!=='done');
+  let pct = 0; if(name==='0') pct=4; else if(String(name).startsWith('q')) pct=((parseInt(String(name).slice(1))+1)/(TOTAL+1))*100; else if(name==='capture') pct=92; else if(name==='done') pct=100;
+  document.getElementById('progBar').style.width = pct+'%';
+  window.scrollTo(0,0);
+}
+function start(){ pxc('SurveyStart', {variant:VARIANT}); if(window.THG_FX) THG_FX('start'); idx=1; renderQ(0); show('q0'); }
+function goBack(){ if(idx<=0) return; idx--; if(idx===0) show('0'); else { renderQ(idx-1); show('q'+(idx-1)); } }
+function pick(qi, oi){
+  const q = qAt(qi);
+  pickIdx[q.key] = oi;
+  if(qi===0 && pickIdx.__branch !== oi){ pickIdx.b2 = null; pickIdx.__branch = oi; }   // מניע אחר = ענף אחר
+  document.querySelectorAll(`[data-screen="q${qi}"] .opt`).forEach((b,k)=> b.classList.toggle('sel', k===oi));
+  pxc('SurveyStep', {step:qi+1, variant:VARIANT});
+  setTimeout(()=>{ if(qi < TOTAL-1){ idx = qi+2; renderQ(qi+1); show('q'+(qi+1)); } else { idx = TOTAL+1; show('capture'); } }, 260);
+}
+
+/* ═══════════ ניקוד ═══════════
+   0 עד 6: הענף (0 עד 2) + מתי (0 עד 2) + זמינות הכסף (0 עד 2). 4 ומעלה חם. */
+function score(){
+  const b = Q_BRANCH[pickIdx.b1 ?? 0].options[pickIdx.b2 ?? -1], w = Q_WHEN.options[pickIdx.b3 ?? -1], m = Q_MONEY.options[pickIdx.b4 ?? -1];
+  return (b?b.v:0) + (w?w.v:0) + (m?m.v:0);
+}
+function temperature(){ return score() >= HOT_MIN ? 'hot' : 'cold'; }
+function labels(){
+  const mo = Q_MOTIVE.options[pickIdx.b1], br = Q_BRANCH[pickIdx.b1].options[pickIdx.b2], wh = Q_WHEN.options[pickIdx.b3], mn = Q_MONEY.options[pickIdx.b4];
+  return { mo, br, wh, mn };
+}
+
+/* ═══════════ שליחה ═══════════ */
+function validPhone(p){ let d=(p||'').replace(/\D/g,''); if(d.startsWith('972')) d='0'+d.slice(3); return /^05\d{8}$/.test(d); }
+function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e||''); }
+function submitLead(){
+  const name=document.getElementById('fName').value.trim(), phone=document.getElementById('fPhone').value.trim(), email=document.getElementById('fEmail').value.trim();
+  let ok=true;
+  const eN=document.getElementById('eName'), eP=document.getElementById('ePhone'), eE=document.getElementById('eEmail');
+  const iN=document.getElementById('fName'), iP=document.getElementById('fPhone'), iE=document.getElementById('fEmail');
+  eN.textContent=''; eP.textContent=''; eE.textContent=''; [iN,iP,iE].forEach(x=>x.classList.remove('err'));
+  if(!name){ eN.textContent='נא למלא שם'; iN.classList.add('err'); ok=false; }
+  if(!validPhone(phone)){ eP.textContent='מספר נייד לא תקין. צריך 10 ספרות שמתחילות ב־05'; iP.classList.add('err'); ok=false; }
+  if(!validEmail(email)){ eE.textContent='נא למלא אימייל תקין'; iE.classList.add('err'); ok=false; }
+  if(!ok) return;
+  const btn=document.getElementById('submitBtn'); btn.disabled=true; btn.textContent='שולח...';
+  const temp = temperature(), L = labels();
+  const leadId = (window.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(16).slice(2));
+  window.__lid = leadId; window.__email = email; window.__name = name;
+  const _ck = n => { const m = document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; };
+  const _fbclid = new URLSearchParams(location.search).get('fbclid');
+  let _fbc = _ck('_fbc'); if (!_fbc && _fbclid) _fbc = 'fb.1.' + Date.now() + '.' + _fbclid;
+  const answers = {
+    q2: L.wh.canon, q4: L.mo.canon,                       // הקנוני של A, לרצפים, לדף המידע ולדוח
+    b1: L.mo.t, b2: L.br.t, b3: L.wh.t, b4: L.mn.t,       // התשובות של B כפי שנבחרו
+  };
+  const q_a = `[B · ${temp.toUpperCase()} · ${score()}/6] ` + [Q_MOTIVE.title+' → '+L.mo.t, Q_BRANCH[pickIdx.b1].title+' → '+L.br.t, Q_WHEN.title+' → '+L.wh.t, Q_MONEY.title+' → '+L.mn.t].join(' | ');
+  const payload = { lead_id: leadId, name, phone, email, temperature: temp, score: score(), q_a, answers, variant: VARIANT,
+    utm, ref_url: location.href, ts: new Date().toISOString(), source: utm.source || 'שאלון B', fbp: _ck('_fbp') || undefined, fbc: _fbc || undefined };
+  try{ if(window.fbq) fbq('track','Lead', {content_name:'survey_b', temperature:temp, value: temp==='hot'?2:1, currency:'ILS'}, {eventID: leadId}); }catch(e){}
+  pxc('SurveyComplete', {temperature:temp, score:score(), variant:VARIANT});
+  try{ const q=JSON.parse(localStorage.getItem('th_leads')||'[]'); q.push(payload); localStorage.setItem('th_leads',JSON.stringify(q)); }catch(e){}
+  let done=false; const once=()=>{ if(done)return; done=true; routeTo(temp); };
+  fetch(WORKER_URL, {method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)}).then(once).catch(once);
+  setTimeout(once, 2500);
+  if(window.THG_FX) THG_FX('done');
+  idx = TOTAL+2; show('done');
+}
+/* דף התוצאה בונה את האבחון החלקי מהבחירות: m מניע, b ענף, w מתי, k כסף */
+function routeTo(temp){
+  const q = new URLSearchParams({ t: temp, s: String(score()), m: String(pickIdx.b1), b: String(pickIdx.b2), w: String(pickIdx.b3), k: String(pickIdx.b4) });
+  if(window.__lid) q.set('lid', window.__lid);
+  if(window.__email) q.set('email', window.__email);
+  if(window.__name) q.set('name', window.__name);
+  const dest = RESULT_URL + '?' + q.toString();
+  try{ window.top.location.href = dest; }catch(e){ location.href = dest; }
+}
+show('0');
+</script>
+
+<div style="text-align:center;padding:18px 12px;font-size:11px;color:#8a8f98"><a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a> · © כל הזכויות שמורות</div>
+<script src="/track.js" defer></script>
+</body>
+</html>
