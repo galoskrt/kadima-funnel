@@ -2,132 +2,108 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#F6F7F9"/>
 <title>אבחון אישי · מתחם H · הקרן להשבחת הון ונכסים בע"מ מקבוצת תום הרוש</title>
 <meta name="robots" content="noindex"/>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap');
+/* DESIGN.md · תום הרוש · משפך B. משטחים מופרדים בגוון, לא בקו או בצל. צל רק על הכפתור הראשי. */
 :root{
-  --bg:#F7F7F7; --card:#FFFFFF; --ink:#0a0a0a; --muted:rgba(10,10,10,.55);
-  --line:rgba(194,21,28,.16); --line2:rgba(194,21,28,.30);
-  --accent:#C2151C; --accent2:#7F0224;
+  --accent:#C2151C; --accent-mid:#A20C22; --accent-deep:#7F0224;
   --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);
-  --tint:rgba(194,21,28,.06); --tint2:rgba(194,21,28,.12);
-  --shadow:0 10px 40px rgba(16,16,16,.10); --ok:#157a3a;
+  --ground:#FFFFFF; --paper:#F6F7F9; --step:#ECEEF1; --tint:#FBF1F1;
+  --ink:#0F1216; --ink-soft:#4A4F57; --field:#D5D9DF;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{
-  font-family:'Heebo','Assistant','Segoe UI',sans-serif;color:var(--ink);
-  background:radial-gradient(ellipse at 70% -10%,rgba(194,21,28,.10) 0%,transparent 55%),
-             radial-gradient(ellipse at 10% 110%,rgba(127,2,36,.07) 0%,transparent 50%),var(--bg);
-  min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 16px 56px;overflow-x:hidden;
-}
-.card{
-  background:var(--card);border-radius:24px;box-shadow:var(--shadow);
-  width:min(520px,92vw);margin:0 auto;padding:26px 24px 28px;position:relative;overflow:hidden;flex-shrink:0;
-}
-.brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px}
-.brand img{height:52px;width:auto;object-fit:contain}
-/* progress */
-.prog{height:6px;border-radius:20px;background:var(--tint2);overflow:hidden;margin:0 0 20px}
-.prog>i{display:block;height:100%;width:0;border-radius:20px;background:var(--grad);transition:width .45s cubic-bezier(.4,0,.2,1)}
-/* screens */
-.screen{display:none;animation:slideIn .38s cubic-bezier(.2,.7,.2,1)}
-.screen.active{display:block}
-@keyframes slideIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:translateX(0)}}
-.step-label{font-size:12px;font-weight:800;color:var(--accent);letter-spacing:.04em;margin-bottom:8px;text-transform:uppercase}
-h1{font-size:27px;font-weight:900;line-height:1.25;margin-bottom:10px}
-h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.sub{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:22px}
-.qtitle{font-size:21px;font-weight:800;line-height:1.35;margin-bottom:18px}
-/* options */
-.opt{
-  display:flex;align-items:center;gap:12px;width:100%;text-align:right;
-  background:#fff;border:1.6px solid var(--line);border-radius:15px;padding:16px 16px;
-  margin-bottom:11px;cursor:pointer;font-family:inherit;font-size:16px;font-weight:600;color:var(--ink);
-  transition:.16s;position:relative;
-}
-.opt:hover{border-color:var(--line2);background:var(--tint);transform:translateY(-1px)}
+html,body{min-height:100%}
+body{font-family:'Heebo','Segoe UI',sans-serif;color:var(--ink);background:var(--paper);touch-action:manipulation;
+  min-height:100dvh;display:flex;flex-direction:column;align-items:center;padding:16px 14px 40px;overflow-x:clip}
+.card{background:var(--ground);border-radius:18px;width:min(560px,100%);margin:0 auto;position:relative;overflow:hidden;flex-shrink:0}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px 12px}
+.brand img{height:44px;width:auto;object-fit:contain}
+.brand .bline{font-size:14px;font-weight:700;color:var(--ink-soft)}
+.prog-row{display:flex;align-items:center;gap:12px;padding:0 20px;margin-bottom:6px}
+.prog{flex:1;height:6px;border-radius:99px;background:var(--step);overflow:hidden}
+.prog>i{display:block;height:100%;width:0;border-radius:99px;background:var(--accent);transition:width .45s cubic-bezier(.4,0,.2,1)}
+.prog-n{font-size:14px;font-weight:700;color:var(--ink-soft);min-width:58px;text-align:left;font-variant-numeric:tabular-nums}
+.body{padding:8px 20px 0}
+.screen{display:none}
+.screen.active{display:block;animation:rise .42s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.ph{margin:0 -20px 20px;aspect-ratio:1080/640;background:var(--step) center/cover no-repeat}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+h1{font-size:clamp(30px,7.4vw,46px);font-weight:900;line-height:1.12;letter-spacing:-.02em;margin-bottom:12px;text-wrap:balance}
+h1 .hl{color:var(--accent)}
+.sub{font-size:17px;line-height:1.6;margin-bottom:22px}
+.qtitle{font-size:24px;font-weight:900;line-height:1.25;letter-spacing:-.01em;margin:14px 0 18px}
+.opt{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:right;background:var(--paper);border:0;border-radius:14px;
+  padding:16px;margin-bottom:10px;cursor:pointer;font-family:inherit;font-size:17px;font-weight:700;color:var(--ink);
+  transition:background .16s,transform .16s,box-shadow .16s;position:relative}
+.opt:hover{background:var(--step)}
 .opt:active{transform:scale(.99)}
-.card .opt,.card .opt:hover,.card .opt:focus,.card .opt:active,.card .opt .txt{color:var(--ink)}
-.opt .tick{
-  width:24px;height:24px;border-radius:50%;border:2px solid var(--line2);flex:0 0 auto;
-  display:flex;align-items:center;justify-content:center;transition:.16s;
-}
-.opt.sel{border-color:var(--accent);background:var(--tint);box-shadow:0 4px 16px rgba(194,21,28,.14)}
-.opt.sel .tick{background:var(--grad);border-color:transparent}
+.opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.opt .tick{width:24px;height:24px;border-radius:50%;border:2px solid #B9BEC6;flex:0 0 auto;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:background-color .16s,border-color .16s;background:#fff}
+.opt.sel{background:var(--tint);box-shadow:inset -4px 0 0 var(--accent)}
+.opt.sel .tick{background:var(--accent);border-color:var(--accent)}
 .opt.sel .tick::after{content:'';width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translateY(-1px)}
-.opt .txt{flex:1}
-/* button */
-.btn{
-  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
-  background:var(--grad);color:#fff;border:none;border-radius:14px;padding:16px;
-  font-family:inherit;font-size:17px;font-weight:800;cursor:pointer;
-  box-shadow:0 8px 26px rgba(194,21,28,.30);transition:.16s;margin-top:6px;
-}
-.card .btn,.card .btn:hover,.card .btn:focus{color:#fff}
-.btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(194,21,28,.42)}
+.opt .txt{flex:1;line-height:1.35}
+.opt .mc{display:block;font-size:15px;font-weight:400;color:var(--ink-soft);margin-top:4px;line-height:1.45}
+.opt.pref .mc{color:var(--accent-mid);font-weight:700}
+.btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;background:var(--grad);color:#fff;border:none;border-radius:999px;
+  padding:17px 22px;font-family:inherit;font-size:17px;font-weight:900;cursor:pointer;box-shadow:0 10px 26px rgba(194,21,28,.28);
+  transition:transform .18s,box-shadow .18s;margin-top:6px} /* taste-skill-ignore: הצל והגרדיאנט של הכפתור הראשי הם חלק מספר המותג ומארכיטקטורת ה-CTA של גל */
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(194,21,28,.38)}
+.btn:hover .arw{transform:translateX(-5px)}
 .btn:active{transform:translateY(0)}
-.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
-.btn .arw{font-size:18px;transform:scaleX(-1)}
-.trust{text-align:center;font-size:13px;color:var(--muted);margin-top:14px;display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap}
-.trust b{color:var(--ink)}
-.dot{width:4px;height:4px;border-radius:50%;background:var(--line2)}
-.trust svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;vertical-align:-2px;flex:0 0 auto}
-/* form */
-.field{margin-bottom:13px;text-align:right}
-.field label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px;letter-spacing:.02em}
-.field input{
-  width:100%;background:#fff;border:1.6px solid var(--line);border-radius:13px;padding:14px 15px;
-  font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:.16s;
-}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+.arw{width:34px;height:11px;flex:0 0 auto;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}
+.after{text-align:center;font-size:14px;color:var(--ink-soft);margin-top:10px}
+.trust{text-align:center;font-size:14px;font-weight:700;color:var(--ink-soft);margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.dot{width:4px;height:4px;border-radius:50%;background:#B9BEC6}
+.field{margin-bottom:14px;text-align:right}
+.field label{display:block;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.field input{width:100%;background:#fff;border:1.5px solid var(--field);border-radius:14px;padding:14px 15px;font-family:inherit;font-size:17px;color:var(--ink);outline:none;transition:border-color .16s,box-shadow .16s}
 .field input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.10)}
-.field input.err{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.12)}
+.field input.err{border-color:var(--accent)}
 .field input[type=tel]{direction:ltr;text-align:right}
-.err-msg{color:var(--accent);font-size:12px;font-weight:700;margin-top:4px;min-height:15px}
-/* loading */
-.spin{width:44px;height:44px;border:4px solid var(--tint2);border-top-color:var(--accent);border-radius:50%;animation:sp 1s linear infinite;margin:24px auto 18px}
-@keyframes sp{to{transform:rotate(360deg)}}
-.load-txt{text-align:center;font-size:17px;font-weight:800}
-.load-sub{text-align:center;font-size:14px;color:var(--muted);margin-top:6px}
-/* טוען בעולם הקרקעות: מגרש בקו כחול־הדפס, קו מדידה סורק, וערך שעולה מלמטה */
+.hint{font-size:14px;color:var(--ink-soft);margin-top:6px;line-height:1.5}
+.err-msg{color:var(--accent);font-size:14px;font-weight:700;margin-top:4px;min-height:0}
+.err-msg:empty{display:none}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;color:var(--ink);margin:4px 0 14px;cursor:pointer}
+.consent input{width:20px;height:20px;flex:0 0 auto;margin-top:1px;accent-color:var(--accent)}
+.consent a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
 .landload{width:96px;height:96px;margin:26px auto 18px;position:relative}
-.landload .plot{position:absolute;inset:0;border:2px dashed var(--accent);border-radius:11px;overflow:hidden;background:var(--tint2)}
-.landload .fill{position:absolute;left:0;right:0;bottom:0;height:12%;background:linear-gradient(180deg,rgba(194,21,28,.12),rgba(194,21,28,.5));animation:thgGrow 1.7s ease-in-out infinite}
-.landload .scan{position:absolute;left:0;right:0;height:2px;background:var(--accent);box-shadow:0 0 10px 1px var(--accent);animation:thgScan 1.7s ease-in-out infinite}
-.landload .pin{position:absolute;top:50%;left:50%;width:10px;height:10px;border-radius:50% 50% 50% 0;background:var(--accent);transform:translate(-50%,-70%) rotate(-45deg);animation:thgPin 1.7s ease-in-out infinite}
+.landload .plot{position:absolute;inset:0;border-radius:12px;overflow:hidden;background:var(--tint)}
+.landload .fill{position:absolute;left:0;right:0;bottom:0;height:12%;background:rgba(194,21,28,.35);animation:thgGrow 1.7s ease-in-out infinite}
+.landload .pin{position:absolute;top:50%;left:50%;width:12px;height:12px;border-radius:50% 50% 50% 0;background:var(--accent);transform:translate(-50%,-70%) rotate(-45deg);animation:thgPin 1.7s ease-in-out infinite}
 @keyframes thgGrow{0%,100%{height:12%}50%{height:78%}}
-@keyframes thgScan{0%{top:3px;opacity:.25}50%{top:86%;opacity:1}100%{top:3px;opacity:.25}}
 @keyframes thgPin{0%,100%{transform:translate(-50%,-70%) rotate(-45deg)}50%{transform:translate(-50%,-95%) rotate(-45deg)}}
-/* back */
-.back{background:transparent;border:none;color:var(--muted);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:6px 0;margin-bottom:6px;display:none}
+.load-txt{text-align:center;font-size:20px;font-weight:900}
+.load-sub{text-align:center;font-size:15px;color:var(--ink-soft);margin-top:6px}
+.back{background:transparent;border:none;color:var(--ink-soft);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:8px 0;display:none}
 .back:hover{color:var(--accent)}
-.back.show{display:inline-flex;align-items:center;gap:5px}
-/* disclaimer */
-.disc{text-align:center;font-size:11.5px;color:var(--muted);margin-top:18px;padding-top:12px;border-top:1px solid var(--line);line-height:1.5}
-.disc b{color:var(--accent);font-weight:800}
-.opt .mc{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-top:3px}
-.sub,.qtitle,.hint,.opt .txt{text-wrap:pretty}
-.hint{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.5}
-@media(max-width:440px){
-  .card{padding:22px 18px 16px;border-radius:20px}
-  h1{font-size:24px}.qtitle{font-size:19px}.opt{font-size:15px;padding:14px}
-}
+.back.show{display:inline-flex;align-items:center;gap:6px}
+.disc{text-align:center;font-size:13px;font-weight:700;color:var(--ink-soft);margin-top:20px;padding:12px 20px;background:var(--paper)}
+.sub,.qtitle,.hint,.opt .txt,.consent span{text-wrap:pretty}
+@media(prefers-reduced-motion:reduce){.screen.active{animation:none}.btn,.opt{transition:none}.landload .fill,.landload .pin{animation:none}}
+@media(max-width:440px){.qtitle{font-size:22px}.opt{font-size:16px;padding:15px 14px}}
 </style>
 </head>
 <body>
 <div class="card">
-  <div class="brand"><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/></div>
-  <div class="prog"><i id="progBar"></i></div>
+  <div class="brand"><img src="/logo.png" width="132" height="44" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/><span class="bline" id="cEyebrow"></span></div>
+  <div class="prog-row"><div class="prog"><i id="progBar"></i></div><span class="prog-n" id="progN" aria-live="polite"></span></div>
+  <div class="body">
   <button class="back" id="backBtn" onclick="goBack()">‹ חזרה</button>
 
   <!-- פתיחה (B1, B2, B3) -->
   <div class="screen active" data-screen="0">
-    <div class="step-label" id="cEyebrow"></div>
+    <div class="ph"><img src="/b/media/place-fields.webp" width="1080" height="640" alt="השדות של קדימה צורן מהאוויר, ובאופק קו הרקיע של השרון" fetchpriority="high"/></div>
     <h1 id="cH1"></h1>
     <div class="sub" id="cSub"></div>
-    <button class="btn" onclick="start()"><span id="cCta"></span> <span class="arw">▸</span></button>
+    <button class="btn" onclick="start()"><span id="cCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></button>
     <div class="trust" id="cTrust"></div>
   </div>
 
@@ -135,12 +111,14 @@ h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;
 
   <!-- מסך הפרטים (C1, C2, C3) -->
   <div class="screen" data-screen="capture">
-    <div class="step-label">האבחון שלך</div>
     <div class="qtitle" id="cCapTitle"></div>
-    <div class="field"><label for="fName">שם מלא</label><input id="fName" type="text" placeholder="השם שלך" autocomplete="name"/><div class="err-msg" id="eName"></div></div>
-    <div class="field"><label for="fPhone">טלפון נייד</label><input id="fPhone" type="tel" placeholder="050-0000000" autocomplete="tel" inputmode="numeric"/><div class="hint" id="cPhoneHint"></div><div class="err-msg" id="ePhone"></div></div>
-    <div class="field"><label for="fEmail">אימייל</label><input id="fEmail" type="email" placeholder="name@example.com" autocomplete="email" inputmode="email"/><div class="err-msg" id="eEmail"></div></div>
-    <button class="btn" id="submitBtn" onclick="submitLead()"><span id="cCapCta"></span> <span class="arw">▸</span></button>
+    <div class="field"><label for="fName">שם מלא</label><input id="fName" name="name" type="text" placeholder="השם שלך…" autocomplete="name" aria-describedby="cNameHint eName"/><div class="hint" id="cNameHint"></div><div class="err-msg" id="eName" aria-live="polite"></div></div>
+    <div class="field"><label for="fPhone">טלפון נייד</label><input id="fPhone" name="tel" type="tel" placeholder="050-0000000…" autocomplete="tel" inputmode="numeric" aria-describedby="cPhoneHint ePhone"/><div class="hint" id="cPhoneHint"></div><div class="err-msg" id="ePhone" aria-live="polite"></div></div>
+    <div class="field"><label for="fEmail">אימייל</label><input id="fEmail" name="email" type="email" placeholder="name@example.com…" autocomplete="email" inputmode="email" spellcheck="false" aria-describedby="cMailHint eEmail"/><div class="hint" id="cMailHint"></div><div class="err-msg" id="eEmail" aria-live="polite"></div></div>
+    <label class="consent"><input type="checkbox" id="fConsent" name="consent"/><span id="cConsent"></span></label>
+    <div class="err-msg" id="eConsent" aria-live="polite" style="margin:-8px 0 12px"></div>
+    <button class="btn" id="submitBtn" onclick="submitLead()"><span id="cCapCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></button>
+    <div class="after" id="cAfter"></div>
   </div>
 
   <div class="screen" data-screen="done">
@@ -149,7 +127,8 @@ h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;
     <div class="load-sub">מהתשובות שסימנת</div>
   </div>
 
-  <div class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b></div>
+  </div>
+  <div class="disc">*הקרקע עדיין אינה זמינה לבנייה מיידית.</div>
 </div>
 <script>
 /* ═══════════ גרסה B · שאלון אבחון מסתעף (גל 15/10) ═══════════
@@ -157,14 +136,18 @@ h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;
    השאלה הראשונה היא המניע, השנייה מסתעפת לפי המניע, ושתיים אחרונות לכולם.
    התשובה למניע נשמרת גם בערך הקנוני של A (answers.q4), כדי שהרצפים ודף המידע ימשיכו לעבוד. */
 const COPY = {
-  eyebrow: 'אבחון אישי · מתחם H · קדימה צורן',
+  eyebrow: 'מתחם H · קדימה צורן',
   B1: 'לפני שמדברים על קרקע, מאבחנים את <span class="hl">הציפיות שלך</span>.',
   B2: 'לכל משקיע יש צורך אישי אחר. ארבע שאלות קצרות, ובסופן תשובה אישית: איפה יש התאמה לצורך האישי שלך, ומה עוד עליך לבדוק.',
   B3: 'לגלות מה הכסף שלי יכול להשיג כאן',
   trust: ['4 שאלות', 'פחות מדקה', 'אבחון אישי'],
   C1: 'האבחון שלך מוכן. נשאר רק לדעת למי הוא שייך.',
   C2: 'לטלפון הזה מגיע החלק שאי אפשר לכתוב במסך.',
-  C3: 'לחשיפת האבחון שלי',
+  C3: 'להראות לי איפה הכסף שלי יוצא לעבוד',
+  C3_AFTER: 'האבחון נפתח מיד אחרי הלחיצה.',
+  C_NAME: 'כך נפנה אליך באבחון ובשיחה.',
+  C_MAIL: 'גיבוי, למקרה שלא נתפוס אותך בטלפון.',
+  CONSENT: 'קראתי את <a href="/privacy-kadima/" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ואפשר ליצור איתי קשר בטלפון, בוואטסאפ ובמייל.',
 };
 const WORKER_URL = 'https://tom-funnel.tom-harush.workers.dev/lead';
 const RESULT_URL = '/b/p/';
@@ -187,30 +170,30 @@ const Q_MOTIVE = { key:'b1', title:'כשהכסף שלך יוצא לעבוד, מ�
 const Q_BRANCH = [
   { key:'b2', title:'השקעה עם תשואה גבוהה יותר, אבל עם פחות ודאות: זה מתאים לך?', options:[
     {t:'לא. ודאות קודמת לכל', mc:'השקעה מדויקת לטווח הארוך', v:1},
-    {t:'גם וגם', mc:'השקעה שתניב רווח בריא, עם מסמכים וגיבוי', v:2},
-    {t:'תלוי כמה גבוהה', v:1}]},
+    {t:'גם וגם', mc:'השקעה שתניב רווח בריא, עם מסמכים וגיבוי', v:2, pref:1},
+    {t:'תלוי כמה גבוהה', mc:'קודם רוצה לראות את המספרים', v:1}]},
   { key:'b2', title:'מה הדבר הראשון שהיית רוצה לראות במו עיניך?', options:[
-    {t:'את התוכנית ואת שלבי התכנון', v:2},
-    {t:'איך בדיוק נקבע המחיר', v:2},
-    {t:'מה קורה אם ארצה לצאת', v:1}]},
+    {t:'את התוכנית ואת שלבי התכנון', mc:'איפה המתחם עומד היום, ומה נשאר עד הבנייה', v:2, pref:1},
+    {t:'איך בדיוק נקבע המחיר', mc:'מי קבע אותו, ולפי מה', v:2},
+    {t:'מה קורה אם ארצה לצאת', mc:'איך יוצאים, ומה כתוב על זה בחוזה', v:1}]},
   { key:'b2', title:'לכמה זמן הכסף הזה יכול לצאת לעבוד?', options:[
-    {t:'עד 3 שנים', v:0},
-    {t:'3 עד 7 שנים', v:2},
-    {t:'גם יותר, אם זה נכון', v:2}]},
+    {t:'עד 3 שנים', mc:'כסף שצריך לחזור בקרוב', v:0},
+    {t:'3 עד 7 שנים', mc:'הקצב הטבעי של תכנון קרקע', v:2, pref:1},
+    {t:'גם יותר, אם זה נכון', mc:'כסף שאין צורך לגעת בו בינתיים', v:2}]},
   { key:'b2', title:'איך נוח לך להתחיל?', options:[
-    {t:'בסכום קטן, ולראות איך זה מתקדם', v:1},
-    {t:'מהלך אחד משמעותי', v:2},
-    {t:'עוד לא החלטתי', v:0}]},
+    {t:'בסכום קטן, ולראות איך זה מתקדם', mc:'קונים לפי מטר, בהיקף שנוח לך', v:1},
+    {t:'מהלך אחד משמעותי', mc:'הכסף כבר מחכה להחלטה', v:2, pref:1},
+    {t:'עוד לא החלטתי', mc:'את ההיקף בונים יחד בשיחה', v:0}]},
 ];
 /* canon = הנוסח הקנוני של A לשאלה 2 (מתי), כדי שהדוח והאותות שלו ימשיכו לעבוד */
 const Q_WHEN = { key:'b3', title:'מתי נכון לך להתחיל?', options:[
-  {t:'כבר עכשיו', v:2, canon:'מיד, אני מוכן להתקדם'},
-  {t:'בחודשים הקרובים', v:1, canon:'בחודשים הקרובים'},
-  {t:'רק בודקים בשלב הזה', v:0, canon:'רק בודק אפשרויות בשלב זה'}]};
+  {t:'כבר עכשיו', mc:'הכסף מוכן, וההחלטה קרובה', v:2, pref:1, canon:'מיד, אני מוכן להתקדם'},
+  {t:'בחודשים הקרובים', mc:'להבין עכשיו, להחליט בקרוב', v:1, canon:'בחודשים הקרובים'},
+  {t:'רק בודקים בשלב הזה', mc:'איסוף מידע, בלי התחייבות', v:0, canon:'רק בודק אפשרויות בשלב זה'}]};
 const Q_MONEY = { key:'b4', title:'הכסף כבר זמין?', options:[
-  {t:'כן, יושב ומחכה', v:2},
-  {t:'חלק כן, חלק בדרך', v:1},
-  {t:'עוד לא', v:0}]};
+  {t:'כן, יושב ומחכה', mc:'ובינתיים לא עושה כלום', v:2, pref:1},
+  {t:'חלק כן, חלק בדרך', mc:'אפשר להתחיל בחלק שכבר זמין', v:1},
+  {t:'עוד לא', mc:'נבדוק יחד מה נכון לך ומתי', v:0}]};
 
 /* ═══════════ מצב ═══════════ */
 const pickIdx = { b1:null, b2:null, b3:null, b4:null };
@@ -236,6 +219,10 @@ document.getElementById('cTrust').innerHTML = COPY.trust.map(t=>'<span>'+t+'</sp
 document.getElementById('cCapTitle').textContent = glue(COPY.C1);
 document.getElementById('cPhoneHint').textContent = glue(COPY.C2);
 document.getElementById('cCapCta').textContent = COPY.C3;
+document.getElementById('cAfter').textContent = glue(COPY.C3_AFTER);
+document.getElementById('cNameHint').textContent = glue(COPY.C_NAME);
+document.getElementById('cMailHint').textContent = glue(COPY.C_MAIL);
+document.getElementById('cConsent').innerHTML = COPY.CONSENT;
 
 /* ═══════════ רינדור שאלה ═══════════ */
 const mount = document.getElementById('qMount');
@@ -243,8 +230,8 @@ for(let i=0;i<TOTAL;i++){ const s=document.createElement('div'); s.className='sc
 function renderQ(i){
   const q = qAt(i), s = document.querySelector(`[data-screen="q${i}"]`);
   const sel = pickIdx[q.key];
-  s.innerHTML = `<div class="step-label">שאלה ${i+1} מתוך ${TOTAL}</div><div class="qtitle">${q.title}</div>
-    <div class="opts">${q.options.map((o,j)=>`<button class="opt${sel===j?' sel':''}" onclick="pick(${i},${j})"><span class="tick"></span><span class="txt">${o.t}${o.mc?'<span class="mc">'+o.mc+'</span>':''}</span></button>`).join('')}</div>`;
+  s.innerHTML = `<div class="qtitle">${glue(q.title)}</div>
+    <div class="opts" role="group">${q.options.map((o,j)=>`<button type="button" class="opt${sel===j?' sel':''}${o.pref?' pref':''}" aria-pressed="${sel===j}" onclick="pick(${i},${j})"><span class="tick" aria-hidden="true"></span><span class="txt">${o.t}${o.mc?'<span class="mc">'+glue(o.mc)+'</span>':''}</span></button>`).join('')}</div>`;
 }
 
 /* ═══════════ ניווט ═══════════ */
@@ -255,6 +242,8 @@ function show(name){
   document.getElementById('backBtn').classList.toggle('show', idx>0 && name!=='done');
   let pct = 0; if(name==='0') pct=4; else if(String(name).startsWith('q')) pct=((parseInt(String(name).slice(1))+1)/(TOTAL+1))*100; else if(name==='capture') pct=92; else if(name==='done') pct=100;
   document.getElementById('progBar').style.width = pct+'%';
+  const qn = String(name).startsWith('q') ? parseInt(String(name).slice(1))+1 : 0;
+  document.getElementById('progN').textContent = qn ? `${qn} מתוך ${TOTAL}` : (name==='capture' ? 'עוד רגע' : '');
   window.scrollTo(0,0);
 }
 function start(){ pxc('SurveyStart', {variant:VARIANT}); if(window.THG_FX) THG_FX('start'); idx=1; renderQ(0); show('q0'); }
@@ -263,7 +252,7 @@ function pick(qi, oi){
   const q = qAt(qi);
   pickIdx[q.key] = oi;
   if(qi===0 && pickIdx.__branch !== oi){ pickIdx.b2 = null; pickIdx.__branch = oi; }   // מניע אחר = ענף אחר
-  document.querySelectorAll(`[data-screen="q${qi}"] .opt`).forEach((b,k)=> b.classList.toggle('sel', k===oi));
+  document.querySelectorAll(`[data-screen="q${qi}"] .opt`).forEach((b,k)=>{ b.classList.toggle('sel', k===oi); b.setAttribute('aria-pressed', k===oi); });
   pxc('SurveyStep', {step:qi+1, variant:VARIANT});
   setTimeout(()=>{ if(qi < TOTAL-1){ idx = qi+2; renderQ(qi+1); show('q'+(qi+1)); } else { idx = TOTAL+1; show('capture'); } }, 260);
 }
@@ -292,8 +281,10 @@ function submitLead(){
   if(!name){ eN.textContent='נא למלא שם'; iN.classList.add('err'); ok=false; }
   if(!validPhone(phone)){ eP.textContent='מספר נייד לא תקין. צריך 10 ספרות שמתחילות ב־05'; iP.classList.add('err'); ok=false; }
   if(!validEmail(email)){ eE.textContent='נא למלא אימייל תקין'; iE.classList.add('err'); ok=false; }
-  if(!ok) return;
-  const btn=document.getElementById('submitBtn'); btn.disabled=true; btn.textContent='שולח...';
+  const eC=document.getElementById('eConsent'); eC.textContent='';
+  if(!document.getElementById('fConsent').checked){ eC.textContent='צריך לסמן את האישור כדי להמשיך'; ok=false; }
+  if(!ok){ const f=[iN,iP,iE].find(x=>x.classList.contains('err')) || document.getElementById('fConsent'); try{ f.focus(); }catch(_){} return; }
+  const btn=document.getElementById('submitBtn'); btn.disabled=true; btn.textContent='מרכיבים את האבחון…';
   const temp = temperature(), L = labels();
   const leadId = (window.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(16).slice(2));
   window.__lid = leadId; window.__email = email; window.__name = name;
@@ -305,7 +296,7 @@ function submitLead(){
     b1: L.mo.t, b2: L.br.t, b3: L.wh.t, b4: L.mn.t,       // התשובות של B כפי שנבחרו
   };
   const q_a = `[B · ${temp.toUpperCase()} · ${score()}/6] ` + [Q_MOTIVE.title+' → '+L.mo.t, Q_BRANCH[pickIdx.b1].title+' → '+L.br.t, Q_WHEN.title+' → '+L.wh.t, Q_MONEY.title+' → '+L.mn.t].join(' | ');
-  const payload = { lead_id: leadId, name, phone, email, temperature: temp, score: score(), q_a, answers, variant: VARIANT,
+  const payload = { lead_id: leadId, name, phone, email, temperature: temp, score: score(), q_a, answers, variant: VARIANT, consent: { privacy: true, contact: true, at: new Date().toISOString() },
     utm, ref_url: location.href, ts: new Date().toISOString(), source: utm.source || 'שאלון B', fbp: _ck('_fbp') || undefined, fbc: _fbc || undefined };
   try{ if(window.fbq) fbq('track','Lead', {content_name:'survey_b', temperature:temp, value: temp==='hot'?2:1, currency:'ILS'}, {eventID: leadId}); }catch(e){}
   pxc('SurveyComplete', {temperature:temp, score:score(), variant:VARIANT});
@@ -328,7 +319,7 @@ function routeTo(temp){
 show('0');
 </script>
 
-<div style="text-align:center;padding:18px 12px;font-size:11px;color:#8a8f98"><a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a> · © כל הזכויות שמורות</div>
+<div style="text-align:center;padding:18px 12px;font-size:13px;color:#5F646C"><a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a> · © כל הזכויות שמורות</div>
 <script src="/track.js" defer></script>
 </body>
 </html>
