@@ -31,25 +31,25 @@ body{font-family:'Heebo','Segoe UI',sans-serif;color:var(--ink);background:var(-
 .screen{display:none}
 .screen.active{display:block;animation:rise .42s cubic-bezier(.2,.7,.2,1)}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.ph{margin:0 -20px 20px;aspect-ratio:1080/640;background:var(--step) center/cover no-repeat}
+.ph{margin:0 -20px 20px;aspect-ratio:1200/640;background:var(--step) center/cover no-repeat}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
 h1{font-size:clamp(30px,7.4vw,46px);font-weight:900;line-height:1.12;letter-spacing:-.02em;margin-bottom:12px;text-wrap:balance}
 h1 .hl{color:var(--accent)}
 .sub{font-size:17px;line-height:1.6;margin-bottom:22px}
 .qtitle{font-size:24px;font-weight:900;line-height:1.25;letter-spacing:-.01em;margin:14px 0 18px}
 .opt{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:right;background:var(--paper);border:0;border-radius:14px;
-  padding:16px;margin-bottom:10px;cursor:pointer;font-family:inherit;font-size:17px;font-weight:700;color:var(--ink);
+  padding:16px;margin-bottom:12px;cursor:pointer;font-family:inherit;font-size:17px;font-weight:700;color:var(--ink);
+  box-shadow:0 1px 2px rgba(15,18,22,.06),0 4px 12px rgba(15,18,22,.07);   /* עומק עדין לכל תשובה (גל 18/10) */
   transition:background .16s,transform .16s,box-shadow .16s;position:relative}
-.opt:hover{background:var(--step)}
+.opt:hover{background:var(--step);box-shadow:0 2px 4px rgba(15,18,22,.07),0 8px 20px rgba(15,18,22,.09);transform:translateY(-1px)}
 .opt:active{transform:scale(.99)}
 .opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .opt .tick{width:24px;height:24px;border-radius:50%;border:2px solid #B9BEC6;flex:0 0 auto;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:background-color .16s,border-color .16s;background:#fff}
-.opt.sel{background:var(--tint);box-shadow:inset -4px 0 0 var(--accent)}
+.opt.sel{background:var(--tint);box-shadow:inset -4px 0 0 var(--accent),0 1px 2px rgba(15,18,22,.06),0 4px 12px rgba(194,21,28,.10)}
 .opt.sel .tick{background:var(--accent);border-color:var(--accent)}
 .opt.sel .tick::after{content:'';width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translateY(-1px)}
 .opt .txt{flex:1;line-height:1.35}
 .opt .mc{display:block;font-size:15px;font-weight:400;color:var(--ink-soft);margin-top:4px;line-height:1.45}
-.opt.pref .mc{color:var(--accent-mid);font-weight:700}
 .btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;background:var(--grad);color:#fff;border:none;border-radius:999px;
   padding:17px 22px;font-family:inherit;font-size:17px;font-weight:900;cursor:pointer;box-shadow:0 10px 26px rgba(194,21,28,.28);
   transition:transform .18s,box-shadow .18s;margin-top:6px} /* taste-skill-ignore: הצל והגרדיאנט של הכפתור הראשי הם חלק מספר המותג ומארכיטקטורת ה-CTA של גל */
@@ -100,7 +100,7 @@ h1 .hl{color:var(--accent)}
 
   <!-- פתיחה (B1, B2, B3) -->
   <div class="screen active" data-screen="0">
-    <div class="ph"><img src="/b/media/place-fields.webp" width="1080" height="640" alt="השדות של קדימה צורן מהאוויר, ובאופק קו הרקיע של השרון" fetchpriority="high"/></div>
+    <div class="ph"><img src="/b/media/field-gal-800.webp" srcset="/b/media/field-gal-800.webp 800w, /b/media/field-gal-1200.webp 1200w" sizes="(max-width:600px) 100vw, 560px" width="1200" height="640" alt="שדות מעובדים בקדימה צורן, במבט מלמעלה" fetchpriority="high"/></div>
     <h1 id="cH1"></h1>
     <div class="sub" id="cSub"></div>
     <button class="btn" onclick="start()"><span id="cCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></button>
@@ -163,8 +163,8 @@ if(PIXEL_ID){ fbq('init', PIXEL_ID); fbq('track','PageView'); }
 const Q_MOTIVE = { key:'b1', title:'כשהכסף שלך יוצא לעבוד, מה הכי חשוב לך?', options:[
   {t:'ודאות וביטחון', mc:'שכל מספר יהיה מגובה במסמך', canon:'ודאות וביטחון'},
   {t:'להבין לעומק לפני החלטה', mc:'לראות הכל, בלי חלקים חסרים', canon:'להבין לעומק לפני החלטה'},
-  {t:'תשואה גבוהה', mc:'שהכסף יגדל, ולא רק ישמור על ערכו', canon:'תשואה גבוהה'},
-  {t:'רף כניסה נמוך', mc:'להתחיל בלי לשים את כל הכסף', canon:'רף כניסה נמוך'},
+  {t:'תשואה בטוחה', mc:'שהכסף יגדל, ולא רק ישמור על ערכו', canon:'תשואה גבוהה'},
+  {t:'רף כניסה נמוך', mc:'להתחיל עם ההון שיש לי', canon:'רף כניסה נמוך'},
 ]};
 /* v = נקודות לניקוד (0 עד 2) */
 const Q_BRANCH = [

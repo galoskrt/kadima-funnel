@@ -261,7 +261,7 @@ footer .cr{margin-top:12px;font-size:var(--f-small)}
 <!-- 1. התוצאה (D1 עד D4): המקום, והכרטיס בתוכו -->
 <section class="hero" aria-labelledby="dH1">
   <div class="view">
-    <video id="heroV" autoplay muted playsinline preload="metadata" poster="/b/media/place-town-m.webp" aria-hidden="true"></video>
+    <video id="heroV" data-nomeasure autoplay muted playsinline preload="metadata" poster="/b/media/place-town-m.webp" aria-hidden="true"></video>
     <script>(function(){ var v=document.getElementById('heroV'), d=matchMedia('(min-width:820px)').matches; v.poster=d?'/b/media/place-town.webp':'/b/media/place-town-m.webp'; if(!matchMedia('(prefers-reduced-motion:reduce)').matches) v.src=d?'/b/media/place-town.mp4':'/b/media/place-town-m.mp4'; })();</script>
   </div>
   <div class="wrap">
@@ -584,13 +584,17 @@ $('jform').addEventListener('submit', async e => {
   let sent = false;
   try { const r = await fetch(WORKER + '/callback', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body }); sent = r.ok; } catch(err) {}
   if (!sent) { try { navigator.sendBeacon && navigator.sendBeacon(WORKER + '/callback', new Blob([body], {type:'text/plain;charset=UTF-8'})); } catch(err) {} }
-  try { fbq('track','Schedule',{content_name:'b_callback',variant:'b',window:w}); } catch(err) {}
+  /* ההמרה (Schedule) נשלחת מדף התודה ומהשרת עם אותו event_id, כדי שמטא יספור אותה פעם אחת */
   const num = fmtPhone(alt || myPhone());
   set('jDH', COPY.JDH);
   set('jDP', COPY.JDP.replace('{w}', COPY.WINS[w]).replace('{n}', num || 'שהזנת'));
   $('jDN').innerHTML = COPY.JDN.replace('{p}', '<b>' + COPY.PHONE + '</b>') + ' <a class="link" href="' + $('dSave').href + '" download="kadima-h.vcf">שמירה באנשי הקשר</a>';
   $('jform').hidden = true; $('jDone').hidden = false;
   $('float').classList.remove('on'); window.__cbDone = true;
+  /* דף התודה של B (גל 18/10). המספר האחר לא עובר בכתובת (הכתובת מגיעה לפיקסל), רק בזיכרון הלשונית */
+  try { sessionStorage.setItem('b_cb', JSON.stringify({ w, alt: alt || '', at: Date.now() })); } catch(err) {}
+  const tq = new URLSearchParams({ w }); if (LID) tq.set('lid', LID);
+  setTimeout(() => { try { window.top.location.href = '/b/t/?' + tq.toString(); } catch(err) { location.href = '/b/t/?' + tq.toString(); } }, 350);
 });
 
 /* ═══════════ תנועה ═══════════ */

@@ -80,7 +80,8 @@
      את הסרגל, ולכן נצברות גם שניות צפייה אמיתיות. */
   var vid = { on:false, pct:0, secs:0, len:0, done:false };
   function watch(v){
-    if(!v || v.__thg) return; v.__thg = 1;
+    /* סרטון רקע מעוצב (data-nomeasure, למשל לולאת הרחפן בדף התוצאה של B) אינו צפייה בסרטון ולא נמדד */
+    if(!v || v.__thg || v.hasAttribute('data-nomeasure')) return; v.__thg = 1;
     var last = null;
     v.addEventListener('play', function(){ vid.on = true; last = v.currentTime; });
     v.addEventListener('pause', function(){ last = null; });
@@ -118,7 +119,9 @@
       else fetch(W + path, { method:'POST', body: body, keepalive:true });
     } catch(e){}
   }
-  var PG = location.pathname.indexOf('/b/p') > -1 ? 'b'
+  /* tnx = דף התודה (B ב-/b/t, A ב-/tnxhpage): התנהגות פר ליד כשיש lid בכתובת (גל 18/10) */
+  var PG = (location.pathname.indexOf('/b/t') > -1 || location.pathname.indexOf('/tnxhpage') > -1) ? 'tnx'
+         : location.pathname.indexOf('/b/p') > -1 ? 'b'
          : location.pathname.indexOf('/cpage') > -1 ? 'cold'
          : location.pathname.indexOf('/hpage') > -1 ? 'hot'
          : location.pathname.indexOf('/info') > -1 ? 'info' : '';   /* דף המידע מההודעה המיידית (גל 13/10) */
@@ -173,5 +176,7 @@
   addEventListener('visibilitychange', function(){ if(document.hidden) flush(); });
   /* רשת ביטחון למי שהדפדפן שלו לא הספיק לשלוח ביציאה */
   /* דף המידע (מההודעה המיידית) הוא לא חלק ממשפך השאלון: לא סופרים אותו כביקור במונים */
-  if (PG !== 'info') setTimeout(function(){ fx('view'); }, 800);
+  /* ב-B צפייה נספרת רק בשאלון עצמו (/b/), לא בדף התוצאה ולא בדף התודה, כדי ש"צפיות" יהיו צפיות בשאלון */
+  var B_SURVEY = VAR === 'b' && /^\/b\/?(index\.html)?$/.test(location.pathname);
+  if (PG !== 'info' && (!VAR || B_SURVEY)) setTimeout(function(){ fx('view'); }, 800);
 })();

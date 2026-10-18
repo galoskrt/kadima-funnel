@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#F6F7F9"/>
+<title>השיחה שלך שמורה · מתחם H · קבוצת תום הרוש</title>
+<meta name="robots" content="noindex"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap');
+/* דף התודה של גרסה B (גל 18/10). שפת העיצוב לפי DESIGN.md של תום, כמו דף התוצאה. */
+:root{
+  --accent:#C2151C; --accent-deep:#7F0224; --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);
+  --ground:#FFFFFF; --paper:#F6F7F9; --step:#ECEEF1; --tint:#FBF1F1; --ink:#0F1216; --ink-soft:#4A4F57; --ok:#157A3A;
+  --f-head:clamp(28px,6vw,40px); --f-lead:clamp(18px,2vw,21px); --f-body:17px; --f-small:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Heebo','Segoe UI',sans-serif;color:var(--ink);background:var(--paper);font-size:var(--f-body);line-height:1.6;
+  min-height:100dvh;display:flex;flex-direction:column;align-items:center;padding:16px 14px 32px;touch-action:manipulation;overflow-x:clip}
+.card{background:var(--ground);border-radius:18px;width:min(560px,100%);padding:28px 22px 26px;text-align:center}
+.logo{height:46px;width:auto;margin:0 auto 22px;display:block}
+.check{width:72px;height:72px;border-radius:50%;background:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+.check svg{width:34px;height:34px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+@keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+h1{font-size:var(--f-head);font-weight:900;line-height:1.12;letter-spacing:-.02em;text-wrap:balance}
+.sub{font-size:var(--f-lead);font-weight:700;line-height:1.5;margin-top:12px;text-wrap:pretty}
+.sub b{white-space:nowrap}
+.num{direction:ltr;unicode-bidi:isolate;white-space:nowrap;font-variant-numeric:tabular-nums}
+.btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;background:var(--grad);color:#fff;border:0;border-radius:999px;padding:17px 22px;
+  font:900 17px/1.3 'Heebo',sans-serif;text-decoration:none;cursor:pointer;margin-top:22px;box-shadow:0 10px 26px rgba(194,21,28,.28);transition:transform .18s,box-shadow .18s} /* taste-skill-ignore */
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(194,21,28,.38)} /* taste-skill-ignore */
+.btn:hover .arw{transform:translateX(-5px)}
+.btn:focus-visible,.link:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.arw{width:34px;height:11px;flex:0 0 auto;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}
+.after{font-size:var(--f-small);color:var(--ink-soft);margin-top:10px}
+.next{text-align:right;background:var(--paper);border-radius:14px;padding:18px 18px 8px;margin-top:24px}
+.next h2,.prep h2{font-size:var(--f-lead);font-weight:900;line-height:1.3;margin-bottom:10px}
+.next ol{list-style:none;counter-reset:s}
+.next li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;margin-bottom:12px;line-height:1.55;text-wrap:pretty}
+.next li::before{content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:900;font-size:var(--f-small);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.prep{text-align:right;background:var(--tint);border-radius:14px;padding:16px 18px;margin-top:12px}
+.prep p{text-wrap:pretty}
+.alt{margin-top:20px;font-size:var(--f-small)}
+.link{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.social{display:flex;justify-content:center;gap:10px;margin-top:18px}
+.social a{width:48px;height:48px;display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.social a:hover{transform:translateY(-3px)}
+.social lottie-player{width:100%;height:100%}
+.disc{font-size:var(--f-small);color:var(--ink-soft);line-height:1.6;margin-top:18px;max-width:520px;text-align:center}
+.disc b{color:var(--ink)}
+.cr{text-align:center;padding:16px 12px 0;font-size:var(--f-small);color:#5F646C}
+.cr a{color:inherit;text-decoration:none}
+@media(prefers-reduced-motion:reduce){.check{animation:none}.btn,.arw,.social a{transition:none}}
+</style>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" defer></script>
+</head>
+<body>
+<main class="card">
+  <img class="logo" src="/logo.png" width="138" height="46" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/>
+  <div class="check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></div>
+  <h1 id="tH"></h1>
+  <p class="sub" id="tS"></p>
+
+  <a class="btn" id="tSave" href="#" download="kadima-h.vcf"><span id="tCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a>
+  <p class="after" id="tAfter"></p>
+
+  <section class="next" aria-labelledby="tNextH">
+    <h2 id="tNextH">מה קורה עכשיו</h2>
+    <ol id="tSteps"></ol>
+  </section>
+
+  <section class="prep" aria-labelledby="tPrepH">
+    <h2 id="tPrepH"></h2>
+    <p id="tPrep"></p>
+  </section>
+
+  <p class="alt"><a class="link" id="tWa" href="https://wa.me/972533025464" target="_blank" rel="noopener" onclick="pxContact()"></a></p>
+
+  <div class="social">
+    <a href="https://wa.me/972533025464" target="_blank" rel="noopener" aria-label="וואטסאפ" onclick="pxContact()"><lottie-player src="/lot-s-wa.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+    <a href="https://www.instagram.com/tom_harush/" target="_blank" rel="noopener" aria-label="אינסטגרם"><lottie-player src="/lot-s-ig.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+    <a href="https://www.facebook.com/appartmentforsaleinramatgan" target="_blank" rel="noopener" aria-label="פייסבוק"><lottie-player src="/lot-s-fb.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+  </div>
+</main>
+<p class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b> הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.</p>
+<p class="cr">© הקרן להשבחת הון ונכסים בע״מ מקבוצת תום הרוש · <a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener">נבנה על ידי <b>דיוק דיגיטלי</b></a></p>
+
+<script>
+/* ═══════════ דף התודה של B · הקופי (מזהי שולחן הקופי: G) ═══════════ */
+const COPY = {
+  H: 'השיחה שלך שמורה.',
+  S: 'נציג מהצוות שלנו יחזור אליך {w}, למספר {n}.',
+  S_NO_W: 'נציג מהצוות שלנו יחזור אליך בקרוב.',
+  PHONE: '053-302-5464',
+  CTA: 'שמירת המספר שלנו באנשי הקשר',
+  AFTER: 'ככה השיחה מ־053-302-5464 לא תיפול על מספר לא מוכר.',
+  STEPS: ['בחלון שבחרת מגיעה שיחה מ־053-302-5464.', 'בשיחה משלימים את האבחון: איזה היקף מתאים לך, ובאיזה לוח זמנים.', 'אם יש התאמה, קובעים פגישה אישית עם תום, מול המסמכים.'],
+  PREP_H: 'כדי שהשיחה תלך ישר לעניין',
+  PREP: 'כדאי לחשוב מראש על ההיקף שנוח לך ועל אופק הזמן. ככה מדברים מהדקה הראשונה על המספרים שרלוונטיים לך.',
+  WA: 'יש שאלה לפני השיחה? אפשר לכתוב לנו בוואטסאפ',
+  WINS: { morning: 'בבוקר, בין 09:00 ל־12:00', noon: 'בצהריים, בין 12:00 ל־16:00', evening: 'בערב, בין 16:00 ל־20:00' },
+};
+function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g,'$1$2 '); const i=t.lastIndexOf(' '); return i>0 ? t.slice(0,i)+' '+t.slice(i+1) : t; }
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nums = h => h.replace(/0\d{2}-\d{3}-\d{4}/g, m => '<span class="num">' + m + '</span>');   /* מספר טלפון לא נשבר בין שורות */
+function topQS(){ try{ return window.top.location.search || location.search; }catch(e){ return location.search; } }
+const Q = new URLSearchParams(topQS()), LID = Q.get('lid') || '';
+function fmtPhone(p){ let d = String(p||'').replace(/\D/g,''); if (d.startsWith('972')) d = '0' + d.slice(3); return d.length === 10 ? d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6) : ''; }
+(function(){
+  let cb = {}; try { cb = JSON.parse(sessionStorage.getItem('b_cb') || '{}') || {}; } catch(e){}
+  let formPhone = ''; try { const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); const r = a.slice().reverse().find(x => !LID || x.lead_id === LID); formPhone = r ? r.phone : ''; } catch(e){}
+  const w = COPY.WINS[Q.get('w')] ? Q.get('w') : (COPY.WINS[cb.w] ? cb.w : '');
+  const n = fmtPhone(cb.alt || formPhone);
+  $('tH').textContent = COPY.H;
+  if (w && n) $('tS').innerHTML = esc(glue(COPY.S)).replace('{w}', esc(COPY.WINS[w])).replace('{n}', '<b class="num">' + esc(n) + '</b>');
+  else if (w) $('tS').textContent = glue(COPY.S.replace('{w}', COPY.WINS[w]).replace(', למספר {n}', ''));
+  else $('tS').textContent = glue(COPY.S_NO_W);
+  $('tCta').textContent = COPY.CTA; $('tAfter').innerHTML = nums(esc(glue(COPY.AFTER)));
+  $('tSteps').innerHTML = COPY.STEPS.map(s => '<li><span>' + nums(esc(glue(s))) + '</span></li>').join('');
+  $('tPrepH').textContent = COPY.PREP_H; $('tPrep').textContent = glue(COPY.PREP); $('tWa').textContent = COPY.WA;
+  const vcf = 'BEGIN:VCARD\nVERSION:3.0\nFN:קדימה צורן · מתחם H\nORG:קבוצת תום הרוש\nTEL;TYPE=CELL:+972' + COPY.PHONE.replace(/\D/g,'').replace(/^0/,'') + '\nEND:VCARD';
+  $('tSave').href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcf);
+})();
+
+/* ═══════════ המרות ═══════════
+   Schedule = בחירת השעה, ההמרה של B. אותו event_id שהשרת שולח (schedule:<lead_id>), כך שמטא סופר פעם אחת.
+   Contact = לחיצה על וואטסאפ מדף התודה, כמו בדף התודה של A. */
+const PIXEL_ID = '1002428386157716';
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', PIXEL_ID); fbq('track', 'PageView');
+(function(){ try { const k = 'b_sched_' + (LID || 'x'); if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1');
+  fbq('track', 'Schedule', { content_name:'b_thankyou', variant:'b' }, LID ? { eventID: 'schedule:' + LID } : undefined); } catch(e){} })();
+function pxContact(){ try { fbq('track', 'Contact', { content_name:'b_thankyou_wa', variant:'b' }); } catch(e){} }
+</script>
+<script src="/track.js" defer></script>
+</body>
+</html>
