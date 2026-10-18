@@ -3,690 +3,740 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="theme-color" content="#FFFFFF"/>
+<meta name="theme-color" content="#F6F7F9"/>
 <title>בדיקת ההתאמה שלך · מתחם H · קבוצת תום הרוש</title>
 <meta name="robots" content="noindex"/>
-<link rel="preload" as="image" href="/b/media/hero-land-m.webp" media="(max-width:819px)"/>
-<link rel="preload" as="image" href="/b/media/hero-land.webp" media="(min-width:820px)"/>
+<link rel="preload" as="image" href="/b/media/hero-land.webp"/>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
 :root{
-  --accent:#C2151C; --accent-mid:#A20C22; --accent-deep:#7F0224; --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);
-  --ground:#FFFFFF; --paper:#F6F7F9; --step:#ECEEF1; --tint:#FBF1F1; --night:#0F1216;
-  --ink:#0F1216; --ink-soft:#4A4F57; --on-night:#FFFFFF; --on-night-soft:#C9CDD3; --ok:#157A3A; --field:#D5D9DF;
-  --g:18px; --col:720px; --sec:clamp(72px,12vw,150px); --r:18px;
-  --f-display:clamp(30px,6.4vw,54px); --f-head:clamp(26px,4.2vw,40px); --f-lead:clamp(18px,2vw,21px); --f-body:17px; --f-small:14px;
+  --bg:#F6F7F9; --gray:#ECEEF1; --card:#FFFFFF; --dark:#0f1216; --dark2:#181c22;
+  --ink:#0f1216; --muted:rgba(15,18,22,.60); --faint:rgba(15,18,22,.42);
+  --line:rgba(15,18,22,.10); --line-r:rgba(194,21,28,.20); --dline:rgba(255,255,255,.12);
+  --accent:#C2151C; --accent2:#7F0224; --green:#157a3a; --gold:#B8892B;
+  --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);
+  --tint:rgba(194,21,28,.055); --tintg:rgba(21,122,58,.07);
+  --sh:0 14px 44px rgba(16,16,16,.10); --sh-sm:0 6px 20px rgba(16,16,16,.07); --wa:#25d366;
+  --rad:18px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;scroll-padding-top:72px;scroll-padding-bottom:96px}
-body{font-family:'Heebo','Segoe UI',sans-serif;color:var(--ink);background:var(--ground);touch-action:manipulation;font-size:var(--f-body);line-height:1.6;overflow-x:clip}
-img,video{max-width:100%;display:block}
-a{color:inherit}
-.wrap{max-width:1120px;margin:0 auto;padding:0 var(--g)}
-.col{max-width:var(--col);margin:0 auto}
-.sec{padding:var(--sec) 0}
-.paper{background:var(--paper)}
-.night{background:var(--night);color:var(--on-night)}
-h2{font-size:var(--f-head);font-weight:900;line-height:1.15;letter-spacing:-.015em;text-wrap:balance}
-.lead{font-size:var(--f-lead);font-weight:700;line-height:1.5;margin-top:14px;text-wrap:pretty}
-p{text-wrap:pretty}
-.soft{color:var(--ink-soft)}
-.night .soft{color:var(--on-night-soft)}
-
-/* כותרת עליונה: לוגו ופעולה משנית אחת */
-.hdr{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);transition:box-shadow .2s}
-.hdr.sc{box-shadow:0 6px 18px rgba(15,18,22,.08)}
-.hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
-.hdr img{height:40px;width:auto}
-.btn2{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--accent);color:var(--accent);background:#fff;border-radius:999px;padding:9px 16px;font:900 14px/1 'Heebo',sans-serif;text-decoration:none;cursor:pointer;transition:background .16s,color .16s}
-.btn2:hover{background:var(--accent);color:#fff}
-.btn2:focus-visible,.btn:focus-visible,.win input:focus-visible + label,.vcover:focus-visible,.link:focus-visible,.faq summary:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-
-/* הכפתור הראשי: אחד למסך, היחיד עם חץ וצל (ספר המותג + ארכיטקטורת ה-CTA של גל) */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--grad);color:#fff;border:0;border-radius:999px;padding:17px 26px;
-  font:900 17px/1.3 'Heebo',sans-serif;text-decoration:none;cursor:pointer;box-shadow:0 10px 26px rgba(194,21,28,.28);transition:transform .18s,box-shadow .18s} /* taste-skill-ignore */
-.btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(194,21,28,.38)} /* taste-skill-ignore */
-.btn:hover .arw{transform:translateX(-5px)}
-.btn:active{transform:none}
-.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
-.btn.full{width:100%}
-.arw{width:34px;height:11px;flex:0 0 auto;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}
-.link{font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;background:none;border:0;font-family:inherit;font-size:inherit;color:inherit}
-
-/* ── 1. התוצאה: המקום, והכרטיס בתוכו ── */
-.hero{position:relative;background:var(--paper);padding-bottom:var(--sec)}
-.view{position:relative;height:min(34svh,330px);overflow:hidden;background:#cfd8de}
-.view video,.view img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
-.vpause{position:absolute;top:12px;inset-inline-end:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(15,18,22,.55);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .16s}
-.vpause:hover{background:rgba(15,18,22,.75)}
-.vpause:focus-visible{outline:3px solid #fff;outline-offset:2px}
-.vpause svg{width:18px;height:18px;fill:currentColor}
-.vpause .pl,.vpause.off .ps{display:none}
-.vpause.off .pl{display:inline}
-.res{position:relative;margin:-64px auto 0;max-width:760px;background:#fff;border-radius:var(--r);padding:28px 22px 26px}
-.res h1{font-size:var(--f-display);font-weight:900;line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
-.res h1 .nm{color:var(--accent)}
-.pts{list-style:none;margin:22px 0 0;display:grid;gap:14px}
-.pts li{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;font-size:var(--f-body);line-height:1.55}
-.pts .ic{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px}
-.pts .ok .ic{background:var(--ok)}
-.pts .ic svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.pts .q{background:var(--tint);border-radius:14px;padding:12px}
-.pts .q .ic{background:var(--accent);color:#fff;font-weight:900;font-size:14px}
-.callp{margin-top:18px;font-size:var(--f-lead);font-weight:700;line-height:1.5}
-.res .btn{margin-top:20px;width:100%}
-.numline{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:center;font-size:var(--f-small);color:var(--ink-soft)}
-.numline b{color:var(--ink);direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
-
-/* ── 2. הסרטון: כיסוי מעוצב, טלפון ומחשב ── */
-.vsl-h{text-align:center}
-.vcover{position:relative;margin:28px auto 0;max-width:960px;border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--night);color:#fff;display:grid;border:0;width:100%;text-align:right;font-family:inherit}
-.vcover img{width:100%;height:100%;object-fit:cover}
-.vcover .vt{font-size:var(--f-display);font-weight:900;line-height:1.05;letter-spacing:-.02em;text-wrap:balance}
-.vcover .vs{font-size:var(--f-lead);font-weight:700;color:var(--on-night-soft);margin-top:10px}
-.vcover .play{width:74px;height:74px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex:0 0 auto;transition:transform .2s}
-.vcover .play svg{width:26px;height:26px;fill:#fff;margin-inline-end:-4px}
-.vcover:hover .play{transform:scale(1.08)}
-.vcover .meta{display:flex;align-items:center;gap:16px;margin-top:22px}
-.vcover .meta span{font-size:var(--f-small);font-weight:700;color:var(--on-night-soft)}
-/* טלפון: תמונה למעלה, טקסט על שדה כהה למטה */
-.vcover{grid-template-rows:auto auto}
-.vcover .vimg,.vcover .vtxt,.vcover .vt,.vcover .vs{display:block}
-.vcover .vimg{aspect-ratio:900/720;overflow:hidden}
-.vcover .vimg img{object-position:50% 30%}
-.vcover .vtxt{padding:22px 20px 24px}
-@media(min-width:820px){
-  /* במחשב: הגרפיקה של גל, 16:9, עם הטקסט בתוכה (נבנית ב-src/vsl-cover). בטלפון: התמונה למעלה והטקסט מתחת, חי. */
-  .vcover{display:block;aspect-ratio:16/9}
-  .vcover .vimg{aspect-ratio:auto;height:100%}
-  .vcover .vtxt{display:none}
-}
-.vmodal{position:fixed;inset:0;z-index:300;display:none;overscroll-behavior:contain;align-items:center;justify-content:center;background:rgba(6,7,10,.94);padding:16px}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:'Heebo','Assistant','Segoe UI',sans-serif;color:var(--ink);background:var(--bg);line-height:1.7;overflow-x:clip}
+.wrap{max-width:840px;margin:0 auto;padding:0 20px}
+img{max-width:100%;display:block}
+.arw{width:36px;height:11px;stroke:currentColor;stroke-width:1.5;fill:none;flex:0 0 auto;stroke-linecap:round;stroke-linejoin:round}
+/* section backgrounds for rhythm */
+.sec{padding:52px 0}
+.sec-gray{background:var(--gray)}
+.sec-dark{background:var(--dark);color:#fff}
+.sec-tint{background:linear-gradient(180deg,transparent,var(--tint),transparent)}
+.sec-tintg{background:linear-gradient(180deg,transparent,var(--tintg),transparent)}
+/* header */
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:.3s}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
+header img{height:42px}
+.h-cta{display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:13.5px;padding:9px 17px;border-radius:11px;box-shadow:0 6px 18px rgba(194,21,28,.28);transition:.16s}
+.h-cta:hover{transform:translateY(-1px)}
+.h-cta .arw{width:24px}
+/* hero */
+.hero{position:relative;text-align:center;overflow:hidden;isolation:isolate;color:#fff}
+.hero-bg{position:absolute;inset:0;z-index:-1}
+.hero-bg img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,17,22,.34),rgba(14,17,22,.18) 45%,rgba(14,17,22,.52))}
+.hero-inner{padding:72px 0 58px;background:radial-gradient(ellipse 92% 76% at 50% 44%,rgba(8,10,14,.48),transparent 72%)}
+.hero h1{text-shadow:0 2px 30px rgba(0,0,0,.6),0 1px 4px rgba(0,0,0,.45)}
+.hero .sub{text-shadow:0 1px 14px rgba(0,0,0,.5)}
+.hero .eyebrow{text-shadow:none}
+.hero .eyebrow{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff}
+.hero h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.4)}
+.hero .hl{background:linear-gradient(135deg,#ff6167,#ff9a45);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .hl-g{color:#63e487}
+.hero .sub{color:rgba(255,255,255,.92)}
+.hero .note{color:rgba(255,255,255,.76)}
+.trustband{background:#fff;border-bottom:1px solid var(--line);padding:22px 0}
+/* hero with VSL (hot, no bg image) */
+.hero-v{position:relative;text-align:center;padding:46px 0 34px;background:radial-gradient(ellipse 70% 60% at 76% -12%,rgba(194,21,28,.10),transparent 60%),radial-gradient(ellipse 60% 50% at 8% 112%,rgba(21,122,58,.07),transparent 55%),var(--bg)}
+.hero-v h1{color:var(--ink);text-shadow:none;font-size:40px;line-height:1.14;margin-bottom:14px}
+.hero-v .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-v .sub-v{font-size:17.5px;color:var(--muted);max-width:600px;margin:0 auto 24px;font-weight:500}
+.vsl{max-width:720px;margin:0 auto 24px;background:#0f1216;border-radius:20px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:var(--sh);position:relative;overflow:hidden;cursor:pointer;border:1px solid var(--line)}
+.vsl-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 26%;z-index:0}
+.vsl::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,18,22,.28),rgba(15,18,22,.66));z-index:1}
+.vsl .play,.vsl .vt,.vsl small{z-index:2}
+.vsl .play{position:relative;width:72px;height:72px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 10px 30px rgba(194,21,28,.5);transition:.2s}
+.vsl:hover .play{transform:scale(1.08)}
+.vsl .play::after{content:'';border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent #fff;margin-right:-4px}
+.vsl .vt{position:relative;font-weight:800;font-size:18px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.vsl small{position:relative;opacity:.9;font-size:13px;margin-top:5px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+/* vertical-VSL modal (reels plays big only on click; page footprint stays the 16:9 card) */
+.vmodal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(6,7,10,.93);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:16px}
 .vmodal.on{display:flex}
-.vmodal-video{height:min(84vh,860px);width:auto;max-width:94vw;aspect-ratio:9/16;background:#000;border-radius:16px;display:block}
-.vmodal-x{position:absolute;top:16px;left:16px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.16);border:0;color:#fff;font-size:22px;cursor:pointer}
-
-/* ── 3. הקיר: מסמך מודפס, חתוך בתחתית ── */
-.wall{position:relative;overflow:hidden;padding:var(--sec) 0 0;background:var(--accent-deep);color:#fff}
-.wall h2{color:#fff}
-.wall .lead{color:#F3D6D8}
-.doc{position:relative;margin:40px auto 0;max-width:720px;background:#FAFAF9;color:var(--ink);border-radius:6px 6px 0 0;padding:34px 28px 64px;transform:rotate(-1deg);transform-origin:50% 0}
-.doc .dh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:var(--f-small);font-weight:700;color:var(--ink-soft);padding-bottom:16px;margin-bottom:8px;background:linear-gradient(var(--step),var(--step)) bottom/100% 2px no-repeat}
-.doc ol{list-style:none;counter-reset:d}
-.doc li{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:18px 0;align-items:start}
-.doc li + li{background:linear-gradient(var(--step),var(--step)) top/100% 2px no-repeat}
-.doc .seal{width:44px;height:44px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center}
-.doc .seal svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.doc b{display:block;font-size:var(--f-lead);line-height:1.4}
-.doc .src{font-size:var(--f-small);color:var(--ink-soft);margin-top:4px}
-.doc figure{margin-top:12px;border-radius:10px;overflow:hidden;background:var(--paper)}
-.doc figure img{width:100%;height:auto}
-.doc .foot{margin-top:18px;font-weight:700}
-
-/* ── 4. ציר הזמן: JET שמתמלא בגלילה ── */
-.jtl{position:relative;list-style:none;margin:40px auto 0;max-width:720px;padding-inline-start:44px}
-.jtl-rail,.jtl-fill{position:absolute;inset-inline-start:15px;top:8px;width:4px;border-radius:4px}
-.jtl-rail{bottom:8px;background:var(--step)}
-.jtl-fill{height:0;background:var(--accent);transition:height .12s linear}
-.jtl-item{position:relative;padding:0 0 30px}
-.jtl-item:last-child{padding-bottom:0}
-.jtl-node{position:absolute;inset-inline-start:-44px;top:0;width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid var(--step);display:flex;align-items:center;justify-content:center;transition:background .3s,border-color .3s}
-.jtl-node svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .3s}
-.jtl-item.done.on .jtl-node{background:var(--ok);border-color:var(--ok)}
-.jtl-item.done.on .jtl-node svg{opacity:1}
-.jtl-item.here .jtl-node{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 7px rgba(194,21,28,.16)}
-.jtl-item.here.on .jtl-node{animation:beat 1.8s ease-in-out infinite}
-@keyframes beat{0%,100%{box-shadow:0 0 0 6px rgba(194,21,28,.18)}50%{box-shadow:0 0 0 12px rgba(194,21,28,.06)}}
-.jtl-body h3{font-size:var(--f-lead);font-weight:900;line-height:1.3;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.jtl-body p{font-size:var(--f-body);color:var(--ink-soft);margin-top:4px}
-.jtl-item.next .jtl-body h3{color:var(--ink-soft)}
-.here-tag{font-size:var(--f-small);font-weight:900;color:#fff;background:var(--accent);border-radius:999px;padding:3px 12px}
-.jtl-item.here .jtl-body{background:var(--tint);border-radius:14px;padding:12px 14px;margin-top:-6px}
-.jtl-item.here .jtl-body p{color:var(--ink)}
-
-/* ── 5. היישוב לפניך: תמונה רחבה, אריח מפה, עובדות ── */
-.town-grid{display:grid;gap:16px;margin-top:36px}
-.town-ph{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3}
-.town-ph img{width:100%;height:100%;object-fit:cover}
-.town-map{border-radius:var(--r);background:var(--paper);padding:14px}
-.town-map img{width:100%;height:auto;border-radius:10px}
-.facts{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px;margin-top:24px}
-.facts b{display:block;font-size:var(--f-head);font-weight:900;line-height:1.05;letter-spacing:-.02em;color:var(--accent-deep)}
-.facts span{font-size:var(--f-small);color:var(--ink-soft);line-height:1.45;display:block;margin-top:4px}
-.note{font-size:var(--f-small);color:var(--ink-soft);margin-top:14px}
-@media(min-width:900px){.town-grid{grid-template-columns:1.6fr 1fr;align-items:start}.town-ph{aspect-ratio:16/10}}
-
-/* ── 6. היציאה ── */
-.exit{font-size:var(--f-lead);font-weight:700;line-height:1.5;margin-top:16px;text-wrap:pretty}
-
-/* ── 7. הביקורות (פרק כהה) ── */
-.gbadge{display:flex;align-items:center;gap:14px;margin-top:18px;flex-wrap:wrap}
-.gbadge .gw{font:700 21px/1 Arial,Helvetica,sans-serif;letter-spacing:-.5px;direction:ltr}
-.gbadge .stars{display:flex;gap:3px;direction:ltr}
-.gbadge .stars svg{width:20px;height:20px;fill:#FBBC05}
-.gbadge b{font-size:var(--f-lead)}
-.rgal{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:30px}
-.rgal .rev{width:100%;height:auto;border-radius:12px;background:#fff}
-.rgal{grid-template-columns:1fr}
-.rgal:not(.all) .rev:nth-child(n+4){display:none}
-@media(min-width:820px){.rgal{grid-template-columns:repeat(3,1fr);gap:16px}.rgal:not(.all) .rev:nth-child(n+4){display:block}.rgal:not(.all) .rev:nth-child(n+7){display:none}}
-.more{margin-top:24px;text-align:center}
-.night .btn2{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
-.night .btn2:hover{background:#fff;color:var(--night)}
-
-/* ── 8. תום ── */
-.tom{display:grid;gap:26px;align-items:center}
-.tom .tph{border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;max-width:420px;width:100%;justify-self:center;background:var(--step)}
-.tom .tph img{width:100%;height:100%;object-fit:cover}
-.tom .sig{margin-top:18px;font-size:var(--f-lead);font-weight:900;color:var(--accent)}
-@media(min-width:820px){.tom{grid-template-columns:1fr 1fr;gap:56px}}
-
-/* ── 9. מתי לחזור אליך: כרטיס על תמונה ── */
-.join{position:relative;background:var(--paper);padding-bottom:var(--sec)}
-.join .jph{height:min(52svh,460px);overflow:hidden}
-.join .jph img{width:100%;height:100%;object-fit:cover}
-.jcard{position:relative;margin:-110px auto 0;max-width:640px;background:#fff;border-radius:var(--r);padding:28px 22px 26px}
-.jcard h2{font-size:var(--f-head)}
-.jcard .lead{font-weight:400;font-size:var(--f-body);margin-top:10px}
-.mynum{margin-top:14px;background:var(--paper);border-radius:14px;padding:12px 14px;font-size:var(--f-small)}
-.mynum b{font-size:var(--f-lead);direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;color:var(--ink)}
-.wins{display:grid;gap:10px;margin-top:18px;border:0}
-.win label{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border-radius:14px;padding:16px;cursor:pointer;transition:background .16s}
-.win label:hover{background:var(--step)}
-.win input{position:absolute;opacity:0;pointer-events:none}
-.win .wn{font-size:var(--f-lead);font-weight:900}
-.win .wt{font-size:var(--f-small);color:var(--ink-soft);font-variant-numeric:tabular-nums}
-.win input:checked + label{background:var(--tint);box-shadow:inset -4px 0 0 var(--accent)}
-.win input:checked + label .wn{color:var(--accent-deep)}
-.field{margin-top:16px}
-.field label{display:block;font-size:var(--f-small);font-weight:700;margin-bottom:6px}
-.field input{width:100%;border:1.5px solid var(--field);border-radius:14px;padding:14px 15px;font:400 17px 'Heebo',sans-serif;color:var(--ink);direction:ltr;text-align:right;outline:none}
-.field input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.1)}
-.hint{font-size:var(--f-small);color:var(--ink-soft);margin-top:6px}
-.consent{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:var(--f-body);font-weight:700;line-height:1.5;cursor:pointer}
-.consent input{width:22px;height:22px;flex:0 0 auto;margin-top:1px;accent-color:var(--accent)}
-.err{color:var(--accent);font-size:var(--f-small);font-weight:700;margin-top:8px}
-.err:empty{display:none}
-.jcard .btn{margin-top:18px}
-.after{text-align:center;font-size:var(--f-small);color:var(--ink-soft);margin-top:10px}
-.alt{text-align:center;margin-top:16px;font-size:var(--f-small)}
-.done-box{text-align:center;padding:8px 0}
-.done-box .big{width:64px;height:64px;border-radius:50%;background:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
-.done-box .big svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.done-box p{margin-top:10px}
-
-/* ── 10. שאלות ── */
-.faq details{background:#fff;border-radius:14px;margin-top:10px}
-.faq summary{list-style:none;cursor:pointer;padding:18px 18px;font-size:var(--f-lead);font-weight:900;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.vmodal-video{height:min(84vh,860px);width:auto;max-width:94vw;aspect-ratio:9/16;background:#000;border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.6);display:block}
+.vmodal-x{position:absolute;top:16px;left:16px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.16);border:none;color:#fff;font-size:22px;cursor:pointer;z-index:2;transition:.16s}
+.vmodal-x:hover{background:rgba(255,255,255,.28)}
+.hero-v .note-v{font-size:13.5px;color:var(--faint);margin-top:12px}
+@media(max-width:600px){.hero-v h1{font-size:29px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line-r);color:var(--accent);font-weight:800;font-size:12.5px;letter-spacing:.02em;padding:7px 16px;border-radius:30px;margin-bottom:18px;box-shadow:var(--sh-sm)}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+h1{font-size:39px;font-weight:900;line-height:1.15;letter-spacing:-.02em;margin-bottom:16px}
+.hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hl-g{color:var(--green)}
+.hero .sub{font-size:18px;color:rgba(255,255,255,.95);max-width:610px;margin:0 auto 26px;font-weight:500;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--grad);color:#fff;text-decoration:none;border:none;cursor:pointer;font-family:inherit;font-size:18px;font-weight:800;padding:17px 36px;border-radius:15px;box-shadow:0 12px 32px rgba(194,21,28,.34);transition:.18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(194,21,28,.46)}
+.btn .arw{width:40px}
+.hero .note{font-size:13.5px;color:rgba(255,255,255,.85);margin-top:13px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.fail .fi lottie-player,.jtl-lot lottie-player{width:100%;height:100%}
+.tl-lot{width:58px;height:58px;margin:0 auto 8px;position:relative;z-index:2}
+/* trust bar */
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.trust .t{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px 10px;box-shadow:var(--sh-sm)}
+.trust .v{font-size:24px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.trust .l{font-size:12px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.4}
+/* section headers */
+.kicker{text-align:center;color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.06em;margin-bottom:8px}
+.sec-dark .kicker{color:#ff6b6b}
+.sec-t{font-size:31px;font-weight:900;text-align:center;line-height:1.2;letter-spacing:-.01em;margin-bottom:10px}
+.sec-sub{text-align:center;color:var(--muted);max-width:610px;margin:0 auto 30px;font-size:16px}
+.sec-dark .sec-sub{color:rgba(255,255,255,.62)}
+/* thought bubble (problem) */
+.think{max-width:660px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px 30px 26px;box-shadow:var(--sh);position:relative;font-size:19px;line-height:1.8;color:#2a2f36;font-weight:500}
+.think::after{content:'';position:absolute;bottom:-16px;right:60px;width:30px;height:30px;background:#fff;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.think .lead-in{display:block;color:var(--accent);font-weight:800;font-size:15px;margin-bottom:12px;letter-spacing:.01em}
+.think .dots{display:flex;gap:6px;margin-top:16px}
+.think .dots i{width:8px;height:8px;border-radius:50%;background:var(--line-r)}
+.think-foot{text-align:center;margin-top:34px;font-size:17px;font-weight:700;color:var(--ink)}
+.think-foot b{color:var(--accent)}
+/* fails grid */
+.fails{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fail{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--sh-sm);transition:.2s}
+.fail:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+.fail .fi{width:66px;height:66px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.fail .fi svg{width:24px;height:24px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fail b{display:block;font-size:17px;margin-bottom:5px}
+.fail p{color:var(--muted);font-size:14.5px;line-height:1.65}
+/* JET scroll-fill timeline */
+.jtl{position:relative;padding-right:60px;max-width:680px;margin:0 auto}
+.jtl-line{position:absolute;right:29px;top:8px;bottom:8px;width:4px;background:var(--line-r);border-radius:4px}
+.sec-dark .jtl-line{background:rgba(255,255,255,.14)}
+.jtl-fill{position:absolute;right:29px;top:8px;width:4px;background:var(--grad);border-radius:4px;height:0}
+.jtl-item{position:relative;margin-bottom:22px}
+.jtl-item:last-child{margin-bottom:0}
+.jtl-node{position:absolute;right:-46px;top:0;width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid var(--line-r);display:flex;align-items:center;justify-content:center;transition:.35s;color:var(--faint);font-weight:900;font-size:18px}
+.sec-dark .jtl-node{background:#fff;border-color:rgba(194,21,28,.4)}
+.sec-dark .jtl-item.on .jtl-node{background:#fff;border-color:rgba(194,21,28,.95);color:var(--accent);box-shadow:0 0 24px rgba(194,21,28,.55),0 8px 20px rgba(0,0,0,.4)}
+.jtl-node lottie-player{width:32px;height:32px}
+.jtl-item.on .jtl-node{border-color:transparent;background:var(--grad);color:#fff;box-shadow:0 8px 22px rgba(194,21,28,.4);transform:scale(1.06)}
+.jtl-node svg{width:22px;height:22px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.jtl-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--sh-sm);transition:.4s cubic-bezier(.2,.7,.2,1);opacity:.5;transform:translateX(12px)}
+.sec-dark .jtl-card{background:linear-gradient(180deg,#1c222c,#12161d);border:1px solid rgba(255,255,255,.13);box-shadow:0 12px 34px rgba(0,0,0,.5)}
+.sec-dark .jtl-item.on .jtl-card{border-color:rgba(194,21,28,.55);box-shadow:0 16px 46px rgba(0,0,0,.6),0 0 26px rgba(194,21,28,.20)}
+.jtl-item.on .jtl-card{opacity:1;transform:none;box-shadow:var(--sh);border-color:var(--line-r)}
+.jtl-card h4{font-size:18px;font-weight:800;margin-bottom:5px}
+.jtl-card p{color:var(--ink);font-size:14.7px}
+.sec-dark .jtl-card p{color:rgba(255,255,255,.66)}
+/* value proof timeline (horizontal) */
+.tl{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px 24px 24px;box-shadow:var(--sh);position:relative;overflow:hidden;max-width:720px;margin:0 auto}
+.tl-track{display:flex;justify-content:space-between;position:relative;margin:20px 0 0}
+.tl-track::before{content:'';position:absolute;top:29px;right:6%;left:6%;height:4px;background:var(--line-r);border-radius:4px;opacity:.5}
+.tl-track::after{content:'';position:absolute;top:29px;right:6%;height:4px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--green));border-radius:4px;width:0;transition:width 1.6s ease}
+.tl.on .tl-track::after{width:88%}
+.tl-pt{position:relative;z-index:2;text-align:center;flex:1}
+.tl-pt .dot{width:42px;height:42px;border-radius:50%;background:#fff;border:4px solid var(--accent);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);box-shadow:0 4px 12px rgba(194,21,28,.2)}
+.tl-pt.g .dot{border-color:var(--green);color:var(--green)}
+.tl-pt .y{font-size:12.5px;color:var(--faint);font-weight:700}
+.tl-pt .p{font-size:18px;font-weight:900;margin-top:3px}
+.tl-note{text-align:center;margin-top:20px;font-size:15px;color:var(--muted)}
+.tl-note b{color:var(--green)}
+/* value 3-cards (was timeline) */
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:760px;margin:0 auto}
+.vcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 16px;text-align:center;box-shadow:var(--sh-sm);transition:.2s}
+.vcard:hover{transform:translateY(-3px);box-shadow:var(--sh);border-color:var(--line-r)}
+.vcard lottie-player{width:76px;height:76px;margin:0 auto 10px}
+.vcard .y{font-size:12.5px;color:var(--faint);font-weight:700}
+.vcard .p{font-size:23px;font-weight:900;margin-top:4px;color:var(--ink)}
+.vcard .p span{font-size:12px;font-weight:600;color:var(--muted)}
+.vcard.g .p{color:var(--green)}
+@media(max-width:600px){
+  .vgrid{grid-template-columns:1fr;gap:11px}
+  .vcard{display:flex;align-items:center;gap:16px;text-align:right;padding:16px 18px}
+  .vcard lottie-player{margin:0;flex:0 0 auto;width:62px;height:62px}
+  .vcard .p{font-size:20px}
+}
+/* testimonials */
+.revs{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 16px;-webkit-overflow-scrolling:touch}
+.revs::-webkit-scrollbar{height:6px}.revs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:6px}
+.revs img{scroll-snap-align:center;flex:0 0 78%;max-width:340px;height:auto;background:#fff;border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.4);cursor:zoom-in;object-fit:contain}
+@media(min-width:720px){.revs img{flex-basis:32%}}
+/* stories */
+.stories{display:flex;flex-direction:column;align-items:center;position:relative}
+.story{position:sticky;width:100%;max-width:640px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 -4px 24px rgba(16,16,16,.08),0 16px 44px rgba(16,16,16,.12);margin-bottom:44px}
+.stories .story:nth-child(1){top:92px}
+.stories .story:nth-child(2){top:110px}
+.stories .story:nth-child(3){top:128px}
+.stories .story:last-child{margin-bottom:0}
+@media(max-width:600px){.story{padding:22px;margin-bottom:34px}.stories .story:nth-child(1){top:78px}.stories .story:nth-child(2){top:92px}.stories .story:nth-child(3){top:106px}}
+.story .top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.story .av{width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;flex:0 0 auto}
+.story .nm{font-weight:800;font-size:17px}.story .ro{font-size:13px;color:var(--faint)}
+.story .big{background:var(--tintg);border:1px solid rgba(21,122,58,.18);color:var(--green);font-weight:900;font-size:15px;border-radius:12px;padding:9px 14px;display:inline-block;margin:4px 0 12px}
+.story p{font-size:15.5px;color:var(--ink);line-height:1.75}.story p b{color:var(--accent)}
+/* tom */
+.tom{display:grid;grid-template-columns:1fr 240px;gap:28px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--sh)}
+.tom img{width:100%;border-radius:16px;object-fit:contain;background:transparent}
+.tom h3{font-size:23px;font-weight:900;margin-bottom:10px}
+.tom h3 span{color:var(--accent)}
+.tom p{color:var(--muted);font-size:15.5px;margin-bottom:9px}.tom p b{color:var(--ink)}
+.tom .sig{color:var(--green);font-weight:800;font-size:15.5px;margin-top:4px}
+@media(max-width:620px){.tom{grid-template-columns:1fr;text-align:center}.tom img{max-width:230px;margin:0 auto}}
+/* faq */
+.faq details{background:#fff;border:1px solid var(--line);border-radius:15px;margin-bottom:11px;box-shadow:var(--sh-sm);overflow:hidden;transition:.2s}
+.faq details[open]{border-color:var(--line-r);box-shadow:var(--sh)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:800;font-size:16.5px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary .pl{width:14px;height:14px;flex:0 0 auto;position:relative}
-.faq summary .pl::before,.faq summary .pl::after{content:'';position:absolute;inset:6px 0 auto 0;height:2px;background:var(--ink);transition:transform .2s}
-.faq summary .pl::after{transform:rotate(90deg)}
-.faq details[open] summary .pl::after{transform:rotate(0)}
-.faq .a{padding:0 18px 18px;color:var(--ink-soft)}
-
-/* ── פוטר ── */
-footer{background:var(--night);color:var(--on-night-soft);padding:56px 0 34px;text-align:center;font-size:var(--f-small)}
-footer .flogo{height:52px;margin:0 auto 22px;background:#fff;padding:10px 16px;border-radius:13px}
-.social{display:flex;justify-content:center;gap:10px;margin:6px 0 20px}
-.social a{width:48px;height:48px;display:flex;align-items:center;justify-content:center;transition:transform .2s}
-.social a:hover{transform:translateY(-3px)}
+.faq summary .pl{width:26px;height:26px;flex:0 0 auto;border-radius:8px;background:var(--tint);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;transition:.25s}
+.faq details[open] summary .pl{transform:rotate(45deg)}
+.faq .a{padding:0 20px 18px;color:var(--muted);font-size:15px;line-height:1.7}
+/* convert (survey-language, inviting) */
+.join-card{max-width:520px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px 30px;box-shadow:var(--sh);text-align:center}
+.join-card .kicker{margin-bottom:6px}
+.join-card h2{font-size:26px;font-weight:900;margin-bottom:10px}
+.join-card p{color:var(--muted);font-size:16px;margin-bottom:22px}
+.jfield{text-align:right;margin-bottom:8px}
+.jfield label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}
+.jfield input{width:100%;background:#fff;border:1.6px solid var(--line);border-radius:13px;padding:15px;font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:.16s}
+.jfield input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.jfield input.err{border-color:var(--accent)}
+.jerr{color:var(--accent);font-size:12.5px;font-weight:700;min-height:16px;text-align:right;margin:4px 0 10px}
+.join-card .btn{width:100%}
+.join-card .note{font-size:13px;color:var(--faint);margin-top:14px}
+/* calendar embed (hot) */
+.cal-wrap{background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:var(--sh);overflow:hidden;max-width:760px;margin:0 auto}
+.cal-wrap iframe{width:100%;height:660px;border:0;border-radius:12px;display:block}
+@media(max-width:560px){.cal-wrap iframe{height:600px}}
+/* footer */
+footer{background:var(--dark);color:rgba(255,255,255,.66);padding:34px 0 26px;text-align:center}
+footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;border-radius:13px;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.foot-title{font-size:15px;font-weight:700;color:rgba(255,255,255,.85);max-width:440px;margin:0 auto 12px;line-height:1.55}
+.social{display:flex;justify-content:center;gap:10px;margin:2px 0 18px}
+.social a{width:48px;height:48px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.social a:hover{transform:translateY(-3px) scale(1.07)}
 .social lottie-player{width:100%;height:100%}
-footer .disc{max-width:640px;margin:0 auto;line-height:1.6;font-size:var(--f-small)}
-footer .disc b{color:#fff}
-footer .fl{margin-top:14px}
-footer .fl a{color:var(--on-night-soft)}
-footer .cr{margin-top:12px;font-size:var(--f-small)}
-
-/* צף: הכפתור הראשי, רק אחרי שעוברים את הכרטיס ועד שמגיעים לבורר */
-.float{position:fixed;inset-inline:12px;bottom:12px;z-index:60;transform:translateY(140%);transition:transform .3s}
-.float.on{transform:none}
-.float .btn{width:100%}
-@media(min-width:820px){.float{inset-inline:auto 24px;width:360px}}
-
-/* כניסה מדורגת: כותרת, טקסט, תמונה */
-.rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.social svg{width:20px;height:20px;fill:#fff}
+.disc{font-size:12.5px;line-height:1.65;max-width:640px;margin:0 auto}
+.disc b{color:#ff6b6b}
+.foot-links{margin-top:12px;font-size:12.5px}
+.foot-links a{color:rgba(255,255,255,.55);text-decoration:underline;margin:0 8px}
+.copy{font-size:11.5px;color:rgba(255,255,255,.4);margin-top:12px}
+/* lightbox + float */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.lb.on{display:flex}.lb img{max-width:96vw;max-height:92vh;border-radius:10px}
+.lb .x{position:absolute;top:18px;left:18px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:24px;cursor:pointer}
+.float{position:fixed;left:0;right:0;bottom:0;z-index:55;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 16px;transform:translateY(120%);transition:.35s;box-shadow:0 -6px 24px rgba(16,16,16,.1)}
+.float.on{transform:translateY(0)}
+.float a{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:16px;padding:14px;border-radius:13px;max-width:820px;margin:0 auto;box-shadow:0 8px 22px rgba(194,21,28,.32)}
+.float a .arw{width:34px}
+.rv{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
 .rv.in{opacity:1;transform:none}
-.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv{opacity:1;transform:none;transition:none}.jtl-item.here.on .jtl-node{animation:none}}
-@media(min-width:820px){
-  :root{--g:32px}
-  .res{padding:40px 44px 36px;margin-top:-140px}
-  .view{height:min(56svh,540px);margin:0 auto;max-width:1200px;border-radius:0 0 var(--r) var(--r)}
-  .jcard{padding:40px 44px 36px;margin-top:-160px}
-  .join .jph{max-width:1200px;margin:0 auto;border-radius:0 0 var(--r) var(--r)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media(max-width:600px){
+  h1{font-size:29px}.hero .sub{font-size:16px}.sec-t{font-size:24px}
+  .trust{grid-template-columns:1fr 1fr}.fails{grid-template-columns:1fr}
+  .tl-pt .p{font-size:14px}.tl-pt .dot{width:34px;height:34px;font-size:12px}
+  .think{font-size:16.5px;padding:24px}.join-card h2{font-size:22px}
 }
 
-/* ── גרסה 3: ראש הדף ── */
-.view{height:max(72svh,460px)}
-.view img,.view video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.view video{opacity:0;transition:opacity .6s}
-.view video.on{opacity:1}
-.view::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,18,22,.08) 35%,rgba(15,18,22,.82));pointer-events:none}
-.hcap{position:absolute;inset-inline:0;bottom:0;z-index:2;color:#fff;padding:0 var(--g) 64px;max-width:900px;margin:0 auto}
-.hcap h1{font-size:var(--f-display);font-weight:900;line-height:1.08;letter-spacing:-.02em;text-wrap:balance;text-shadow:0 2px 24px rgba(0,0,0,.35)}
-.hcap p{font-size:var(--f-lead);font-weight:700;line-height:1.5;margin-top:12px;white-space:pre-line;color:#E9ECEF}
-.res{margin-top:-40px}
-.ctitle{font-size:var(--f-lead);font-weight:700;line-height:1.45;color:var(--ink-soft);text-wrap:pretty}
-.csum{font-size:clamp(22px,2.6vw,30px);font-weight:900;line-height:1.25;letter-spacing:-.01em;margin-top:10px;text-wrap:balance}
-.pts li{border-top:1px solid var(--step);padding-top:14px}
-.pts .nd{display:block;font-weight:900}
-.pts .mc{display:block;font-size:var(--f-small);color:var(--ink-soft)}
-.pts .an{display:block;margin-top:6px;white-space:pre-line}
-.pts .ask .ic{background:#8A8F98;color:#fff;font-weight:900;font-size:14px}
-.pts .honest .ic{background:#B8892B;color:#fff;font-weight:900;font-size:15px}
-.pts .last{background:var(--tint);border-radius:14px;padding:12px;border-top:0}
-.calm{text-align:center;font-size:var(--f-small);color:var(--ink-soft);margin-top:10px;line-height:1.55}
-.booked{margin-top:18px;background:#E9F6EE;border-radius:14px;padding:14px 16px;font-weight:700;color:#0D5A2A;line-height:1.5}
-.booked a{color:inherit}
-/* ── הלקוח במרכז, גרסה 2 (גל 18/10 לילה): כותרת גדולה וממורכזת, 3 כרטיסי מחשבות, שורת מחץ על רקע כהה ── */
-.hero{padding-bottom:clamp(28px,4vw,48px)}
-.pain2{background:var(--paper) radial-gradient(rgba(15,18,22,.07) 1px,transparent 1.3px) 0 0/22px 22px;padding:clamp(48px,7vw,96px) 0 clamp(40px,6vw,80px)}
-.pain2 .ph{text-align:center;max-width:860px;margin:0 auto}
-.big2{font-size:clamp(34px,6.4vw,64px);font-weight:900;line-height:1.08;letter-spacing:-.02em;margin-top:10px;text-wrap:balance}
-.big2 .em{color:var(--accent)}
-.psub{font-size:var(--f-lead);color:var(--ink-soft);margin:18px auto 0;line-height:1.6;max-width:680px}
-.plead{text-align:center;font-weight:900;font-size:var(--f-lead);margin-top:clamp(36px,5vw,56px)}
-.thoughts{display:grid;gap:14px;margin-top:20px}
-.tc{background:#fff;border-radius:20px;padding:22px 22px 24px;box-shadow:0 12px 34px rgba(15,18,22,.07),0 2px 6px rgba(15,18,22,.04)}
-.tc .top{display:flex;justify-content:space-between;align-items:flex-start}
-.tico{width:54px;height:54px;border-radius:50%;background:var(--tint);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-.tico svg{width:26px;height:26px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tq{font-size:72px;line-height:.75;font-weight:900;color:var(--accent);opacity:.22}
-.tc h3{font-size:clamp(19px,1.9vw,22px);font-weight:900;line-height:1.38;margin-top:14px;text-wrap:balance}
-.tc .rule{display:block;width:40px;height:3px;background:var(--accent);border-radius:2px;margin:14px 0 12px}
-.tc p{color:var(--ink-soft);line-height:1.6}
-.punch{margin-top:clamp(28px,4vw,44px);background:var(--night);color:#fff;border-radius:22px;padding:clamp(30px,5vw,52px) clamp(22px,5vw,60px);text-align:center}
-.punch .tico{margin:0 auto 16px;background:rgba(255,77,85,.14)}
-.punch .tico svg{stroke:#FF6B72}
-.punch .p1,.punch .p2{font-size:clamp(26px,4.4vw,46px);font-weight:900;line-height:1.15;letter-spacing:-.015em;text-wrap:balance}
-.punch .p2{color:#FF4D55}
-.punch .pk{margin-top:20px;font-size:var(--f-lead);font-weight:900}
-.punch .pp{margin:10px auto 0;max-width:680px;color:var(--on-night-soft);line-height:1.65}
-.punch .pc{margin:18px auto 0;max-width:640px;font-weight:900;font-size:var(--f-lead);line-height:1.5}
-.alts-sec{padding-top:clamp(24px,4vw,48px)}
-@media(min-width:900px){.thoughts{grid-template-columns:repeat(3,1fr);gap:18px}}
-/* ── הלקוח במרכז ── */
-.kick{font-size:var(--f-small);font-weight:900;color:var(--accent);letter-spacing:.01em}
-.pain blockquote{margin-top:22px;font-size:clamp(20px,2.6vw,26px);font-weight:900;line-height:1.45;border-inline-start:5px solid var(--accent);padding-inline-start:18px;text-wrap:pretty}
-.pain .pf{margin-top:16px;color:var(--ink-soft)}
-.alts{display:grid;gap:12px;margin-top:26px}
-.altc{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:center;background:#fff;border-radius:16px;padding:14px 16px}
-.altc .lot{width:72px;height:72px}
-.altc b{display:block;font-size:var(--f-lead);font-weight:900;line-height:1.3}
-.altc p{color:var(--ink-soft);margin-top:4px}
-.altf{margin-top:22px;font-size:var(--f-lead);font-weight:900;line-height:1.5;text-wrap:pretty}
-@media(min-width:820px){.alts{grid-template-columns:1fr 1fr}}
-/* ── למה דווקא עכשיו ── */
-.now .lot{width:110px;height:110px;margin-bottom:6px}
-.now .big{font-size:var(--f-display);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-top:14px;color:#fff}
-.now .nk{font-size:var(--f-lead);font-weight:700;margin-top:18px;color:#fff}
-.now .np{margin-top:10px;color:var(--on-night-soft);font-size:var(--f-lead);line-height:1.6}
-.doc .seal{background:none;width:52px;height:52px}
-.doc li{grid-template-columns:52px 1fr}
-.exitrow{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start;margin-top:16px}
-.exitrow .lot{width:64px;height:64px}
-.exitrow .exit{margin-top:0}
-.revq{font-size:clamp(22px,3vw,30px);font-weight:900;line-height:1.35;text-wrap:balance}
-.revs{font-size:var(--f-small);color:var(--on-night-soft);margin-top:8px}
-/* ── תום ── */
-.tom .vis{margin-top:16px;font-size:var(--f-lead);font-weight:900;line-height:1.45}
-.tom .grp{margin-top:14px;color:var(--ink-soft);white-space:pre-line;line-height:1.6}
-.tom .vals{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.tom .vals span{background:var(--tint);color:var(--accent-deep);font-weight:900;font-size:var(--f-small);border-radius:999px;padding:6px 14px}
-.tom .ppl{margin-top:14px}
-.own{max-width:640px;margin:0 auto 18px;color:#fff;font-weight:700;line-height:1.5}
+/* google reviews gallery */
+.rgal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+@media(max-width:720px){.rgal{grid-template-columns:repeat(2,1fr);gap:12px}}
+.rgal .rev{width:100%;height:auto;display:block;object-fit:contain;background:#fff;border-radius:12px;border:1px solid rgba(255,255,255,.18);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05),0 0 22px rgba(255,255,255,.13);cursor:zoom-in;transition:transform .2s ease,box-shadow .2s ease}
+.rgal .rev:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.6),0 0 30px rgba(255,255,255,.22)}
+.rgal .rev.hid{display:none}
+.rgal-more{text-align:center;margin-top:26px}
+.rgal-btn{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.26);color:#fff;font-family:inherit;font-weight:800;font-size:16px;padding:14px 32px;border-radius:100px;cursor:pointer;transition:.16s}
+.rgal-btn:hover{background:rgba(255,255,255,.16);transform:translateY(-1px)}
+
+.story .av img{width:100%!important;height:100%!important;object-fit:cover;border-radius:50%;display:block;max-width:none!important}
+.story .av{overflow:hidden}
+
+/* הוכחות מתחם H (גל 12/10): מסמכים אמיתיים, ברזולוציה מלאה, לחיצה פותחת את המקור */
+.proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:880px;margin:26px auto 0}
+.proof-card{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;color:var(--ink);box-shadow:var(--sh)}
+.proof-card img{width:100%;height:auto;aspect-ratio:16/10;object-fit:contain;object-position:center;border-radius:10px;border:1px solid var(--line);background:#f6f7f9;display:block}
+.proof-card span{font-size:14.5px;line-height:1.5;text-wrap:pretty}
+.proof-card b{color:var(--accent)}
+.proof-hint{text-align:center;font-size:13px;color:var(--muted);margin-top:12px}
+.sec-dark .proof-card{background:#fff}
+.proof-link{display:inline-block;margin-top:10px;font-size:14px;font-weight:700;color:var(--accent);text-decoration:none}
+.sec-dark .proof-link{color:#ff8a8f}
+.proof-thumb{display:block;margin-top:10px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.proof-thumb img{width:100%;height:auto;display:block}
+@media(max-width:700px){.proof{grid-template-columns:1fr}}
+
+/* ═══ גרסה B, דף התוצאה (19/10): רק תוספות על השפה של HPAGE. טוקנים: 8pt, רדיוסים 12/18/20, האדום של המותג לכוונת תשומת לב ═══ */
+:root{--s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px}
+.wrap-l{max-width:1120px;margin:0 auto;padding:0 20px}
+.sec{padding:var(--s6) 0}
+@media(max-width:600px){.sec{padding:var(--s5) 0}}
+.sec-t .hl,.pain-h .hl,.rc-sum .hl,h1 .hl{white-space:normal}
+.sec-dark .hl{background:linear-gradient(135deg,#ff6167,#ff8f6b);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.left{text-align:right}.left.kicker,.left .kicker{text-align:right}
+/* ── 1. התוצאה ── */
+.hero-v{padding:var(--s4) 0 var(--s5)}
+.hero-v h1{font-size:39px;line-height:1.18;margin-bottom:0}
+.hero-grid{display:grid;gap:var(--s2);margin-top:var(--s3)}
+.rcard{background:#fff;border:2px solid var(--accent);border-radius:20px;padding:20px 20px 18px;box-shadow:0 14px 44px rgba(194,21,28,.12);text-align:right}
+.rc-intro{font-size:14.5px;color:var(--muted);font-weight:600;line-height:1.55}
+.rc-sum{font-size:21px;font-weight:900;line-height:1.38;margin-top:6px}
+.rc-rows{list-style:none;margin-top:var(--s2)}
+.rc-rows li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.rc-ic{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px;margin-top:2px}
+.rc-ic.ok{background:var(--green)}.rc-ic.ask{background:#8A8F98}.rc-ic.honest{background:var(--gold)}
+.rc-ic svg{width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.rc-nd{display:block;font-weight:800;font-size:15.5px;line-height:1.45}
+.rc-an{display:block;font-size:15px;color:var(--muted);margin-top:2px;line-height:1.6}
+.rc-rows li.open{background:var(--tint);border:0;border-radius:12px;padding:12px;margin-top:6px}
+.rc-rows li.open .rc-an{color:var(--ink)}
+.rcard .btn{width:100%;margin-top:var(--s2);font-size:17px;padding:15px 20px}
+.rc-calm{text-align:center;font-size:13.5px;color:var(--faint);margin-top:10px;line-height:1.55}
+.rc-num{text-align:center;font-size:13.5px;color:var(--muted);margin-top:4px}
+.rc-num b{direction:ltr;unicode-bidi:isolate;color:var(--ink)}
+.rc-num a{color:var(--accent);font-weight:700;margin-inline-start:6px}
+.rc-booked{margin-top:var(--s2);background:var(--tintg);color:var(--green);font-weight:800;border-radius:12px;padding:12px 14px;line-height:1.55}
+.vframe{position:relative;border:3px solid var(--accent);border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:#0f1216;box-shadow:var(--sh)}
+.vframe img,.vframe video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vframe video{opacity:0;transition:opacity .6s}.vframe video.on{opacity:1}
+.vcap{position:absolute;inset-inline:0;bottom:0;padding:28px 16px 12px;background:linear-gradient(180deg,transparent,rgba(15,18,22,.72));color:#fff;font-weight:700;font-size:13.5px;text-align:right}
+.hero-note{text-align:center;font-size:14.5px;color:var(--muted);margin:var(--s3) auto 0;max-width:620px;white-space:pre-line;font-weight:500}
+@media(min-width:960px){
+  .hero-grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s3);align-items:start}
+  .rcard{grid-column:1/span 6;padding:26px 28px 22px}
+  .vframe{grid-column:7/span 6;position:sticky;top:96px}
+}
+@media(max-width:600px){.hero-v{padding:20px 0 var(--s4)}.hero-v h1{font-size:27px}.hero-v .eyebrow{margin-bottom:12px}}
+/* ── 2. יש לך כסף בצד (לפי העיצוב לדוגמה של גל) ── */
+.pain{background:#fff radial-gradient(rgba(15,18,22,.055) 1px,transparent 1.3px) 0 0/22px 22px;padding:var(--s6) 0}
+.pain-top{display:grid;gap:var(--s3);align-items:center}
+.pain-h{font-size:39px;font-weight:900;line-height:1.15;letter-spacing:-.02em;border-inline-start:5px solid var(--accent);padding-inline-start:18px;margin-top:6px}
+.pain-sub{font-size:17px;color:var(--muted);margin-top:var(--s2);max-width:580px;font-weight:500;line-height:1.7}
+.pain-ph{display:none}
+.pain-lead{font-weight:800;font-size:17px;margin:var(--s5) 0 var(--s2)}
+.thoughts{display:grid;gap:var(--s2)}
+.tc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 22px;box-shadow:var(--sh-sm)}
+.tico{width:56px;height:56px;border-radius:50%;background:var(--tint);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.tico svg{width:26px;height:26px;stroke:var(--accent);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tc h3{font-size:18px;font-weight:900;line-height:1.45;margin-top:var(--s2)}
+.tc .rule{display:block;width:36px;height:3px;background:var(--accent);border-radius:2px;margin:14px 0 12px}
+.tc p{color:var(--muted);font-size:15px;line-height:1.65}
+.punch{margin-top:var(--s4);background:var(--tint);border:1px solid var(--line-r);border-radius:20px;padding:24px;display:flex;gap:20px;align-items:center}
+.punch .p1,.punch .p2{font-size:28px;font-weight:900;line-height:1.22;letter-spacing:-.01em}
+.punch-after{text-align:center;margin:var(--s3) auto 0;max-width:640px}
+.punch-after .pk{font-weight:900;font-size:17px}
+.punch-after .pp{color:var(--muted);font-size:15.5px;margin-top:6px}
+.punch-after .pc{font-weight:800;font-size:16.5px;margin-top:10px}
+@media(min-width:960px){
+  .pain-top{grid-template-columns:repeat(12,minmax(0,1fr))}
+  .pain-head{grid-column:1/span 7}
+  .pain-ph{display:block;grid-column:10/span 3;position:relative;max-width:280px;justify-self:end}
+  .pain-ph img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:20px;position:relative;z-index:1}
+  .pain-ph::before{content:'';position:absolute;inset:18px -14px -14px 18px;border:1.5px solid var(--line-r);border-radius:22px}
+  .thoughts{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+}
+@media(max-width:600px){.pain{padding:var(--s5) 0}.pain-h{font-size:29px}.punch{padding:20px;gap:14px;align-items:flex-start}.punch .p1,.punch .p2{font-size:21px}.punch .tico{width:46px;height:46px}.punch .tico svg{width:22px;height:22px}}
+/* ── 3. ציר הזמן: כותרת בצד, הציר לידה (אסימטרי) ── */
+.split{display:grid;gap:var(--s3)}
+.split .kicker,.split .sec-t,.split .sec-sub{text-align:right;margin-inline:0}
+.jtl-item.here .jtl-node{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 0 0 7px rgba(194,21,28,.14)}
+.jtl-item.here .jtl-card{border-color:var(--accent);opacity:1;transform:none}
+.jtl-item.done .jtl-node svg{stroke:currentColor}
+.herepulse{width:12px;height:12px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
+.here-tag{display:inline-block;margin-inline-start:8px;font-size:12px;font-weight:900;color:#fff;background:var(--accent);border-radius:999px;padding:2px 10px;vertical-align:middle}
+.jtl-item.next .jtl-card h4{color:var(--muted)}
+@media(min-width:960px){.split{grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s3)}.split-head{grid-column:1/span 5;position:sticky;top:110px;align-self:start}.split-body{grid-column:7/span 6}.split .jtl{margin:0}}
+/* ── 4. למה דווקא עכשיו ── */
+.now{text-align:center}
+.now .dateb{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,107,107,.5);color:#ff8a8f;font-weight:800;font-size:13px;border-radius:999px;padding:6px 14px;margin-bottom:var(--s2)}
+.now .sec-t{font-size:39px}
+.now .sec-sub{max-width:560px;font-size:17px}
+.now lottie-player{width:84px;height:84px;margin:0 auto var(--s1)}
+@media(max-width:600px){.now .sec-t{font-size:29px}}
+/* ── 5. החלופות (הכרטיסים של CPAGE) ── */
+.fails{max-width:840px;margin:0 auto}
+.alt-close{text-align:center;max-width:620px;margin:var(--s4) auto 0;font-size:17px;font-weight:800;line-height:1.55}
+/* ── 6. שלוש חותמות ── */
+.dgrid{display:grid;gap:var(--s2);max-width:960px;margin:0 auto}
+.dcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--sh-sm);display:grid;grid-template-columns:64px 1fr;gap:4px 14px;align-items:center}
+.dcard lottie-player{grid-row:1/span 2}
+.dcard b{font-size:16.5px;line-height:1.45}
+.dcard span{font-size:13.5px;color:var(--faint);font-weight:600}
+.doc-close{text-align:center;margin-top:var(--s3);font-weight:800;font-size:16.5px}
+@media(min-width:960px){.dgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.dcard{grid-template-columns:1fr;text-align:center;justify-items:center;padding:26px 20px}.dcard lottie-player{grid-row:auto}}
+/* ── 7. היישוב לפניך ── */
+.facts4{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
+.facts4 .t{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 14px;box-shadow:var(--sh-sm);text-align:center}
+.facts4 .v{font-size:23px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.15}
+.facts4 .l{font-size:13px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.45}
+.mapcard{max-width:560px;margin:var(--s4) auto 0}
+.mapcard img{max-height:320px;aspect-ratio:auto}
+.town-note{text-align:center;font-size:12.5px;color:var(--faint);margin-top:10px}
+/* ── 8. היציאה ── */
+.exitcard{max-width:760px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--sh);display:grid;grid-template-columns:72px 1fr;gap:var(--s2);align-items:start}
+.exitcard .kicker,.exitcard .sec-t{text-align:right}
+.exitcard .sec-t{font-size:26px;margin-bottom:8px}
+.exitcard p{color:var(--muted);font-size:16px;line-height:1.7}
+@media(max-width:600px){.exitcard{grid-template-columns:1fr;text-align:right}.exitcard .sec-t{font-size:22px}}
+/* ── 9. הביקורות ── */
+.revq{font-size:29px}
+.rev-src{text-align:center;color:rgba(255,255,255,.62);font-size:14px;margin-top:-4px}
+.gline{display:flex;align-items:center;justify-content:center;gap:10px;margin:var(--s2) 0 var(--s3)}
+.gline .gw{font:700 22px/1 Arial,Helvetica,sans-serif;letter-spacing:-.5px;direction:ltr}
+.gline .st{display:flex;gap:2px;direction:ltr}
+.gline b{font-size:18px}
+@media(max-width:600px){.revq{font-size:22px}}
+/* ── 10. תום ── */
+.tom .kicker{text-align:right}
+.tom .vis{color:var(--ink);font-weight:800;font-size:16px}
+.tom .grp{font-size:14px;color:var(--faint)}
+.vals{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.vals span{background:var(--tint);color:var(--accent2);font-weight:800;font-size:13px;border-radius:999px;padding:5px 13px}
+@media(max-width:620px){.tom .kicker{text-align:center}.vals{justify-content:center}}
+/* ── 11. בחירת מועד (הכרטיס של HPAGE) ── */
+.join-card{max-width:560px}
+.join-card h2 .hl{white-space:normal}
+.mynum{background:var(--bg);border-radius:12px;padding:10px 14px;font-size:14.5px;margin:-8px 0 14px}
+.mynum b{direction:ltr;unicode-bidi:isolate}
+.wins{display:grid;gap:10px;border:0;margin-bottom:14px}
+.win input{position:absolute;opacity:0;pointer-events:none}
+.win label{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--bg);border:1.6px solid var(--line);border-radius:13px;padding:14px 16px;cursor:pointer;transition:.16s}
+.win label:hover{border-color:var(--line-r)}
+.win .wn{font-weight:900;font-size:17px}
+.win .wt{font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.win input:checked + label{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.win input:focus-visible + label{outline:3px solid var(--ink);outline-offset:2px}
+.consent{display:flex;gap:10px;align-items:flex-start;text-align:right;font-size:15px;font-weight:700;line-height:1.5;margin:6px 0 4px;cursor:pointer}
+.consent input{width:22px;height:22px;flex:0 0 auto;margin-top:1px;accent-color:var(--accent)}
+.join-card .btn{font-size:17px;padding:16px 18px;white-space:nowrap}
+.join-card .after{font-size:13px;color:var(--faint);margin-top:12px}
+.join-card .alt{font-size:14px;margin-top:10px}
+.join-card .alt a{color:var(--ink);font-weight:700}
+.done-box .big{width:64px;height:64px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.done-box .big svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+/* ── 12. שאלות ── */
 .faq .a{white-space:pre-line}
+/* ── צף ── */
+.float a{font-size:16px}
 /* ── סרגל הדמו (רק עם ?demo=1) ── */
-.demo{position:relative;z-index:49;background:#1C1933;color:#fff;font-size:12.5px}
-.demo .wrap{display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;align-items:center;padding-block:8px}
-.demo .wrap>b{grid-column:1/-1}
-.demo label{min-width:0}
-.demo select,.demo input{width:100%;max-width:none;min-width:0}
-@media(min-width:820px){.demo .wrap{display:flex;flex-wrap:wrap}.demo select,.demo input{width:auto}}
-.demo b{font-weight:900}
-.demo select,.demo input{font:inherit;font-size:13px;border-radius:8px;border:0;padding:5px 6px;max-width:44vw}
-.demo label{display:flex;gap:4px;align-items:center}
-@media(min-width:820px){.view{height:min(70svh,640px)}.res{margin-top:-90px}.hcap{padding-bottom:120px}}
+.demo{background:#1C1933;color:#fff;font-size:12.5px}
+.demo .wrap-l{display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;align-items:center;padding-block:8px}
+.demo .wrap-l>b{grid-column:1/-1}
+.demo label{display:flex;gap:4px;align-items:center;min-width:0}
+.demo select,.demo input{font:inherit;font-size:12.5px;border-radius:8px;border:0;padding:5px 6px;width:100%;min-width:0}
+@media(min-width:820px){.demo .wrap-l{display:flex;flex-wrap:wrap}.demo select,.demo input{width:auto}}
 </style>
 </head>
 <body>
-<header class="hdr" id="hdr"><div class="wrap">
-  <img src="/logo.png" width="120" height="40" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/>
-  <a class="btn2" href="#join" onclick="scrollJoin(event)">לבחירת שעה</a>
+<header id="hdr"><div class="wrap-l" style="display:flex;align-items:center;justify-content:space-between;padding-block:10px">
+  <img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/>
+  <a class="h-cta" href="#join" onclick="scrollJoin(event)">לבחירת שעה <svg class="arw" viewBox="0 0 36 11"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a>
 </div></header>
-<div class="demo" id="demo" hidden><div class="wrap" id="demoIn"></div></div>
+<div class="demo" id="demo" hidden><div class="wrap-l" id="demoIn"></div></div>
 
-<main>
-<!-- 1. ראש הדף: הכותרת האישית על תמונת השדות (במחשב הסרטון), ומתחתיו כרטיס בדיקת ההתאמה -->
-<section class="hero" aria-labelledby="hH">
-  <div class="view" id="view">
-    <picture><source media="(min-width:820px)" srcset="/b/media/hero-land.webp"/><img src="/b/media/hero-land-m.webp" width="700" height="1000" alt="שדות קדימה צורן מלמעלה, מתוך צילום הרחפן של תום" fetchpriority="high"/></picture>
-    <div class="hcap"><h1 id="hH"></h1><p id="hS"></p></div>
-  </div>
-  <div class="wrap">
-    <div class="res" id="res">
-      <p class="ctitle" id="cT"></p>
-      <p class="csum" id="cS"></p>
-      <ul class="pts" id="pts"></ul>
+<!-- 1. התוצאה: הכותרת, כרטיס הנקודות שסומנו (אאוטליין אדום, ראשון במובייל), והסרטון במסגרת אדומה -->
+<div class="hero-v"><div class="wrap-l">
+  <span class="eyebrow"><span class="dot"></span>בדיקת ההתאמה שלך · מתחם H · קדימה צורן</span>
+  <h1 id="hH"></h1>
+  <div class="hero-grid">
+    <div class="rcard" id="res">
+      <p class="rc-intro" data-t="C.title"></p>
+      <p class="rc-sum" id="cS"></p>
+      <ul class="rc-rows" id="pts"></ul>
       <div id="ctaBox">
-        <a class="btn" href="#join" onclick="scrollJoin(event)"><span id="cCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a>
-        <p class="calm" id="cCalm"></p>
-        <div class="numline" id="dNum"><span id="dNumTxt"></span><a class="link" id="dSave" href="#" download="kadima-h.vcf">שמירה באנשי הקשר</a></div>
+        <a class="btn" href="#join" onclick="scrollJoin(event)"><span data-t="C.cta"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
+        <p class="rc-calm" data-t="C.call"></p>
+        <p class="rc-num">השיחה תגיע מהמספר <b>053-302-5464</b><a id="dSave" href="#" download="kadima-h.vcf">שמירה באנשי הקשר</a></p>
       </div>
-      <p class="booked" id="cBooked" hidden></p>
+      <p class="rc-booked" id="cBooked" hidden></p>
+    </div>
+    <div class="vframe" id="view">
+      <picture><source media="(min-width:960px)" srcset="/b/media/hero-land.webp"/><img src="/b/media/hero-land.webp" width="1600" height="854" alt="השדות של מתחם H מלמעלה, מתוך צילום הרחפן של תום" fetchpriority="high"/></picture>
+      <div class="vcap">מתחם H מהאוויר · מתוך הצילום של תום</div>
     </div>
   </div>
-</section>
+  <p class="hero-note" data-t="H.sub"></p>
+</div></div>
 
-<!-- 2. הלקוח במרכז (גל 18/10 לילה): 3 מחשבות קצרות שהליד מנהל עם עצמו, ושורת מחץ שמפענחת מה עוצר אותו -->
-<section class="pain2" aria-labelledby="pH"><div class="wrap">
-  <div class="ph">
-    <p class="kick rv" data-t="PAIN.k"></p>
-    <h2 class="big2 rv d1" id="pH"><span data-t="PAIN.h1"></span><br/><span class="em" data-t="PAIN.h2"></span></h2>
-    <p class="psub rv d2" data-t="PAIN.sub"></p>
+<!-- 2. יש לך כסף בצד (לפי העיצוב לדוגמה של גל: כותרת עם פס אדום, 3 מחשבות, קופסת מחץ) -->
+<section class="pain" aria-labelledby="pH"><div class="wrap-l">
+  <div class="pain-top">
+    <div class="pain-head">
+      <div class="kicker left rv" data-t="PAIN.k"></div>
+      <h2 class="pain-h rv" id="pH"><span data-t="PAIN.h1"></span><br/><span class="hl" data-t="PAIN.h2"></span></h2>
+      <p class="pain-sub rv" data-t="PAIN.sub"></p>
+    </div>
+    <div class="pain-ph rv"><img src="/b/media/life.webp" width="640" height="800" alt="רחוב מגורים, מתוך הסרטון של תום" loading="lazy"/></div>
   </div>
-  <p class="plead rv" data-t="PAIN.lead"></p>
+  <p class="pain-lead rv" data-t="PAIN.lead"></p>
   <div class="thoughts">
-    <article class="tc rv"><div class="top"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></span><span class="tq" aria-hidden="true">״</span></div><h3 data-tq="PAIN.t1"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t1"></p></article>
-    <article class="tc rv d1"><div class="top"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><span class="tq" aria-hidden="true">״</span></div><h3 data-tq="PAIN.t2"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t2"></p></article>
-    <article class="tc rv d2"><div class="top"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="tq" aria-hidden="true">״</span></div><h3 data-tq="PAIN.t3"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t3"></p></article>
+      <article class="tc rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></span><h3 data-tq="PAIN.t1"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t1"></p></article>
+      <article class="tc rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><h3 data-tq="PAIN.t2"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t2"></p></article>
+      <article class="tc rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><h3 data-tq="PAIN.t3"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t3"></p></article>
   </div>
-  <div class="punch rv">
-    <span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
-    <p class="p1" data-t="PUNCH.1"></p>
-    <p class="p2" data-t="PUNCH.2"></p>
-    <p class="pk" data-t="PUNCH.k"></p>
-    <p class="pp" data-t="PUNCH.p"></p>
-    <p class="pc" data-t="PUNCH.c"></p>
-  </div>
+  <div class="punch rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><div><p class="p1" data-t="PUNCH.1"></p><p class="p2 hl" data-t="PUNCH.2"></p></div></div>
+  <div class="punch-after rv"><p class="pk" data-t="PUNCH.k"></p><p class="pp" data-t="PUNCH.p"></p><p class="pc" data-t="PUNCH.c"></p></div>
 </div></section>
 
-<!-- 2ב. החלופות -->
-<section class="sec paper alts-sec" aria-labelledby="aH"><div class="wrap"><div class="col">
-  <h2 class="rv" id="aH" data-t="ALT.h"></h2>
-  <div class="alts">
-    <div class="altc rv"><lottie-player class="lot" src="/lot-oash.json" background="transparent" speed="1" autoplay loop></lottie-player><div><b data-t="ALT.1h"></b><p data-t="ALT.1p"></p></div></div>
-    <div class="altc rv"><lottie-player class="lot" src="/lot-dira.json" background="transparent" speed="1" autoplay loop></lottie-player><div><b data-t="ALT.2h"></b><p data-t="ALT.2p"></p></div></div>
-    <div class="altc rv"><lottie-player class="lot" src="/lot-shuk.json" background="transparent" speed="1" autoplay loop></lottie-player><div><b data-t="ALT.3h"></b><p data-t="ALT.3p"></p></div></div>
-    <div class="altc rv"><lottie-player class="lot" src="/lot-ads.json" background="transparent" speed="1" autoplay loop></lottie-player><div><b data-t="ALT.4h"></b><p data-t="ALT.4p"></p></div></div>
+<!-- 3. איפה מתחם H עומד היום: כותרת בצד, הציר לידה -->
+<section class="sec sec-tint"><div class="wrap-l split">
+  <div class="split-head">
+    <div class="kicker rv">המסלול התכנוני, בשקיפות</div>
+    <div class="sec-t rv" data-th="E3H"></div>
+    <div class="sec-sub rv" data-t="E3S"></div>
   </div>
-  <p class="altf rv" data-t="ALT.f"></p>
-</div></div></section>
-
-<!-- 3. למה דווקא עכשיו: במקום ה־VSL -->
-<section class="sec night now" aria-labelledby="nH"><div class="wrap"><div class="col">
-  <lottie-player class="lot" src="/lot-year.json" background="transparent" speed="1" autoplay loop></lottie-player>
-  <h2 class="rv" id="nH" data-t="NOW.h"></h2>
-  <p class="big rv d1" data-t="NOW.big"></p>
-  <p class="nk rv d2" data-t="NOW.k"></p>
-  <p class="np rv d2" data-t="NOW.p"></p>
-</div></div></section>
-
-<!-- 4. המסמכים -->
-<section class="wall" aria-labelledby="eStampsH"><div class="wrap">
-  <div class="col">
-    <h2 class="rv" id="eStampsH" data-t="E2H"></h2>
-    <p class="lead rv d1" data-t="E2L"></p>
-  </div>
-  <div class="doc rv d2">
-    <div class="dh"><span>מתחם H · קדימה צורן</span><span>תכנית <span dir="ltr">457-0112086</span></span></div>
-    <ol>
-      <li><lottie-player class="seal" src="/lot-cert1.json" background="transparent" speed="1" autoplay loop></lottie-player><div><b data-t="E2.1"></b><div class="src">מתוך אתר מינהל התכנון</div>
-        <figure><img src="/proof/mavat-approved.png" width="900" height="555" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"/></figure></div></li>
-      <li><lottie-player class="seal" src="/lot-cert2.json" background="transparent" speed="1" autoplay loop></lottie-player><div><b data-t="E2.2"></b><div class="src">מתוך הערכת השמאי, תקן 22</div>
-        <figure><img src="/proof/location-in-h.jpg" width="666" height="734" alt="מיקום החלקה בתוך מתחם H, מתוך הערכת השמאי" loading="lazy"/></figure></div></li>
-      <li><lottie-player class="seal" src="/lot-cert3.json" background="transparent" speed="1" autoplay loop></lottie-player><div><b data-t="E2.3"></b><div class="src">כתוב בחוזה, ונקרא יחד בפגישה</div></div></li>
-    </ol>
-    <p class="foot" data-t="E2F"></p>
-  </div>
-</div></section>
-
-<!-- 5. ציר הזמן -->
-<section class="sec" aria-labelledby="eTlH"><div class="wrap">
-  <div class="col">
-    <h2 class="rv" id="eTlH" data-t="E3H"></h2>
-    <p class="lead rv d1" data-t="E3S"></p>
-  </div>
-  <ol class="jtl" data-jet>
-    <span class="jtl-rail" aria-hidden="true"></span><span class="jtl-fill" aria-hidden="true"></span>
-      <li class="jtl-item done"><span class="jtl-node" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17 19 7"/></svg></span>
-        <div class="jtl-body"><h3>קרקע חקלאית</h3><p>נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.</p></div></li>
-      <li class="jtl-item done"><span class="jtl-node" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17 19 7"/></svg></span>
-        <div class="jtl-body"><h3>ועדה ארצית</h3><p>הקווים הגדולים של המדינה: איפה מתכננים לגדול.</p></div></li>
-      <li class="jtl-item done"><span class="jtl-node" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17 19 7"/></svg></span>
-        <div class="jtl-body"><h3>ועדה מחוזית</h3><p>ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.</p></div></li>
-      <li class="jtl-item here"><span class="jtl-node" aria-hidden="true"></span>
-        <div class="jtl-body"><h3>ועדה מקומית<span class="here-tag">אנחנו כאן</span></h3><p>כאן אנחנו היום. התכנון יורד לרמת המתחם.</p></div></li>
-      <li class="jtl-item next"><span class="jtl-node" aria-hidden="true"></span>
-        <div class="jtl-body"><h3>אישור תוכנית מפורטת</h3><p>תוכנית אחת לכל מתחם H: מגרשים, זכויות ושימושים.</p></div></li>
-      <li class="jtl-item next"><span class="jtl-node" aria-hidden="true"></span>
-        <div class="jtl-body"><h3>אישור תוכנית פיתוח</h3><p>כבישים, מים וניקוז. השטח מתחיל להשתנות.</p></div></li>
-      <li class="jtl-item next"><span class="jtl-node" aria-hidden="true"></span>
-        <div class="jtl-body"><h3>זמינות לבנייה</h3><p>היעד. *הקרקע עדיין אינה זמינה לבנייה מיידית.</p></div></li>
-  </ol>
-</div></section>
-
-<!-- 6. היישוב לפניך -->
-<section class="sec paper" aria-labelledby="eTownH"><div class="wrap">
-  <div class="col">
-    <h2 class="rv" id="eTownH" data-t="E4H"></h2>
-    <p class="lead rv d1" data-t="E4P"></p>
-  </div>
-  <div class="town-grid">
-    <div class="town-ph rv"><img src="/b/media/place-fields.webp" width="1080" height="640" alt="קדימה צורן מהאוויר" loading="lazy"/></div>
-    <div class="rv d1">
-      <div class="town-map"><img src="/proof/subcompounds-map.jpg" width="1083" height="763" alt="מפת מתחמי התכנון של קדימה צורן, ומתחם H במרכז היישוב" loading="lazy"/></div>
-      <div class="facts" id="eFacts"></div>
-    </div>
-  </div>
-  <p class="note rv">מתוך התוכנית הכוללנית והערכת השמאי. התמונות להמחשה בלבד.</p>
-</div></section>
-
-<!-- 7. היציאה -->
-<section class="sec" aria-labelledby="eExitH"><div class="wrap"><div class="col">
-  <h2 class="rv" id="eExitH" data-t="EXITH"></h2>
-  <div class="exitrow rv d1"><lottie-player class="lot" src="/lot-cert4.json" background="transparent" speed="1" autoplay loop></lottie-player><p class="exit" data-t="E5"></p></div>
-</div></div></section>
-
-<!-- 8. הביקורות -->
-<section class="sec night" aria-labelledby="eRevH"><div class="wrap">
-  <h2 class="revq rv" id="eRevH"></h2>
-  <p class="revs rv" id="eRevS"></p>
-  <div class="gbadge rv d1"><span class="gw"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></span>
-    <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg></span>
-    <b>5.0</b><span class="soft">דירוג בגוגל</span></div>
-  <div class="rgal">
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-1.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-2.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-3.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-4.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-5.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-6.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-7.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-8.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-9.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-10.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-11.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-12.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-13.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-14.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-15.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-16.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-17.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-18.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-19.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-20.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-21.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-22.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-23.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-24.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-25.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-26.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-    <img class="rev" src="https://tom-harush.co.il/wp-content/uploads/review-27.png" width="600" height="420" alt="ביקורת גוגל, 5 כוכבים, על קבוצת תום הרוש" loading="lazy" decoding="async"/>
-  </div>
-  <div class="more"><button class="btn2" type="button" id="revMore" onclick="showMoreRevs()">לעוד ביקורות</button></div>
-</div></section>
-
-<!-- 9. תום -->
-<section class="sec" aria-labelledby="eTomH"><div class="wrap">
-  <div class="tom">
-    <div class="tph rv"><img src="/media/tom-portrait.jpg" width="640" height="800" alt="תום הרוש" loading="lazy"/></div>
-    <div>
-      <p class="kick rv" data-t="TOM.k"></p>
-      <h2 class="rv" id="eTomH" data-t="TOM.h"></h2>
-      <p class="lead rv d1" style="font-weight:400" data-t="TOM.bio"></p>
-      <p class="vis rv d1" data-t="TOM.vision"></p>
-      <p class="grp rv d2" data-t="TOM.group"></p>
-      <div class="vals rv d2" id="tVals"></div>
-      <p class="ppl rv d2" data-t="TOM.people"></p>
-      <p class="sig rv d2" data-t="TOM.sig"></p>
+  <div class="split-body">
+    <div class="jtl" data-jet>
+      <div class="jtl-line"></div><div class="jtl-fill"></div>
+      <div class="jtl-item done"><div class="jtl-node"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><div class="jtl-card"><h4>קרקע חקלאית</h4><p>נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.</p></div></div>
+      <div class="jtl-item done"><div class="jtl-node"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><div class="jtl-card"><h4>ועדה ארצית</h4><p>הקווים הגדולים של המדינה: איפה מתכננים לגדול.</p></div></div>
+      <div class="jtl-item done"><div class="jtl-node"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><div class="jtl-card"><h4>ועדה מחוזית</h4><p>ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.</p></div></div>
+      <div class="jtl-item here"><div class="jtl-node"><span class="herepulse"></span></div><div class="jtl-card"><h4>ועדה מקומית<span class="here-tag">אנחנו כאן</span></h4><p>כאן אנחנו היום. התכנון יורד לרמת המתחם.</p></div></div>
+      <div class="jtl-item next"><div class="jtl-node">5</div><div class="jtl-card"><h4>אישור תוכנית מפורטת</h4><p>תוכנית אחת לכל מתחם H: מגרשים, זכויות ושימושים.</p></div></div>
+      <div class="jtl-item next"><div class="jtl-node">6</div><div class="jtl-card"><h4>אישור תוכנית פיתוח</h4><p>כבישים, מים וניקוז. השטח מתחיל להשתנות.</p></div></div>
+      <div class="jtl-item next"><div class="jtl-node">7</div><div class="jtl-card"><h4>זמינות לבנייה</h4><p>היעד. *הקרקע עדיין אינה זמינה לבנייה מיידית.</p></div></div>
     </div>
   </div>
 </div></section>
 
-<!-- 10. מתי לחזור אליך -->
-<section class="join" id="join" aria-labelledby="jH">
-  <div class="jph"><img src="/b/media/place-rows.webp" width="1080" height="480" alt="שורות השדה במתחם H מהאוויר" loading="lazy"/></div>
-  <div class="wrap">
-    <div class="jcard" id="jcard">
-      <form id="jform" novalidate>
-        <h2 id="jH" data-t="JH"></h2>
-        <p class="lead" id="jL"></p>
-        <div class="mynum" id="jMy" hidden></div>
-        <fieldset class="wins" id="jWins">
-          <legend class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">חלון הזמן לחזרה</legend>
-          <div class="win"><input type="radio" name="w" id="w1" value="morning"/><label for="w1"><span class="wn">בבוקר</span><span class="wt">09:00 עד 12:00</span></label></div>
-          <div class="win"><input type="radio" name="w" id="w2" value="noon"/><label for="w2"><span class="wn">בצהריים</span><span class="wt">12:00 עד 16:00</span></label></div>
-          <div class="win"><input type="radio" name="w" id="w3" value="evening"/><label for="w3"><span class="wn">בערב</span><span class="wt">16:00 עד 20:00</span></label></div>
-        </fieldset>
-        <div class="err" id="jEw" aria-live="polite"></div>
-        <div class="field"><label for="jAlt" id="jAltL"></label><input id="jAlt" name="alt_phone" type="tel" inputmode="numeric" autocomplete="off" placeholder="050-0000000…" aria-describedby="jAltH jEo"/><div class="hint" id="jAltH"></div></div>
-        <label class="consent"><input type="checkbox" id="jOk" name="phone_ok"/><span data-t="JOK"></span></label>
-        <div class="err" id="jEo" aria-live="polite"></div>
-        <button class="btn full" type="submit" id="jBtn"><span id="jCta" data-t="JCTA"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></button>
-        <p class="after" data-t="JAFTER"></p>
-        <p class="alt"><a class="link" href="https://wa.me/972533025464" target="_blank" rel="noopener" data-t="JWA"></a></p>
-      </form>
-      <div class="done-box" id="jDone" hidden>
-        <div class="big"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17 19 7"/></svg></div>
-        <h2 id="jDH"></h2>
-        <p class="lead" id="jDP" style="font-weight:400"></p>
-      </div>
-    </div>
+<!-- 4. למה דווקא עכשיו (במקום ה־VSL) -->
+<section class="sec sec-dark now"><div class="wrap">
+  <lottie-player src="/lot-year.json" background="transparent" speed="1" autoplay loop></lottie-player>
+  <div class="dateb">18.12.2024 · התוכנית הכוללנית אושרה</div>
+  <div class="kicker" data-t="NOW.h"></div>
+  <div class="sec-t rv" data-th="NOW.big"></div>
+  <div class="sec-sub rv" data-t="NOW.p"></div>
+</div></section>
+
+<!-- 5. כל חלופה פותרת רק חצי (הכרטיסים של CPAGE) -->
+<section class="sec sec-gray"><div class="wrap-l">
+  <div class="kicker">לפני שבוחרים</div>
+  <div class="sec-t rv" data-th="ALT.h"></div>
+  <div class="fails" style="margin-top:28px">
+      <div class="fail rv"><div class="fi"><lottie-player src="/lot-oash.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.1h"></b><p data-t="ALT.1p"></p></div>
+      <div class="fail rv"><div class="fi"><lottie-player src="/lot-dira.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.2h"></b><p data-t="ALT.2p"></p></div>
+      <div class="fail rv"><div class="fi"><lottie-player src="/lot-shuk.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.3h"></b><p data-t="ALT.3p"></p></div>
+      <div class="fail rv"><div class="fi"><lottie-player src="/lot-ads.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.4h"></b><p data-t="ALT.4p"></p></div>
   </div>
+  <p class="alt-close rv" data-t="ALT.f"></p>
+</div></section>
+
+<!-- 6. שלוש חותמות -->
+<section class="sec"><div class="wrap-l">
+  <div class="kicker">הביטחון שלך</div>
+  <div class="sec-t rv" data-th="E2H"></div>
+  <div class="sec-sub rv" data-t="E2L"></div>
+  <div class="dgrid">
+      <div class="dcard rv"><lottie-player src="/lot-cert1.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b data-t="E2.1"></b><span>מתוך אתר מינהל התכנון</span></div>
+      <div class="dcard rv"><lottie-player src="/lot-cert2.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b data-t="E2.2"></b><span>מתוך הערכת השמאי, תקן 22</span></div>
+      <div class="dcard rv"><lottie-player src="/lot-cert3.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b data-t="E2.3"></b><span>כתוב בחוזה, ונקרא יחד בפגישה</span></div>
+  </div>
+  <div class="proof rv">
+    <div class="proof-card"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"><span>מתוך אתר מינהל התכנון: <b>תכנית <span dir="ltr" style="white-space:nowrap;unicode-bidi:isolate">457-0112086</span>, אישור 18/12/2024</b></span></div>
+    <div class="proof-card"><img src="/proof/location-in-h.jpg" alt="מיקום החלקה בתוך מתחם H, מתוך הערכת השמאי" loading="lazy"><span>מיקום החלקה בתוך מתחם H, <b>מתוך הערכת השמאי</b></span></div>
+  </div>
+  <p class="doc-close rv" data-t="E2F"></p>
+</div></section>
+
+<!-- 7. היישוב לפניך -->
+<section class="sec sec-gray"><div class="wrap-l split">
+  <div class="split-head">
+    <div class="kicker rv">מה מתוכנן כאן</div>
+    <div class="sec-t rv" data-th="E4H"></div>
+    <div class="sec-sub rv" data-t="E4P"></div>
+  </div>
+  <div class="split-body"><div class="facts4 rv" id="eFacts"></div></div>
+</div>
+<div class="wrap-l"><div class="mapcard proof-card rv"><img src="/proof/subcompounds-map.jpg" alt="מפת מתחמי התכנון של קדימה צורן, ומתחם H במרכז היישוב" loading="lazy"><span>מתחמי התכנון של קדימה צורן. <b>מתחם H, במרכז היישוב</b></span></div>
+<p class="town-note">מתוך התוכנית הכוללנית והערכת השמאי.</p></div>
 </section>
 
-<!-- 11. שאלות -->
-<section class="sec paper faq" aria-labelledby="fqH"><div class="wrap"><div class="col">
-  <h2 class="rv" id="fqH" data-t="FAQ.h"></h2>
-  <div class="rv d1" style="margin-top:22px" id="faqs"></div>
-</div></div></section>
-</main>
+<!-- 8. מה אם ארצה לצאת -->
+<section class="sec"><div class="wrap-l">
+  <div class="exitcard rv"><lottie-player src="/lot-cert4.json" background="transparent" speed="1" autoplay loop style="width:72px;height:72px"></lottie-player><div><div class="kicker">היציאה</div><div class="sec-t" data-th="EXITH"></div><p data-t="E5"></p></div></div>
+</div></section>
+
+<!-- 9. הביקורות -->
+<section class="sec sec-dark"><div class="wrap-l">
+  <div class="kicker">לקוחות מספרים</div>
+  <div class="sec-t revq rv" id="eRevH"></div>
+  <p class="rev-src rv" id="eRevS"></p>
+  <div class="gline rv"><span class="gw"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></span><span class="st"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg></span><b>5.0</b></div>
+  <div class="rgal rv">
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-1.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-2.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-3.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-4.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-5.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-6.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-7.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-8.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-9.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-10.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-11.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-12.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-13.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-14.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-15.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-16.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-17.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-18.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-19.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-20.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-21.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-22.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-23.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-24.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-25.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-26.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx hid" src="https://tom-harush.co.il/wp-content/uploads/review-27.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+  </div>
+  <div class="rgal-more" id="rgalMore"><button class="rgal-btn" type="button" onclick="showMoreRevs()">הצג עוד ביקורות</button></div>
+</div></section>
+
+<!-- 10. תום הרוש (הכרטיס של HPAGE, מהאודות של תום) -->
+<section class="sec"><div class="wrap">
+  <div class="tom rv">
+    <div>
+      <div class="kicker" data-t="TOM.k"></div>
+      <h3 data-th="TOM.h"></h3>
+      <p data-t="TOM.bio"></p>
+      <p class="vis" data-t="TOM.vision"></p>
+      <div class="vals" id="tVals"></div>
+      <p class="grp" data-t="TOM.group"></p>
+      <div class="sig" data-t="TOM.sig"></div>
+    </div>
+    <img src="https://tom-harush.co.il/wp-content/uploads/%D7%A2%D7%99%D7%A6%D7%95%D7%91-%D7%9C%D7%9C%D7%90-%D7%A9%D7%9D-17.png" alt="תום הרוש" loading="lazy"/>
+  </div>
+</div></section>
+
+<!-- 11. בחירת מועד -->
+<section class="sec sec-gray" id="join"><div class="wrap">
+  <div class="join-card rv" id="jcard">
+    <form id="jform" novalidate>
+      <div class="kicker">הצעד האחרון</div>
+      <h2 id="jH" data-th="JH"></h2>
+      <p id="jL"></p>
+      <div class="mynum" id="jMy" hidden></div>
+      <fieldset class="wins">
+        <legend style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">חלון הזמן לחזרה</legend>
+        <div class="win"><input type="radio" name="w" id="w1" value="morning"/><label for="w1"><span class="wn">בבוקר</span><span class="wt">09:00 עד 12:00</span></label></div>
+        <div class="win"><input type="radio" name="w" id="w2" value="noon"/><label for="w2"><span class="wn">בצהריים</span><span class="wt">12:00 עד 16:00</span></label></div>
+        <div class="win"><input type="radio" name="w" id="w3" value="evening"/><label for="w3"><span class="wn">בערב</span><span class="wt">16:00 עד 20:00</span></label></div>
+      </fieldset>
+      <div class="jerr" id="jEw" aria-live="polite"></div>
+      <div class="jfield"><label for="jAlt" id="jAltL"></label><input id="jAlt" name="alt_phone" type="tel" inputmode="numeric" autocomplete="off" placeholder="050-0000000…"/></div>
+      <label class="consent"><input type="checkbox" id="jOk" name="phone_ok"/><span id="jOkT" data-t="JOK"></span></label>
+      <div class="jerr" id="jEo" aria-live="polite"></div>
+      <button class="btn" type="submit" id="jBtn"><span id="jCta" data-t="JCTA"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
+      <p class="after" data-t="JAFTER"></p>
+      <p class="alt"><a href="https://wa.me/972533025464" target="_blank" rel="noopener" data-t="JWA"></a></p>
+    </form>
+    <div class="done-box" id="jDone" hidden><div class="big"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><h2 id="jDH"></h2><p id="jDP"></p></div>
+  </div>
+</div></section>
+
+<!-- 12. שאלות -->
+<section class="sec"><div class="wrap faq">
+  <div class="kicker">לפני השיחה</div>
+  <div class="sec-t rv" data-th="FAQ.h"></div>
+  <div class="rv" id="faqs" style="margin-top:24px"></div>
+</div></section>
 
 <footer>
-  <p class="own" data-t="OWN"></p>
-  <img class="flogo" src="/logo.png" width="140" height="52" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" loading="lazy"/>
+  <img class="flogo" src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" loading="lazy"/>
+  <div class="foot-title" data-t="OWN"></div>
   <div class="social">
     <a href="https://wa.me/972533025464" target="_blank" rel="noopener" aria-label="וואטסאפ"><lottie-player src="/lot-s-wa.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
     <a href="https://www.instagram.com/tom_harush/" target="_blank" rel="noopener" aria-label="אינסטגרם"><lottie-player src="/lot-s-ig.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
     <a href="https://www.facebook.com/appartmentforsaleinramatgan" target="_blank" rel="noopener" aria-label="פייסבוק"><lottie-player src="/lot-s-fb.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
   </div>
   <div class="wrap"><div class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b> הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.</div></div>
-  <div class="fl"><a href="/privacy-kadima/">מדיניות פרטיות</a></div>
-  <div class="cr">© הקרן להשבחת הון ונכסים בע״מ מקבוצת תום הרוש · <a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a></div>
+  <div class="foot-links"><a href="/privacy-kadima/">מדיניות פרטיות</a></div>
+  <div class="copy">© הקרן להשבחת הון ונכסים בע״מ מקבוצת תום הרוש · <a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a></div>
 </footer>
-
-<div class="float" id="float"><a class="btn" href="#join" onclick="scrollJoin(event)"><span id="fCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a></div>
+<div class="float" id="float"><a href="#join" onclick="scrollJoin(event)"><span data-t="C.cta"></span> <svg class="arw" viewBox="0 0 36 11"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a></div>
 <script>
-/* ═══════════ דף התוצאה הדינמי של B · הטקסטים מגיעים מהלוגיקה שגל אישר (b_result_logic_content.py) ═══════════ */
-const D = {"tx": {"H.w0": "{שם}, שאלת איפה כן. הנה התשובה שלנו, נקודה אחרי נקודה.", "H.w1": "{שם}, אנחנו לא ממהרים. קודם הבנו מה נכון לך.", "H.w2": "{שם}, הנה כל מה שכדאי לדעת עכשיו, כדי להחליט בקרוב ובשקט.", "H.sub": "בנינו את הדף הזה רק מהתשובות שלך. הוא שלך, וקיבלת אותו גם בוואטסאפ!\nאפשר לחזור אליו מתי שנוח לך.", "C.title": "מה שמוביל כל השקעה טובה זה תיאום ציפיות ראשוני, הנה מה שהבטחנו:", "C.sum4": "כל 4 הנקודות שסימנת מתאימות. זה הזמן שנקבע 15 דקות ונדבר על הצעד הבא.", "C.sumN": "{n} מתוך 4 הנקודות שסימנת כבר מתאימות. זה הזמן שנקבע 15 דקות ונדבר על השאר.", "C.need": "כל שורה מתחילה במה שהוא בחר, מילה במילה מהשאלון שלך (התשובה והמיקרו קופי שלה), ואחריה התשובה שלנו.", "R1.0": "כאן לא ממהרים. כל שלב נשען על מסמך שאפשר לבדוק, ואת הקצב קובעים ביחד לפי מה שנכון לך.", "R1.1": "כל מסמך כאן פתוח לבדיקה, משלב התכנון ועד היציאה, ומוסבר במילים פשוטות. בקצב שלך.", "R1.2": "מקום בטוח: התוכנית הכוללנית כבר אושרה. קצב בטוח: נכנסים בתזמון מדויק, עוד בשלב התכנוני, לפני שהקרקע הופכת למרכז של יישוב, ובמחיר שקוף מול השמאות העדכנית.", "R1.3": "אנחנו מתאימים לך מודל בדיוק בהיקף שנכון לך, בלי משכנתא חונקת. מתחילים במטרים, ומחזיקים חלק אמיתי ממרכז קדימה צורן החדש, כשכל צעד מגובה במסמך שמצמצם את הסיכון.", "R2.0.0": "שלושה מסמכים שנעבור עליהם יחד: תוכנית מאושרת, שמאות לפי תקן 22, והקטנת הסיכון דרך התחייבות לרכישה חוזרת.", "R2.0.1": "כאן הבסיס הוא ודאות: התוכנית הכוללנית כבר מאושרת והצפי שקוף לשנים הקרובות. אם מה שחיפשת זה רק תשואה גבוהה במחיר של סיכון גבוה, נגיד בשיחה בכנות אם זה המקום.", "R2.0.2": "המספר הראשון כבר כאן: שמאות מקרקעין לפי תקן 22 קבעה: החל מ־3,700 ש״ח למטר.\nאבל זה לא כל מה שצריך לדעת. על השאר עוברים בשיחה, מול השמאות.", "R2.1.0": "יש מודל יציאה שקוף וברור, עם מזעור סיכונים דרך התחייבות בכתב מצדנו לרכישה חוזרת. כל התנאים שקופים מראש בחוזה, ועוברים עליהם יחד, סעיף אחרי סעיף.", "R2.1.1": "התוכנית אושרה ב־18/12/2024, ומתחם H נמצא היום בשלב הוועדה המקומית, אחרי אישור התוכנית הכוללנית. כרגע על הפרק: תוכנית מפורטת. ציר הזמן המלא מחכה כאן למטה.", "R2.1.2": "שמאות מקרקעין לפי תקן 22 קבעה: 3,700 ש״ח למטר, כלומר 370,000 ש״ח ליחידת קרקע של כ־100 מ״ר.\nאבל זה רק חלק ממה שצריך לדעת. על השאר נעבור יחד, בגובה העיניים ובקצב שלך.", "R2.2.0": "תכנון קרקע לוקח בדרך כלל יותר מזה. את זה חשוב לבדוק בשיחה בכנות, לפני שמחליטים משהו.", "R2.2.1": "הטווח שסימנת מתאים לקצב של תכנון קרקע.", "R2.2.2": "קרקע בשלבי תכנון צריכה בדיוק את זה: סבלנות. ובינתיים, הכסף שיושב בצד מקבל תפקיד.", "R2.3.0": "אפשרי כאן, בהיקף שבונים יחד. נכנסים אחרי שהתוכנית הכוללנית אושרה, ולפני התוכנית המפורטת.", "R2.3.1": "קונים לפי מטר, בדיוק בהיקף של ההון שמחכה להחלטה.", "R2.3.2": "את ההיקף בונים יחד בשיחה, לפי מה שנוח לך.", "R3.0": "אז בלי הקדמות: כאן. הסיבות כתובות בדף הזה, כל אחת עם המסמך שלה, והשיחה תהיה ממוקדת במספרים שלך.", "R3.1": "בגלל זה השיחה מתחילה בשאלות שלך, לא בהצעה. ההחלטה והקצב נשארים אצלך.", "R3.2": "כל המידע כאן, עם המקורות שלו. ובשיחה אפשר לשאול על כל מה שחסר.", "R4.0": "זה מה שמאפשר להיכנס עכשיו, בשלב הנוכחי של התכנון.", "R4.1": "אפשר להיכנס גם עם הון מלווה, וזה בסדר גמור מבחינתנו. בשיחה בונים יחד היקף ולוח זמנים שמתאימים גם לתזרים שלך.", "R4.2": "אפשר להתחיל בהיקף של החלק שכבר זמין, לפי מטר.", "R5": "מה שעוד פתוח: איזה היקף מתאים לך, ובאיזה לוח זמנים. את זה סוגרים בשיחה אחת קצרה.", "C.call": "15 דקות בטלפון, בזמן שנוח לך ובלי לנסוע. שואלים, ומקבלים תשובות.", "C.cta": "להשלים את בדיקת ההתאמה שלי", "C.num": "השיחה תגיע מהמספר 053-302-5464. · שמירה באנשי הקשר", "C.booked": "השיחה שלך שמורה {w}. אם צריך לשנות, אפשר לכתוב לנו בוואטסאפ.", "PAIN.k": "רגע לפני שמדברים על נדל״ן", "PAIN.h1": "יש לך כסף בצד.", "PAIN.h2": "אבל אין לך שקט איתו.", "PAIN.sub": "עבדת קשה בשביל הכסף הזה. חסכת, ויתרת, בנית לעצמך ולמשפחה ביטחון כלכלי. ועכשיו ברור לך שהוא יכול לעשות יותר, אבל אין לך שום כוונה לסכן אותו בשביל עוד הבטחה יפה.", "PAIN.lead": "ואולי גם המחשבות האלה עברו לך בראש:", "PAIN.t1": "״יש לי סכום יפה בצד, אבל הוא פשוט לא עושה כלום.״\nברור לי שהכסף שלי יכול לעבוד יותר טוב. רק לא ברור לי איפה לשים אותו.", "PAIN.t2": "״כל פעם שמציעים לי ׳הזדמנות השקעה׳, הדבר הראשון שעולה לי בראש: איפה הקאץ׳.״\nכולם מבטיחים תשואות ורווחים. אבל למי באמת אפשר להאמין?", "PAIN.t3": "״אני רואה אחרים מתקדמים, ואני עדיין באותו מקום.״\nמצד אחד, אני לא רוצה לפספס שוב. מצד שני, אני לא אהמר על מה שלקח לי שנים לבנות.", "PUNCH.1": "לא מפחיד אותך שהכסף שלך יעבוד.", "PUNCH.2": "מפחיד אותך שהוא יעבוד נגדך.", "PUNCH.k": "וזה בדיוק ההבדל.", "PUNCH.p": "לא חסר לך עוד מישהו שיגיד לך שההשקעה שלו מדהימה. חסר לך מישהו שיראה לך את המספרים, את המסמכים, את הסיכונים ואת האפשרויות שלך, וייתן לך להחליט בעצמך.", "PUNCH.c": "כי לפני שהכסף שלך מתחיל לעבוד, מגיע לך להבין בדיוק איפה הוא מושקע.", "ALT.h": "כל חלופה פותרת רק חצי", "ALT.1": "העו״ש והפיקדון: הכסף שקט, אבל לא עובד. כל שנה שהוא יושב שם, הוא שווה קצת פחות.", "ALT.2": "דירה להשקעה: נכס אמיתי, אבל עם הון עצמי גדול ומשכנתא לשנים. כדי שהכסף יעבוד, צריך לעבוד בשביל הבנק.", "ALT.3": "שוק ההון: אולי תשואה, אבל בלי גב. המחיר זז כל יום, והשליטה לא אצלך.", "ALT.4": "עוד הזדמנות מפרסומת: הרבה הבטחות, הרבה פגישות, ומעט מאוד מסמכים.", "ALT.f": "מה שחסר בכולן הוא השילוב: כסף שעובד, בהיקף שנכון לך, ועם מסמך מאחורי כל טענה. וזה בדיוק מה שאפשר לבדוק כאן.", "NOW.h": "למה דווקא עכשיו?", "NOW.big": "הקיר כבר מאחוריך.", "NOW.k": "מה השתנה ב־18/12/2024, ולמה זה משנה לכסף שלך:", "NOW.p": "בקרקע, מה ששורף כסף הוא ההמתנה לתוכנית שאולי לא תגיע. במתחם H ההמתנה הזו נגמרה ב־18/12/2024, כשהתוכנית הכוללנית של קדימה צורן אושרה. מי שנכנס עכשיו, נכנס אחרי ההחלטה הגדולה ולפני התוכנית המפורטת.", "E2H": "שלוש חותמות. כל אחת אפשר לבדוק.", "E2L": "מה שבעסקאות קרקע מבקשים בדרך כלל להאמין לו, כאן כתוב במסמך.", "E2.1": "התוכנית אושרה ב־18/12/2024.", "E2.2": "שמאי מקרקעין קבע שווי של 3,700 ש״ח למטר. זה בדיוק מחיר הכניסה.", "E2.3": "התחייבות שלנו לרכישה חוזרת, כתובה בחוזה.", "E2F": "את שלושתן פותחים יחד בשיחה, מסמך אחרי מסמך, ועונים על כל שאלה.", "E3H": "איפה מתחם H עומד היום", "E3S": "השלב שבו קרקעות נתקעות שנים כבר מאחור. הבא בתור: תוכנית מפורטת למתחם H.", "STAGES": "קרקע חקלאית: נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.\nועדה ארצית: הקווים הגדולים של המדינה: איפה מתכננים לגדול.\nועדה מחוזית: ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.\nועדה מקומית (אנחנו כאן): כאן אנחנו היום. התכנון יורד לרמת המתחם.\nאישור תוכנית מפורטת: תוכנית אחת לכל מתחם H: מגרשים, זכויות ושימושים.\nאישור תוכנית פיתוח: כבישים, מים וניקוז. השטח מתחיל להשתנות.\nזמינות לבנייה: היעד. *הקרקע עדיין אינה זמינה לבנייה מיידית.", "E4H": "היישוב לפניך", "E4P": "במתחם H מתוכנן המרכז החדש של קדימה צורן, והמספרים כאן לקוחים מהתוכנית שאושרה. מי שנכנס עכשיו, נכנס לפני שכל זה קם.", "FACTS": "1,000 · יחידות דיור בשכונה החדשה\nכ־50,000 מ״ר · מרכז קניות פתוח\nעירוב שימושים · מגורים, דיור מוגן, מסחר ותעסוקה\nכ־10 ק״מ · מנתניה ומהים", "EXITH": "ומה אם ארצה לצאת?", "E5": "יש לנו מודל יציאה שקוף וברור, עם התחייבות בכתב מצדנו לרכישה חוזרת. כל התנאים כתובים מראש בחוזה, ובפגישה עוברים עליהם יחד, סעיף אחרי סעיף.", "REVH": "״חיפשנו הרבה זמן מישהו שאפשר לסמוך עליו בתחום הנדל״ן״\nמתוך ביקורת בגוגל על קבוצת תום הרוש", "TOM.k": "מבינים אנשים. מומחים בנדל״ן.", "TOM.h": "אני תום הרוש", "TOM.bio": "יותר מ־15 שנה אני בעולם הנדל״ן: השקעות, תיווך, יזמות והתחדשות עירונית. יחד עם השותפים יזמנו, הקמנו ומסרנו מעל 1,000 יחידות דיור.", "TOM.vision": "החזון שלנו: לאפשר לאנשים לעבור לרמה הכלכלית הבאה שלהם באמצעות נדל״ן.", "TOM.group": "קבוצת תום הרוש פועלת באמצעות שלוש חברות:\nSUPERB: מעטפת שיווק פרויקטלי מקיפה ליזמי נדל״ן.\nREBUILD: חברה מארגנת המתמחה בהתחדשות עירונית, כמנהלת דיירים.\nELITA ONE: שיווק ואיתור נכסי יוקרה.", "TOM.values": "שותפות · מנהיגות · מצוינות · חדשנות", "TOM.people": "הצוות שלנו רוקם קשרים אישיים ועסקיים איתנים עם הלקוחות, שהופכים לשותפים וחברים לדרך.", "TOM.sig": "הפגישה היא איתי, באופן אישי.", "JH": "מתי נוח שנחזור אליך?", "JL": "בוחרים חלון זמן, ואנחנו מתקשרים בתוכו. אם ההחלטה משותפת, כדאי לבחור זמן שנוח לשניכם.", "JL.w1": "אין לחץ. בוחרים חלון זמן לשיחת היכרות קצרה, ואם זה לא הזמן, הדף הזה מחכה לך.", "JMY": "נתקשר למספר שמסתיים ב־{3 ספרות}", "JALT": "מספר אחר לחזרה (רשות)\nרק אם עדיף שנתקשר למספר אחר מזה שבטופס.", "JOK": "המספר שהזנתי בטופס זה הטלפון לחזור אליי", "JCTA": "לשריין את השיחה שלי", "JAFTER": "בשיחה עונים על כל שאלה. ההחלטה נשארת אצלך.", "JWA": "עדיף לכתוב עכשיו? אפשר בוואטסאפ", "JDP": "השיחה שלך שמורה.\nנחזור אליך {w}, למספר {n}.", "JERR": "צריך לבחור חלון זמן", "FAQ.h": "מה שכדאי לדעת לפני השיחה", "FAQ.1": "זו הפעם הראשונה שלי בקרקע. זה מתאים לי?\nרוב מי שפונים אלינו עושים את זה בפעם הראשונה. לכן בשיחה מתחילים מהבסיס, ומסבירים כל מונח במילים פשוטות: מה זה טאבו, מה זו תוכנית מפורטת, ואיך יוצאים מהעסקה.", "FAQ.2": "מה בדיוק קונים?\nקרקע פרטית בטאבו, לפי מטר, בתוך מתחם H בקדימה צורן. התוכנית הכוללנית של היישוב אושרה ב־18/12/2024, והשלב הבא הוא תוכנית מפורטת.", "FAQ.3": "איך נקבע המחיר?\nשמאי מקרקעין קבע שווי של 3,700 ש״ח למטר, וזה בדיוק מחיר הכניסה. את השמאות עצמה פותחים יחד בשיחה.", "FAQ.4": "מתי אפשר לבנות?\nהקרקע עדיין אינה זמינה לבנייה מיידית. לבנייה נדרשת תוכנית מפורטת, ואת לוחות הזמנים הצפויים עוברים בשיחה, מול המסמכים.", "FAQ.5": "ומה לגבי מיסוי?\nכמו בכל עסקת נדל״ן יש מס רכישה בכניסה ומס שבח במכירה. עוברים על התמונה המלאה בשיחה, ומומלץ ללוות את זה עם יועץ המס שלך.", "OWN": "הדף הזה נבנה רק בשבילך. אפשר לחזור אליו מכל מכשיר, מהקישור האישי שקיבלת.", "DISC": "*הקרקע עדיין אינה זמינה לבנייה מיידית. הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.", "T.H": "השיחה שלך שמורה.", "T.S": "נחזור אליך {w}, למספר {n}.\nבלי חלון: נחזור אליך בקרוב.", "T.CTA": "שמירת המספר שלנו באנשי הקשר\nככה השיחה מ־053-302-5464 לא תיפול על מספר לא מוכר.", "T.STEPS": "מה קורה עכשיו\n1. בחלון שבחרת מגיעה שיחה מ־053-302-5464.\n2. בשיחה משלימים את בדיקת ההתאמה: איזה היקף מתאים לך, ובאיזה לוח זמנים.\n3. אם יש התאמה, קובעים פגישה אישית עם תום, מול המסמכים.", "T.PREP": "כדי שהשיחה תלך ישר לעניין\nכדאי לחשוב מראש על ההיקף שנוח לך ועל אופק הזמן. ואם ההחלטה משותפת, שווה ששניכם תהיו בשיחה. ככה מדברים מהדקה הראשונה על מה שרלוונטי לכם.", "T.WA": "יש שאלה לפני השיחה? אפשר לכתוב לנו בוואטסאפ", "T.OWN": "הדף האישי שלך נשאר פתוח: אפשר לחזור אליו מכל מכשיר."}, "st": {"R1.0": "ok", "R1.1": "ok", "R1.2": "ok", "R1.3": "ok", "R2.0.0": "ok", "R2.0.1": "honest", "R2.0.2": "ok", "R2.1.0": "ok", "R2.1.1": "ok", "R2.1.2": "ok", "R2.2.0": "honest", "R2.2.1": "ok", "R2.2.2": "ok", "R2.3.0": "ok", "R2.3.1": "ok", "R2.3.2": "ask", "R3.0": "ok", "R3.1": "ok", "R3.2": "ok", "R4.0": "ok", "R4.1": "ok", "R4.2": "ok", "R5": "ask"}, "q1": [["ודאות וביטחון", "ליווי רגוע והתאמת הצורך האישי."], ["להבין לעומק לפני החלטה", "לראות הכל בעיניים, ולבדוק בקצב שלי."], ["תשואה בטוחה", "שהכסף יגדל, במקום וקצב בטוח."], ["רף כניסה נמוך", "להתחיל עם ההון שיש לי עכשיו."]], "q2": [[["גם וגם", "השקעה שתניב רווח בריא, עם מסמכים וגיבוי"], ["כן. אצלי תשואה קודמת להכל", "הסיכון שאקח מחושב בהתאם לתשואה."], ["תלוי כמה גבוהה", "אני קודם רוצה לראות את המספרים"]], [["מה קורה אם ארצה לצאת", "איך יוצאים, ומה כתוב על זה בחוזה."], ["את התוכנית הכוללנית ושלבי התכנון", "איפה המתחם עומד היום, ומה נשאר עד הבנייה."], ["איך בדיוק נקבע המחיר", "מי קבע אותו, ולפי מה."]], [["גג 3 שנים", "מתאימה לי השקעה לטווח הקצר."], ["3 עד 7 שנים", "הקצב הטבעי של קרקע עם ודאות."], ["אין לי לחץ של זמן", "יש לי כסף שיושב בצד ולא עובד."]], [["מהלך אחד משמעותי", "להרוויח בעיקר מהשלבים התכנוניים."], ["מההון שכבר יש לי", "הכסף שלי מחכה להחלטה."], ["עוד לא החלטתי", "את ההיקף בונים יחד בשיחה."]]], "q2t": ["השקעה עם תשואה גבוהה יותר, אבל עם פחות ודאות: זה מתאים לך?", "מה הדבר הראשון שהיית רוצה לראות במו עיניך?", "לכמה זמן הכסף הזה יכול לצאת לעבוד?", "איך נוח לך להתחיל?"], "q3": [["יש לי מוכנות לקבל החלטה", "השאלה שלי היא \"איפה כן\" ולא \"מה מתאים לי\""], ["לא עכשיו", "צריך כאן מישהו שיבין אותי.. השארתי פרטים בהרבה מקומות."], ["בחודשים הקרובים", "לאסוף מידע מעכשיו, להחליט עם עצמי בקרוב."]], "q4": [["כן, יושב ומחכה", "ובינתיים לא עובד בשבילי."], ["עוד לא", "שקלתי ללוות הון."], ["חלק זמין, חלק בדרך", "נבדוק יחד מה הכי נכון לך ומתי."]]};
+/* ═══ דף התוצאה הדינמי של B (גרסה 4). הטקסטים מהלוגיקה שגל אישר. [[...]] = צבע המותג ═══ */
+const D = {"tx": {"H.w0": "{שם}, שאלת איפה כן.\nהנה [[התשובה שלנו]], נקודה אחרי נקודה.", "H.w1": "{שם}, [[אנחנו לא ממהרים]].\nקודם הבנו מה נכון לך.", "H.w2": "{שם}, הנה כל מה שכדאי לדעת עכשיו,\nכדי להחליט [[בקרוב ובשקט]].", "H.sub": "בנינו את הדף הזה רק מהתשובות שלך. הוא שלך, וקיבלת אותו גם בוואטסאפ!\nאפשר לחזור אליו מתי שנוח לך.", "C.title": "מה שמוביל כל השקעה טובה זה תיאום ציפיות ראשוני, הנה מה שהבטחנו:", "C.sum4": "כל 4 הנקודות שסימנת [[מתאימות]]. זה הזמן שנקבע 15 דקות ונדבר על הצעד הבא.", "C.sumN": "{n} מתוך 4 הנקודות שסימנת [[כבר מתאימות]]. זה הזמן שנקבע 15 דקות ונדבר על השאר.", "C.need": "כל שורה מתחילה במה שהוא בחר, מילה במילה מהשאלון שלך (התשובה והמיקרו קופי שלה), ואחריה התשובה שלנו.", "R1.0": "כאן לא ממהרים. כל שלב נשען על מסמך שאפשר לבדוק, ואת הקצב קובעים ביחד לפי מה שנכון לך.", "R1.1": "כל מסמך כאן פתוח לבדיקה, משלב התכנון ועד היציאה, ומוסבר במילים פשוטות. בקצב שלך.", "R1.2": "מקום בטוח: התוכנית הכוללנית כבר אושרה. קצב בטוח: נכנסים בתזמון מדויק, עוד בשלב התכנוני, לפני שהקרקע הופכת למרכז של יישוב, ובמחיר שקוף מול השמאות העדכנית.", "R1.3": "אנחנו מתאימים לך מודל בדיוק בהיקף שנכון לך, בלי משכנתא חונקת. מתחילים במטרים, ומחזיקים חלק אמיתי ממרכז קדימה צורן החדש, כשכל צעד מגובה במסמך שמצמצם את הסיכון.", "R2.0.0": "שלושה מסמכים שנעבור עליהם יחד: תוכנית מאושרת, שמאות לפי תקן 22, והקטנת הסיכון דרך התחייבות לרכישה חוזרת.", "R2.0.1": "כאן הבסיס הוא ודאות: התוכנית הכוללנית כבר מאושרת והצפי שקוף לשנים הקרובות. אם מה שחיפשת זה רק תשואה גבוהה במחיר של סיכון גבוה, נגיד בשיחה בכנות אם זה המקום.", "R2.0.2": "המספר הראשון כבר כאן: שמאות מקרקעין לפי תקן 22 קבעה: החל מ־3,700 ש״ח למטר.\nאבל זה לא כל מה שצריך לדעת. על השאר עוברים בשיחה, מול השמאות.", "R2.1.0": "יש מודל יציאה שקוף וברור, עם מזעור סיכונים דרך התחייבות בכתב מצדנו לרכישה חוזרת. כל התנאים שקופים מראש בחוזה, ועוברים עליהם יחד, סעיף אחרי סעיף.", "R2.1.1": "התוכנית אושרה ב־18/12/2024, ומתחם H נמצא היום בשלב הוועדה המקומית, אחרי אישור התוכנית הכוללנית. כרגע על הפרק: תוכנית מפורטת. ציר הזמן המלא מחכה כאן למטה.", "R2.1.2": "שמאות מקרקעין לפי תקן 22 קבעה: 3,700 ש״ח למטר, כלומר 370,000 ש״ח ליחידת קרקע של כ־100 מ״ר.\nאבל זה רק חלק ממה שצריך לדעת. על השאר נעבור יחד, בגובה העיניים ובקצב שלך.", "R2.2.0": "תכנון קרקע לוקח בדרך כלל יותר מזה. את זה חשוב לבדוק בשיחה בכנות, לפני שמחליטים משהו.", "R2.2.1": "הטווח שסימנת מתאים לקצב של תכנון קרקע.", "R2.2.2": "קרקע בשלבי תכנון צריכה בדיוק את זה: סבלנות. ובינתיים, הכסף שיושב בצד מקבל תפקיד.", "R2.3.0": "אפשרי כאן, בהיקף שבונים יחד. נכנסים אחרי שהתוכנית הכוללנית אושרה, ולפני התוכנית המפורטת.", "R2.3.1": "קונים לפי מטר, בדיוק בהיקף של ההון שמחכה להחלטה.", "R2.3.2": "את ההיקף בונים יחד בשיחה, לפי מה שנוח לך.", "R3.0": "אז בלי הקדמות: כאן. הסיבות כתובות בדף הזה, כל אחת עם המסמך שלה, והשיחה תהיה ממוקדת במספרים שלך.", "R3.1": "בגלל זה השיחה מתחילה בשאלות שלך, לא בהצעה. ההחלטה והקצב נשארים אצלך.", "R3.2": "כל המידע כאן, עם המקורות שלו. ובשיחה אפשר לשאול על כל מה שחסר.", "R4.0": "זה מה שמאפשר להיכנס עכשיו, בשלב הנוכחי של התכנון.", "R4.1": "אפשר להיכנס גם עם הון מלווה, וזה בסדר גמור מבחינתנו. בשיחה בונים יחד היקף ולוח זמנים שמתאימים גם לתזרים שלך.", "R4.2": "אפשר להתחיל בהיקף של החלק שכבר זמין, לפי מטר.", "R5": "מה שעוד פתוח: איזה היקף מתאים לך, ובאיזה לוח זמנים. את זה סוגרים בשיחה אחת קצרה.", "C.call": "15 דקות בטלפון, בזמן שנוח לך ובלי לנסוע. שואלים, ומקבלים תשובות.", "C.cta": "להשלים את בדיקת ההתאמה שלי", "C.num": "השיחה תגיע מהמספר 053-302-5464. · שמירה באנשי הקשר", "C.booked": "השיחה שלך שמורה {w}. אם צריך לשנות, אפשר לכתוב לנו בוואטסאפ.", "PAIN.k": "רגע לפני שמדברים על נדל״ן", "PAIN.h1": "יש לך כסף בצד.", "PAIN.h2": "אבל אין לך שקט איתו.", "PAIN.sub": "עבדת קשה בשביל הכסף הזה. חסכת, ויתרת, בנית לעצמך ולמשפחה ביטחון כלכלי. ועכשיו ברור לך שהוא יכול לעשות יותר, אבל אין לך שום כוונה לסכן אותו בשביל עוד הבטחה יפה.", "PAIN.lead": "ואולי גם המחשבות האלה עברו לך בראש:", "PAIN.t1": "״יש לי סכום יפה בצד, אבל הוא פשוט לא עושה כלום.״\nברור לי שהכסף שלי יכול לעבוד יותר טוב. רק לא ברור לי איפה לשים אותו.", "PAIN.t2": "״כל פעם שמציעים לי ׳הזדמנות השקעה׳, הדבר הראשון שעולה לי בראש: איפה הקאץ׳.״\nכולם מבטיחים תשואות ורווחים. אבל למי באמת אפשר להאמין?", "PAIN.t3": "״אני רואה אחרים מתקדמים, ואני עדיין באותו מקום.״\nמצד אחד, אני לא רוצה לפספס שוב. מצד שני, אני לא אהמר על מה שלקח לי שנים לבנות.", "PUNCH.1": "לא מפחיד אותך שהכסף שלך יעבוד.", "PUNCH.2": "מפחיד אותך שהוא יעבוד נגדך.", "PUNCH.k": "וזה בדיוק ההבדל.", "PUNCH.p": "לא חסר לך עוד מישהו שיגיד לך שההשקעה שלו מדהימה. חסר לך מישהו שיראה לך את המספרים, את המסמכים, את הסיכונים ואת האפשרויות שלך, וייתן לך להחליט בעצמך.", "PUNCH.c": "כי לפני שהכסף שלך מתחיל לעבוד, מגיע לך להבין בדיוק איפה הוא מושקע.", "ALT.h": "כל חלופה פותרת [[רק חצי]]", "ALT.1": "העו״ש והפיקדון: הכסף שקט, אבל לא עובד. כל שנה שהוא יושב שם, הוא שווה קצת פחות.", "ALT.2": "דירה להשקעה: נכס אמיתי, אבל עם הון עצמי גדול ומשכנתא לשנים. כדי שהכסף יעבוד, צריך לעבוד בשביל הבנק.", "ALT.3": "שוק ההון: אולי תשואה, אבל בלי גב. המחיר זז כל יום, והשליטה לא אצלך.", "ALT.4": "עוד הזדמנות מפרסומת: הרבה הבטחות, הרבה פגישות, ומעט מאוד מסמכים.", "ALT.f": "מה שחסר בכולן הוא השילוב: כסף שעובד, בהיקף שנכון לך, ועם מסמך מאחורי כל טענה. וזה בדיוק מה שאפשר לבדוק כאן.", "NOW.h": "למה דווקא עכשיו?", "NOW.big": "הקיר כבר [[מאחוריך]].", "NOW.p": "ב־18/12/2024 ההמתנה לתוכנית במתחם H נגמרה. מי שנכנס עכשיו, נכנס אחרי ההחלטה הגדולה ולפני התוכנית המפורטת.", "E2H": "שלוש חותמות. [[כל אחת אפשר לבדוק.]]", "E2L": "מה שבעסקאות קרקע מבקשים בדרך כלל להאמין לו, כאן כתוב במסמך.", "E2.1": "התוכנית אושרה ב־18/12/2024.", "E2.2": "שמאי מקרקעין קבע שווי של 3,700 ש״ח למטר. זה בדיוק מחיר הכניסה.", "E2.3": "התחייבות שלנו לרכישה חוזרת, כתובה בחוזה.", "E2F": "את שלושתן פותחים יחד בשיחה, מסמך אחרי מסמך, ועונים על כל שאלה.", "E3H": "איפה מתחם H [[עומד היום]]", "E3S": "השלב שבו קרקעות נתקעות שנים כבר מאחור. הבא בתור: תוכנית מפורטת למתחם H.", "STAGES": "קרקע חקלאית: נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.\nועדה ארצית: הקווים הגדולים של המדינה: איפה מתכננים לגדול.\nועדה מחוזית: ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.\nועדה מקומית (אנחנו כאן): כאן אנחנו היום. התכנון יורד לרמת המתחם.\nאישור תוכנית מפורטת: תוכנית אחת לכל מתחם H: מגרשים, זכויות ושימושים.\nאישור תוכנית פיתוח: כבישים, מים וניקוז. השטח מתחיל להשתנות.\nזמינות לבנייה: היעד. *הקרקע עדיין אינה זמינה לבנייה מיידית.", "E4H": "היישוב [[לפניך]]", "E4P": "במתחם H מתוכנן המרכז החדש של קדימה צורן, והמספרים כאן לקוחים מהתוכנית שאושרה. מי שנכנס עכשיו, נכנס לפני שכל זה קם.", "FACTS": "1,000 · יחידות דיור בשכונה החדשה\nכ־50,000 מ״ר · מרכז קניות פתוח\nעירוב שימושים · מגורים, דיור מוגן, מסחר ותעסוקה\nכ־10 ק״מ · מנתניה ומהים", "EXITH": "ומה אם [[ארצה לצאת?]]", "E5": "יש לנו מודל יציאה שקוף וברור, עם התחייבות בכתב מצדנו לרכישה חוזרת. כל התנאים כתובים מראש בחוזה, ובפגישה עוברים עליהם יחד, סעיף אחרי סעיף.", "REVH": "״חיפשנו הרבה זמן [[מישהו שאפשר לסמוך עליו]] בתחום הנדל״ן״\nמתוך ביקורת בגוגל על קבוצת תום הרוש", "TOM.k": "מבינים אנשים. מומחים בנדל״ן.", "TOM.h": "אני [[תום הרוש]]", "TOM.bio": "יותר מ־15 שנה אני בעולם הנדל״ן: השקעות, תיווך, יזמות והתחדשות עירונית. יחד עם השותפים יזמנו, הקמנו ומסרנו מעל 1,000 יחידות דיור.", "TOM.vision": "החזון שלנו: לאפשר לאנשים לעבור לרמה הכלכלית הבאה שלהם באמצעות נדל״ן.", "TOM.group": "פועלים באמצעות שלוש חברות: SUPERB, REBUILD ו־ELITA ONE.", "TOM.values": "שותפות · מנהיגות · מצוינות · חדשנות", "TOM.sig": "הפגישה היא איתי, באופן אישי.", "JH": "מתי נוח [[שנחזור אליך?]]", "JL": "בוחרים חלון זמן, ואנחנו מתקשרים בתוכו. אם ההחלטה משותפת, כדאי לבחור זמן שנוח לשניכם.", "JL.w1": "אין לחץ. בוחרים חלון זמן לשיחת היכרות קצרה, ואם זה לא הזמן, הדף הזה מחכה לך.", "JMY": "נתקשר למספר שמסתיים ב־{3 ספרות}", "JALT": "מספר אחר לחזרה (רשות)\nרק אם עדיף שנתקשר למספר אחר מזה שבטופס.", "JOK": "המספר שהזנתי בטופס זה הטלפון לחזור אליי", "JCTA": "לשריין את השיחה שלי", "JAFTER": "בשיחה עונים על כל שאלה. ההחלטה נשארת אצלך.", "JWA": "עדיף לכתוב עכשיו? אפשר בוואטסאפ", "JDP": "השיחה שלך שמורה.\nנחזור אליך {w}, למספר {n}.", "JERR": "צריך לבחור חלון זמן", "FAQ.h": "מה שכדאי לדעת [[לפני השיחה]]", "FAQ.1": "זו הפעם הראשונה שלי בקרקע. זה מתאים לי?\nרוב מי שפונים אלינו עושים את זה בפעם הראשונה. לכן בשיחה מתחילים מהבסיס, ומסבירים כל מונח במילים פשוטות: מה זה טאבו, מה זו תוכנית מפורטת, ואיך יוצאים מהעסקה.", "FAQ.2": "מה בדיוק קונים?\nקרקע פרטית בטאבו, לפי מטר, בתוך מתחם H בקדימה צורן. התוכנית הכוללנית של היישוב אושרה ב־18/12/2024, והשלב הבא הוא תוכנית מפורטת.", "FAQ.3": "איך נקבע המחיר?\nשמאי מקרקעין קבע שווי של 3,700 ש״ח למטר, וזה בדיוק מחיר הכניסה. את השמאות עצמה פותחים יחד בשיחה.", "FAQ.4": "מתי אפשר לבנות?\nהקרקע עדיין אינה זמינה לבנייה מיידית. לבנייה נדרשת תוכנית מפורטת, ואת לוחות הזמנים הצפויים עוברים בשיחה, מול המסמכים.", "FAQ.5": "ומה לגבי מיסוי?\nכמו בכל עסקת נדל״ן יש מס רכישה בכניסה ומס שבח במכירה. עוברים על התמונה המלאה בשיחה, ומומלץ ללוות את זה עם יועץ המס שלך.", "OWN": "הדף הזה נבנה רק בשבילך. אפשר לחזור אליו מכל מכשיר, מהקישור האישי שקיבלת.", "DISC": "*הקרקע עדיין אינה זמינה לבנייה מיידית. הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.", "T.H": "השיחה שלך שמורה.", "T.S": "נחזור אליך {w}, למספר {n}.\nבלי חלון: נחזור אליך בקרוב.", "T.CTA": "שמירת המספר שלנו באנשי הקשר\nככה השיחה מ־053-302-5464 לא תיפול על מספר לא מוכר.", "T.STEPS": "מה קורה עכשיו\n1. בחלון שבחרת מגיעה שיחה מ־053-302-5464.\n2. בשיחה משלימים את בדיקת ההתאמה: איזה היקף מתאים לך, ובאיזה לוח זמנים.\n3. אם יש התאמה, קובעים פגישה אישית עם תום, מול המסמכים.", "T.PREP": "כדי שהשיחה תלך ישר לעניין\nכדאי לחשוב מראש על ההיקף שנוח לך ועל אופק הזמן. ואם ההחלטה משותפת, שווה ששניכם תהיו בשיחה. ככה מדברים מהדקה הראשונה על מה שרלוונטי לכם.", "T.WA": "יש שאלה לפני השיחה? אפשר לכתוב לנו בוואטסאפ", "T.OWN": "הדף האישי שלך נשאר פתוח: אפשר לחזור אליו מכל מכשיר."}, "st": {"R1.0": "ok", "R1.1": "ok", "R1.2": "ok", "R1.3": "ok", "R2.0.0": "ok", "R2.0.1": "honest", "R2.0.2": "ok", "R2.1.0": "ok", "R2.1.1": "ok", "R2.1.2": "ok", "R2.2.0": "honest", "R2.2.1": "ok", "R2.2.2": "ok", "R2.3.0": "ok", "R2.3.1": "ok", "R2.3.2": "ask", "R3.0": "ok", "R3.1": "ok", "R3.2": "ok", "R4.0": "ok", "R4.1": "ok", "R4.2": "ok", "R5": "ask"}, "q1": [["ודאות וביטחון", "ליווי רגוע והתאמת הצורך האישי."], ["להבין לעומק לפני החלטה", "לראות הכל בעיניים, ולבדוק בקצב שלי."], ["תשואה בטוחה", "שהכסף יגדל, במקום וקצב בטוח."], ["רף כניסה נמוך", "להתחיל עם ההון שיש לי עכשיו."]], "q2": [[["גם וגם", "השקעה שתניב רווח בריא, עם מסמכים וגיבוי"], ["כן. אצלי תשואה קודמת להכל", "הסיכון שאקח מחושב בהתאם לתשואה."], ["תלוי כמה גבוהה", "אני קודם רוצה לראות את המספרים"]], [["מה קורה אם ארצה לצאת", "איך יוצאים, ומה כתוב על זה בחוזה."], ["את התוכנית הכוללנית ושלבי התכנון", "איפה המתחם עומד היום, ומה נשאר עד הבנייה."], ["איך בדיוק נקבע המחיר", "מי קבע אותו, ולפי מה."]], [["גג 3 שנים", "מתאימה לי השקעה לטווח הקצר."], ["3 עד 7 שנים", "הקצב הטבעי של קרקע עם ודאות."], ["אין לי לחץ של זמן", "יש לי כסף שיושב בצד ולא עובד."]], [["מהלך אחד משמעותי", "להרוויח בעיקר מהשלבים התכנוניים."], ["מההון שכבר יש לי", "הכסף שלי מחכה להחלטה."], ["עוד לא החלטתי", "את ההיקף בונים יחד בשיחה."]]], "q3": [["יש לי מוכנות לקבל החלטה", "השאלה שלי היא \"איפה כן\" ולא \"מה מתאים לי\""], ["לא עכשיו", "צריך כאן מישהו שיבין אותי.. השארתי פרטים בהרבה מקומות."], ["בחודשים הקרובים", "לאסוף מידע מעכשיו, להחליט עם עצמי בקרוב."]], "q4": [["כן, יושב ומחכה", "ובינתיים לא עובד בשבילי."], ["עוד לא", "שקלתי ללוות הון."], ["חלק זמין, חלק בדרך", "נבדוק יחד מה הכי נכון לך ומתי."]]};
 const TX = D.tx, ST = D.st;
-const PHONE = '053-302-5464';
-const WORKER = 'https://tom-funnel.tom-harush.workers.dev';
-const PIXEL_ID = '1002428386157716';
+const PHONE = '053-302-5464', WORKER = 'https://tom-funnel.tom-harush.workers.dev', PIXEL_ID = '1002428386157716';
 const WINS = { morning:'בבוקר, בין 09:00 ל־12:00', noon:'בצהריים, בין 12:00 ל־16:00', evening:'בערב, בין 16:00 ל־20:00' };
-function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g,'$1$2\u00a0'); return t.split('\n').map(function(l){ const i=l.lastIndexOf(' '); return i>0 ? l.slice(0,i)+'\u00a0'+l.slice(i+1) : l; }).join('\n'); }
+function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s\[])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g,'$1$2\u00a0'); return t.split('\n').map(function(l){ const i=l.lastIndexOf(' '); return i>0 ? l.slice(0,i)+'\u00a0'+l.slice(i+1) : l; }).join('\n'); }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const plain = t => String(t || '').replace(/\[\[|\]\]/g, '');
 const $ = id => document.getElementById(id);
-const set = (el, t) => { if (el) el.textContent = glue(t); };
+const set = (el, t) => { if (el) el.textContent = glue(plain(t)); };
+const setH = (el, t) => { if (el) el.innerHTML = esc(glue(t)).replace(/\[\[(.+?)\]\]/g, '<span class="hl">$1</span>').replace(/\n/g, '<br/>'); };
 function topQS(){ try{ return window.top.location.search || location.search; }catch(e){ return location.search; } }
 const Q = new URLSearchParams(topQS());
-const DEMO = Q.get('demo') === '1';
-const LID = Q.get('lid') || '';
+const DEMO = Q.get('demo') === '1', LID = Q.get('lid') || '';
 const num = (k, max, d) => { const v = parseInt(Q.get(k), 10); return (v >= 0 && v < max) ? v : d; };
 const m = num('m', 4, 0), b = num('b', 3, 0), w = num('w', 3, 2), k = num('k', 3, 0);
 const NAME = (Q.get('name') || '').trim().split(/\s+/)[0] || '';
 function myPhone(){ try{ const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); const r = a.slice().reverse().find(x => !LID || x.lead_id === LID); return r ? String(r.phone || '') : ''; }catch(e){ return ''; } }
 function fmtPhone(p){ let d = String(p||'').replace(/\D/g,''); if (d.startsWith('972')) d = '0' + d.slice(3); return d.length === 10 ? d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6) : ''; }
-function booked(){ if (DEMO) return Q.get('cb') && WINS[Q.get('cb')] ? Q.get('cb') : ''; try{ const c = JSON.parse(sessionStorage.getItem('b_cb') || '{}'); return WINS[c.w] ? c.w : ''; }catch(e){ return ''; } }
+function booked(){ if (DEMO) return WINS[Q.get('cb')] ? Q.get('cb') : ''; try{ const c = JSON.parse(sessionStorage.getItem('b_cb') || '{}'); return WINS[c.w] ? c.w : ''; }catch(e){ return ''; } }
 const CB = booked();
 
-/* כל אלמנט עם data-t מקבל את הטקסט שלו. כרטיסי החלופות: הכותרת לפני הנקודתיים, הטקסט אחריהן */
+/* טקסטים: data-t = טקסט, data-th = כותרת עם צבע המותג, data-tq/tp = כרטיסי המחשבות, ALT.n h/p = כרטיסי החלופות */
 document.querySelectorAll('[data-t]').forEach(el => {
-  const id = el.getAttribute('data-t');
-  const mm = id.match(/^(ALT\.\d)(h|p)$/);
-  if (mm) { const t = TX[mm[1]]; const i = t.indexOf(':'); set(el, mm[2] === 'h' ? t.slice(0, i) : t.slice(i + 1).trim()); return; }
+  const id = el.getAttribute('data-t'), mm = id.match(/^(ALT\.\d)(h|p)$/);
+  if (mm) { const t = plain(TX[mm[1]]); const i = t.indexOf(':'); set(el, mm[2] === 'h' ? t.slice(0, i) : t.slice(i + 1).trim()); return; }
   set(el, TX[id]);
 });
+document.querySelectorAll('[data-th]').forEach(el => setH(el, TX[el.getAttribute('data-th')]));
+document.querySelectorAll('[data-tq]').forEach(el => set(el, TX[el.getAttribute('data-tq')].split('\n')[0]));
+document.querySelectorAll('[data-tp]').forEach(el => set(el, TX[el.getAttribute('data-tp')].split('\n').slice(1).join(' ')));
 
-/* כרטיסי המחשבות: השורה הראשונה היא המחשבה (המרכאות הגדולות כבר בעיצוב), השנייה היא ההסבר */
-document.querySelectorAll('[data-tq]').forEach(el => { const p = TX[el.getAttribute('data-tq')].split('\n'); set(el, p[0].replace(/^״|״$/g, '')); });
-document.querySelectorAll('[data-tp]').forEach(el => { const p = TX[el.getAttribute('data-tp')].split('\n'); set(el, p.slice(1).join(' ')); });
-
-/* ראש הדף */
+/* 1. התוצאה */
 const hw = TX['H.w' + w];
-set($('hH'), NAME ? hw.replace('{שם}', NAME) : hw.replace(/^\{שם\},\s*/, ''));
-set($('hS'), TX['H.sub']);
-
-/* כרטיס בדיקת ההתאמה: שורה לכל תשובה, מה שסימן במילים של השאלון, ואז התשובה שלנו */
+setH($('hH'), NAME ? hw.replace('{שם}', NAME) : hw.replace(/^\{שם\},\s*/, ''));
 const rows = [['R1.' + m, D.q1[m]], ['R2.' + m + '.' + b, D.q2[m][b]], ['R3.' + w, D.q3[w]], ['R4.' + k, D.q4[k]]];
 const okN = rows.filter(r => ST[r[0]] === 'ok').length;
-set($('cT'), TX['C.title']);
-set($('cS'), okN === 4 ? TX['C.sum4'] : TX['C.sumN'].replace('{n}', okN));
-const ICON = { ok:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' };
+setH($('cS'), okN === 4 ? TX['C.sum4'] : TX['C.sumN'].replace('{n}', okN));
+const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' };
 const LBL = { ok:'מתאים', ask:'נסגר בשיחה', honest:'בודקים בכנות' };
-$('pts').innerHTML = '';
 rows.forEach(r => {
   const s = ST[r[0]] || 'ok', li = document.createElement('li');
-  li.className = s;
-  li.innerHTML = '<span class="ic" role="img" aria-label="' + LBL[s] + '">' + ICON[s] + '</span><div><span class="nd"></span><span class="mc"></span><span class="an"></span></div>';
-  set(li.querySelector('.nd'), 'סימנת: ' + r[1][0]); set(li.querySelector('.mc'), r[1][1]); set(li.querySelector('.an'), TX[r[0]]);
+  li.innerHTML = '<span class="rc-ic ' + s + '" role="img" aria-label="' + LBL[s] + '">' + ICON[s] + '</span><div><span class="rc-nd"></span><span class="rc-an"></span></div>';
+  set(li.querySelector('.rc-nd'), 'סימנת: ' + r[1][0]); set(li.querySelector('.rc-an'), TX[r[0]]);
   $('pts').appendChild(li);
 });
-const last = document.createElement('li'); last.className = 'ask last';
-last.innerHTML = '<span class="ic" aria-hidden="true">?</span><div><span class="an"></span></div>'; set(last.querySelector('.an'), TX['R5']); $('pts').appendChild(last);
-set($('cCta'), TX['C.cta']); set($('fCta'), TX['C.cta']); set($('cCalm'), TX['C.call']);
-$('dNumTxt').innerHTML = 'השיחה תגיע מהמספר <b>' + PHONE + '</b>.';
+const lo = document.createElement('li'); lo.className = 'open';
+lo.innerHTML = '<span class="rc-ic ask" aria-hidden="true">?</span><div><span class="rc-an"></span></div>'; set(lo.querySelector('.rc-an'), TX['R5']); $('pts').appendChild(lo);
 const vcf = 'BEGIN:VCARD\nVERSION:3.0\nFN:קדימה צורן · מתחם H\nORG:קבוצת תום הרוש\nTEL;TYPE=CELL:+972' + PHONE.replace(/\D/g,'').replace(/^0/,'') + '\nEND:VCARD';
 $('dSave').href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcf);
 
-/* הביקורות, תום, העובדות, השאלות */
-const rq = TX['REVH'].split('\n'); set($('eRevH'), rq[0]); set($('eRevS'), rq[1] || '');
-$('tVals').innerHTML = TX['TOM.values'].split('·').map(v => '<span>' + v.trim() + '</span>').join('');
-$('eFacts').innerHTML = TX['FACTS'].split('\n').map(l => { const p = l.split('·'); return '<div><b>' + p[0].trim() + '</b><span>' + glue((p[1] || '').trim()) + '</span></div>'; }).join('');
-$('faqs').innerHTML = ['FAQ.1','FAQ.2','FAQ.3','FAQ.4','FAQ.5'].map(id => { const p = TX[id].split('\n'); return '<details><summary>' + p[0] + ' <span class="pl" aria-hidden="true"></span></summary><div class="a">' + glue(p.slice(1).join('\n')) + '</div></details>'; }).join('');
+/* 9-12 */
+const rq = TX['REVH'].split('\n'); setH($('eRevH'), rq[0]); set($('eRevS'), rq[1] || '');
+$('tVals').innerHTML = TX['TOM.values'].split('·').map(v => '<span>' + esc(v.trim()) + '</span>').join('');
+$('eFacts').innerHTML = TX['FACTS'].split('\n').map(l => { const p = l.split('·'); return '<div class="t"><div class="v">' + esc(p[0].trim()) + '</div><div class="l">' + esc(glue((p[1] || '').trim())) + '</div></div>'; }).join('');
+$('faqs').innerHTML = ['FAQ.1','FAQ.2','FAQ.3','FAQ.4','FAQ.5'].map((id, i) => { const p = TX[id].split('\n'); return '<details' + (i === 0 ? ' open' : '') + '><summary>' + esc(p[0]) + ' <span class="pl">+</span></summary><div class="a">' + esc(glue(p.slice(1).join('\n'))) + '</div></details>'; }).join('');
 
-/* בורר המועד: לפי שאלה 3, ואם כבר נבחר מועד, הדף זוכר */
+/* 11. בורר המועד: לפי שאלה 3, וזוכר מועד שכבר נבחר */
 set($('jL'), w === 1 ? TX['JL.w1'] : TX['JL']);
-const ja = TX['JALT'].split('\n'); set($('jAltL'), ja[0]); set($('jAltH'), ja[1] || '');
+const ja = TX['JALT'].split('\n'); set($('jAltL'), ja[0] + (ja[1] ? ' · ' + ja[1] : ''));
 const ph = fmtPhone(myPhone());
-if (ph) { $('jMy').innerHTML = glue(TX['JMY']).replace('{3 ספרות}', '<b>' + ph.slice(-3) + '</b>'); $('jMy').hidden = false; }
+if (ph) { $('jMy').innerHTML = esc(glue(TX['JMY'])).replace('{3 ספרות}', '<b>' + ph.slice(-3) + '</b>'); $('jMy').hidden = false; }
 function showBooked(win, n){
-  const t = TX['C.booked'].replace('{w}', WINS[win]);
-  $('cBooked').textContent = glue(t); $('cBooked').hidden = false; $('ctaBox').hidden = true;
-  const dp = TX['JDP'].split('\n');
-  set($('jDH'), dp[0]); set($('jDP'), (dp[1] || '').replace('{w}', WINS[win]).replace('{n}', n || 'שהזנת'));
+  $('cBooked').textContent = glue(TX['C.booked'].replace('{w}', WINS[win])); $('cBooked').hidden = false; $('ctaBox').hidden = true;
+  const dp = TX['JDP'].split('\n'); set($('jDH'), dp[0]); set($('jDP'), (dp[1] || '').replace('{w}', WINS[win]).replace('{n}', n || 'שהזנת'));
   $('jform').hidden = true; $('jDone').hidden = false; window.__cbDone = true; $('float').classList.remove('on');
 }
 if (CB) showBooked(CB, ph);
-
-/* שליחת המועד. בדמו: לא שולחים, לא עוברים לדף התודה, ולא יורה פיקסל */
 function validPhone(p){ let d=(p||'').replace(/\D/g,''); if(d.startsWith('972')) d='0'+d.slice(3); return /^05\d{8}$/.test(d); }
-$('jAlt').addEventListener('input', () => { set(document.querySelector('[data-t="JOK"]'), $('jAlt').value.trim() ? 'המספר החדש שהזנתי כאן הוא הטלפון לחזור אליי' : TX['JOK']); });
+$('jAlt').addEventListener('input', () => { set($('jOkT'), $('jAlt').value.trim() ? 'המספר החדש שהזנתי כאן הוא הטלפון לחזור אליי' : TX['JOK']); });
 $('jform').addEventListener('submit', async e => {
   e.preventDefault();
-  const win = (document.querySelector('input[name="w"]:checked') || {}).value || '';
-  const alt = $('jAlt').value.trim();
+  const win = (document.querySelector('input[name="w"]:checked') || {}).value || '', alt = $('jAlt').value.trim();
   $('jEw').textContent = ''; $('jEo').textContent = '';
   let ok = true;
   if (!win) { $('jEw').textContent = TX['JERR']; ok = false; }
@@ -694,8 +744,8 @@ $('jform').addEventListener('submit', async e => {
   if (!$('jOk').checked) { $('jEo').textContent = $('jEo').textContent || 'צריך לאשר את המספר כדי שנחזור למספר הנכון'; ok = false; }
   if (!ok) { (!win ? $('w1') : (alt && !validPhone(alt)) ? $('jAlt') : $('jOk')).focus(); return; }
   const n = fmtPhone(alt) || ph;
-  if (DEMO || !LID) { showBooked(win, n); return; }
-  const btn = $('jBtn'); btn.disabled = true; $('jCta').textContent = 'שומרים…';
+  if (DEMO || !LID) { showBooked(win, n); return; }   /* דמו: לא שולחים ולא עוברים לדף התודה */
+  $('jBtn').disabled = true; $('jCta').textContent = 'שומרים…';
   const body = JSON.stringify({ lead_id: LID, window: win, alt_phone: alt || '', confirmed: true, at: new Date().toISOString() });
   let sent = false;
   try { const r = await fetch(WORKER + '/callback', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body }); sent = r.ok; } catch(err) {}
@@ -707,25 +757,24 @@ $('jform').addEventListener('submit', async e => {
 });
 try { sessionStorage.setItem('b_res', location.pathname + location.search); } catch(e) {}
 
-/* סרגל הדמו: מחליפים תשובות ורואים את הדף של ליד אחר */
+/* סרגל הדמו */
 if (DEMO) {
-  const mk = (lbl, key, opts, cur) => '<label>' + lbl + ' <select data-k="' + key + '">' + opts.map((o, i) => '<option value="' + i + '"' + (i === cur ? ' selected' : '') + '>' + o + '</option>').join('') + '</select></label>';
-  $('demoIn').innerHTML = '<b>דמו</b>' + '<label>שם <input data-k="name" value="' + (NAME || 'דנה') + '" size="6"/></label>' +
+  const mk = (lbl, key, opts, cur) => '<label>' + lbl + ' <select data-k="' + key + '">' + opts.map((o, i) => '<option value="' + i + '"' + (i === cur ? ' selected' : '') + '>' + esc(o) + '</option>').join('') + '</select></label>';
+  $('demoIn').innerHTML = '<b>דמו: מחליפים תשובות ורואים את הדף של כל ליד</b><label>שם <input data-k="name" value="' + esc(NAME || 'דנה') + '"/></label>' +
     mk('שאלה 1', 'm', D.q1.map(o => o[0]), m) + mk('שאלה 2', 'b', D.q2[m].map(o => o[0]), b) + mk('שאלה 3', 'w', D.q3.map(o => o[0]), w) + mk('שאלה 4', 'k', D.q4.map(o => o[0]), k) +
-    '<label>מועד <select data-k="cb"><option value="">עוד לא בחר</option><option value="morning"' + (CB==='morning'?' selected':'') + '>בוקר</option><option value="noon"' + (CB==='noon'?' selected':'') + '>צהריים</option><option value="evening"' + (CB==='evening'?' selected':'') + '>ערב</option></select></label>';
+    '<label>מועד <select data-k="cb"><option value="">עוד לא בחר</option>' + ['morning','noon','evening'].map((x, i) => '<option value="' + x + '"' + (CB === x ? ' selected' : '') + '>' + ['בוקר','צהריים','ערב'][i] + '</option>').join('') + '</select></label>';
   $('demo').hidden = false;
   $('demoIn').addEventListener('change', e => { const p = new URLSearchParams(location.search); const kk = e.target.getAttribute('data-k'); p.set(kk, e.target.value); if (kk === 'm') p.set('b', '0'); if (!e.target.value) p.delete(kk); p.set('demo', '1'); location.search = p.toString(); });
 }
 
-/* ראש הדף במחשב: הסרטון מעל תמונת השדות, בלי כפתור עצירה. בטלפון רק התמונה */
+/* הסרטון במסגרת: במחשב בלבד, מעל תמונת השדות, בלי כפתור עצירה */
 (function(){
-  if (!matchMedia('(min-width:820px)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if (!matchMedia('(min-width:960px)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   const v = document.createElement('video');
   v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.setAttribute('data-nomeasure', ''); v.setAttribute('aria-hidden', 'true');
   v.preload = 'auto'; v.poster = '/b/media/hero-land.webp'; v.src = '/b/media/hero-vision.mp4';
   v.addEventListener('playing', () => v.classList.add('on'), { once:true });
-  $('view').insertBefore(v, $('view').querySelector('.hcap'));
-  v.play && v.play().catch(() => {});
+  $('view').insertBefore(v, $('view').querySelector('.vcap')); v.play && v.play().catch(() => {});
 })();
 
 /* פיקסל ומדידה: לא בדמו */
@@ -735,7 +784,7 @@ if (!DEMO) {
   const s = document.createElement('script'); s.src = '/track.js'; s.defer = true; document.body.appendChild(s);
 }
 
-/* תנועה */
+/* תנועה: חשיפה בגלילה, ציר JET, כפתור צף, עוד ביקורות */
 function scrollJoin(e){ if(e) e.preventDefault(); $('join').scrollIntoView({behavior:'smooth', block:'start'}); }
 const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), {threshold:.12});
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
@@ -743,7 +792,7 @@ function initJet(el){
   const fill = el.querySelector('.jtl-fill'), items = [...el.querySelectorAll('.jtl-item')], here = el.querySelector('.jtl-item.here .jtl-node');
   function upd(){
     const r = el.getBoundingClientRect(), center = innerHeight * .6;
-    const stop = here ? (here.getBoundingClientRect().top - r.top + 17) : el.offsetHeight;
+    const stop = here ? (here.getBoundingClientRect().top - r.top + 23) : el.offsetHeight;
     fill.style.height = Math.min(Math.max(center - r.top, 0), stop) + 'px';
     items.forEach(it => { const nr = it.querySelector('.jtl-node').getBoundingClientRect(); it.classList.toggle('on', nr.top < center); });
   }
@@ -752,11 +801,10 @@ function initJet(el){
 document.querySelectorAll('[data-jet]').forEach(initJet);
 const fl = $('float'), res = $('res'), join = $('join');
 addEventListener('scroll', () => {
-  $('hdr').classList.toggle('sc', scrollY > 8);
   const past = res.getBoundingClientRect().bottom < 0, before = join.getBoundingClientRect().top > innerHeight * .9;
   fl.classList.toggle('on', past && before && !window.__cbDone);
 }, {passive:true});
-function showMoreRevs(){ document.querySelector('.rgal').classList.add('all'); $('revMore').hidden = true; }
+function showMoreRevs(){ document.querySelectorAll('.rgal .rev.hid').forEach(i => i.classList.remove('hid')); $('rgalMore').hidden = true; }
 </script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" defer></script>
 </body>
