@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#FFFFFF"/>
 <title>האבחון שלך · מתחם H · קבוצת תום הרוש</title>
 <meta name="robots" content="noindex"/>
-<link rel="preload" as="image" href="/b/media/place-town-m.webp" media="(max-width:819px)"/>
-<link rel="preload" as="image" href="/b/media/place-town.webp" media="(min-width:820px)"/>
+<link rel="preload" as="image" href="/b/media/hero-vision-m.webp" media="(max-width:819px)"/>
+<link rel="preload" as="image" href="/b/media/hero-vision.webp" media="(min-width:820px)"/>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap');
 :root{
@@ -56,7 +56,13 @@ p{text-wrap:pretty}
 /* ── 1. התוצאה: המקום, והכרטיס בתוכו ── */
 .hero{position:relative;background:var(--paper);padding-bottom:var(--sec)}
 .view{position:relative;height:min(34svh,330px);overflow:hidden;background:#cfd8de}
-.view video,.view img{width:100%;height:100%;object-fit:cover;object-position:50% 80%}
+.view video,.view img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.vpause{position:absolute;top:12px;inset-inline-end:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(15,18,22,.55);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .16s}
+.vpause:hover{background:rgba(15,18,22,.75)}
+.vpause:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.vpause svg{width:18px;height:18px;fill:currentColor}
+.vpause .pl,.vpause.off .ps{display:none}
+.vpause.off .pl{display:inline}
 .res{position:relative;margin:-64px auto 0;max-width:760px;background:#fff;border-radius:var(--r);padding:28px 22px 26px}
 .res h1{font-size:var(--f-display);font-weight:900;line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
 .res h1 .nm{color:var(--accent)}
@@ -261,8 +267,14 @@ footer .cr{margin-top:12px;font-size:var(--f-small)}
 <!-- 1. התוצאה (D1 עד D4): המקום, והכרטיס בתוכו -->
 <section class="hero" aria-labelledby="dH1">
   <div class="view">
-    <video id="heroV" data-nomeasure autoplay muted playsinline preload="metadata" poster="/b/media/place-town-m.webp" aria-hidden="true"></video>
-    <script>(function(){ var v=document.getElementById('heroV'), d=matchMedia('(min-width:820px)').matches; v.poster=d?'/b/media/place-town.webp':'/b/media/place-town-m.webp'; if(!matchMedia('(prefers-reduced-motion:reduce)').matches) v.src=d?'/b/media/place-town.mp4':'/b/media/place-town-m.mp4'; })();</script>
+    <video id="heroV" data-nomeasure autoplay muted loop playsinline preload="metadata" poster="/b/media/hero-vision-m.webp" aria-label="קדימה צורן מהאוויר, מתוך הסרטון של תום"></video>
+    <button class="vpause" id="heroP" type="button" aria-label="עצירת הסרטון" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path class="ps" d="M8 5h3v14H8zM13 5h3v14h-3z"/><path class="pl" d="M8 5v14l11-7z"/></svg></button>
+    <script>(function(){ var v=document.getElementById('heroV'), b=document.getElementById('heroP'), d=matchMedia('(min-width:820px)').matches;
+      v.poster=d?'/b/media/hero-vision.webp':'/b/media/hero-vision-m.webp';
+      if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;   /* בלי תנועה: נשארת התמונה */
+      v.src=d?'/b/media/hero-vision.mp4':'/b/media/hero-vision-m.mp4'; b.hidden=false;
+      b.addEventListener('click',function(){ if(v.paused){ v.play(); b.classList.remove('off'); b.setAttribute('aria-label','עצירת הסרטון'); } else { v.pause(); b.classList.add('off'); b.setAttribute('aria-label','הפעלת הסרטון'); } });
+    })();</script>
   </div>
   <div class="wrap">
     <div class="res" id="res">

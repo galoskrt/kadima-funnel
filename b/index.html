@@ -294,6 +294,7 @@ function submitLead(){
   const answers = {
     q2: L.wh.canon, q4: L.mo.canon,                       // הקנוני של A, לרצפים, לדף המידע ולדוח
     b1: L.mo.t, b2: L.br.t, b3: L.wh.t, b4: L.mn.t,       // התשובות של B כפי שנבחרו
+    bi: [pickIdx.b1, pickIdx.b2, pickIdx.b3, pickIdx.b4].join(','),   // האינדקסים, לקישור האישי לדף התוצאה (18/10)
   };
   const q_a = `[B · ${temp.toUpperCase()} · ${score()}/6] ` + [Q_MOTIVE.title+' → '+L.mo.t, Q_BRANCH[pickIdx.b1].title+' → '+L.br.t, Q_WHEN.title+' → '+L.wh.t, Q_MONEY.title+' → '+L.mn.t].join(' | ');
   const payload = { lead_id: leadId, name, phone, email, temperature: temp, score: score(), q_a, answers, variant: VARIANT, consent: { privacy: true, contact: true, at: new Date().toISOString() },
