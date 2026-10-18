@@ -75,6 +75,7 @@ h1{font-size:var(--f-head);font-weight:900;line-height:1.12;letter-spacing:-.02e
   </section>
 
   <p class="alt"><a class="link" id="tWa" href="https://wa.me/972533025464" target="_blank" rel="noopener" onclick="pxContact()"></a></p>
+  <p class="alt"><a class="link" id="tOwn" href="/b/p/" hidden></a></p>
 
   <div class="social">
     <a href="https://wa.me/972533025464" target="_blank" rel="noopener" aria-label="וואטסאפ" onclick="pxContact()"><lottie-player src="/lot-s-wa.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
@@ -94,10 +95,11 @@ const COPY = {
   PHONE: '053-302-5464',
   CTA: 'שמירת המספר שלנו באנשי הקשר',
   AFTER: 'ככה השיחה מ־053-302-5464 לא תיפול על מספר לא מוכר.',
-  STEPS: ['בחלון שבחרת מגיעה שיחה מ־053-302-5464.', 'בשיחה משלימים את האבחון: איזה היקף מתאים לך, ובאיזה לוח זמנים.', 'אם יש התאמה, קובעים פגישה אישית עם תום, מול המסמכים.'],
+  STEPS: ['בחלון שבחרת מגיעה שיחה מ־053-302-5464.', 'בשיחה משלימים את בדיקת ההתאמה: איזה היקף מתאים לך, ובאיזה לוח זמנים.', 'אם יש התאמה, קובעים פגישה אישית עם תום, מול המסמכים.'],
   PREP_H: 'כדי שהשיחה תלך ישר לעניין',
   PREP: 'כדאי לחשוב מראש על ההיקף שנוח לך ועל אופק הזמן. ככה מדברים מהדקה הראשונה על המספרים שרלוונטיים לך.',
   WA: 'יש שאלה לפני השיחה? אפשר לכתוב לנו בוואטסאפ',
+  OWN: 'הדף האישי שלך נשאר פתוח: אפשר לחזור אליו מכל מכשיר.',
   WINS: { morning: 'בבוקר, בין 09:00 ל־12:00', noon: 'בצהריים, בין 12:00 ל־16:00', evening: 'בערב, בין 16:00 ל־20:00' },
 };
 function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g,'$1$2 '); const i=t.lastIndexOf(' '); return i>0 ? t.slice(0,i)+' '+t.slice(i+1) : t; }
@@ -119,6 +121,7 @@ function fmtPhone(p){ let d = String(p||'').replace(/\D/g,''); if (d.startsWith(
   $('tCta').textContent = COPY.CTA; $('tAfter').innerHTML = nums(esc(glue(COPY.AFTER)));
   $('tSteps').innerHTML = COPY.STEPS.map(s => '<li><span>' + nums(esc(glue(s))) + '</span></li>').join('');
   $('tPrepH').textContent = COPY.PREP_H; $('tPrep').textContent = glue(COPY.PREP); $('tWa').textContent = COPY.WA;
+  try { const r = sessionStorage.getItem('b_res'); if (r && r.indexOf('/b/p/') === 0) { $('tOwn').href = r; $('tOwn').textContent = glue(COPY.OWN); $('tOwn').hidden = false; } } catch(e){}   /* קישור חזרה לדף האישי */
   const vcf = 'BEGIN:VCARD\nVERSION:3.0\nFN:קדימה צורן · מתחם H\nORG:קבוצת תום הרוש\nTEL;TYPE=CELL:+972' + COPY.PHONE.replace(/\D/g,'').replace(/^0/,'') + '\nEND:VCARD';
   $('tSave').href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcf);
 })();
