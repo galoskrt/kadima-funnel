@@ -92,13 +92,14 @@ p{text-wrap:pretty}
 /* טלפון: תמונה למעלה, טקסט על שדה כהה למטה */
 .vcover{grid-template-rows:auto auto}
 .vcover .vimg,.vcover .vtxt,.vcover .vt,.vcover .vs{display:block}
-.vcover .vimg{aspect-ratio:4/3.2;overflow:hidden}
-.vcover .vimg img{object-position:50% 18%}
+.vcover .vimg{aspect-ratio:900/720;overflow:hidden}
+.vcover .vimg img{object-position:50% 30%}
 .vcover .vtxt{padding:22px 20px 24px}
 @media(min-width:820px){
-  .vcover{grid-template-columns:1.05fr .95fr;grid-template-rows:none;aspect-ratio:16/9}
+  /* במחשב: הגרפיקה של גל, 16:9, עם הטקסט בתוכה (נבנית ב-src/vsl-cover). בטלפון: התמונה למעלה והטקסט מתחת, חי. */
+  .vcover{display:block;aspect-ratio:16/9}
   .vcover .vimg{aspect-ratio:auto;height:100%}
-  .vcover .vtxt{display:flex;flex-direction:column;justify-content:center;padding:44px 48px}
+  .vcover .vtxt{display:none}
 }
 .vmodal{position:fixed;inset:0;z-index:300;display:none;overscroll-behavior:contain;align-items:center;justify-content:center;background:rgba(6,7,10,.94);padding:16px}
 .vmodal.on{display:flex}
@@ -294,8 +295,8 @@ footer .cr{margin-top:12px;font-size:var(--f-small)}
 <!-- 2. הסרטון (E1): כיסוי מעוצב, גרסת טלפון וגרסת מחשב -->
 <section class="sec" aria-labelledby="eVslH"><div class="wrap">
   <h2 class="vsl-h rv" id="eVslH"></h2>
-  <button class="vcover rv d1" type="button" onclick="openVsl()" aria-label="צפייה בסרטון של תום, 2 דקות">
-    <span class="vimg"><img src="/media/tom-portrait.jpg" width="640" height="800" alt="" loading="lazy"/></span>
+  <button class="vcover rv d1" type="button" onclick="openVsl()" aria-label="צפייה בסרטון של תום הרוש, 2 דקות">
+    <picture class="vimg"><source media="(min-width:820px)" srcset="/b/media/vsl-cover-16x9.webp" width="1920" height="1080"/><img src="/b/media/vsl-cover-m.webp" width="900" height="720" alt="" loading="lazy"/></picture>
     <span class="vtxt">
       <span class="vt" id="eVslCover"></span>
       <span class="vs" id="eVslSub"></span>
