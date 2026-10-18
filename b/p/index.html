@@ -495,13 +495,6 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
   <div class="split-body">
     <div class="jtl" data-jet>
       <div class="jtl-line"></div><div class="jtl-fill"></div>
-      <div class="jtl-item done"><div class="jtl-node"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><div class="jtl-card"><h4>קרקע חקלאית</h4><p>נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.</p></div></div>
-      <div class="jtl-item done"><div class="jtl-node"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><div class="jtl-card"><h4>ועדה ארצית</h4><p>הקווים הגדולים של המדינה: איפה מתכננים לגדול.</p></div></div>
-      <div class="jtl-item done"><div class="jtl-node"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><div class="jtl-card"><h4>ועדה מחוזית</h4><p>ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.</p></div></div>
-      <div class="jtl-item here"><div class="jtl-node"><span class="herepulse"></span></div><div class="jtl-card"><h4>ועדה מקומית<span class="here-tag">אנחנו כאן</span></h4><p>כאן אנחנו היום. התכנון יורד לרמת המתחם.</p></div></div>
-      <div class="jtl-item next"><div class="jtl-node">5</div><div class="jtl-card"><h4>אישור תוכנית מפורטת</h4><p>תוכנית אחת לכל מתחם H: מגרשים, זכויות ושימושים.</p></div></div>
-      <div class="jtl-item next"><div class="jtl-node">6</div><div class="jtl-card"><h4>אישור תוכנית פיתוח</h4><p>כבישים, מים וניקוז. השטח מתחיל להשתנות.</p></div></div>
-      <div class="jtl-item next"><div class="jtl-node">7</div><div class="jtl-card"><h4>זמינות לבנייה</h4><p>היעד. *הקרקע עדיין אינה זמינה לבנייה מיידית.</p></div></div>
     </div>
   </div>
 </div></section>
@@ -669,9 +662,13 @@ const D = {"tx": {"H.w0": "{שם}, שאלת איפה כן.\nהנה [[התשוב�
 const TX = D.tx, ST = D.st;
 const PHONE = '053-302-5464', WORKER = 'https://tom-funnel.tom-harush.workers.dev', PIXEL_ID = '1002428386157716';
 /* חלונות הזמן מהטקסט "שם · 09:00 עד 12:00", ומהם גם הניסוח במשפט ("בבוקר, בין 09:00 ל־12:00") */
-const WINL = TX['JWIN'].split('\n').map(l => { const p = l.split('·'); return [p[0].trim(), (p[1] || '').trim()]; });
-const WINS = {};
-['morning', 'noon', 'evening'].forEach((key, i) => { const [n, h] = WINL[i] || ['', '']; const hh = h.split(' עד '); WINS[key] = hh.length === 2 ? n + ', בין ' + hh[0] + ' ל־' + hh[1] : (n + ' ' + h).trim(); });
+const WKEYS = ['morning', 'noon', 'evening'];
+let WINL = [], WINS = {};
+function winsFrom(){
+  WINL = TX['JWIN'].split('\n').map(l => { const p = l.split('·'); return [p[0].trim(), (p[1] || '').trim()]; });
+  WINS = {};
+  WKEYS.forEach((key, i) => { const [n, h] = WINL[i] || ['', '']; const hh = h.split(' עד '); WINS[key] = hh.length === 2 ? n + ', בין ' + hh[0] + ' ל־' + hh[1] : (n + ' ' + h).trim(); });
+}
 function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s\[])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g,'$1$2\u00a0'); return t.split('\n').map(function(l){ const i=l.lastIndexOf(' '); return i>0 ? l.slice(0,i)+'\u00a0'+l.slice(i+1) : l; }).join('\n'); }
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const plain = t => String(t || '').replace(/\[\[|\]\]/g, '');
@@ -688,59 +685,79 @@ const m = num('m', 4, 0), b = num('b', 3, 0), w = num('w', 3, 2), k = num('k', 3
 const NAME = (Q.get('name') || '').trim().split(/\s+/)[0] || '';
 function myPhone(){ try{ const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); const r = a.slice().reverse().find(x => !LID || x.lead_id === LID); return r ? String(r.phone || '') : ''; }catch(e){ return ''; } }
 function fmtPhone(p){ let d = String(p||'').replace(/\D/g,''); if (d.startsWith('972')) d = '0' + d.slice(3); return d.length === 10 ? d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6) : ''; }
-function booked(){ if (DEMO) return WINS[Q.get('cb')] ? Q.get('cb') : ''; try{ const c = JSON.parse(sessionStorage.getItem('b_cb') || '{}'); return WINS[c.w] ? c.w : ''; }catch(e){ return ''; } }
+function booked(){ if (DEMO) return WKEYS.includes(Q.get('cb')) ? Q.get('cb') : ''; try{ const c = JSON.parse(sessionStorage.getItem('b_cb') || '{}'); return WKEYS.includes(c.w) ? c.w : ''; }catch(e){ return ''; } }
 const CB = booked();
 
-/* טקסטים: data-t = טקסט, data-th = כותרת עם צבע המותג, data-tq/tp = כרטיסי המחשבות, ALT.n h/p = כרטיסי החלופות */
-document.querySelectorAll('[data-t]').forEach(el => {
-  const id = el.getAttribute('data-t'), mm = id.match(/^(ALT\.\d)(h|p)$/);
-  if (mm) { const t = plain(TX[mm[1]]); const i = t.indexOf(':'); set(el, mm[2] === 'h' ? t.slice(0, i) : t.slice(i + 1).trim()); return; }
-  set(el, TX[id]);
-});
-document.querySelectorAll('[data-th]').forEach(el => setH(el, TX[el.getAttribute('data-th')]));
-document.querySelectorAll('[data-tb]').forEach(el => setB(el, TX[el.getAttribute('data-tb')]));
-document.querySelectorAll('[data-tw]').forEach(el => { const p = WINL[+el.getAttribute('data-tw')] || ['', '']; set(el.querySelector('.wn'), p[0]); set(el.querySelector('.wt'), p[1]); });
-(function(){ const d = String(TX['DISC'] || ''), i = d.indexOf('.') + 1; $('fDisc').innerHTML = i > 0 ? '<b>' + esc(d.slice(0, i)) + '</b>' + esc(glue(d.slice(i))) : esc(glue(d)); })();
-document.querySelectorAll('[data-tq]').forEach(el => set(el, TX[el.getAttribute('data-tq')].split('\n')[0]));
-document.querySelectorAll('[data-tp]').forEach(el => set(el, TX[el.getAttribute('data-tp')].split('\n').slice(1).join(' ')));
-
-/* 1. התוצאה */
-const hw = TX['H.w' + w];
-setH($('hH'), NAME ? hw.replace('{שם}', NAME) : hw.replace(/^\{שם\},\s*/, ''));
-const rows = [['R1.' + m, D.q1[m]], ['R2.' + m + '.' + b, D.q2[m][b]], ['R3.' + w, D.q3[w]], ['R4.' + k, D.q4[k]]];
-const okN = rows.filter(r => ST[r[0]] === 'ok').length;
-setH($('cS'), okN === 4 ? TX['C.sum4'] : TX['C.sumN'].replace('{n}', okN));
 const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' };
 const LBL = { ok:'מתאים', ask:'נסגר בשיחה', honest:'בודקים בכנות' };
-rows.forEach(r => {
-  const s = ST[r[0]] || 'ok', li = document.createElement('li');
-  li.innerHTML = '<span class="rc-ic ' + s + '" role="img" aria-label="' + LBL[s] + '">' + ICON[s] + '</span><div><span class="rc-nd"></span><span class="rc-an"></span></div>';
-  set(li.querySelector('.rc-nd'), TX['C.mark'] + ' ' + r[1][0]); set(li.querySelector('.rc-an'), TX[r[0]]);
-  $('pts').appendChild(li);
-});
-const lo = document.createElement('li'); lo.className = 'open';
-lo.innerHTML = '<span class="rc-ic ask" aria-hidden="true">?</span><div><span class="rc-an"></span></div>'; set(lo.querySelector('.rc-an'), TX['R5']); $('pts').appendChild(lo);
+const rows = [['R1.' + m, D.q1[m]], ['R2.' + m + '.' + b, D.q2[m][b]], ['R3.' + w, D.q3[w]], ['R4.' + k, D.q4[k]]];
+const okN = rows.filter(r => ST[r[0]] === 'ok').length;
+const ph = fmtPhone(myPhone());
 const vcf = 'BEGIN:VCARD\nVERSION:3.0\nFN:קדימה צורן · מתחם H\nORG:קבוצת תום הרוש\nTEL;TYPE=CELL:+972' + PHONE.replace(/\D/g,'').replace(/^0/,'') + '\nEND:VCARD';
 $('dSave').href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcf);
-(function(){ const p = String(TX['C.num'] || '').split('·'); $('cNum').innerHTML = esc(glue(p[0].trim())).replace(/(0\d{1,2}-\d{3}-\d{4})/, '<b>$1</b>'); set($('dSave'), (p[1] || '').trim()); })();
-
-/* 9-12 */
-const rq = TX['REVH'].split('\n'); setH($('eRevH'), rq[0]); set($('eRevS'), rq[1] || '');
-$('tVals').innerHTML = TX['TOM.values'].split('·').map(v => '<span>' + esc(v.trim()) + '</span>').join('');
-$('eFacts').innerHTML = TX['FACTS'].split('\n').map(l => { const p = l.split('·'); return '<div class="t"><div class="v">' + esc(p[0].trim()) + '</div><div class="l">' + esc(glue((p[1] || '').trim())) + '</div></div>'; }).join('');
-$('faqs').innerHTML = ['FAQ.1','FAQ.2','FAQ.3','FAQ.4','FAQ.5'].map((id, i) => { const p = TX[id].split('\n'); return '<details' + (i === 0 ? ' open' : '') + '><summary>' + esc(p[0]) + ' <span class="pl">+</span></summary><div class="a">' + esc(glue(p.slice(1).join('\n'))) + '</div></details>'; }).join('');
-
-/* 11. בורר המועד: לפי שאלה 3, וזוכר מועד שכבר נבחר */
-set($('jL'), w === 1 ? TX['JL.w1'] : TX['JL']);
-const ja = TX['JALT'].split('\n'); set($('jAltL'), ja[0] + (ja[1] ? ' · ' + ja[1] : ''));
-const ph = fmtPhone(myPhone());
-if (ph) { $('jMy').innerHTML = esc(glue(TX['JMY'])).replace('{3 ספרות}', '<b>' + ph.slice(-3) + '</b>'); $('jMy').hidden = false; }
 function showBooked(win, n){
   $('cBooked').textContent = glue(TX['C.booked'].replace('{w}', WINS[win])); $('cBooked').hidden = false; $('ctaBox').hidden = true;
   const dp = TX['JDP'].split('\n'); set($('jDH'), dp[0]); set($('jDP'), (dp[1] || '').replace('{w}', WINS[win]).replace('{n}', n || 'שהזנת'));
   $('jform').hidden = true; $('jDone').hidden = false; window.__cbDone = true; $('float').classList.remove('on');
 }
-if (CB) showBooked(CB, ph);
+
+/* כל הטקסטים של הדף נכתבים כאן, וזה בטוח להריץ שוב: התצוגה המקדימה בארטיפקט הקופי מריצה את render אחרי כל עריכה.
+   data-t = טקסט, data-th = כותרת עם צבע המותג, data-tb = כיתוב עם הדגשה, data-tq/tp = כרטיסי המחשבות, ALT.n h/p = כרטיסי החלופות */
+function render(){
+  winsFrom();
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const id = el.getAttribute('data-t'), mm = id.match(/^(ALT\.\d)(h|p)$/);
+    if (mm) { const t = plain(TX[mm[1]]); const i = t.indexOf(':'); set(el, mm[2] === 'h' ? t.slice(0, i) : t.slice(i + 1).trim()); return; }
+    set(el, TX[id]);
+  });
+  if ($('jAlt').value.trim()) set($('jOkT'), TX['JOK.alt']);
+  document.querySelectorAll('[data-th]').forEach(el => setH(el, TX[el.getAttribute('data-th')]));
+  document.querySelectorAll('[data-tb]').forEach(el => setB(el, TX[el.getAttribute('data-tb')]));
+  document.querySelectorAll('[data-tw]').forEach(el => { const p = WINL[+el.getAttribute('data-tw')] || ['', '']; set(el.querySelector('.wn'), p[0]); set(el.querySelector('.wt'), p[1]); });
+  const d = String(TX['DISC'] || ''), di = d.indexOf('.') + 1; $('fDisc').innerHTML = di > 0 ? '<b>' + esc(d.slice(0, di)) + '</b>' + esc(glue(d.slice(di))) : esc(glue(d));
+  document.querySelectorAll('[data-tq]').forEach(el => set(el, TX[el.getAttribute('data-tq')].split('\n')[0]));
+  document.querySelectorAll('[data-tp]').forEach(el => set(el, TX[el.getAttribute('data-tp')].split('\n').slice(1).join(' ')));
+
+  /* 3. ציר הזמן: וי עד "(אנחנו כאן)", ואחריו מספרים */
+  const jtl = document.querySelector('.jtl'); let seen = false;
+  jtl.querySelectorAll('.jtl-item').forEach(x => x.remove());
+  TX['STAGES'].split('\n').forEach((ln, i) => {
+    const j = ln.indexOf(':'), here = ln.slice(0, j).includes('(אנחנו כאן)'), name = ln.slice(0, j).replace('(אנחנו כאן)', '').trim();
+    const s = here ? 'here' : (seen ? 'next' : 'done'); seen = seen || here;
+    const it = document.createElement('div'); it.className = 'jtl-item ' + s;
+    it.innerHTML = '<div class="jtl-node">' + (s === 'done' ? ICON.ok : s === 'here' ? '<span class="herepulse"></span>' : String(i + 1)) + '</div><div class="jtl-card"><h4>' + esc(name) + (here ? '<span class="here-tag">אנחנו כאן</span>' : '') + '</h4><p>' + esc(glue(ln.slice(j + 1).trim())) + '</p></div>';
+    jtl.appendChild(it);
+  });
+
+  /* 1. התוצאה */
+  const hw = TX['H.w' + w];
+  setH($('hH'), NAME ? hw.replace('{שם}', NAME) : hw.replace(/^\{שם\},\s*/, ''));
+  setH($('cS'), okN === 4 ? TX['C.sum4'] : TX['C.sumN'].replace('{n}', okN));
+  $('pts').innerHTML = '';
+  rows.forEach(r => {
+    const s = ST[r[0]] || 'ok', li = document.createElement('li'); li.setAttribute('data-id', r[0]);
+    li.innerHTML = '<span class="rc-ic ' + s + '" role="img" aria-label="' + LBL[s] + '">' + ICON[s] + '</span><div><span class="rc-nd"></span><span class="rc-an"></span></div>';
+    set(li.querySelector('.rc-nd'), TX['C.mark'] + ' ' + r[1][0]); set(li.querySelector('.rc-an'), TX[r[0]]);
+    $('pts').appendChild(li);
+  });
+  const lo = document.createElement('li'); lo.className = 'open';
+  lo.innerHTML = '<span class="rc-ic ask" aria-hidden="true">?</span><div><span class="rc-an"></span></div>'; set(lo.querySelector('.rc-an'), TX['R5']); $('pts').appendChild(lo);
+  const np = String(TX['C.num'] || '').split('·'); $('cNum').innerHTML = esc(glue(np[0].trim())).replace(/(0\d{1,2}-\d{3}-\d{4})/, '<b>$1</b>'); set($('dSave'), (np[1] || '').trim());
+
+  /* 9-12 */
+  const rq = TX['REVH'].split('\n'); setH($('eRevH'), rq[0]); set($('eRevS'), rq[1] || '');
+  $('tVals').innerHTML = TX['TOM.values'].split('·').map(v => '<span>' + esc(v.trim()) + '</span>').join('');
+  $('eFacts').innerHTML = TX['FACTS'].split('\n').map(l => { const p = l.split('·'); return '<div class="t"><div class="v">' + esc(p[0].trim()) + '</div><div class="l">' + esc(glue((p[1] || '').trim())) + '</div></div>'; }).join('');
+  $('faqs').innerHTML = ['FAQ.1','FAQ.2','FAQ.3','FAQ.4','FAQ.5'].map((id, i) => { const p = TX[id].split('\n'); return '<details' + (i === 0 ? ' open' : '') + '><summary>' + esc(p[0]) + ' <span class="pl">+</span></summary><div class="a">' + esc(glue(p.slice(1).join('\n'))) + '</div></details>'; }).join('');
+
+  /* 11. בורר המועד: לפי שאלה 3, וזוכר מועד שכבר נבחר */
+  set($('jL'), w === 1 ? TX['JL.w1'] : TX['JL']);
+  const ja = TX['JALT'].split('\n'); set($('jAltL'), ja[0] + (ja[1] ? ' · ' + ja[1] : ''));
+  if (ph) { $('jMy').innerHTML = esc(glue(TX['JMY'])).replace('{3 ספרות}', '<b>' + ph.slice(-3) + '</b>'); $('jMy').hidden = false; }
+  document.title = plain(TX['META.title']);
+  if (CB) showBooked(CB, ph);
+}
+render();
 function validPhone(p){ let d=(p||'').replace(/\D/g,''); if(d.startsWith('972')) d='0'+d.slice(3); return /^05\d{8}$/.test(d); }
 $('jAlt').addEventListener('input', () => { set($('jOkT'), $('jAlt').value.trim() ? TX['JOK.alt'] : TX['JOK']); });
 $('jform').addEventListener('submit', async e => {
@@ -798,8 +815,9 @@ function scrollJoin(e){ if(e) e.preventDefault(); $('join').scrollIntoView({beha
 const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), {threshold:.12});
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
 function initJet(el){
-  const fill = el.querySelector('.jtl-fill'), items = [...el.querySelectorAll('.jtl-item')], here = el.querySelector('.jtl-item.here .jtl-node');
+  const fill = el.querySelector('.jtl-fill');
   function upd(){
+    const items = [...el.querySelectorAll('.jtl-item')], here = el.querySelector('.jtl-item.here .jtl-node');
     const r = el.getBoundingClientRect(), center = innerHeight * .6;
     const stop = here ? (here.getBoundingClientRect().top - r.top + 23) : el.offsetHeight;
     fill.style.height = Math.min(Math.max(center - r.top, 0), stop) + 'px';
