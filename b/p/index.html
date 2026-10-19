@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<style>html.id-wait body{visibility:hidden}</style>
 <script>
 (function(){ try {
   if (window.top !== window) return;
@@ -10,15 +11,41 @@
   if (q.get('demo') === '1' || q.has('m')) return;
   var go = q.get('go') === 'place' ? 'place' : (q.get('go') ? 'docs' : '');
   var keep = new URLSearchParams(); q.forEach(function(v, k){ if (/^utm_|^fbclid$/.test(k)) keep.set(k, v); });
-  var last = null; try { last = JSON.parse(localStorage.getItem('b_last') || 'null'); } catch(e) {}
-  if (last && last.url) {
-    var u = new URL(last.url, location.origin);
-    keep.forEach(function(v, k){ u.searchParams.set(k, v); });
-    if (go) u.searchParams.set('go', go);
-    location.replace(u.pathname + u.search); return;
+  function noAnswers(){
+    document.documentElement.classList.remove('id-wait');
+    var last = null; try { last = JSON.parse(localStorage.getItem('b_last') || 'null'); } catch(e) {}
+    if (last && last.url) {
+      var u = new URL(last.url, location.origin);
+      keep.forEach(function(v, k){ u.searchParams.set(k, v); });
+      if (go) u.searchParams.set('go', go);
+      location.replace(u.pathname + u.search); return;
+    }
+    if (!go) { location.replace('/b/' + (keep.toString() ? '?' + keep.toString() : '')); return; }
+    document.documentElement.classList.add('docs-mode');
   }
-  if (!go) { location.replace('/b/' + (keep.toString() ? '?' + keep.toString() : '')); return; }
-  document.documentElement.classList.add('docs-mode');
+  /* הקישור האישי לפי מספר ליד (גל 20/10): /b/p/?id=<מספר ליד>. השרת מחזיר שם פרטי, תשובות ומועד שנבחר,
+     והדף נפתח כמו מהקישור המלא. מועד שנבחר נשמר במכשיר, כך שהדף לא שואל שוב גם בטלפון אחר. אם השרת לא עונה: כמו ביקור בלי תשובות */
+  var id = q.get('id') || '';
+  if (/^[A-Za-z0-9-]{12,64}$/.test(id)) {
+    document.documentElement.classList.add('id-wait');
+    var done = false, fail = function(){ if (!done) { done = true; noAnswers(); } };
+    setTimeout(fail, 6000);
+    fetch('https://tom-funnel.tom-harush.workers.dev/b/me?id=' + encodeURIComponent(id), { cache:'no-store' })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){
+        if (done) return;
+        var a = j && j.ok && /^\d,\d,\d,\d$/.test(j.bi || '') ? j.bi.split(',') : null;
+        if (!a) return fail();
+        done = true;
+        var u = new URLSearchParams({ t: j.t === 'hot' ? 'hot' : 'cold', lid: id, m: a[0], b: a[1], w: a[2], k: a[3] });
+        if (j.name) u.set('name', j.name);
+        keep.forEach(function(v, k){ u.set(k, v); }); if (q.get('go')) u.set('go', q.get('go'));
+        if (j.cb) { try { var c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: id }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {} }
+        location.replace('/b/p/?' + u.toString() + location.hash);
+      }).catch(fail);
+    return;
+  }
+  noAnswers();
 } catch(e) {} })();
 </script>
 
@@ -872,6 +899,12 @@ function render(){
   if (CB) showBooked(CB, ph);
 }
 render();
+/* קישור מלא (נשלח לפני 20/10) או מכשיר אחר: שואלים את השרת אם כבר נבחר מועד, כדי שהדף לא יבקש לבחור שוב */
+if (LID && !CB && !DEMO && window.top === window) fetch(WORKER + '/b/me?id=' + encodeURIComponent(LID), { cache:'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
+  if (!j || !j.ok || !WKEYS.includes(j.cb) || window.__cbDone) return;
+  try { const c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: LID }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {}
+  showBooked(j.cb, ph);
+}).catch(() => {});
 function validPhone(p){ let d=(p||'').replace(/\D/g,''); if(d.startsWith('972')) d='0'+d.slice(3); return /^05\d{8}$/.test(d); }
 /* שתי תיבות הסימון: אחת חובה, לא שתיהן יחד. השנייה פותחת את שדה הטלפון */
 function syncAlt(){ $('jAltBox').hidden = !$('jOk2').checked; }
@@ -936,8 +969,8 @@ if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeHero);
   lb.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 45) show(dx > 0 ? i + 1 : i - 1); }, { passive:true });
 })();
 
-/* פיקסל ומדידה: לא בדמו */
-if (!DEMO) {
+/* פיקסל ומדידה: לא בדמו, ולא בזמן שקישור לפי מספר ליד מחכה לשרת (הדף נטען שוב מיד עם התשובות, ושם נמדד פעם אחת) */
+if (!DEMO && !document.documentElement.classList.contains('id-wait')) {
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', PIXEL_ID); fbq('track', 'PageView'); fbq('track', 'ViewContent', { content_name:'b_page', variant:'b' });
   const s = document.createElement('script'); s.src = '/track.js'; s.defer = true; document.body.appendChild(s);
