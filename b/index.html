@@ -298,7 +298,15 @@ function submitLead(){
   pxc('SurveyComplete', {temperature:temp, score:score(), variant:VARIANT});
   try{ const q=JSON.parse(localStorage.getItem('th_leads')||'[]'); q.push(payload); localStorage.setItem('th_leads',JSON.stringify(q)); }catch(e){}
   let done=false; const once=()=>{ if(done)return; done=true; routeTo(temp); };
-  fetch(WORKER_URL, {method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)}).then(once).catch(once);
+  /* ליד שחוזר עם אותו טלפון (למשל מהרימרקטינג, ממכשיר אחר) לא נוצר מחדש: השרת מחזיר את המזהה הקיים שלו.
+     משתמשים בו, אחרת המועד שיבחר בדף התוצאה נשלח למזהה שלא קיים ונאבד בשקט (19/10) */
+  fetch(WORKER_URL, {method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)})
+    .then(r => r.json()).then(j => {
+      if (j && j.lead_id && j.lead_id !== leadId) {
+        window.__lid = j.lead_id;
+        try{ const q=JSON.parse(localStorage.getItem('th_leads')||'[]'); const it=q.find(x=>x.lead_id===leadId); if(it){ it.lead_id=j.lead_id; localStorage.setItem('th_leads',JSON.stringify(q)); } }catch(e){}
+      }
+    }).catch(()=>{}).then(once);
   setTimeout(once, 2500);
   if(window.THG_FX) THG_FX('done');
   idx = TOTAL+2; show('done');
