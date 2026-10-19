@@ -141,6 +141,7 @@ footer a{color:inherit}
 </footer>
 <script>
 var C = {"investor": {"h1a": "הזדמנות טובה לא נמדדת בכמה רועש מוכרים אותה,", "h1b": "אלא בכמה מסמכים עומדים מאחוריה.", "angle": "<div class=\"ang\"><div class=\"ang-t\">למה דווקא עכשיו</div><p>משקיעים לפי השווי של הקרקע היום, כשהמחיר עדיין נמוך, וכל שלב תכנוני שמתקדם מעלה את צפי ההשבחה, לפי הערכות השמאי.</p></div>"}, "idle_money": {"h1a": "כסף שיושב בעו״ש לא באמת נח.", "h1b": "הוא נמס לאט, כמו קוביית קרח שנשכחה על השיש באוגוסט.", "angle": "<div class=\"ang\"><div class=\"ang-t\">בשביל זה בדיוק בנינו את העסקה</div><p>להעביר הון קיים, בלי משכנתא ובלי חוב, לקרקע בתוך תוכנית כוללנית שאושרה בדצמבר 2024. המחיר הוא בדיוק השווי ששמאי מקרקעין מוסמך קבע.</p></div>"}, "apartment": {"h1a": "מי ששקל דירה להשקעה כבר מכיר את החבילה:", "h1b": "משכנתא לשלושים שנה, שוכרים, ודוד שמש שמחליט להתפוצץ בדיוק בליל שבת.", "angle": "<div class=\"ang\"><div class=\"ang-t\">קרקע עובדת אחרת</div><div class=\"cmp\"><div class=\"cmp-h\"><span></span><span>דירה להשקעה</span><span>קרקע במתחם H</span></div><div class=\"cmp-r\"><span class=\"cmp-k\">מימון</span><span class=\"cmp-a\">משכנתא לשלושים שנה</span><span class=\"cmp-b\">מהון קיים, בלי משכנתא</span></div><div class=\"cmp-r\"><span class=\"cmp-k\">ניהול</span><span class=\"cmp-a\">שוכרים ותיקונים</span><span class=\"cmp-b\">בלי שוכרים ובלי תיקונים</span></div><div class=\"cmp-r\"><span class=\"cmp-k\">מחיר</span><span class=\"cmp-a\">מה שהשוק מבקש</span><span class=\"cmp-b\">3,700 ש״ח למ״ר, השווי שקבע השמאי</span></div></div><p class=\"ang-f\">לפי מספרים, לא לפי תחושה.</p></div>"}, "beginner": {"h1a": "להתחיל להתעניין בהשקעות מרגיש לפעמים כמו לשתות מזרנוק של כבאים.", "h1b": "כולם מסבירים, כולם בטוחים, ואף אחד לא מראה מסמך.", "angle": "<div class=\"ang\"><div class=\"ang-t\">אז הנה זה, פשוט ובגובה העיניים</div><ol class=\"steps\"><li><b>1</b><span>קונים חלק מקרקע כשהיא עוד בשלב תכנוני.</span></li><li><b>2</b><span>התכנון מתקדם, שלב אחרי שלב.</span></li><li><b>3</b><span>בכל שלב שהקרקע מתקרבת לבנייה, צפי ההשבחה עולה.</span></li></ol><p class=\"ang-f\">לא צריך מיליונים ולא משכנתא.</p></div>"}};
+var B = {"cta": "לתשובות שלי", "h": "בדיקת ההתאמה שלך, במקום אחד", "p": "התשובה לכל מה שסימנת, ובחירת מועד שנחזור אליך.", "disc": "*הקרקע עדיין אינה זמינה לבנייה מיידית. הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות."};
 (function(){
   var q = new URLSearchParams(location.search), a = C[q.get('a')] ? q.get('a') : 'beginner', t = q.get('t'), lid = q.get('lid') || '';
   var c = C[a];
@@ -151,6 +152,17 @@ var C = {"investor": {"h1a": "הזדמנות טובה לא נמדדת בכמה �
   var url = (hot ? '/hpage/' : '/cpage/') + (p.toString() ? '?' + p.toString() : '');
   ['go', 'go2'].forEach(function(id){ var el = document.getElementById(id); el.href = url; if (hot) el.firstChild.textContent = 'לקביעת שיחה ביומן '; });
   if (!hot) { document.getElementById('ctaH').textContent = 'כל התמונה, במקום אחד'; document.getElementById('ctaP').textContent = 'הסרטון, הקהילה וכל הפרטים, בקצב שלך.'; }
+  /* ליד של גרסה B (גל 19/10, ח־76): הקישור מההודעה שלו נושא את התשובות (bi = 4 ספרות). הכפתור מוביל לדף התשובות שלו,
+     והגילוי הנאות בנוסח של B (בלי "ודאות מלאה לבנייה", שלא נכנס ל־B). ליד של A לא משתנה */
+  var bi = q.get('bi') || '';
+  if (/^\d{4}$/.test(bi)) {
+    var bp = new URLSearchParams(); if (t) bp.set('t', t);
+    ['m', 'b', 'w', 'k'].forEach(function(k, i){ bp.set(k, bi.charAt(i)); }); if (lid) bp.set('lid', lid);
+    ['go', 'go2'].forEach(function(id){ var el = document.getElementById(id); el.href = '/b/p/?' + bp.toString(); el.firstChild.textContent = B.cta + ' '; });
+    document.getElementById('ctaH').textContent = B.h; document.getElementById('ctaP').textContent = B.p;
+    var dsc = document.querySelector('footer .disc'), di = B.disc.indexOf('.') + 1;
+    dsc.textContent = ''; var bb = document.createElement('b'); bb.textContent = B.disc.slice(0, di); dsc.appendChild(bb); dsc.appendChild(document.createElement('br')); dsc.appendChild(document.createTextNode(B.disc.slice(di).trim()));
+  }
   /* הכפתור הקבוע מופיע אחרי הפתיחה, ונעלם כשהכפתור הראשי על המסך */
   var st = document.getElementById('sticky'), hero = document.querySelector('.hero'), cta = document.getElementById('cta');
   function upd(){ var hb = hero.getBoundingClientRect().bottom, cr = cta.getBoundingClientRect(); st.classList.toggle('on', hb < 0 && !(cr.top < innerHeight && cr.bottom > 0)); }
