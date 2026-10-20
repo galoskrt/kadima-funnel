@@ -40,6 +40,8 @@
         var u = new URLSearchParams({ t: j.t === 'hot' ? 'hot' : 'cold', lid: id, m: a[0], b: a[1], w: a[2], k: a[3] });
         if (j.name) u.set('name', j.name);
         keep.forEach(function(v, k){ u.set(k, v); }); if (q.get('go')) u.set('go', q.get('go'));
+        /* צפייה מהדשבורד: המועד שנבחר עובר בכתובת, ושום דבר לא נשמר במכשיר של מי שצופה */
+        if (q.get('staff') === '1') { u.set('staff', '1'); if (j.cb) u.set('cb', j.cb); location.replace('/b/p/?' + u.toString() + location.hash); return; }
         if (j.cb) { try { var c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: id }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {} }
         location.replace('/b/p/?' + u.toString() + location.hash);
       }).catch(fail);
@@ -816,14 +818,15 @@ const setH = (el, t) => { if (el) el.innerHTML = esc(glue(t)).replace(/\{\{(.+?)
 const setB = (el, t) => { if (el) el.innerHTML = esc(glue(t)).replace(/\[\[(.+?)\]\]/g, '<b>$1</b>').replace(/(\d+(?:-\d+)+)/g, '<span dir="ltr" style="white-space:nowrap;unicode-bidi:isolate">$1</span>').replace(/\n/g, '<br/>'); };
 function topQS(){ try{ return window.top.location.search || location.search; }catch(e){ return location.search; } }
 const Q = new URLSearchParams(topQS());
-const DEMO = Q.get('demo') === '1', LID = Q.get('lid') || '';
+/* staff=1: צפייה מהדשבורד בדף של ליד (גל 20/10). כמו דמו: לא נספר, לא שולח ולא בוחר מועד בשמו, אבל בלי לוח ההחלפה */
+const DEMO = Q.get('demo') === '1', STAFF = Q.get('staff') === '1', VIEW = DEMO || STAFF, LID = Q.get('lid') || '';
 const num = (k, max, d) => { const v = parseInt(Q.get(k), 10); return (v >= 0 && v < max) ? v : d; };
 const m = num('m', 4, 0), b = num('b', 3, 0), w = num('w', 3, 2), k = num('k', 3, 0);
 const NAME = (Q.get('name') || '').trim().split(/\s+/)[0] || '';
 function myPhone(){ try{ const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); const r = a.slice().reverse().find(x => !LID || x.lead_id === LID); return r ? String(r.phone || '') : ''; }catch(e){ return ''; } }
 function fmtPhone(p){ let d = String(p||'').replace(/\D/g,''); if (d.startsWith('972')) d = '0' + d.slice(3); return d.length === 10 ? d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6) : ''; }
 /* מועד שנבחר נזכר גם בביקור הבא מאותו מכשיר (למשל מהרימרקטינג), רק לאותו ליד */
-function booked(){ if (DEMO) return WKEYS.includes(Q.get('cb')) ? Q.get('cb') : ''; try{ const c = JSON.parse(sessionStorage.getItem('b_cb') || localStorage.getItem('b_cb') || '{}'); return WKEYS.includes(c.w) && (!c.lid || !LID || c.lid === LID) ? c.w : ''; }catch(e){ return ''; } }
+function booked(){ if (VIEW) return WKEYS.includes(Q.get('cb')) ? Q.get('cb') : ''; try{ const c = JSON.parse(sessionStorage.getItem('b_cb') || localStorage.getItem('b_cb') || '{}'); return WKEYS.includes(c.w) && (!c.lid || !LID || c.lid === LID) ? c.w : ''; }catch(e){ return ''; } }
 const CB = booked();
 
 const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' };
@@ -900,7 +903,7 @@ function render(){
 }
 render();
 /* קישור מלא (נשלח לפני 20/10) או מכשיר אחר: שואלים את השרת אם כבר נבחר מועד, כדי שהדף לא יבקש לבחור שוב */
-if (LID && !CB && !DEMO && window.top === window) fetch(WORKER + '/b/me?id=' + encodeURIComponent(LID), { cache:'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
+if (LID && !CB && !VIEW && window.top === window) fetch(WORKER + '/b/me?id=' + encodeURIComponent(LID), { cache:'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
   if (!j || !j.ok || !WKEYS.includes(j.cb) || window.__cbDone) return;
   try { const c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: LID }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {}
   showBooked(j.cb, ph);
@@ -920,7 +923,7 @@ $('jform').addEventListener('submit', async e => {
   else if (useAlt && !validPhone(alt)) { $('jEo').textContent = TX['JERR.alt']; ok = false; }
   if (!ok) { (!win ? $('w1') : (!$('jOk').checked && !useAlt) ? $('jOk') : $('jAlt')).focus(); return; }
   const n = fmtPhone(alt) || ph;
-  if (DEMO || !LID) { showBooked(win, n); return; }   /* דמו: לא שולחים ולא עוברים לדף התודה */
+  if (VIEW || !LID) { showBooked(win, n); return; }   /* דמו או צפייה מהדשבורד: לא שולחים ולא עוברים לדף התודה */
   $('jBtn').disabled = true; $('jCta').textContent = TX['JSAVING'];
   const body = JSON.stringify({ lead_id: LID, window: win, alt_phone: alt || '', confirmed: true, at: new Date().toISOString() });
   let sent = false;
@@ -970,7 +973,13 @@ if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeHero);
 })();
 
 /* פיקסל ומדידה: לא בדמו, ולא בזמן שקישור לפי מספר ליד מחכה לשרת (הדף נטען שוב מיד עם התשובות, ושם נמדד פעם אחת) */
-if (!DEMO && !document.documentElement.classList.contains('id-wait')) {
+if (STAFF) {
+  const sb = document.createElement('div');
+  sb.textContent = 'תצוגה מהדשבורד: כך הליד רואה את הדף. לחיצות כאן לא נשלחות ולא נספרות.';
+  sb.style.cssText = 'position:sticky;top:0;z-index:60;background:#14161b;color:#fff;font:700 13px/1.5 Heebo,Arial,sans-serif;text-align:center;padding:7px 12px';
+  document.body.prepend(sb);
+}
+if (!VIEW && !document.documentElement.classList.contains('id-wait')) {
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', PIXEL_ID); fbq('track', 'PageView'); fbq('track', 'ViewContent', { content_name:'b_page', variant:'b' });
   const s = document.createElement('script'); s.src = '/track.js'; s.defer = true; document.body.appendChild(s);
@@ -1003,7 +1012,7 @@ if (DOCS) {
 /* קפיצה לחלק בדף: go=docs/place מהרימרקטינג, ו־#join מהכפתור בדף המידע (גל 20/10, בבדיקת הקצה לקצה: הקפיצה של הדפדפן קורית
    לפני שהתמונות והגופנים נטענים, והחלק זז למטה). אותה קפיצה חוזרת אחרי הטעינה, עד שהליד נוגע במסך */
 const GO = ['docs', 'place'].includes(Q.get('go')) ? Q.get('go') : (location.hash === '#join' ? 'join' : '');
-if (GO && !DEMO) {
+if (GO && !VIEW) {
   let touched = false; ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, () => { touched = true; }, { once:true, passive:true }));
   const jump = () => { if (!touched) $(GO).scrollIntoView({ behavior:'instant', block:'start' }); };
   jump(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(jump); addEventListener('load', jump, { once:true });
