@@ -1000,7 +1000,9 @@ if (DOCS) {
   const href = '/b/' + (sq.toString() ? '?' + sq.toString() : '');
   document.querySelectorAll('.h-cta,.mid-cta .btn').forEach(a => { a.href = href; a.removeAttribute('onclick'); const s = a.querySelector('span'); if (s) { s.removeAttribute('data-t'); s.textContent = glue(D.docsCta); } });
 }
-const GO = ['docs', 'place'].includes(Q.get('go')) ? Q.get('go') : '';
+/* קפיצה לחלק בדף: go=docs/place מהרימרקטינג, ו־#join מהכפתור בדף המידע (גל 20/10, בבדיקת הקצה לקצה: הקפיצה של הדפדפן קורית
+   לפני שהתמונות והגופנים נטענים, והחלק זז למטה). אותה קפיצה חוזרת אחרי הטעינה, עד שהליד נוגע במסך */
+const GO = ['docs', 'place'].includes(Q.get('go')) ? Q.get('go') : (location.hash === '#join' ? 'join' : '');
 if (GO && !DEMO) {
   let touched = false; ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, () => { touched = true; }, { once:true, passive:true }));
   const jump = () => { if (!touched) $(GO).scrollIntoView({ behavior:'instant', block:'start' }); };
