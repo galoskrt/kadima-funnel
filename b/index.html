@@ -100,6 +100,13 @@ h1 .hl{color:var(--accent)}
 @keyframes bdot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(194,21,28,.35)}50%{opacity:.55;box-shadow:0 0 0 6px rgba(194,21,28,0)}}
 @media(prefers-reduced-motion:reduce){.bdot{animation:none}}
 .btn{white-space:nowrap;border-radius:15px}
+[data-screen="0"] h1,[data-screen="0"] .sub{text-align:center}
+.ph{position:relative}
+.ph .sim{position:absolute;bottom:8px;right:10px;font-size:11px;font-weight:700;color:#fff;background:rgba(15,18,22,.45);padding:2px 8px;border-radius:4px;line-height:1.5}
+@keyframes btnFloat{0%,100%{translate:0 0;box-shadow:0 10px 24px rgba(194,21,28,.26)}50%{translate:0 -4px;box-shadow:0 18px 34px rgba(194,21,28,.36)}}
+[data-screen="0"] .btn,#submitBtn{animation:btnFloat 3s ease-in-out infinite}
+#submitBtn:disabled{animation:none}
+@media(prefers-reduced-motion:reduce){[data-screen="0"] .btn,#submitBtn{animation:none}}
 @media(max-width:440px){.btn{font-size:clamp(14px,4.1vw,17px);padding:17px 12px;gap:8px}.btn .arw{width:26px}}
 /* ── /B 19/10 ── */
 </style>
@@ -113,7 +120,7 @@ h1 .hl{color:var(--accent)}
 
   <!-- פתיחה (B1, B2, B3) -->
   <div class="screen active" data-screen="0">
-    <div class="ph"><img src="/b/media/field-gal-800.webp" srcset="/b/media/field-gal-800.webp 800w, /b/media/field-gal-1200.webp 1200w" sizes="(max-width:600px) 100vw, 560px" width="1200" height="640" alt="שדות מעובדים בקדימה צורן, במבט מלמעלה" fetchpriority="high"/></div>
+    <div class="ph"><img src="/b/media/future-h-800.webp" srcset="/b/media/future-h-800.webp 800w, /b/media/future-h-1200.webp 1200w" sizes="(max-width:600px) 100vw, 560px" width="1200" height="640" alt="השטח של מתחם H היום, ולצידו הדמיה של מרכז קדימה צורן החדש" fetchpriority="high"/><span class="sim">הדמיה להמחשה בלבד</span></div>
     <h1 id="cH1"></h1>
     <div class="sub" id="cSub"></div>
     <button class="btn" onclick="start()"><span id="cCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></button>
