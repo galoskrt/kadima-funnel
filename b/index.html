@@ -91,12 +91,15 @@ h1 .hl{color:var(--accent)}
 @media(max-width:440px){.qtitle{font-size:22px}.opt{font-size:16px;padding:15px 14px}}
 /* ── B 19/10 ── */
 .h1b{display:block;font-size:.6em;font-weight:800;line-height:1.3;letter-spacing:-.01em;margin-top:10px}
-#cSub{white-space:pre-line;margin-bottom:16px}
-.badge{display:inline-flex;align-items:center;gap:8px;background:var(--tint);color:var(--accent-deep);font-size:14px;font-weight:700;line-height:1.4;border-radius:999px;padding:7px 14px;margin:0 0 20px}
+.hlg{display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+#cSub{white-space:pre-line}
+.badge{display:flex;width:fit-content;max-width:100%;align-items:center;gap:8px;background:var(--tint);color:var(--accent-deep);font-size:14px;font-weight:700;line-height:1.4;border-radius:6px;padding:7px 12px;margin:18px auto 0;text-align:center}
+.badge .nw{white-space:nowrap}
+@media(max-width:440px){.badge .sep{display:block;height:0;overflow:hidden}}
 .bdot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto;animation:bdot 2.2s ease-in-out infinite}
 @keyframes bdot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(194,21,28,.35)}50%{opacity:.55;box-shadow:0 0 0 6px rgba(194,21,28,0)}}
 @media(prefers-reduced-motion:reduce){.bdot{animation:none}}
-.btn{white-space:nowrap}
+.btn{white-space:nowrap;border-radius:15px}
 @media(max-width:440px){.btn{font-size:clamp(14px,4.1vw,17px);padding:17px 12px;gap:8px}.btn .arw{width:26px}}
 /* ── /B 19/10 ── */
 </style>
@@ -113,9 +116,9 @@ h1 .hl{color:var(--accent)}
     <div class="ph"><img src="/b/media/field-gal-800.webp" srcset="/b/media/field-gal-800.webp 800w, /b/media/field-gal-1200.webp 1200w" sizes="(max-width:600px) 100vw, 560px" width="1200" height="640" alt="שדות מעובדים בקדימה צורן, במבט מלמעלה" fetchpriority="high"/></div>
     <h1 id="cH1"></h1>
     <div class="sub" id="cSub"></div>
-    <div class="badge" id="cBadge"><span class="bdot" aria-hidden="true"></span><span id="cBadgeT"></span></div>
     <button class="btn" onclick="start()"><span id="cCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></button>
     <div class="trust" id="cTrust"></div>
+    <div class="badge" id="cBadge"><span class="bdot" aria-hidden="true"></span><span id="cBadgeT"></span></div>
   </div>
 
   <div id="qMount"></div>
@@ -148,7 +151,7 @@ h1 .hl{color:var(--accent)}
    התשובה למניע נשמרת גם בערך הקנוני של A (answers.q4), כדי שהרצפים ודף המידע ימשיכו לעבוד. */
 const COPY = {
  "eyebrow": "מתחם H · קדימה צורן",
- "B1": "אנחנו לא ממהרים.<span class=\"h1b\">לפני שמדברים על השקעות, אנחנו אוהבים <span class=\"hl\">לתאם ציפיות</span>.</span>",
+ "B1": "לפני שמדברים על השקעות, <span class=\"hlg\">אנחנו אוהבים לתאם ציפיות.</span>",
  "B2": "לכל משקיע יש צורך פיננסי ומטרות לעתיד.\nיצרנו שאלון התאמה קצר, 4 שאלות ובסופן התשובות לכל מה שעוד עליך לבדוק.",
  "BADGE": "קבוצת תום הרוש · מעל 15 שנים של נדל״ן מותאם אישית",
  "B3": "לבדיקת התאמה לצורך הפיננסי שלי",
@@ -206,7 +209,7 @@ function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s])(ללא|בלי|�
 document.getElementById('cEyebrow').textContent = COPY.eyebrow;
 document.getElementById('cH1').innerHTML = COPY.B1;
 document.getElementById('cSub').textContent = COPY.B2.split('\n').map(glue).join('\n');
-document.getElementById('cBadgeT').textContent = COPY.BADGE;
+document.getElementById('cBadgeT').innerHTML = COPY.BADGE.split(' · ').map(t=>'<span class="nw">'+t+'</span>').join('<span class="sep"> · </span>');
 document.getElementById('cCta').textContent = COPY.B3;
 document.getElementById('cTrust').innerHTML = COPY.trust.map(t=>'<span>'+t+'</span>').join('<span class="dot"></span>');
 document.getElementById('cCapTitle').textContent = glue(COPY.C1);
