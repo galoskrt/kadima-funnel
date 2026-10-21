@@ -884,7 +884,9 @@ function renderQ(i){
     '<button type="button" class="opt' + (sel === j ? ' sel' : '') + '" aria-pressed="' + (sel === j) + '" data-q="' + i + '" data-o="' + j + '"><span class="tick" aria-hidden="true"></span><span class="txt">' + esc(o.t) + (o.mc ? '<span class="mc">' + esc(glue(o.mc)) + '</span>' : '') + '</span></button>').join('') + '</div>';
 }
 let cur = 'q0';
-function show(name){
+/* init = הטעינה הראשונה: בלי גלילה ובלי מדידה. גל 21/10: "הקישור שולח אותי לאמצע הדף ולא לראשו" (הגלילה לכרטיס רצה גם בטעינה),
+   ובלי זה כל מבקר נספר בדשבורד כמי שהגיע לשאלה 1. שלב 1 נמדד כשהכרטיס באמת על המסך (למטה, עם click) */
+function show(name, init){
   cur = name;
   document.querySelectorAll('#svc .screen').forEach(s => s.classList.toggle('active', s.dataset.screen === name));
   const qn = name.startsWith('q') ? +name.slice(1) + 1 : 0;
@@ -892,6 +894,7 @@ function show(name){
   $('backBtn').classList.toggle('show', (qn > 1) || name === 'capture');
   $('progBar').style.width = (qn ? qn / (TOTAL + 1) * 100 : name === 'capture' ? 92 : 100) + '%';
   $('progN').textContent = qn ? qn + ' מתוך ' + TOTAL : (name === 'capture' ? 'עוד רגע' : '');
+  if (init) return;
   if (qn) step(qn, false); else if (name === 'capture') step(TOTAL + 1, true);
   const r = $('svc').getBoundingClientRect();   /* הכרטיס נשאר בעין: אם הראש שלו מעל המסך, חוזרים אליו */
   if (r.top < 0 || r.top > innerHeight * .6) $('svc').scrollIntoView({ behavior:'auto', block:'start' });
@@ -997,9 +1000,9 @@ $('jform').addEventListener('submit', async e => {
   const tq = new URLSearchParams({ w: win, lid: LID });
   setTimeout(() => { location.href = '/b/t/?' + tq.toString(); }, 350);
 });
-renderQ(0); show('q0'); $('svTop').hidden = false;
+renderQ(0); show('q0', true); $('svTop').hidden = false;
 /* מי שהגיע לשאלון (גלל או לחץ): נספר במונה "click" של B בדשבורד, פעם אחת */
-new IntersectionObserver((es, ob) => es.forEach(x => { if (x.isIntersecting) { fx('click'); ob.disconnect(); } }), { threshold:.35 }).observe($('svc'));
+new IntersectionObserver((es, ob) => es.forEach(x => { if (x.isIntersecting) { fx('click'); if (cur === 'q0') step(1, false); ob.disconnect(); } }), { threshold:.35 }).observe($('svc'));
 
 /* ── הכפתור הצף: אחרי הפתיחה, ועד שהשאלון על המסך ── */
 const fl = $('float'), top0 = $('top'), sv = $('sv');
