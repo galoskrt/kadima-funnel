@@ -784,7 +784,9 @@ const WORKER = 'https://tom-funnel.tom-harush.workers.dev', PIXEL_ID = '10024283
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g,'$1$2\u00a0'); return t.split('\n').map(l => { const i=l.lastIndexOf(' '); return i>0 ? l.slice(0,i)+'\u00a0'+l.slice(i+1) : l; }).join('\n'); }
-const Q = new URLSearchParams(location.search);
+/* כמו בשאלון הישן: הפרמטרים נקראים גם מהחלון העליון, אם הדף אי פעם מוטמע (השקה 22/10, השוואה מול השאלון) */
+function topSearch(){ try { return window.top.location.search || location.search; } catch(e) { return location.search; } }
+const Q = new URLSearchParams(topSearch());
 /* תצוגה מקדימה (/b/new/, או demo=1): בלי פיקסל, בלי מדידה ובלי שליחה. אפשר לעבור את כל הדרך, ושום ליד לא נוצר */
 const PREVIEW = true || Q.get('demo') === '1';
 if (PREVIEW) {
@@ -964,7 +966,12 @@ function submitLead(){
   try { const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); a.push(payload); localStorage.setItem('th_leads', JSON.stringify(a)); } catch(e) {}
   /* ליד שחוזר עם אותו טלפון: השרת מחזיר את המזהה הקיים, וממשיכים איתו (אחרת המועד נשלח למזהה שלא קיים) */
   fetch(WORKER + '/lead', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
-    .then(r => r.json()).then(j => { if (j && j.lead_id && j.lead_id !== leadId) LID = j.lead_id; }).catch(() => {}).then(go);
+    .then(r => r.json()).then(j => {
+      if (j && j.lead_id && j.lead_id !== leadId) {
+        LID = j.lead_id;
+        try { const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); const it = a.find(x => x.lead_id === leadId); if (it) { it.lead_id = j.lead_id; localStorage.setItem('th_leads', JSON.stringify(a)); } } catch(e) {}
+      }
+    }).catch(() => {}).then(go);
   setTimeout(go, 2500);
 }
 /* ── התשובות ובחירת המועד, באותו מקום בדף ── */
@@ -1003,7 +1010,7 @@ $('jform').addEventListener('submit', async e => {
   try { const c = JSON.stringify({ w: win, alt: alt || '', at: Date.now(), lid: LID }); sessionStorage.setItem('b_cb', c); localStorage.setItem('b_cb', c); } catch(err) {}
   fin();
   const tq = new URLSearchParams({ w: win, lid: LID });
-  setTimeout(() => { location.href = '/b/t/?' + tq.toString(); }, 350);
+  setTimeout(() => { const dest = '/b/t/?' + tq.toString(); try { window.top.location.href = dest; } catch(e) { location.href = dest; } }, 350);
 });
 renderQ(0); show('q0', true); $('svTop').hidden = false;
 /* מי שהגיע לשאלון (גלל או לחץ): נספר במונה "click" של B בדשבורד, פעם אחת */
