@@ -537,8 +537,11 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 @keyframes btnFloat{0%,100%{translate:0 0;box-shadow:0 10px 24px rgba(194,21,28,.26)}50%{translate:0 -4px;box-shadow:0 18px 34px rgba(194,21,28,.36)}}
 .lh-btn,.sv-go{animation:btnFloat 3s ease-in-out infinite}
 .sv-go:disabled{animation:none}
-.trust{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;font-size:14px;font-weight:700;color:var(--muted);margin-top:14px}
-.trust .dot{width:4px;height:4px;border-radius:50%;background:#B9BEC6}
+/* ההזמנה לגלול לציר הזמן, במקום הכפתור (22/10) */
+.lh-cue{display:inline-flex;flex-direction:column;align-items:center;gap:2px;color:var(--accent);font-weight:800;font-size:16px;text-decoration:none;padding:6px 14px}
+.lh-cue svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;animation:cueDrop 2.2s ease-in-out infinite}
+.lh-cue:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:10px}
+@keyframes cueDrop{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 .lh-disc{font-size:12.5px;color:var(--faint);margin-top:16px}
 @media(min-width:960px){
   .lh{padding:var(--s5) 0}
@@ -546,7 +549,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
   .lh-ph{grid-column:7/span 6;grid-row:1;border-radius:20px;box-shadow:var(--sh)}
   .lh-tx{grid-column:1/span 6;grid-row:1;text-align:right;padding:0;margin:0}
   .lh-sub{margin-inline:0}
-  .trust{justify-content:flex-start}
+  .lh-cue{flex-direction:row;padding-inline:0}
 }
 /* הביקורות: קרוסלה רצה של כרטיסי טקסט (ח־94). הטקסט קריא בלי לפתוח, הצילום מגוגל בלחיצה */
 .rvs .wrap-l{padding-bottom:0}
@@ -628,7 +631,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 .done-box p{color:var(--muted);margin-top:6px}
 .float a{border-radius:15px}
 @media(max-width:440px){.qtitle{font-size:21px}.opt{font-size:16px;padding:15px 14px}.svc{padding:16px 16px 20px}.btn{font-size:clamp(14px,4.1vw,17px);padding:16px 12px;gap:8px}.btn .arw{width:26px}}
-@media(prefers-reduced-motion:reduce){.lh-btn,.sv-go,.screen.active,.landload .fill,.landload .pin{animation:none}.field .hint{transition:none}}
+@media(prefers-reduced-motion:reduce){.lh-btn,.sv-go,.screen.active,.landload .fill,.landload .pin,.lh-cue svg{animation:none}.field .hint{transition:none}}
 </style>
 </head>
 <body>
@@ -640,12 +643,38 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
   <div class="lh-ph"><img src="/b/media/future-h-800.webp" srcset="/b/media/future-h-800.webp 800w, /b/media/future-h-1200.webp 1200w" sizes="(max-width:960px) 100vw, 560px" width="1200" height="640" alt="השטח של מתחם H היום, ולצידו הדמיה של מרכז קדימה צורן החדש" fetchpriority="high"/></div>
   <div class="lh-tx">
     <span class="lh-eb">מתחם H · קדימה צורן</span>
-    <h1>קרקע פרטית בטאבו במרכז <span class="hlg">החדש של קדימה צורן.</span></h1>
-    <p class="lh-sub">החל מ־462,500 ₪ ליחידה של 125 מ״ר, שמאות לפי תקן 22. התוכנית הכוללנית כבר אושרה, והשלב הבא הוא תוכנית מפורטת.</p>
-    <a class="btn lh-btn" href="#sv" data-go="sv"><span>לבדיקת התאמה · 4 שאלות</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
-    <div class="trust"><span>4 שאלות</span><span class="dot"></span><span>פחות מדקה</span><span class="dot"></span><span>התשובה שלנו לכל מה שתסמן</span></div>
+    <h1>התוכנית כבר אושרה.
+<span class="hlg">הנה בדיוק איפה מתחם H עומד היום.</span></h1>
+    <p class="lh-sub">קרקע פרטית בטאבו במרכז החדש של קדימה צורן. לפני שמדברים על כסף: מה כבר אושר, מה השלב הבא, ותוך כמה זמן.</p>
+    <a class="lh-cue" href="#tl" data-go="tl"><span>לשלבי התכנון</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5 12 15.5 18 9.5"/></svg></a>
     <p class="lh-disc">הדמיה להמחשה בלבד. *הקרקע עדיין אינה זמינה לבנייה מיידית.</p>
   </div>
+</div></section>
+<section class="sec bg-g" id="tl"><div class="wrap-l split">
+  <div class="split-head">
+    <h2 class="sec-t rv">איפה הרווח בעסקה <span class="hl">עומד היום</span></h2>
+    <div class="sec-sub rv">השלב שבו קרקעות נתקעות שנים, כבר מאחור. הבא בתור: תוכנית מפורטת למתחם.</div>
+  </div>
+  <div class="split-body">
+    <div class="jtl" data-jet><div class="jtl-line"></div><div class="jtl-fill"></div></div>
+    <p class="tl-disc">אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון.</p>
+    <div class="mid-cta rv"><a class="btn" href="#sv" data-go="sv"><span>לבדיקת התאמה · 4 שאלות</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a></div>
+  </div>
+</div></section>
+<section class="sec bg-w" aria-labelledby="buyH"><div class="wrap-l">
+  <h2 class="sec-t rv" id="buyH">מה בדיוק <span class="hl">קונים כאן?</span></h2>
+  <div class="buy3"><div class="t rv"><div class="v">125 מ״ר</div><div class="l">יחידת קרקע פרטית בטאבו, בתוך מתחם H</div></div><div class="t rv"><div class="v">3,700 ₪</div><div class="l">למטר, לפי שמאות מקרקעין בתקן 22 (2026).</div></div><div class="t rv"><div class="v">462,500 ₪</div><div class="l">ליחידת קרקע שלמה של 125 מ״ר שמקנה לך זכויות בנייה עתידיות.</div></div></div>
+  <p class="buy-note rv">את השמאות עצמה פותחים יחד בשיחה, מול המסמכים.</p>
+  <div class="mid-cta rv"><a class="btn" href="#sv" data-go="sv"><span>לבדיקת התאמה · 4 שאלות</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a></div>
+</div></section>
+<section class="sec bg-g" id="docs"><div class="wrap-l">
+  <h2 class="sec-t rv">לדעת איך נכנסים, <span class="hl">ואיך יוצאים.</span></h2>
+  <div class="sec-sub rv">כל מה שלא מספיק שקוף בעסקאות קרקע, כאן מול העיניים שלך.</div>
+  <div class="dgrid"><div class="dcard rv"><lottie-player src="/lot-cert1.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b>תוכנית מתאר כוללנית מספר 457-0112086 כבר אושרה ב־18/12/2024, ופורסמה לתוקף.</b><span>אפשר לבדוק בעצמך באתר מינהל התכנון</span></div><div class="dcard rv"><lottie-player src="/lot-cert2.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b>שמאי מקרקעין מוסמך קבע שווי של 3,700 ש״ח למטר, וזה בדיוק מחיר הכניסה שאנחנו מציעים.</b><span>מתוך הערכת השמאי, לפי תקן 22 בשנת 2026</span></div><div class="dcard rv"><lottie-player src="/lot-cert3.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b>נקודת יציאה שקופה ובטוחה עם התחייבות שלנו, שמצוינת בחוזה הקנייה.</b><span>כתוב בחוזה, ונקרא יחד בפגישה</span></div></div>
+  <div class="mavat rv"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"/></div>
+</div></section>
+<section class="sec bg-w"><div class="wrap-l">
+  <div class="exitcard rv"><lottie-player src="/lot-cert4.json" background="transparent" speed="1" autoplay loop style="width:72px;height:72px"></lottie-player><div><h2 class="sec-t">ומה אם <span class="hl">ארצה לצאת?</span></h2><p>אפשר למכור בכל שלב! בנוסף אנו מספקים מודל שקוף וברור עם נקודות יציאה, הכל מגובה בכתב מצדנו, וכל התנאים כתובים מראש בחוזה. בפגישה עוברים עליהם יחד, סעיף אחרי סעיף.</p></div></div>
 </div></section>
 <section class="sec sec-dark rvs" aria-labelledby="revH"><div class="wrap-l">
   <div class="kicker">לקוחות מספרים</div>
@@ -673,32 +702,6 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
     </div>
     <img src="https://tom-harush.co.il/wp-content/uploads/%D7%A2%D7%99%D7%A6%D7%95%D7%91-%D7%9C%D7%9C%D7%90-%D7%A9%D7%9D-17.png" alt="תום הרוש" loading="lazy"/>
   </div>
-</div></section>
-<section class="sec bg-w" aria-labelledby="buyH"><div class="wrap-l">
-  <h2 class="sec-t rv" id="buyH">מה בדיוק <span class="hl">קונים כאן?</span></h2>
-  <div class="buy3"><div class="t rv"><div class="v">125 מ״ר</div><div class="l">יחידת קרקע פרטית בטאבו, בתוך מתחם H</div></div><div class="t rv"><div class="v">3,700 ₪</div><div class="l">למטר, לפי שמאות מקרקעין בתקן 22 (2026).</div></div><div class="t rv"><div class="v">462,500 ₪</div><div class="l">ליחידת קרקע שלמה של 125 מ״ר שמקנה לך זכויות בנייה עתידיות.</div></div></div>
-  <p class="buy-note rv">את השמאות עצמה פותחים יחד בשיחה, מול המסמכים.</p>
-  <div class="mid-cta rv"><a class="btn" href="#sv" data-go="sv"><span>לבדיקת התאמה · 4 שאלות</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a></div>
-</div></section>
-<section class="sec bg-g"><div class="wrap-l split">
-  <div class="split-head">
-    <h2 class="sec-t rv">איפה הרווח בעסקה <span class="hl">עומד היום</span></h2>
-    <div class="sec-sub rv">השלב שבו קרקעות נתקעות שנים, כבר מאחור. הבא בתור: תוכנית מפורטת למתחם.</div>
-  </div>
-  <div class="split-body">
-    <div class="jtl" data-jet><div class="jtl-line"></div><div class="jtl-fill"></div></div>
-    <p class="tl-disc">אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון.</p>
-    <div class="mid-cta rv"><a class="btn" href="#sv" data-go="sv"><span>לבדיקת התאמה · 4 שאלות</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a></div>
-  </div>
-</div></section>
-<section class="sec bg-w" id="docs"><div class="wrap-l">
-  <h2 class="sec-t rv">לדעת איך נכנסים, <span class="hl">ואיך יוצאים.</span></h2>
-  <div class="sec-sub rv">כל מה שלא מספיק שקוף בעסקאות קרקע, כאן מול העיניים שלך.</div>
-  <div class="dgrid"><div class="dcard rv"><lottie-player src="/lot-cert1.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b>תוכנית מתאר כוללנית מספר 457-0112086 כבר אושרה ב־18/12/2024, ופורסמה לתוקף.</b><span>אפשר לבדוק בעצמך באתר מינהל התכנון</span></div><div class="dcard rv"><lottie-player src="/lot-cert2.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b>שמאי מקרקעין מוסמך קבע שווי של 3,700 ש״ח למטר, וזה בדיוק מחיר הכניסה שאנחנו מציעים.</b><span>מתוך הערכת השמאי, לפי תקן 22 בשנת 2026</span></div><div class="dcard rv"><lottie-player src="/lot-cert3.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b>נקודת יציאה שקופה ובטוחה עם התחייבות שלנו, שמצוינת בחוזה הקנייה.</b><span>כתוב בחוזה, ונקרא יחד בפגישה</span></div></div>
-  <div class="mavat rv"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"/></div>
-</div></section>
-<section class="sec bg-g"><div class="wrap-l">
-  <div class="exitcard rv"><lottie-player src="/lot-cert4.json" background="transparent" speed="1" autoplay loop style="width:72px;height:72px"></lottie-player><div><h2 class="sec-t">ומה אם <span class="hl">ארצה לצאת?</span></h2><p>אפשר למכור בכל שלב! בנוסף אנו מספקים מודל שקוף וברור עם נקודות יציאה, הכל מגובה בכתב מצדנו, וכל התנאים כתובים מראש בחוזה. בפגישה עוברים עליהם יחד, סעיף אחרי סעיף.</p></div></div>
 </div></section>
 <section class="sec bg-w" id="place"><div class="wrap-l split">
   <div class="split-head">
@@ -742,7 +745,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
         <label class="consent"><input type="checkbox" id="jOk2" name="phone_alt"/><span>עדיף להתקשר למספר אחר שלי</span></label>
         <div class="jfield" id="jAltBox" hidden><input id="jAlt" name="alt_phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="מספר טלפון לחזרה" aria-label="מספר טלפון לחזרה"/></div>
         <div class="jerr" id="jEo" aria-live="polite"></div>
-        <button class="btn sv-go" type="submit" id="jBtn"><span id="jCta">לשריין את 15 הדקות שלי</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
+        <button class="btn sv-go" type="submit" id="jBtn"><span id="jCta">לשריין את 10 הדקות שלי</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
         <p class="after">בשיחה עונים על כל השאלות ובוחנים האם ההשקעה תתאים לך לפני שנתקדם לפגישה.</p>
       </form>
       <div class="done-box" id="jDone" hidden><div class="big"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><h3 id="jDH"></h3><p id="jDP"></p></div>
@@ -804,6 +807,8 @@ function step(i, contact){ if (!PREVIEW && window.THG_STEP) THG_STEP(i, contact)
 /* ── כפתורי "לבדיקת התאמה": גלילה לשאלון ── */
 function toSv(e){ if (e) e.preventDefault(); $('sv').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block:'start' }); }
 document.querySelectorAll('[data-go="sv"]').forEach(a => a.addEventListener('click', toSv));
+/* "לשלבי התכנון" בפתיחה: גלילה לציר הזמן, בלי לשנות את הכתובת */
+document.querySelectorAll('[data-go="tl"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); $('tl').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block:'start' }); }));
 
 /* ── ציר הזמן: אותו רכיב של דף התוצאה. וי עד "אנחנו כאן", ואחריו מספרים ── */
 (function(){
@@ -1004,10 +1009,10 @@ renderQ(0); show('q0', true); $('svTop').hidden = false;
 /* מי שהגיע לשאלון (גלל או לחץ): נספר במונה "click" של B בדשבורד, פעם אחת */
 new IntersectionObserver((es, ob) => es.forEach(x => { if (x.isIntersecting) { fx('click'); if (cur === 'q0') step(1, false); ob.disconnect(); } }), { threshold:.35 }).observe($('svc'));
 
-/* ── הכפתור הצף: אחרי הפתיחה, ועד שהשאלון על המסך ── */
-const fl = $('float'), top0 = $('top'), sv = $('sv');
+/* ── הכפתור הצף: רק אחרי ציר הזמן (הסקיצה, 22/10), ועד שהשאלון על המסך ── */
+const fl = $('float'), tl = $('tl'), sv = $('sv');
 addEventListener('scroll', () => {
-  const past = top0.getBoundingClientRect().bottom < 0, before = sv.getBoundingClientRect().top > innerHeight * .85, after = sv.getBoundingClientRect().bottom < 0;
+  const past = tl.getBoundingClientRect().bottom < innerHeight * .85, before = sv.getBoundingClientRect().top > innerHeight * .85, after = sv.getBoundingClientRect().bottom < 0;
   fl.classList.toggle('on', past && (before || after) && cur !== 'res');
 }, { passive:true });
 </script>
