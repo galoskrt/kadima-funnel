@@ -626,6 +626,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 .res-h{font-size:22px;font-weight:900;line-height:1.3;margin:8px 0 6px;text-wrap:balance}
 #jform .res-h{margin-top:var(--s4)}
 #jform .wins{margin-top:14px}
+.resume-note{background:#FFF5E6;color:#8a5a00;border:1px solid #f3d9a8;border-radius:12px;font-weight:800;font-size:15px;text-align:center;padding:8px 12px;margin-bottom:12px}
 .done-box{text-align:center;padding:var(--s3) 0}
 .done-box h3{font-size:21px;font-weight:900}
 .done-box p{color:var(--muted);margin-top:6px}
@@ -922,6 +923,7 @@ function pick(qi, oi){
   if (!started) { started = true; px('SurveyStart', { variant:VARIANT, page:'landing' }); fx('start'); }
   pickIdx[q.key] = oi;
   if (qi === 0 && pickIdx.__branch !== oi) { pickIdx.b2 = null; pickIdx.__branch = oi; }   /* מניע אחר = ענף אחר */
+  try { localStorage.setItem('b_prog', JSON.stringify({ p: pickIdx, at: Date.now() })); } catch(e) {}   /* ההתקדמות נשמרת: מי שחוזר מהמודעה ממשיך מאותה שאלה (25/10) */
   document.querySelectorAll('[data-screen="q' + qi + '"] .opt').forEach((b, k) => { b.classList.toggle('sel', k === oi); b.setAttribute('aria-pressed', k === oi); });
   px('SurveyStep', { step:qi + 1, variant:VARIANT, page:'landing' });
   setTimeout(() => {
@@ -997,6 +999,7 @@ function result(name){
     if (LID) q.set('lid', LID); if (name) q.set('name', String(name).trim().split(/\s+/)[0]);
     try { localStorage.setItem('b_last', JSON.stringify({ url: '/b/p/?' + q.toString(), lid: LID, at: Date.now() })); } catch(e) {}
   }
+  try { localStorage.removeItem('b_prog'); } catch(e) {}
   show('res'); $('float').classList.remove('on');
 }
 function fmtPhone(p){ let d = String(p || '').replace(/\D/g, ''); if (d.startsWith('972')) d = '0' + d.slice(3); return d.length === 10 ? d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6) : ''; }
@@ -1023,6 +1026,19 @@ $('jform').addEventListener('submit', async e => {
   setTimeout(() => { const dest = '/b/t/?' + tq.toString(); try { window.top.location.href = dest; } catch(e) { location.href = dest; } }, 350);
 });
 renderQ(0); show('q0', true); $('svTop').hidden = false;
+(function resume(){
+  let pr = null, last = null;
+  try { pr = JSON.parse(localStorage.getItem('b_prog') || 'null'); last = localStorage.getItem('b_last'); } catch(e) {}
+  if (!pr || last || !pr.p || Date.now() - (pr.at || 0) > 180 * 864e5) return;
+  ['b1', 'b2', 'b3', 'b4', '__branch'].forEach(k => { if (pr.p[k] != null) pickIdx[k] = pr.p[k]; });
+  let n = 0; while (n < TOTAL && pickIdx[qAt(n).key] != null) n++;
+  if (n === 0) return;
+  if (n < TOTAL) { renderQ(n); show('q' + n, true); } else { show('capture', true); }
+  const note = document.createElement('div'); note.className = 'resume-note';
+  note.textContent = n < TOTAL ? 'ממשיכים מאיפה שעצרת: שאלה ' + (n + 1) + ' מתוך ' + TOTAL : 'ממשיכים מאיפה שעצרת: נשארו רק הפרטים';
+  $('svc').prepend(note);
+  if ((Q.get('utm_campaign') || '') === 'rmk') setTimeout(() => toSv(), 400);
+})();
 /* מי שהגיע לשאלון (גלל או לחץ): נספר במונה "click" של B בדשבורד, פעם אחת */
 new IntersectionObserver((es, ob) => es.forEach(x => { if (x.isIntersecting) { fx('click'); if (cur === 'q0') step(1, false); ob.disconnect(); } }), { threshold:.35 }).observe($('svc'));
 
