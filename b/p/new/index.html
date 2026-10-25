@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#FFFFFF"/>
+<title>בדיקת ההתאמה שלך · מתחם H · קבוצת תום הרוש</title>
+<meta name="robots" content="noindex"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+:root{
+  --bg:#F6F7F9; --gray:#ECEEF1; --card:#FFFFFF; --dark:#0f1216; --dark2:#181c22;
+  --ink:#0f1216; --muted:rgba(15,18,22,.60); --faint:rgba(15,18,22,.42);
+  --line:rgba(15,18,22,.10); --line-r:rgba(194,21,28,.20); --dline:rgba(255,255,255,.12);
+  --accent:#C2151C; --accent2:#7F0224; --green:#157a3a; --gold:#B8892B;
+  --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);
+  --tint:rgba(194,21,28,.055); --tintg:rgba(21,122,58,.07);
+  --sh:0 14px 44px rgba(16,16,16,.10); --sh-sm:0 6px 20px rgba(16,16,16,.07); --wa:#25d366;
+  --rad:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:'Heebo','Assistant','Segoe UI',sans-serif;color:var(--ink);background:var(--bg);line-height:1.7;overflow-x:clip}
+.wrap{max-width:840px;margin:0 auto;padding:0 20px}
+img{max-width:100%;display:block}
+.arw{width:36px;height:11px;stroke:currentColor;stroke-width:1.5;fill:none;flex:0 0 auto;stroke-linecap:round;stroke-linejoin:round}
+/* section backgrounds for rhythm */
+.sec{padding:52px 0}
+.sec-gray{background:var(--gray)}
+.sec-dark{background:var(--dark);color:#fff}
+.sec-tint{background:linear-gradient(180deg,transparent,var(--tint),transparent)}
+.sec-tintg{background:linear-gradient(180deg,transparent,var(--tintg),transparent)}
+/* header */
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:.3s}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
+header img{height:42px}
+.h-cta{display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:13.5px;padding:9px 17px;border-radius:11px;box-shadow:0 6px 18px rgba(194,21,28,.28);transition:.16s}
+.h-cta:hover{transform:translateY(-1px)}
+.h-cta .arw{width:24px}
+/* hero */
+.hero{position:relative;text-align:center;overflow:hidden;isolation:isolate;color:#fff}
+.hero-bg{position:absolute;inset:0;z-index:-1}
+.hero-bg img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,17,22,.34),rgba(14,17,22,.18) 45%,rgba(14,17,22,.52))}
+.hero-inner{padding:72px 0 58px;background:radial-gradient(ellipse 92% 76% at 50% 44%,rgba(8,10,14,.48),transparent 72%)}
+.hero h1{text-shadow:0 2px 30px rgba(0,0,0,.6),0 1px 4px rgba(0,0,0,.45)}
+.hero .sub{text-shadow:0 1px 14px rgba(0,0,0,.5)}
+.hero .eyebrow{text-shadow:none}
+.hero .eyebrow{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff}
+.hero h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.4)}
+.hero .hl{background:linear-gradient(135deg,#ff6167,#ff9a45);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .hl-g{color:#63e487}
+.hero .sub{color:rgba(255,255,255,.92)}
+.hero .note{color:rgba(255,255,255,.76)}
+.trustband{background:#fff;border-bottom:1px solid var(--line);padding:22px 0}
+/* hero with VSL (hot, no bg image) */
+.hero-v{position:relative;text-align:center;padding:46px 0 34px;background:radial-gradient(ellipse 70% 60% at 76% -12%,rgba(194,21,28,.10),transparent 60%),radial-gradient(ellipse 60% 50% at 8% 112%,rgba(21,122,58,.07),transparent 55%),var(--bg)}
+.hero-v h1{color:var(--ink);text-shadow:none;font-size:40px;line-height:1.14;margin-bottom:14px}
+.hero-v .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-v .sub-v{font-size:17.5px;color:var(--muted);max-width:600px;margin:0 auto 24px;font-weight:500}
+.vsl{max-width:720px;margin:0 auto 24px;background:#0f1216;border-radius:20px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:var(--sh);position:relative;overflow:hidden;cursor:pointer;border:1px solid var(--line)}
+.vsl-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 26%;z-index:0}
+.vsl::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,18,22,.28),rgba(15,18,22,.66));z-index:1}
+.vsl .play,.vsl .vt,.vsl small{z-index:2}
+.vsl .play{position:relative;width:72px;height:72px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 10px 30px rgba(194,21,28,.5);transition:.2s}
+.vsl:hover .play{transform:scale(1.08)}
+.vsl .play::after{content:'';border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent #fff;margin-right:-4px}
+.vsl .vt{position:relative;font-weight:800;font-size:18px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.vsl small{position:relative;opacity:.9;font-size:13px;margin-top:5px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+/* vertical-VSL modal (reels plays big only on click; page footprint stays the 16:9 card) */
+.vmodal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(6,7,10,.93);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:16px}
+.vmodal.on{display:flex}
+.vmodal-video{height:min(84vh,860px);width:auto;max-width:94vw;aspect-ratio:9/16;background:#000;border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.6);display:block}
+.vmodal-x{position:absolute;top:16px;left:16px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.16);border:none;color:#fff;font-size:22px;cursor:pointer;z-index:2;transition:.16s}
+.vmodal-x:hover{background:rgba(255,255,255,.28)}
+.hero-v .note-v{font-size:13.5px;color:var(--faint);margin-top:12px}
+@media(max-width:600px){.hero-v h1{font-size:29px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line-r);color:var(--accent);font-weight:800;font-size:12.5px;letter-spacing:.02em;padding:7px 16px;border-radius:30px;margin-bottom:18px;box-shadow:var(--sh-sm)}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+h1{font-size:39px;font-weight:900;line-height:1.15;letter-spacing:-.02em;margin-bottom:16px}
+.hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hl-g{color:var(--green)}
+.hero .sub{font-size:18px;color:rgba(255,255,255,.95);max-width:610px;margin:0 auto 26px;font-weight:500;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--grad);color:#fff;text-decoration:none;border:none;cursor:pointer;font-family:inherit;font-size:18px;font-weight:800;padding:17px 36px;border-radius:15px;box-shadow:0 12px 32px rgba(194,21,28,.34);transition:.18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(194,21,28,.46)}
+.btn .arw{width:40px}
+.hero .note{font-size:13.5px;color:rgba(255,255,255,.85);margin-top:13px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.fail .fi lottie-player,.jtl-lot lottie-player{width:100%;height:100%}
+.tl-lot{width:58px;height:58px;margin:0 auto 8px;position:relative;z-index:2}
+/* trust bar */
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.trust .t{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px 10px;box-shadow:var(--sh-sm)}
+.trust .v{font-size:24px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.trust .l{font-size:12px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.4}
+/* section headers */
+.kicker{text-align:center;color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.06em;margin-bottom:8px}
+.sec-dark .kicker{color:#ff6b6b}
+.sec-t{font-size:31px;font-weight:900;text-align:center;line-height:1.2;letter-spacing:-.01em;margin-bottom:10px}
+.sec-sub{text-align:center;color:var(--muted);max-width:610px;margin:0 auto 30px;font-size:16px}
+.sec-dark .sec-sub{color:rgba(255,255,255,.62)}
+/* thought bubble (problem) */
+.think{max-width:660px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px 30px 26px;box-shadow:var(--sh);position:relative;font-size:19px;line-height:1.8;color:#2a2f36;font-weight:500}
+.think::after{content:'';position:absolute;bottom:-16px;right:60px;width:30px;height:30px;background:#fff;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.think .lead-in{display:block;color:var(--accent);font-weight:800;font-size:15px;margin-bottom:12px;letter-spacing:.01em}
+.think .dots{display:flex;gap:6px;margin-top:16px}
+.think .dots i{width:8px;height:8px;border-radius:50%;background:var(--line-r)}
+.think-foot{text-align:center;margin-top:34px;font-size:17px;font-weight:700;color:var(--ink)}
+.think-foot b{color:var(--accent)}
+/* fails grid */
+.fails{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fail{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--sh-sm);transition:.2s}
+.fail:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+.fail .fi{width:66px;height:66px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.fail .fi svg{width:24px;height:24px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fail b{display:block;font-size:17px;margin-bottom:5px}
+.fail p{color:var(--muted);font-size:14.5px;line-height:1.65}
+/* JET scroll-fill timeline */
+.jtl{position:relative;padding-right:60px;max-width:680px;margin:0 auto}
+.jtl-line{position:absolute;right:29px;top:8px;bottom:8px;width:4px;background:var(--line-r);border-radius:4px}
+.sec-dark .jtl-line{background:rgba(255,255,255,.14)}
+.jtl-fill{position:absolute;right:29px;top:8px;width:4px;background:var(--grad);border-radius:4px;height:0}
+.jtl-item{position:relative;margin-bottom:22px}
+.jtl-item:last-child{margin-bottom:0}
+.jtl-node{position:absolute;right:-46px;top:0;width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid var(--line-r);display:flex;align-items:center;justify-content:center;transition:.35s;color:var(--faint);font-weight:900;font-size:18px}
+.sec-dark .jtl-node{background:#fff;border-color:rgba(194,21,28,.4)}
+.sec-dark .jtl-item.on .jtl-node{background:#fff;border-color:rgba(194,21,28,.95);color:var(--accent);box-shadow:0 0 24px rgba(194,21,28,.55),0 8px 20px rgba(0,0,0,.4)}
+.jtl-node lottie-player{width:32px;height:32px}
+.jtl-item.on .jtl-node{border-color:transparent;background:var(--grad);color:#fff;box-shadow:0 8px 22px rgba(194,21,28,.4);transform:scale(1.06)}
+.jtl-node svg{width:22px;height:22px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.jtl-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--sh-sm);transition:.4s cubic-bezier(.2,.7,.2,1);opacity:.5;transform:translateX(12px)}
+.sec-dark .jtl-card{background:linear-gradient(180deg,#1c222c,#12161d);border:1px solid rgba(255,255,255,.13);box-shadow:0 12px 34px rgba(0,0,0,.5)}
+.sec-dark .jtl-item.on .jtl-card{border-color:rgba(194,21,28,.55);box-shadow:0 16px 46px rgba(0,0,0,.6),0 0 26px rgba(194,21,28,.20)}
+.jtl-item.on .jtl-card{opacity:1;transform:none;box-shadow:var(--sh);border-color:var(--line-r)}
+.jtl-card h4{font-size:18px;font-weight:800;margin-bottom:5px}
+.jtl-card p{color:var(--ink);font-size:14.7px}
+.sec-dark .jtl-card p{color:rgba(255,255,255,.66)}
+/* value proof timeline (horizontal) */
+.tl{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px 24px 24px;box-shadow:var(--sh);position:relative;overflow:hidden;max-width:720px;margin:0 auto}
+.tl-track{display:flex;justify-content:space-between;position:relative;margin:20px 0 0}
+.tl-track::before{content:'';position:absolute;top:29px;right:6%;left:6%;height:4px;background:var(--line-r);border-radius:4px;opacity:.5}
+.tl-track::after{content:'';position:absolute;top:29px;right:6%;height:4px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--green));border-radius:4px;width:0;transition:width 1.6s ease}
+.tl.on .tl-track::after{width:88%}
+.tl-pt{position:relative;z-index:2;text-align:center;flex:1}
+.tl-pt .dot{width:42px;height:42px;border-radius:50%;background:#fff;border:4px solid var(--accent);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);box-shadow:0 4px 12px rgba(194,21,28,.2)}
+.tl-pt.g .dot{border-color:var(--green);color:var(--green)}
+.tl-pt .y{font-size:12.5px;color:var(--faint);font-weight:700}
+.tl-pt .p{font-size:18px;font-weight:900;margin-top:3px}
+.tl-note{text-align:center;margin-top:20px;font-size:15px;color:var(--muted)}
+.tl-note b{color:var(--green)}
+/* value 3-cards (was timeline) */
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:760px;margin:0 auto}
+.vcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 16px;text-align:center;box-shadow:var(--sh-sm);transition:.2s}
+.vcard:hover{transform:translateY(-3px);box-shadow:var(--sh);border-color:var(--line-r)}
+.vcard lottie-player{width:76px;height:76px;margin:0 auto 10px}
+.vcard .y{font-size:12.5px;color:var(--faint);font-weight:700}
+.vcard .p{font-size:23px;font-weight:900;margin-top:4px;color:var(--ink)}
+.vcard .p span{font-size:12px;font-weight:600;color:var(--muted)}
+.vcard.g .p{color:var(--green)}
+@media(max-width:600px){
+  .vgrid{grid-template-columns:1fr;gap:11px}
+  .vcard{display:flex;align-items:center;gap:16px;text-align:right;padding:16px 18px}
+  .vcard lottie-player{margin:0;flex:0 0 auto;width:62px;height:62px}
+  .vcard .p{font-size:20px}
+}
+/* testimonials */
+.revs{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 16px;-webkit-overflow-scrolling:touch}
+.revs::-webkit-scrollbar{height:6px}.revs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:6px}
+.revs img{scroll-snap-align:center;flex:0 0 78%;max-width:340px;height:auto;background:#fff;border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.4);cursor:zoom-in;object-fit:contain}
+@media(min-width:720px){.revs img{flex-basis:32%}}
+/* stories */
+.stories{display:flex;flex-direction:column;align-items:center;position:relative}
+.story{position:sticky;width:100%;max-width:640px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 -4px 24px rgba(16,16,16,.08),0 16px 44px rgba(16,16,16,.12);margin-bottom:44px}
+.stories .story:nth-child(1){top:92px}
+.stories .story:nth-child(2){top:110px}
+.stories .story:nth-child(3){top:128px}
+.stories .story:last-child{margin-bottom:0}
+@media(max-width:600px){.story{padding:22px;margin-bottom:34px}.stories .story:nth-child(1){top:78px}.stories .story:nth-child(2){top:92px}.stories .story:nth-child(3){top:106px}}
+.story .top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.story .av{width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;flex:0 0 auto}
+.story .nm{font-weight:800;font-size:17px}.story .ro{font-size:13px;color:var(--faint)}
+.story .big{background:var(--tintg);border:1px solid rgba(21,122,58,.18);color:var(--green);font-weight:900;font-size:15px;border-radius:12px;padding:9px 14px;display:inline-block;margin:4px 0 12px}
+.story p{font-size:15.5px;color:var(--ink);line-height:1.75}.story p b{color:var(--accent)}
+/* tom */
+.tom{display:grid;grid-template-columns:1fr 240px;gap:28px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--sh)}
+.tom img{width:100%;border-radius:16px;object-fit:contain;background:transparent}
+.tom h3{font-size:23px;font-weight:900;margin-bottom:10px}
+.tom h3 span{color:var(--accent)}
+.tom p{color:var(--muted);font-size:15.5px;margin-bottom:9px}.tom p b{color:var(--ink)}
+.tom .sig{color:var(--green);font-weight:800;font-size:15.5px;margin-top:4px}
+@media(max-width:620px){.tom{grid-template-columns:1fr;text-align:center}.tom img{max-width:230px;margin:0 auto}}
+/* faq */
+.faq details{background:#fff;border:1px solid var(--line);border-radius:15px;margin-bottom:11px;box-shadow:var(--sh-sm);overflow:hidden;transition:.2s}
+.faq details[open]{border-color:var(--line-r);box-shadow:var(--sh)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:800;font-size:16.5px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pl{width:26px;height:26px;flex:0 0 auto;border-radius:8px;background:var(--tint);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;transition:.25s}
+.faq details[open] summary .pl{transform:rotate(45deg)}
+.faq .a{padding:0 20px 18px;color:var(--muted);font-size:15px;line-height:1.7}
+/* convert (survey-language, inviting) */
+.join-card{max-width:520px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px 30px;box-shadow:var(--sh);text-align:center}
+.join-card .kicker{margin-bottom:6px}
+.join-card h2{font-size:26px;font-weight:900;margin-bottom:10px}
+.join-card p{color:var(--muted);font-size:16px;margin-bottom:22px}
+.jfield{text-align:right;margin-bottom:8px}
+.jfield label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}
+.jfield input{width:100%;background:#fff;border:1.6px solid var(--line);border-radius:13px;padding:15px;font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:.16s}
+.jfield input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.jfield input.err{border-color:var(--accent)}
+.jerr{color:var(--accent);font-size:12.5px;font-weight:700;min-height:16px;text-align:right;margin:4px 0 10px}
+.join-card .btn{width:100%}
+.join-card .note{font-size:13px;color:var(--faint);margin-top:14px}
+/* calendar embed (hot) */
+.cal-wrap{background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:var(--sh);overflow:hidden;max-width:760px;margin:0 auto}
+.cal-wrap iframe{width:100%;height:660px;border:0;border-radius:12px;display:block}
+@media(max-width:560px){.cal-wrap iframe{height:600px}}
+/* footer */
+footer{background:var(--dark);color:rgba(255,255,255,.66);padding:34px 0 26px;text-align:center}
+footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;border-radius:13px;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.foot-title{font-size:15px;font-weight:700;color:rgba(255,255,255,.85);max-width:440px;margin:0 auto 12px;line-height:1.55}
+.social{display:flex;justify-content:center;gap:10px;margin:2px 0 18px}
+.social a{width:48px;height:48px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.social a:hover{transform:translateY(-3px) scale(1.07)}
+.social lottie-player{width:100%;height:100%}
+.social svg{width:20px;height:20px;fill:#fff}
+.disc{font-size:12.5px;line-height:1.65;max-width:640px;margin:0 auto}
+.disc b{color:#ff6b6b}
+.foot-links{margin-top:12px;font-size:12.5px}
+.foot-links a{color:rgba(255,255,255,.55);text-decoration:underline;margin:0 8px}
+.copy{font-size:11.5px;color:rgba(255,255,255,.4);margin-top:12px}
+/* lightbox + float */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.lb.on{display:flex}.lb img{max-width:96vw;max-height:92vh;border-radius:10px}
+.lb .x{position:absolute;top:18px;left:18px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:24px;cursor:pointer}
+.float{position:fixed;left:0;right:0;bottom:0;z-index:55;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 16px;transform:translateY(120%);transition:.35s;box-shadow:0 -6px 24px rgba(16,16,16,.1)}
+.float.on{transform:translateY(0)}
+.float a{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:16px;padding:14px;border-radius:13px;max-width:820px;margin:0 auto;box-shadow:0 8px 22px rgba(194,21,28,.32)}
+.float a .arw{width:34px}
+.rv{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media(max-width:600px){
+  h1{font-size:29px}.hero .sub{font-size:16px}.sec-t{font-size:24px}
+  .trust{grid-template-columns:1fr 1fr}.fails{grid-template-columns:1fr}
+  .tl-pt .p{font-size:14px}.tl-pt .dot{width:34px;height:34px;font-size:12px}
+  .think{font-size:16.5px;padding:24px}.join-card h2{font-size:22px}
+}
+
+/* google reviews gallery */
+.rgal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+@media(max-width:720px){.rgal{grid-template-columns:repeat(2,1fr);gap:12px}}
+.rgal .rev{width:100%;height:auto;display:block;object-fit:contain;background:#fff;border-radius:12px;border:1px solid rgba(255,255,255,.18);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05),0 0 22px rgba(255,255,255,.13);cursor:zoom-in;transition:transform .2s ease,box-shadow .2s ease}
+.rgal .rev:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.6),0 0 30px rgba(255,255,255,.22)}
+.rgal .rev.hid{display:none}
+.rgal-more{text-align:center;margin-top:26px}
+.rgal-btn{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.26);color:#fff;font-family:inherit;font-weight:800;font-size:16px;padding:14px 32px;border-radius:100px;cursor:pointer;transition:.16s}
+.rgal-btn:hover{background:rgba(255,255,255,.16);transform:translateY(-1px)}
+
+.story .av img{width:100%!important;height:100%!important;object-fit:cover;border-radius:50%;display:block;max-width:none!important}
+.story .av{overflow:hidden}
+
+/* הוכחות מתחם H (גל 12/10): מסמכים אמיתיים, ברזולוציה מלאה, לחיצה פותחת את המקור */
+.proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:880px;margin:26px auto 0}
+.proof-card{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;color:var(--ink);box-shadow:var(--sh)}
+.proof-card img{width:100%;height:auto;aspect-ratio:16/10;object-fit:contain;object-position:center;border-radius:10px;border:1px solid var(--line);background:#f6f7f9;display:block}
+.proof-card span{font-size:14.5px;line-height:1.5;text-wrap:pretty}
+.proof-card b{color:var(--accent)}
+.proof-hint{text-align:center;font-size:13px;color:var(--muted);margin-top:12px}
+.sec-dark .proof-card{background:#fff}
+.proof-link{display:inline-block;margin-top:10px;font-size:14px;font-weight:700;color:var(--accent);text-decoration:none}
+.sec-dark .proof-link{color:#ff8a8f}
+.proof-thumb{display:block;margin-top:10px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.proof-thumb img{width:100%;height:auto;display:block}
+@media(max-width:700px){.proof{grid-template-columns:1fr}}
+
+/* ═══ גרסה B, דף התוצאה (19/10): רק תוספות על השפה של HPAGE. טוקנים: 8pt, רדיוסים 12/18/20, האדום של המותג לכוונת תשומת לב ═══ */
+:root{--s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px}
+.wrap-l{max-width:1120px;margin:0 auto;padding:0 20px}
+.sec{padding:var(--s6) 0}
+@media(max-width:600px){.sec{padding:var(--s5) 0}}
+.sec-t .hl,.pain-h .hl,.rc-sum .hl,h1 .hl{white-space:normal}
+.sec-dark .hl{background:linear-gradient(135deg,#ff6167,#ff8f6b);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.left{text-align:right}.left.kicker,.left .kicker{text-align:right}
+/* ── 1. התוצאה (גל 19/10, ח־67): על התמונה של CPAGE עם אוברליי כהה. בר התקדמות, כותרת, המשפט מתחת, ואז הכרטיס.
+   בטלפון התמונה רק מאחורי הטקסט וראש הכרטיס; במחשב הטקסט מימין והכרטיס משמאל, שניהם על התמונה ── */
+.rh{position:relative;isolation:isolate;overflow:hidden;color:#fff}
+.rh-bg{position:absolute;inset:0;z-index:-2}
+.rh-bg img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+.rh-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,17,22,.62),rgba(14,17,22,.42) 42%,rgba(14,17,22,.66))}
+.rh-grid{display:grid;gap:var(--s3);padding-block:var(--s3) var(--s4)}
+.rh-text{text-align:center}
+.rh h1{color:#fff;font-size:39px;line-height:1.18;margin:0;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+.rh h1 .hl{background:linear-gradient(135deg,#ff6167,#ff9a45);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.rh-sub{font-size:16.5px;color:rgba(255,255,255,.94);font-weight:500;line-height:1.6;margin-top:var(--s2);white-space:pre-line;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.rcard-wrap{position:relative}
+.rcard-wrap::before{content:'';position:absolute;top:72px;bottom:-400px;left:-100vw;right:-100vw;background:var(--bg);z-index:-1}
+/* בר ההתקדמות: מתמלא מימין לשמאל עד 88%, כמו "כמעט סיימנו" */
+.pbar{position:relative;display:block;max-width:440px;height:48px;margin:0 auto var(--s3);border-radius:999px;background:#E3E5E9;overflow:hidden;text-decoration:none;box-shadow:0 10px 28px rgba(0,0,0,.32)}
+.pfill{position:absolute;top:0;bottom:0;inset-inline-start:0;width:90%;border-radius:999px;background:var(--grad);overflow:hidden;animation:pgrow 1.9s cubic-bezier(.2,.7,.2,1) .3s both}
+.pfill::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(120%);animation:pshine 3.4s ease-in-out 2.4s infinite}
+.ptx{position:relative;display:flex;align-items:center;justify-content:center;height:100%;padding:0 14px;font-weight:900;font-size:16.5px;color:#2B2F36;white-space:nowrap}
+.ptx2{position:absolute;top:0;bottom:0;inset-inline-start:0;width:var(--bw,100%);color:#fff}
+.pbar.done .pfill{width:100%;animation:none}
+@keyframes pgrow{from{width:8%}to{width:90%}}
+@keyframes pshine{0%{transform:translateX(120%)}55%,100%{transform:translateX(-120%)}}
+@media(prefers-reduced-motion:reduce){.pfill,.pfill::after{animation:none}}
+.rcard{position:relative;color:var(--ink);background:#fff;border:2px solid var(--accent);border-radius:20px;padding:20px 20px 18px;box-shadow:0 14px 44px rgba(194,21,28,.12);text-align:right}
+.rc-intro{font-size:14.5px;color:var(--muted);font-weight:600;line-height:1.55}
+.rc-sum{font-size:21px;font-weight:900;line-height:1.38;margin-top:6px}
+.rc-rows{list-style:none;margin-top:var(--s2)}
+.rc-rows li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.rc-ic{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px;margin-top:2px}
+.rc-ic.ok{background:var(--green)}.rc-ic.ask{background:#8A8F98}.rc-ic.honest{background:var(--gold)}
+.rc-ic svg{width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.rc-nd{display:block;font-weight:800;font-size:15.5px;line-height:1.45}
+.rc-an{display:block;font-size:15px;color:var(--muted);margin-top:2px;line-height:1.6}
+.rc-rows li.open{background:var(--tint);border:0;border-radius:12px;padding:12px;margin-top:6px}
+.rc-rows li.open .rc-an{color:var(--ink)}
+.rcard .btn{width:100%;margin-top:var(--s2);font-size:17px;padding:15px 16px;white-space:nowrap}
+/* {{...}} בכותרת הכרטיס: קופסה בגרדיאנט המותג עם טקסט לבן (גל: "חייב להיות בולט") */
+.rc-next{font-size:17.5px;font-weight:500;color:var(--ink);line-height:1.5;margin-top:8px}
+.hlx{font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.rc-calm{text-align:center;font-size:13.5px;color:var(--faint);margin-top:10px;line-height:1.55}
+.rc-num{text-align:center;font-size:13.5px;color:var(--muted);margin-top:4px}
+.rc-num b{direction:ltr;unicode-bidi:isolate;color:var(--ink)}
+.rc-num a{color:var(--accent);font-weight:700;margin-inline-start:6px}
+.rc-booked{margin-top:var(--s2);background:var(--tintg);color:var(--green);font-weight:800;border-radius:12px;padding:12px 14px;line-height:1.55}
+@media(min-width:960px){
+  .rh-bg::after{background:linear-gradient(270deg,rgba(14,17,22,.74),rgba(14,17,22,.5) 55%,rgba(14,17,22,.38))}
+  .rh-grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s3);align-items:start;padding-block:var(--s5) var(--s6)}
+  .rh-text{grid-column:1/span 6;text-align:right;padding-top:var(--s4)}
+  .pbar{margin-inline:0}
+  .rh-sub{max-width:520px}
+  .rcard-wrap{grid-column:7/span 6}
+  .rcard-wrap::before{display:none}
+  .rcard{padding:26px 28px 22px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+}
+@media(max-width:600px){.rh h1{font-size:27px}.rh-sub{font-size:15.5px}.pbar{height:46px}.ptx{font-size:clamp(14px,4.1vw,16px);padding:0 10px}.rcard .btn{font-size:clamp(15px,4.3vw,17px);padding:15px 12px;gap:10px}.rcard .btn .arw{width:30px}}
+/* ── 2. יש לך כסף בצד (לפי העיצוב לדוגמה של גל) ── */
+.pain{background:#fff radial-gradient(rgba(15,18,22,.055) 1px,transparent 1.3px) 0 0/22px 22px;padding:var(--s6) 0}
+.pain-top{display:grid;gap:var(--s3);align-items:center}
+.pain-h{font-size:39px;font-weight:900;line-height:1.15;letter-spacing:-.02em;border-inline-start:5px solid var(--accent);padding-inline-start:18px;margin-top:6px}
+.pain-sub{font-size:17px;color:var(--muted);margin-top:var(--s2);max-width:580px;font-weight:500;line-height:1.7}
+.pain-ph{display:none}
+.pain-lead{font-weight:800;font-size:17px;margin:var(--s5) 0 var(--s2)}
+.thoughts{display:grid;gap:var(--s2)}
+.tc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 22px;box-shadow:var(--sh-sm)}
+.tico{width:56px;height:56px;border-radius:50%;background:var(--tint);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.tico svg{width:26px;height:26px;stroke:var(--accent);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tc h3{font-size:18px;font-weight:900;line-height:1.45;margin-top:var(--s2)}
+.tc .rule{display:block;width:36px;height:3px;background:var(--accent);border-radius:2px;margin:14px 0 12px}
+.tc p{color:var(--muted);font-size:15px;line-height:1.65}
+.punch{margin-top:var(--s4);background:var(--tint);border:1px solid var(--line-r);border-radius:20px;padding:24px;display:flex;gap:20px;align-items:center}
+.punch .p1,.punch .p2{font-size:28px;font-weight:900;line-height:1.22;letter-spacing:-.01em}
+.punch-after{text-align:center;margin:var(--s3) auto 0;max-width:640px}
+.punch-after .pk{font-weight:900;font-size:17px}
+.punch-after .pp{color:var(--muted);font-size:15.5px;margin-top:6px}
+.punch-after .pc{font-weight:800;font-size:16.5px;margin-top:10px}
+@media(min-width:960px){
+  .pain-top{grid-template-columns:repeat(12,minmax(0,1fr))}
+  .pain-head{grid-column:1/span 7}
+  .pain-ph{display:block;grid-column:10/span 3;position:relative;max-width:280px;justify-self:end}
+  .pain-ph img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:20px;position:relative;z-index:1}
+  .pain-ph::before{content:'';position:absolute;inset:18px -14px -14px 18px;border:1.5px solid var(--line-r);border-radius:22px}
+  .thoughts{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+}
+@media(max-width:600px){.pain{padding:var(--s5) 0}.pain-h{font-size:29px}.punch{padding:20px;gap:14px;align-items:flex-start}.punch .p1,.punch .p2{font-size:21px}.punch .tico{width:46px;height:46px}.punch .tico svg{width:22px;height:22px}}
+/* ── 3. ציר הזמן: כותרת בצד, הציר לידה (אסימטרי) ── */
+.split{display:grid;gap:var(--s3)}
+.split .kicker,.split .sec-t,.split .sec-sub{text-align:right;margin-inline:0}
+/* "אנחנו כאן" (גל 19/10, ח־67): ירוק, שאי אפשר לפספס גם בגלילה מהירה. נקודה ירוקה על הציר, מסגרת ירוקה עבה ורקע ירוק בהיר, תגית אדומה עם דגל לבן */
+.jtl-item.here .jtl-node{background:linear-gradient(135deg,#22a85c,#157A3A);border-color:transparent;color:#fff;box-shadow:0 0 0 8px rgba(21,122,58,.2),0 8px 22px rgba(21,122,58,.38);transform:scale(1.08)}
+.jtl-item.here .jtl-card{background:#EAF7EF;border:3px solid #157A3A;opacity:1;transform:none;box-shadow:0 14px 34px rgba(21,122,58,.2)}
+.jtl-item.here .jtl-card h4{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.jtl-item.here .jtl-card p{color:var(--ink)}
+.jtl-item.done .jtl-node svg{stroke:currentColor}
+.herepulse{width:12px;height:12px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
+.here-tag{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:900;color:#fff;background:var(--grad);border-radius:999px;padding:5px 13px;box-shadow:0 6px 16px rgba(194,21,28,.32)}
+.here-tag svg{width:15px;height:15px;fill:#fff;stroke:#fff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.jtl-item.next .jtl-card h4{color:var(--muted)}
+@media(min-width:960px){.split{grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s3)}.split-head{grid-column:1/span 5;position:sticky;top:110px;align-self:start}.split-body{grid-column:7/span 6}.split .jtl{margin:0}}
+/* ── 4. למה דווקא עכשיו ── */
+.now{text-align:center}
+.now .dateb{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,107,107,.5);color:#ff8a8f;font-weight:800;font-size:13px;border-radius:999px;padding:6px 14px;margin-bottom:var(--s2)}
+.now .sec-t{font-size:39px}
+.now .sec-sub{max-width:560px;font-size:17px}
+.now lottie-player{width:84px;height:84px;margin:0 auto var(--s1)}
+@media(max-width:600px){.now .sec-t{font-size:29px}}
+/* ── 5. החלופות (הכרטיסים של CPAGE) ── */
+.fails{max-width:840px;margin:0 auto}
+.alt-close{text-align:center;max-width:620px;margin:var(--s4) auto 0;font-size:17px;font-weight:800;line-height:1.55}
+/* ── 6. שלוש חותמות ── */
+.dgrid{display:grid;gap:var(--s2);max-width:960px;margin:0 auto}
+.dcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--sh-sm);display:grid;grid-template-columns:64px 1fr;gap:4px 14px;align-items:center}
+.dcard lottie-player{grid-row:1/span 2}
+.dcard b{font-size:16.5px;line-height:1.45}
+.dcard span{font-size:13.5px;color:var(--faint);font-weight:600}
+.doc-close{text-align:center;margin-top:var(--s3);font-weight:800;font-size:16.5px}
+@media(min-width:960px){.dgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.dcard{grid-template-columns:1fr;text-align:center;justify-items:center;padding:26px 20px}.dcard lottie-player{grid-row:auto}}
+/* ── 7. היישוב לפניך ── */
+.facts4{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
+.facts4 .t{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 14px;box-shadow:var(--sh-sm);text-align:center}
+.facts4 .v{font-size:23px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.15}
+.facts4 .l{font-size:13px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.45}
+.mapcard{max-width:560px;margin:var(--s4) auto 0}
+.mapcard img{max-height:320px;aspect-ratio:auto}
+.town-note{text-align:center;font-size:12.5px;color:var(--faint);margin-top:10px}
+/* ── 8. היציאה ── */
+.exitcard{max-width:760px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--sh);display:grid;grid-template-columns:72px 1fr;gap:var(--s2);align-items:start}
+.exitcard .kicker,.exitcard .sec-t{text-align:right}
+.exitcard .sec-t{font-size:26px;margin-bottom:8px}
+.exitcard p{color:var(--muted);font-size:16px;line-height:1.7}
+@media(max-width:600px){.exitcard{grid-template-columns:1fr;text-align:right}.exitcard .sec-t{font-size:22px}}
+/* ── 9. הביקורות ── */
+.revq{font-size:29px}
+.rev-src{text-align:center;color:rgba(255,255,255,.62);font-size:14px;margin-top:-4px}
+.gline{display:flex;align-items:center;justify-content:center;gap:10px;margin:var(--s2) 0 var(--s3)}
+.gline .gw{font:700 22px/1 Arial,Helvetica,sans-serif;letter-spacing:-.5px;direction:ltr}
+.gline .st{display:flex;gap:2px;direction:ltr}
+.gline b{font-size:18px}
+@media(max-width:600px){.revq{font-size:22px}}
+/* ── 10. תום ── */
+.tom .kicker{text-align:right}
+.tom .vis{color:var(--ink);font-weight:800;font-size:16px}
+.tom .grp{font-size:14px;color:var(--faint)}
+.vals{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.vals span{background:var(--tint);color:var(--accent2);font-weight:800;font-size:13px;border-radius:999px;padding:5px 13px}
+@media(max-width:620px){.tom .kicker{text-align:center}.vals{justify-content:center}}
+/* ── 11. בחירת מועד (הכרטיס של HPAGE) ── */
+.join-card{max-width:560px}
+.join-card h2 .hl{white-space:normal}
+.mynum{background:var(--bg);border-radius:12px;padding:10px 14px;font-size:14.5px;margin:-8px 0 14px}
+.mynum b{direction:ltr;unicode-bidi:isolate}
+.wins{display:grid;gap:10px;border:0;margin-bottom:14px}
+.win input{position:absolute;opacity:0;pointer-events:none}
+.win label{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--bg);border:1.6px solid var(--line);border-radius:13px;padding:14px 16px;cursor:pointer;transition:.16s}
+.win label:hover{border-color:var(--line-r)}
+.win .wn{font-weight:900;font-size:17px}
+.win .wt{font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.win input:checked + label{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.win input:focus-visible + label{outline:3px solid var(--ink);outline-offset:2px}
+.consent{display:flex;gap:10px;align-items:flex-start;text-align:right;font-size:15px;font-weight:700;line-height:1.5;margin:6px 0 4px;cursor:pointer}
+.consent input{width:22px;height:22px;flex:0 0 auto;margin-top:1px;accent-color:var(--accent)}
+.join-card .btn{font-size:17px;padding:16px 18px;white-space:nowrap}
+.join-card .after{font-size:13px;color:var(--faint);margin-top:12px}
+.join-card .alt{font-size:14px;margin-top:10px}
+.join-card .alt a{color:var(--ink);font-weight:700}
+.done-box .big{width:64px;height:64px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.done-box .big svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+/* ── ח־68: ההערות של גל, 19/10 ── */
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.wa-btn span{text-decoration:underline;text-underline-offset:3px}
+.wa-btn .wa-ic{width:18px;height:18px;fill:#25D366}
+.wa-btn[hidden]{display:none}
+.join-card .alt a{display:inline-flex;align-items:center;gap:6px}
+.join-card .alt .wa-ic{width:18px;height:18px;fill:#25D366}
+.punch-after .pk{display:inline-block;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.nowbox{display:flex;align-items:center;gap:14px;max-width:600px;margin:var(--s3) auto 0;background:#fff;border-radius:16px;padding:16px 20px;text-align:right;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.nowbox .nb-ic{flex:none;width:50px;height:50px;border-radius:50%;background:var(--tint);display:flex;align-items:center;justify-content:center}
+.nowbox .nb-ic svg{width:26px;height:26px;stroke:var(--accent);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.nowbox p{margin:0;font-weight:900;font-size:17px;line-height:1.45;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.mid-cta{text-align:center;margin-top:var(--s4)}
+.mid-cta p{font-weight:800;font-size:16px;color:var(--ink);margin-bottom:10px}
+.mid-cta .btn{width:100%;max-width:440px;justify-content:center;white-space:nowrap}
+.tom .kicker{color:var(--ink)}
+.tom .vh{color:var(--accent);font-weight:800;font-size:13.5px;letter-spacing:.03em;margin-top:14px}
+.tom .vals{margin:8px 0 12px}
+.tom .tnote{margin-top:14px;background:var(--tintg);color:var(--ink);border-radius:12px;padding:11px 14px;font-size:14.5px;font-weight:700;line-height:1.55}
+.tom{padding-bottom:0;align-items:end}
+.tom>div{padding-bottom:28px;align-self:center}
+.tom img{align-self:end;display:block;border-radius:0;margin-bottom:0}
+.win label{border-width:2px}
+.win .wico{flex:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.win .wico svg{width:24px;height:24px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* אייקון | שם החלון + השעות בשורה אחת, והמיקרו קופי בשורה משלו לכל הרוחב */
+.win label{display:grid;grid-template-columns:40px 1fr auto;column-gap:12px;row-gap:1px;align-items:center}
+.win .wtx{display:contents}
+.win .wico{grid-column:1;grid-row:1/3}
+.win .wn{grid-column:2;grid-row:1;text-align:right}
+.win .wt{grid-column:3;grid-row:1}
+.win .wm{grid-column:2/4;grid-row:2;text-align:right;font-size:13.5px;color:var(--muted);font-weight:600}
+.w-m label{border-color:#F5B800}.w-m .wico{background:#FFF6D6}.w-m .wico svg{stroke:#E0A400}
+.w-n label{border-color:#3B82F6}.w-n .wico{background:#E6F0FF}.w-n .wico svg{stroke:#2563EB}
+.w-e label{border-color:#14161B}.w-e .wico{background:#ECEDF0}.w-e .wico svg{stroke:#14161B}
+.w-m input:checked + label{border-color:#F5B800;background:#FFFBEA;box-shadow:0 0 0 4px rgba(245,184,0,.25)}
+.w-n input:checked + label{border-color:#3B82F6;background:#F2F7FF;box-shadow:0 0 0 4px rgba(59,130,246,.22)}
+.w-e input:checked + label{border-color:#14161B;background:#F4F5F7;box-shadow:0 0 0 4px rgba(20,22,27,.18)}
+#jAltBox{margin:2px 0 8px}
+@media(max-width:620px){.tom>div{padding-bottom:8px}.tom img{max-width:200px}}
+@media(max-width:600px){.punch{flex-direction:column;align-items:center;text-align:center}.nowbox p{font-size:15.5px}.nowbox{padding:14px 16px}}
+.rgal .rev{cursor:zoom-in}
+.rlb{position:fixed;inset:0;z-index:300;background:rgba(10,12,16,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(76px + env(safe-area-inset-top,0px)) 16px calc(22px + env(safe-area-inset-bottom,0px))}
+.rlb[hidden]{display:none!important}
+.rlb-x{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));inset-inline-end:14px;display:flex;align-items:center;gap:8px;background:#fff;color:#14161B;border:0;border-radius:999px;padding:11px 20px 11px 16px;font:inherit;font-weight:900;font-size:18px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.rlb-x svg{width:24px;height:24px;stroke:currentColor;stroke-width:3;fill:none;stroke-linecap:round}
+.rlb-st{flex:1;min-height:0;width:100%;max-width:760px;display:flex;align-items:center;justify-content:center}
+.rlb-st img{max-width:100%;max-height:100%;border-radius:14px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.rlb-nav{display:flex;align-items:center;gap:22px;margin-top:18px}
+.rlb-b{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.4);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.rlb-b svg{width:26px;height:26px;stroke:currentColor;stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.rlb-n{color:#fff;font-weight:800;font-size:16px;font-variant-numeric:tabular-nums;min-width:72px;text-align:center;direction:ltr}
+.rlb-x:focus-visible,.rlb-b:focus-visible{outline:3px solid #fff;outline-offset:3px}
+/* ── 12. שאלות ── */
+.faq .a{white-space:pre-line}
+/* ── צף ── */
+.float a{font-size:16px}
+/* ── סרגל הדמו (רק עם ?demo=1) ── */
+.demo{background:#1C1933;color:#fff;font-size:12.5px}
+.demo .wrap-l{display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;align-items:center;padding-block:8px}
+.demo .wrap-l>b{grid-column:1/-1}
+.demo label{display:flex;gap:4px;align-items:center;min-width:0}
+.demo select,.demo input{font:inherit;font-size:12.5px;border-radius:8px;border:0;padding:5px 6px;width:100%;min-width:0}
+@media(min-width:820px){.demo .wrap-l{display:flex;flex-wrap:wrap}.demo select,.demo input{width:auto}}
+/* ── רימרקטינג C (ח־74): העוגן מתחת לכותרת הדביקה, וגרסת המסמכים בלי החלקים האישיים ── */
+#docs,#place{scroll-margin-top:64px}
+.docs-mode .rh,.docs-mode #join,.docs-mode #float,.docs-mode .mid-cta p,.docs-mode .foot-title{display:none!important}
+
+/* ═══ דף הנחיתה של B (21/10): סדר וטקסטים מהסקיצה, השפה של דף התוצאה והשאלון. רקע מתחלף, כך ששני סקשנים שכנים לא חולקים רקע ═══ */
+[hidden]{display:none!important}   /* כלל עיצוב עם display לא דורס הסתרה (פס ההתקדמות נשאר מעל התשובות) */
+.bg-w{background:#fff}.bg-g{background:var(--bg)}
+.bg-p{background:linear-gradient(180deg,#FBEDEE,#F6E0E2)}
+.btn{border-radius:15px;white-space:nowrap}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sec-t{text-align:center}
+.split .sec-t{text-align:right}
+/* 1. הפתיחה: כמו מסך הפתיחה של השאלון (גל 20/10): התמונה, כותרת בשתי שורות, הכפתור המרחף, הסימנים */
+.lh{background:#fff;padding:0 0 var(--s5)}
+.lh-grid{display:grid;gap:var(--s3);padding-inline:0}
+.lh-ph{aspect-ratio:1200/640;background:var(--gray);overflow:hidden}
+.lh-ph img{width:100%;height:100%;object-fit:cover}
+.lh-tx{text-align:center;padding:0 20px;max-width:620px;margin:0 auto}
+.lh-eb{display:inline-block;font-weight:800;font-size:14px;color:var(--accent);letter-spacing:.04em;margin-bottom:10px}
+.lh h1{font-size:clamp(30px,8vw,48px);font-weight:900;line-height:1.12;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+.hlg{display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+.lh-sub{font-size:17px;line-height:1.65;color:var(--ink);margin:0 auto 22px;max-width:540px;text-wrap:pretty}
+.lh-btn{width:100%;max-width:460px}
+@keyframes btnFloat{0%,100%{translate:0 0;box-shadow:0 10px 24px rgba(194,21,28,.26)}50%{translate:0 -4px;box-shadow:0 18px 34px rgba(194,21,28,.36)}}
+.lh-btn,.sv-go{animation:btnFloat 3s ease-in-out infinite}
+.sv-go:disabled{animation:none}
+/* ההזמנה לגלול לציר הזמן, במקום הכפתור (22/10) */
+.lh-cue{display:inline-flex;flex-direction:column;align-items:center;gap:2px;color:var(--accent);font-weight:800;font-size:16px;text-decoration:none;padding:6px 14px}
+.lh-cue svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;animation:cueDrop 2.2s ease-in-out infinite}
+.lh-cue:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:10px}
+@keyframes cueDrop{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.lh-disc{font-size:12.5px;color:var(--faint);margin-top:16px}
+@media(min-width:960px){
+  .lh{padding:var(--s5) 0}
+  .lh-grid{grid-template-columns:repeat(12,minmax(0,1fr));align-items:center;padding-inline:20px}
+  .lh-ph{grid-column:7/span 6;grid-row:1;border-radius:20px;box-shadow:var(--sh)}
+  .lh-tx{grid-column:1/span 6;grid-row:1;text-align:right;padding:0;margin:0}
+  .lh-sub{margin-inline:0}
+  .lh-cue{flex-direction:row;padding-inline:0}
+}
+/* הביקורות: קרוסלה רצה של כרטיסי טקסט (ח־94). הטקסט קריא בלי לפתוח, הצילום מגוגל בלחיצה */
+.rvs .wrap-l{padding-bottom:0}
+.rcar{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:6px 0 var(--s2);margin-top:var(--s1);-webkit-overflow-scrolling:touch}
+.rcar::-webkit-scrollbar{display:none}
+.rcar:focus-visible{outline:2px solid #fff;outline-offset:-2px}
+.rtrack{display:flex;gap:14px;padding-inline:20px;width:max-content;align-items:stretch}
+.rcd{all:unset;box-sizing:border-box;width:min(300px,80vw);background:#fff;color:var(--ink);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px;text-align:right;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.rcd:focus-visible{outline:3px solid #ff8f93;outline-offset:2px}
+.rcd-h{display:flex;align-items:center;gap:10px}
+.rcd-av{width:36px;height:36px;border-radius:50%;background:var(--accent2);color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;flex:none}
+.rcd:nth-child(3n+2) .rcd-av{background:var(--green)}.rcd:nth-child(3n) .rcd-av{background:#2B2F36}
+.rcd-h b{font-size:16px;font-weight:800}
+.rcd-st{display:flex;gap:2px;direction:ltr;justify-content:flex-end}
+.rcd-t{font-size:15.5px;line-height:1.6;white-space:pre-line;flex:1}
+.rcd-src{font-size:12.5px;color:var(--muted);font-weight:600}
+/* מה בדיוק קונים: שלושה כרטיסים, כמו כרטיסי היישוב */
+.buy3{display:grid;gap:var(--s2);max-width:960px;margin:var(--s3) auto 0}
+.buy3 .t,.facts4 .t{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 16px;box-shadow:var(--sh-sm);text-align:center}
+.buy3 .v,.facts4 .v{font-size:26px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.15}
+.buy3 .l,.facts4 .l{font-size:14px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.5}
+.facts4 .v{font-size:23px}   /* כמו כרטיסי היישוב בדף התוצאה: "כ־64,000 מ״ר" בשורה אחת גם בשני טורים בטלפון */
+.buy-note{text-align:center;color:var(--muted);font-size:15px;margin-top:var(--s3)}
+@media(min-width:960px){.buy3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tl-disc{font-size:12.5px;color:var(--faint);text-align:center;margin-top:var(--s2)}
+.mavat{max-width:560px;margin:var(--s4) auto 0}
+.mavat img{width:100%;height:auto;border-radius:16px;border:1px solid var(--line);box-shadow:var(--sh)}
+.exitcard .sec-t{text-align:right}
+/* בדיקת ההתאמה בתוך הדף: הכרטיס והמסכים של השאלון של B */
+.svc{background:#fff;border-radius:20px;box-shadow:0 18px 50px rgba(127,2,36,.14);padding:18px 20px 22px;max-width:560px;margin:0 auto;scroll-margin-top:72px}
+.sv-top{display:grid;gap:4px}
+.back{background:transparent;border:none;color:var(--muted);font:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:4px 0;justify-self:start;visibility:hidden}
+.back.show{visibility:visible}
+.back:hover{color:var(--accent)}
+.prog-row{display:flex;align-items:center;gap:12px}
+.prog{flex:1;height:6px;border-radius:99px;background:#ECEEF1;overflow:hidden}
+.prog>i{display:block;height:100%;width:0;border-radius:99px;background:var(--accent);transition:width .45s cubic-bezier(.4,0,.2,1)}
+.prog-n{font-size:14px;font-weight:700;color:var(--muted);min-width:58px;text-align:left;font-variant-numeric:tabular-nums}
+.screen{display:none}
+.screen.active{display:block;animation:rise .42s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.qtitle{font-size:23px;font-weight:900;line-height:1.28;letter-spacing:-.01em;margin:14px 0 18px;text-wrap:pretty}
+.opt{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:right;background:var(--bg);border:0;border-radius:14px;padding:16px;margin-bottom:12px;cursor:pointer;font-family:inherit;font-size:17px;font-weight:700;color:var(--ink);box-shadow:0 1px 2px rgba(15,18,22,.06),0 4px 12px rgba(15,18,22,.07);transition:background .16s,transform .16s,box-shadow .16s}
+.opt:hover{background:#ECEEF1;transform:translateY(-1px)}
+.opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.opt .tick{width:24px;height:24px;border-radius:50%;border:2px solid #B9BEC6;flex:0 0 auto;margin-top:1px;display:flex;align-items:center;justify-content:center;background:#fff}
+.opt.sel{background:#FBF1F1;box-shadow:inset -4px 0 0 var(--accent),0 4px 12px rgba(194,21,28,.10)}
+.opt.sel .tick{background:var(--accent);border-color:var(--accent)}
+.opt.sel .tick::after{content:'';width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translateY(-1px)}
+.opt .txt{flex:1;line-height:1.35}
+.opt .mc{display:block;font-size:15px;font-weight:400;color:var(--muted);margin-top:4px;line-height:1.45}
+.field{margin-bottom:10px;text-align:right}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:4px}
+.field input,.jfield input{width:100%;background:#fff;border:1.5px solid #D5D9DF;border-radius:12px;padding:10px 14px;font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:border-color .16s,box-shadow .16s}
+.field input:focus,.jfield input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.field input.err{border-color:var(--accent)}
+.field input[type=tel],.jfield input{direction:ltr;text-align:right}
+.field .hint{font-size:14px;color:var(--muted);line-height:1.5;max-height:0;opacity:0;overflow:hidden;transition:max-height .22s ease,opacity .22s ease,margin-top .22s ease}
+.field:focus-within .hint{max-height:5em;opacity:1;margin-top:5px}
+.err-msg,.jerr{color:var(--accent);font-size:14px;font-weight:700;margin-top:4px}
+.err-msg:empty,.jerr:empty{display:none}
+.sv-consent{font-size:14px;font-weight:500;margin:6px 0 8px}
+.sv-consent a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+.svc .btn{width:100%;margin-top:8px;font-size:17px;padding:16px 18px}
+.svc .after{text-align:center;font-size:14px;color:var(--muted);margin-top:10px}
+.landload{width:96px;height:96px;margin:26px auto 18px;position:relative}
+.landload .plot{position:absolute;inset:0;border-radius:12px;overflow:hidden;background:#FBF1F1}
+.landload .fill{position:absolute;left:0;right:0;bottom:0;height:12%;background:rgba(194,21,28,.35);animation:thgGrow 1.7s ease-in-out infinite}
+.landload .pin{position:absolute;top:50%;left:50%;width:12px;height:12px;border-radius:50% 50% 50% 0;background:var(--accent);transform:translate(-50%,-70%) rotate(-45deg);animation:thgPin 1.7s ease-in-out infinite}
+@keyframes thgGrow{0%,100%{height:12%}50%{height:78%}}
+@keyframes thgPin{0%,100%{transform:translate(-50%,-70%) rotate(-45deg)}50%{transform:translate(-50%,-95%) rotate(-45deg)}}
+.load-txt{text-align:center;font-size:20px;font-weight:900}
+.load-sub{text-align:center;font-size:15px;color:var(--muted);margin:6px 0 20px}
+.res-h{font-size:22px;font-weight:900;line-height:1.3;margin:8px 0 6px;text-wrap:balance}
+#jform .res-h{margin-top:var(--s4)}
+#jform .wins{margin-top:14px}
+.done-box{text-align:center;padding:var(--s3) 0}
+.done-box h3{font-size:21px;font-weight:900}
+.done-box p{color:var(--muted);margin-top:6px}
+.float a{border-radius:15px}
+@media(max-width:440px){.qtitle{font-size:21px}.opt{font-size:16px;padding:15px 14px}.svc{padding:16px 16px 20px}.btn{font-size:clamp(14px,4.1vw,17px);padding:16px 12px;gap:8px}.btn .arw{width:26px}}
+@media(prefers-reduced-motion:reduce){.lh-btn,.sv-go,.screen.active,.landload .fill,.landload .pin,.lh-cue svg{animation:none}.field .hint{transition:none}}
+
+/* ═══ הדף האישי האחד (25/10) ═══ */
+.op-hdr{background:#fff;border-bottom:1px solid var(--line);text-align:center;padding:10px 0}
+.op-hdr img{height:40px;width:auto;display:block;margin:0 auto}
+.pv{position:sticky;top:0;z-index:70;background:#14161b;color:#fff;font:600 13px/1.4 Heebo,Arial,sans-serif;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:center}
+.pv b{font-weight:800;color:#ffb3b6}
+.pv .grp{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.pv button{font:700 12.5px Heebo,Arial,sans-serif;border:1px solid #3a3d45;background:#23262d;color:#fff;border-radius:999px;padding:4px 10px;cursor:pointer}
+.pv button[aria-pressed="true"]{background:#C2151C;border-color:#C2151C}
+.op-hero{padding-top:var(--s5)}
+.op-tag{display:inline-block;background:var(--redsoft,#fbeceb);color:var(--accent);border:1px solid #f1c4c6;border-radius:999px;font-weight:800;font-size:15px;padding:6px 14px;margin-bottom:12px}
+.op-h1{font-size:clamp(28px,7.2vw,44px);font-weight:900;line-height:1.15;letter-spacing:-.02em;text-wrap:balance}
+.op-sub{font-size:19px;color:var(--muted);margin-top:12px;max-width:40ch}
+.op-lede{text-align:center;color:var(--muted);font-size:17px;margin-top:8px}
+.qa-list{display:grid;gap:14px;margin-top:var(--s3)}
+.qa{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 16px;box-shadow:var(--sh-sm)}
+.qa .qn{display:block;font-size:13px;font-weight:800;color:var(--faint,#8A8F98);letter-spacing:.02em}
+.qa .qq{font-size:18px;font-weight:900;margin:4px 0 10px;line-height:1.35}
+.qa .pick{display:flex;gap:10px;align-items:flex-start;background:#F7F7F9;border:2px solid var(--accent);border-radius:14px;padding:10px 12px}
+.qa .pick .tk{flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.qa .pick .tk svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.qa .pick b{display:block;font-size:16.5px;font-weight:800}
+.qa .pick span.mc{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+.qa .ours{display:grid;grid-template-columns:28px 1fr;gap:10px;margin-top:12px}
+.qa .ours .ol{display:block;font-size:13.5px;font-weight:800;color:var(--muted)}
+.qa .ours .ol em{font-style:normal}
+.qa .ours .ol em.ok{color:var(--green)} .qa .ours .ol em.ask{color:#B8892B} .qa .ours .ol em.honest{color:var(--accent)}
+.qa .ours p{font-size:16px;line-height:1.55;margin-top:2px}
+.op-open{background:#fff;border-right:4px solid var(--accent);border-radius:12px;padding:14px 16px;margin-top:var(--s3);font-size:17px;font-weight:700;line-height:1.5}
+.ang-open{text-align:center;margin:var(--s3) auto 0;max-width:30ch}
+.ang-a{font-size:clamp(24px,6vw,34px);font-weight:900;line-height:1.2;text-wrap:balance}
+.ang-b{font-size:clamp(24px,6vw,34px);font-weight:900;line-height:1.2;color:var(--accent);margin-top:6px;text-wrap:balance}
+.facts{grid-template-columns:repeat(3,1fr)}
+.facts .t .v{font-size:22px}
+@media(max-width:600px){.facts{grid-template-columns:1fr}}
+.ang-card{background:#fff;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:20px;padding:20px 16px;margin-top:var(--s4);box-shadow:var(--sh-sm)}
+.ang-card h3{font-size:22px;font-weight:900;margin-bottom:12px}
+.ang-card .tx{font-size:17px;line-height:1.6;white-space:pre-line}
+.ang-card .ft{font-size:17px;font-weight:800;color:var(--accent);margin-top:14px;white-space:pre-line}
+.cmp{display:grid;grid-template-columns:auto 1fr 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:15.5px}
+.cmp>div{padding:11px 10px;border-top:1px solid var(--line)}
+.cmp .hd{border-top:0;font-weight:900;font-size:14px}
+.cmp .hd.land{background:var(--accent);color:#fff}
+.cmp .hd.apt{background:#F7F7F9}
+.cmp .k{font-weight:800;color:var(--muted)}
+.cmp .apt{color:var(--faint,#8A8F98);text-decoration:line-through}
+.cmp .hd.apt{text-decoration:none;color:var(--ink)}
+.cmp .land{background:#F1F7F3;font-weight:800}
+.stp{list-style:none;counter-reset:s;display:grid;gap:10px}
+.stp li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;font-size:17px;line-height:1.5}
+.stp li:before{content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+.exit-box{text-align:center;margin-top:var(--s5)}
+.exit-box h3{font-size:clamp(24px,6vw,32px);font-weight:900}
+.exit-box p{font-size:17px;line-height:1.6;max-width:44ch;margin:10px auto 0}
+.op-tom{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:var(--s4)}
+.op-tom img{width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:top}
+.op-tom b{font-size:16.5px;font-weight:900;line-height:1.4;display:block}
+.op-tom .vals{margin:8px 0 0}
+#cta .res-h{text-align:center}
+#cta .op-p{text-align:center;font-size:17px;color:var(--muted);margin-top:6px;white-space:pre-line}
+#cta .alt{text-align:center;margin-top:14px}
+#cta .alt a{color:var(--ink);font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.wa-ic{width:18px;height:18px;fill:#25D366}
+#cta .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:440px;margin:18px auto 0;box-sizing:border-box}
+.op-tom .sm{display:block;font-size:14px;font-weight:600;color:var(--muted);margin-top:2px}
+.op-tom .vals span{font-size:13px}
+</style>
+</head>
+<body>
+<header class="op-hdr"><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/></header>
+<div class="pv" id="pv">
+  <span><b>תצוגה מקדימה</b> · שום דבר לא נשלח</span>
+  <span class="grp" id="pvM"><span>תשובה ראשונה:</span></span>
+  <span class="grp" id="pvS"><span>מצב:</span><button type="button" data-s="0">עוד לא בחר מועד</button><button type="button" data-s="1">כבר בחר מועד</button></span>
+</div>
+<main>
+<section class="sec bg-w op-hero"><div class="wrap">
+  <span class="op-tag" id="hTag"></span>
+  <h1 class="op-h1" id="hH1"></h1>
+  <p class="op-sub" id="hSub"></p>
+</div></section>
+<section class="sec bg-g" id="ans"><div class="wrap">
+  <h2 class="sec-t" id="aH2"></h2>
+  <p class="op-lede" id="aSub"></p>
+  <div class="qa-list" id="qaList"></div>
+  <p class="op-open" id="aOpen"></p>
+</div></section>
+<section class="sec bg-w" id="info"><div class="wrap">
+  <h2 class="sec-t" id="iH2"></h2>
+  <div class="ang-open"><p class="ang-a" id="iA"></p><p class="ang-b" id="iB"></p></div>
+  <div class="buy3 facts" id="facts"></div>
+  <div class="ang-card" id="angCard"></div>
+  <div class="exit-box"><h3 id="xH"></h3><p id="xP"></p></div>
+  <div class="op-tom"><img src="https://tom-harush.co.il/wp-content/uploads/%D7%A2%D7%99%D7%A6%D7%95%D7%91-%D7%9C%D7%9C%D7%90-%D7%A9%D7%9D-17.png" alt="תום הרוש" loading="lazy"/><div><b id="tomLine"></b><div class="vals" id="chips"></div></div></div>
+</div></section>
+<section class="sec bg-p" id="cta"><div class="wrap">
+  <div id="ctaPick">
+    <h2 class="res-h" id="pH"></h2>
+    <p class="op-p" id="pP"></p>
+    <form id="jform" novalidate>
+      <fieldset class="wins"><legend class="vh">חלון הזמן לחזרה</legend><div class="win w-m"><input type="radio" name="w" id="w1" value="morning"/><label for="w1"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="wtx"><span class="wn">בבוקר</span><span class="wm">אני טיפוס של בוקר</span></span><span class="wt">09:00 עד 12:00</span></label></div><div class="win w-n"><input type="radio" name="w" id="w2" value="noon"/><label for="w2"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></span><span class="wtx"><span class="wn">בצהריים</span><span class="wm">דברו איתי בצהריים</span></span><span class="wt">12:00 עד 16:00</span></label></div><div class="win w-e"><input type="radio" name="w" id="w3" value="evening"/><label for="w3"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/><path d="M20 3v4M22 5h-4"/></svg></span><span class="wtx"><span class="wn">בערב</span><span class="wm">הכי טוב בערב</span></span><span class="wt">16:00 עד 20:00</span></label></div></fieldset>
+      <div class="jerr" id="jEw" aria-live="polite"></div>
+      <label class="consent"><input type="checkbox" id="jOk2" name="phone_alt"/><span id="jOk2T"></span></label>
+      <div class="jfield" id="jAltBox" hidden><input id="jAlt" name="alt_phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="מספר נייד אחר" aria-label="מספר נייד אחר"/></div>
+      <button class="btn sv-go" type="submit" id="jBtn"><span id="pBtn"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
+    </form>
+    <p class="alt"><a href="https://wa.me/972533025464" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35m-5.42 7.4a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/></svg><span id="pWa"></span></a></p>
+  </div>
+  <div id="ctaDone" hidden>
+    <div class="done-box"><div class="big"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div></div>
+    <h2 class="res-h" id="dH"></h2>
+    <p class="op-p" id="dP"></p>
+    <a class="btn sv-go" id="dBtn" href="/join/"><span id="dBtnT"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
+  </div>
+</div></section>
+</main>
+<footer>
+  <img class="flogo" src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" loading="lazy"/>
+  <div class="social">
+    <a href="https://wa.me/972533025464" target="_blank" rel="noopener" aria-label="וואטסאפ"><lottie-player src="/lot-s-wa.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+    <a href="https://www.instagram.com/tom_harush/" target="_blank" rel="noopener" aria-label="אינסטגרם"><lottie-player src="/lot-s-ig.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+    <a href="https://www.facebook.com/appartmentforsaleinramatgan" target="_blank" rel="noopener" aria-label="פייסבוק"><lottie-player src="/lot-s-fb.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+  </div>
+  <div class="wrap"><div class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b> הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.</div></div>
+  <div class="foot-links"><a href="/privacy-kadima/">מדיניות פרטיות</a></div>
+  <div class="copy">© הקרן להשבחת הון ונכסים בע״מ מקבוצת תום הרוש · <a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a></div>
+</footer>
+<script>
+const ONE = {"txt": {"msg.body": "רגע לפני שהיום שלך ממשיך, הנה מה שהבטחתי לך.\n\nהדף האישי שלך מחכה כאן: התשובות שלך ומה הצעד הבא: {{1}}\n\nכל שאלה, אפשר פשוט לכתוב לי כאן. אני עונה על הכל בעצמי.", "hero.tag": "{שם}, הנה בדיקת ההתאמה שלך", "hero.h1": "שאלנו מה הכי חשוב לך בהשקעה, והתשובה שלך הייתה [[{תשובה 1}]].", "hero.sub.0": "אז כל תשובה כאן מגובה במסמך שאפשר לבדוק.", "hero.sub.1": "אז הכל כאן מוסבר פשוט, בגובה העיניים, ובקצב שלך.", "hero.sub.2": "אז כאן רואים איפה נוצר הערך בקרקע, בלי הבטחות ועם מסמכים.", "hero.sub.3": "אז כאן רואים בדיוק כמה זה עולה, ומאיזה הון אפשר להתחיל.", "ans.h2": "[[התשובות שלך]] מתוך שאלון ההתאמה", "ans.sub": "מה שאלנו, מה סימנת, ומה זה אומר בשבילך.", "ans.ours": "איך לדעת אם זה מתאים לך?", "ans.open": "מה שעוד פתוח: איזה היקף מתאים לך, ובאיזה לוח זמנים. את זה מאבחנים ישירות בשיחה של 10 דקות איתי.", "info.h2": "ועכשיו, [[המידע שהבטחנו לך]]", "info.investor.h1a": "הזדמנות טובה לא נמדדת בכמה רועש מוכרים אותה,", "info.investor.h1b": "אלא בכמה מסמכים עומדים מאחוריה.", "info.investor.title": "למה דווקא עכשיו", "info.investor.text": "משקיעים לפי השווי של הקרקע היום, כשהמחיר עדיין נמוך, וכל שלב תכנוני שמתקדם מעלה את צפי ההשבחה, לפי הערכות השמאי.", "info.beginner.h1a": "להתחיל להתעניין בהשקעות מרגיש לפעמים כמו לשתות מזרנוק של כבאים.", "info.beginner.h1b": "כולם רועשים וכולם בטוחים בעצמם, אבל אף אחד לא מראה מסמך.", "info.beginner.title": "אז הנה זה, פשוט ובגובה העיניים", "info.beginner.step0": "קונים יחידת קרקע במתחם H שכבר עברה אישור של תוכנית כוללנית.", "info.beginner.step1": "הסטטוס התכנוני מתקדם, שלב אחרי שלב.", "info.beginner.step2": "בכל שלב שהקרקע מתקרבת לבנייה, צפי ההשבחה עולה.", "info.beginner.foot": "לא צריך מיליונים או משכנתא.\nובפגישה ללא התחייבות, מקבלים מתום את המסמכים שמגבים את העסקה לעיונך.", "info.apartment.h1a": "אם שקלת דירה להשקעה, כבר הכרת את החבילה:", "info.apartment.h1b": "משכנתא, שוכרים, ודוד שמש שמחליט להתפוצץ בדיוק בליל שבת.", "info.apartment.title": "קרקע עובדת אחרת", "info.apartment.row0": "מימון · משכנתא לשלושים שנה · מהון קיים, בלי משכנתא", "info.apartment.row1": "ניהול · שוכרים ותיקונים · בלי שוכרים ובלי תיקונים", "info.apartment.row2": "מחיר · מה שהשוק מבקש · 3,700 ש״ח למ״ר, השווי שקבע השמאי", "info.apartment.foot": "לפי מספרים, לא לפי תחושה.", "info.idle_money.h1a": "כסף שיושב בעו״ש כל שנה קונה לך פחות.", "info.idle_money.h1b": "הוא נמס לאט, כמו קוביית קרח על השיש באוגוסט.", "info.idle_money.title": "השקעה בקרקע שעברה אישור תוכנית כוללנית זה בדיוק הפוך:", "info.idle_money.text": "להעביר הון קיים, בלי משכנתא ובלי חוב, לקרקע בתוך תוכנית מאושרת.\nולהשביח את הקיים בעשרות ולפעמים גם מאות אחוזים לאורך הדרך.", "info.fact1": "אושרה · התוכנית הכוללנית, דצמבר 2024", "info.fact2": "3,700 ₪ · למטר, לפי הערכת שמאי בתקן 22", "info.fact3": "125 מ״ר · קרקע פרטית בטאבו, החל מ־462,500 ₪", "info.exit.h": "ומה אם [[ארצה לצאת?]]", "info.exit.p": "תמיד יישאר הביקוש, אנחנו נמכור את החלקה שלך, יש נקודות יציאה שקופות וברורות, וכל התנאים כתובים מראש בחוזה. עוברים עליהם יחד, סעיף אחרי סעיף.", "info.tom": "תום הרוש · קבוצת תום הרוש · מעל 15 שנים של נדל״ן ויזמות", "info.chips": "קבוצת תום הרוש מושקעת בעצמה במתחם H המדובר · יחד עם קהילה של אלפי משקיעים · נדל״ן ללא פשרות", "cta.pick.h": "מתי הכי נוח [[שנחזור אליך?]]", "cta.pick.p": "10 דקות בטלפון, בזמן שנוח לך. בוחרים חלון, ואנחנו מתקשרים אליך.", "cta.pick.btn": "לשריין את 10 הדקות שלי", "cta.wa": "עדיף לכתוב עכשיו? אפשר בוואטסאפ", "cta.done.h": "השיחה שלך שמורה, {חלון}.", "cta.done.p": "אנו מזמינים אותך לקהילת המשקיעים שלנו.\nאנחנו משתפים נתונים, הוכחות ועדכונים על עסקת הקרקע בקדימה צורן. בשקיפות מלאה, בלי התחייבות.", "cta.done.btn": "להצטרפות לקהילה"}, "qi": {"investor": {"h1a": "הזדמנות טובה לא נמדדת בכמה רועש מוכרים אותה,", "h1b": "אלא בכמה מסמכים עומדים מאחוריה.", "kind": "text", "title": "למה דווקא עכשיו", "text": "משקיעים לפי השווי של הקרקע היום, כשהמחיר עדיין נמוך, וכל שלב תכנוני שמתקדם מעלה את צפי ההשבחה, לפי הערכות השמאי."}, "idle_money": {"h1a": "כסף שיושב בעו״ש כל שנה קונה לך פחות.", "h1b": "הוא נמס לאט, כמו קוביית קרח על השיש באוגוסט.", "kind": "text", "title": "השקעה בקרקע שעברה אישור תוכנית כוללנית זה בדיוק הפוך:", "text": "להעביר הון קיים, בלי משכנתא ובלי חוב, לקרקע בתוך תוכנית מאושרת.\nולהשביח את הקיים בעשרות ולפעמים גם מאות אחוזים לאורך הדרך."}, "apartment": {"h1a": "אם שקלת דירה להשקעה, כבר הכרת את החבילה:", "h1b": "משכנתא, שוכרים, ודוד שמש שמחליט להתפוצץ בדיוק בליל שבת.", "kind": "compare", "title": "קרקע עובדת אחרת", "rows": [["מימון", "משכנתא לשלושים שנה", "מהון קיים, בלי משכנתא"], ["ניהול", "שוכרים ותיקונים", "בלי שוכרים ובלי תיקונים"], ["מחיר", "מה שהשוק מבקש", "3,700 ש״ח למ״ר, השווי שקבע השמאי"]], "foot": "לפי מספרים, לא לפי תחושה."}, "beginner": {"h1a": "להתחיל להתעניין בהשקעות מרגיש לפעמים כמו לשתות מזרנוק של כבאים.", "h1b": "כולם רועשים וכולם בטוחים בעצמם, אבל אף אחד לא מראה מסמך.", "kind": "steps", "title": "אז הנה זה, פשוט ובגובה העיניים", "steps": ["קונים יחידת קרקע במתחם H שכבר עברה אישור של תוכנית כוללנית.", "הסטטוס התכנוני מתקדם, שלב אחרי שלב.", "בכל שלב שהקרקע מתקרבת לבנייה, צפי ההשבחה עולה."], "foot": "לא צריך מיליונים או משכנתא.\nובפגישה ללא התחייבות, מקבלים מתום את המסמכים שמגבים את העסקה לעיונך."}}, "ang": ["investor", "beginner", "apartment", "idle_money"], "d": {"qm": {"key": "b1", "title": "כשהכסף שלך יוצא לעבוד, מה הכי חשוב לך?", "options": [{"t": "ודאות וביטחון", "mc": "ליווי רגוע והתאמת הצורך האישי.", "canon": "ודאות וביטחון"}, {"t": "להבין לעומק לפני החלטה", "mc": "לראות הכל בעיניים, ולבדוק בקצב שלי.", "canon": "להבין לעומק לפני החלטה"}, {"t": "תשואה בטוחה", "mc": "שהכסף יגדל, במקום וקצב בטוח.", "canon": "תשואה גבוהה"}, {"t": "רף כניסה נמוך", "mc": "להתחיל עם ההון שיש לי עכשיו.", "canon": "רף כניסה נמוך"}]}, "qb": [{"key": "b2", "title": "השקעה עם תשואה גבוהה יותר, אבל עם פחות ודאות: זה מתאים לך?", "options": [{"t": "גם וגם", "mc": "השקעה שתניב רווח בריא, עם מסמכים וגיבוי", "v": 2}, {"t": "כן. אצלי תשואה קודמת להכל", "mc": "הסיכון שאקח מחושב בהתאם לתשואה.", "v": 1}, {"t": "תלוי כמה גבוהה", "mc": "אני קודם רוצה לראות את המספרים", "v": 1}]}, {"key": "b2", "title": "מה הדבר הראשון שהיית רוצה לראות במו עיניך?", "options": [{"t": "מה קורה אם ארצה לצאת", "mc": "איך יוצאים, ומה כתוב על זה בחוזה.", "v": 1}, {"t": "את התוכנית הכוללנית ושלבי התכנון", "mc": "איפה המתחם עומד היום, ומה נשאר עד הבנייה.", "v": 2}, {"t": "איך בדיוק נקבע המחיר", "mc": "מי קבע אותו, ולפי מה.", "v": 2}]}, {"key": "b2", "title": "לכמה זמן הכסף הזה יכול לצאת לעבוד?", "options": [{"t": "גג 3 שנים", "mc": "מתאימה לי השקעה לטווח הקצר.", "v": 0}, {"t": "3 עד 7 שנים", "mc": "הקצב הטבעי של קרקע עם ודאות.", "v": 2}, {"t": "אין לי לחץ של זמן", "mc": "יש לי כסף שיושב בצד ולא עובד.", "v": 2}]}, {"key": "b2", "title": "איך נוח לך להתחיל?", "options": [{"t": "מהלך אחד משמעותי", "mc": "להרוויח בעיקר מהשלבים התכנוניים.", "v": 2}, {"t": "מההון שכבר יש לי", "mc": "הכסף שלי מחכה להחלטה.", "v": 2}, {"t": "עוד לא החלטתי", "mc": "את ההיקף בונים יחד בשיחה.", "v": 0}]}], "qw": {"key": "b3", "title": "מתי נכון לך להתחיל?", "options": [{"t": "יש לי מוכנות לקבל החלטה", "mc": "השאלה שלי היא \"איפה כן\" ולא \"מה מתאים לי\"", "v": 2, "canon": "מיד, אני מוכן להתקדם"}, {"t": "לא עכשיו", "mc": "צריך כאן מישהו שיבין אותי.. השארתי פרטים בהרבה מקומות.", "v": 0, "canon": "רק בודק אפשרויות בשלב זה"}, {"t": "בחודשים הקרובים", "mc": "לאסוף מידע מעכשיו, להחליט עם עצמי בקרוב.", "v": 1, "canon": "בחודשים הקרובים"}]}, "qk": {"key": "b4", "title": "ההון האישי שלך זמין?", "options": [{"t": "כן, יושב ומחכה", "mc": "ובינתיים לא עובד בשבילי.", "v": 2}, {"t": "עוד לא", "mc": "שקלתי ללוות הון.", "v": 1}, {"t": "חלק זמין, חלק בדרך", "mc": "נבדוק יחד מה הכי נכון לך ומתי.", "v": 1}]}, "rows": {"R1.0": "אצלנו אנשים לפני עסקים. לא נמכור לך מה שלא מתאים לך, ובדיוק בגלל זה אנחנו מודדים התאמה.", "R1.1": "את המסמכים מהעסקה, משלב התכנון ועד היציאה, פותחים יחד בשיחה. הכל מוסבר בגובה העיניים.", "R1.2": "המקום שלך בטוח: התוכנית הכוללנית כבר אושרה. גם הקצב בטוח: התזמון כאן משחק לטובתך, והרווח הגדול הוא בשלב התכנוני, לפני שהתוכנית הבאה תאושר.", "R1.3": "אנחנו מתאימים לך מודל השקעה ונקודת יציאה, בדיוק בהיקף שנכון לך. אפשר להגיע להון של דירה מההון שכבר יש לך, ובלי משכנתא חונקת.", "R2.0.0": "שלושה מסמכים שנעבור עליהם יחד: התוכנית הכוללנית שאושרה, השמאות לפי תקן 22, ונקודות היציאה שאנחנו מספקים.", "R2.0.1": "כאן הבסיס הוא ודאות: התוכנית הכוללנית כבר אושרה, והצפי שקוף לשנים הקרובות. אם מישהו היה מציע לי תשואה גבוהה בלי שום סיכון, הייתי משאיר את הכסף מתחת לכרית.", "R2.0.2": "בעסקאות כאלו הרווח הגדול הוא דווקא בשנים של התכנון, וכניסה מוקדמת תעשה את העבודה השחורה בשבילך. אבל זה לא הכל. על השאר עוברים בשיחה, מול השמאות.", "R2.1.0": "אפשר למכור בכל שלב! בנוסף יש נקודות יציאה שקופות וברורות, וכל התנאים שקופים מראש בחוזה. עוברים עליהם יחד, סעיף אחרי סעיף.", "R2.1.1": "התוכנית הכוללנית אושרה ב־18/12/2024, ומתחם H נמצא היום בשלב הוועדה המקומית, אחרי אישור התוכנית הכוללנית. כרגע על הפרק: תוכנית מפורטת.", "R2.1.2": "שמאות מקרקעין 2026 לפי תקן 22 קבעה: 3,700 ש״ח למטר, כלומר 462,500 ש״ח ליחידת קרקע של 125 מ״ר.\nהמחיר מתעדכן לפי התקדמות הסטטוס התכנוני.", "R2.2.0": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים.", "R2.2.1": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים, בתוך הטווח שסימנת.", "R2.2.2": "קרקע בשלבי תכנון צריכה בדיוק את זה: סבלנות. ובינתיים, הכסף שלך שיושב בצד מקבל משמעות.", "R2.3.0": "זה אפשרי, בהיקף שמותאם אליך, במודל שנבנה יחד. משקיעים בדיוק בתקופת ההשבחה: אחרי שהתוכנית הכוללנית אושרה, ולפני התוכנית המפורטת.", "R2.3.1": "השקעה מותאמת אישית, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R2.3.2": "בשיחה נבדוק אם ניתן להתאים לך מודל אישי, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R3.0": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.", "R3.1": "אני מבין אותך, רוב המשקיעים שלי נמצאים בדיוק בנקודה הזו. אשמח להבין לעומק את הצורך שלך ולעזור לך לקבל את ההחלטה המושכלת ביותר עבורך.", "R3.2": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.", "R4.0": "זה מה שמאפשר להיכנס עכשיו, ולהשביח את ההון כבר מהשלב הנוכחי של התכנון.", "R4.1": "בכנות, אנו לא מאפשרים מימון. אפשר להיכנס גם עם הון מלווה, וזה בסדר גמור מבחינתנו. אבל לפני שרצים לקחת הלוואה, נשוחח ונבין יחד היקף ולוח זמנים שיתאימו גם ליעדים שלך.", "R4.2": "התזמון משחק כאן תפקיד מפתח. לפני שממהרים, מומלץ קודם לתאם ציפיות באופן אישי, בשיחה איתי."}, "st": {"R1.0": "ok", "R1.1": "ok", "R1.2": "ok", "R1.3": "ok", "R2.0.0": "ok", "R2.0.1": "honest", "R2.0.2": "ok", "R2.1.0": "ok", "R2.1.1": "ok", "R2.1.2": "ok", "R2.2.0": "honest", "R2.2.1": "ok", "R2.2.2": "ok", "R2.3.0": "ok", "R2.3.1": "ok", "R2.3.2": "ask", "R3.0": "ok", "R3.1": "ok", "R3.2": "ok", "R4.0": "ok", "R4.1": "ask", "R4.2": "ok"}, "wins": [["בבוקר", "09:00 עד 12:00", "אני טיפוס של בוקר"], ["בצהריים", "12:00 עד 16:00", "דברו איתי בצהריים"], ["בערב", "16:00 עד 20:00", "הכי טוב בערב"]], "tx": {"JERR": "צריך לבחור חלון זמן", "JERR.alt": "המספר האחר לא תקין. צריך 10 ספרות שמתחילות ב־05", "JSAVING": "שומרים…", "JDP": "השיחה שלך שמורה.\nנחזור אליך {w}, למספר {n}."}, "copy": {"submit": "מרכיבים את בדיקת ההתאמה…", "load": "מרכיבים את בדיקת ההתאמה שלך", "loadSub": "מהתשובות שסימנת", "intro": "הנה מה שהבטחנו:"}, "stages": [{"n": "קרקע חקלאית", "d": "נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.", "here": false}, {"n": "ועדה ארצית", "d": "הקווים הגדולים של המדינה: איך והאם הרעיון יתרום לעתיד היישוב.", "here": false}, {"n": "ועדה מחוזית", "d": "ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.", "here": false}, {"n": "ועדה מקומית", "d": "התכנון הגדול אושר ויורד לרמת המתחם.", "here": true}, {"n": "אישור תוכנית מפורטת", "d": "תוכנית מפורטת אחת לכל מתחם H: מה מניחים איפה. לפי הערכת השמאי, צפויה להיות מאושרת בתוך כ־5 שנים.", "here": false}, {"n": "אישור תוכנית פיתוח", "d": "כבישים, מים וניקוז. מתכוננים לשלבי הבנייה.", "here": false}, {"n": "זמינות לבנייה", "d": "הקרקע מוכנה לבנייה.", "here": false}]}, "jwa": "עדיף לכתוב עכשיו? אפשר בוואטסאפ", "jok2": "עדיף להתקשר למספר אחר שלי"};
+const T = ONE.txt, D = ONE.d, $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/* מילה קצרה נצמדת למילה שאחריה, והמילה האחרונה לא נשארת לבד בשורה */
+function glue(t){ t = String(t).replace(/(^|[\s])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g, '$1$2\u00a0'); return t.split('\n').map(l => { const i = l.lastIndexOf(' '); return i > 0 ? l.slice(0, i) + '\u00a0' + l.slice(i + 1) : l; }).join('\n'); }
+/* [[...]] = צבע המותג, כמו בכל המשפך */
+const rich = t => esc(glue(t)).replace(/\[\[(.*?)\]\]/g, '<span class="hl">$1</span>');
+const Q = new URLSearchParams(location.search);
+const int = (k, d, n) => { const v = parseInt(Q.get(k), 10); return (v >= 0 && v < n) ? v : d; };
+const S = { m: int('m', 0, 4), b: int('b', 0, 3), w: int('w', 1, 4), k: int('k', 1, 4), name: (Q.get('name') || 'דנה').split(/\s+/)[0], win: Q.get('w8') || '', picked: !!Q.get('w8') };
+const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' }, LBL = { ok:'מתאים', ask:'נסגר בשיחה', honest:'בודקים בכנות' };
+const WKEY = ['morning', 'noon', 'evening'];
+function winText(k){ const i = WKEY.indexOf(k); if (i < 0) return ''; const w = D.wins[i], hh = w[1].split(' עד '); return hh.length === 2 ? w[0] + ', בין ' + hh[0] + ' ל־' + hh[1] : w[0]; }
+
+function render(){
+  const m = S.m, qb = D.qb[m], b = Math.min(S.b, qb.options.length - 1);
+  // 1. הפתיחה
+  $('hTag').textContent = S.name ? T['hero.tag'].replace('{שם}', S.name) : 'הנה בדיקת ההתאמה שלך';
+  $('hH1').innerHTML = rich(T['hero.h1'].replace('{תשובה 1}', D.qm.options[m].t));
+  $('hSub').innerHTML = rich(T['hero.sub.' + m]);
+  // 2. השאלות שלנו והתשובות
+  $('aH2').innerHTML = rich(T['ans.h2']); $('aSub').innerHTML = rich(T['ans.sub']);
+  const cards = [[D.qm.title, D.qm.options[m], 'R1.' + m], [qb.title, qb.options[b], 'R2.' + m + '.' + b], [D.qw.title, D.qw.options[S.w], 'R3.' + S.w], [D.qk.title, D.qk.options[S.k], 'R4.' + S.k]];
+  $('qaList').innerHTML = cards.map((c, i) => { const st = D.st[c[2]] || 'ok';
+    return '<div class="qa"><span class="qn">שאלה ' + (i + 1) + ' מתוך 4</span><p class="qq">' + esc(glue(c[0])) + '</p>'
+      + '<div class="pick"><span class="tk">' + ICON.ok + '</span><span><b>' + esc(c[1].t) + '</b><span class="mc">' + esc(glue(c[1].mc)) + '</span></span></div>'
+      + '<div class="ours"><span class="rc-ic ' + st + '" role="img" aria-label="' + LBL[st] + '">' + ICON[st] + '</span><div><span class="ol">' + esc(T['ans.ours']) + ' · <em class="' + st + '">' + LBL[st] + '</em></span><p>' + esc(glue(D.rows[c[2]] || '')) + '</p></div></div></div>'; }).join('');
+  $('aOpen').innerHTML = rich(T['ans.open']);
+  // 3. המידע, לפי התשובה הראשונה
+  const a = ONE.ang[m], q = ONE.qi[a];
+  $('iH2').innerHTML = rich(T['info.h2']); $('iA').innerHTML = rich(q.h1a); $('iB').innerHTML = rich(q.h1b);
+  $('facts').innerHTML = ['info.fact1', 'info.fact2', 'info.fact3'].map(k => { const p = T[k].split('·'); return '<div class="t"><div class="v">' + esc(p[0].trim()) + '</div><div class="l">' + esc(glue((p[1] || '').trim())) + '</div></div>'; }).join('');
+  let body = '';
+  if (q.kind === 'compare') body = '<div class="cmp"><div class="hd"></div><div class="hd apt">דירה להשקעה</div><div class="hd land">קרקע במתחם H</div>' + q.rows.map(r => '<div class="k">' + esc(r[0]) + '</div><div class="apt">' + esc(r[1]) + '</div><div class="land">' + esc(glue(r[2])) + '</div>').join('') + '</div>';
+  else if (q.kind === 'steps') body = '<ol class="stp">' + q.steps.map(s => '<li>' + esc(glue(s)) + '</li>').join('') + '</ol>';
+  else body = '<p class="tx">' + esc(glue(q.text)) + '</p>';
+  $('angCard').innerHTML = '<h3>' + rich(q.title) + '</h3>' + body + (q.foot ? '<p class="ft">' + esc(glue(q.foot)) + '</p>' : '');
+  $('xH').innerHTML = rich(T['info.exit.h'].trim()); $('xP').innerHTML = rich(T['info.exit.p']);
+  { const tp = T['info.tom'].split('·'); $('tomLine').innerHTML = esc(tp[0].trim()) + '<span class="sm">' + esc(tp.slice(1).map(x => x.trim()).join(' · ')) + '</span>'; } $('chips').innerHTML = T['info.chips'].split('·').map(c => '<span>' + esc(c.trim()) + '</span>').join('');
+  // 4. הצעד הבא, לפי המצב
+  $('ctaPick').hidden = S.picked; $('ctaDone').hidden = !S.picked;
+  $('pH').innerHTML = rich(T['cta.pick.h']); $('pP').innerHTML = rich(T['cta.pick.p']); $('pBtn').textContent = T['cta.pick.btn']; $('pWa').textContent = ONE.jwa; $('jOk2T').textContent = ONE.jok2;
+  $('dH').innerHTML = rich(T['cta.done.h'].replace('{חלון}', winText(S.win || 'morning'))); $('dP').innerHTML = rich(T['cta.done.p']); $('dBtnT').textContent = T['cta.done.btn'];
+  // הפס העליון
+  document.querySelectorAll('#pvM button').forEach(x => x.setAttribute('aria-pressed', String(+x.dataset.m === m)));
+  document.querySelectorAll('#pvS button').forEach(x => x.setAttribute('aria-pressed', String((x.dataset.s === '1') === S.picked)));
+}
+ONE.d.qm.options.forEach((o, i) => { const bt = document.createElement('button'); bt.type = 'button'; bt.dataset.m = i; bt.textContent = o.t; bt.onclick = () => { S.m = i; render(); }; $('pvM').appendChild(bt); });
+document.querySelectorAll('#pvS button').forEach(x => x.onclick = () => { S.picked = x.dataset.s === '1'; if (S.picked && !S.win) S.win = 'morning'; render(); scrollTo({ top: document.getElementById('cta').offsetTop - 60, behavior: 'smooth' }); });
+$('jOk2').addEventListener('change', () => { $('jAltBox').hidden = !$('jOk2').checked; });
+/* בתצוגה המקדימה בחירת מועד רק מחליפה את המצב, בלי שליחה */
+$('jform').addEventListener('submit', e => { e.preventDefault(); const w = (document.querySelector('input[name="w"]:checked') || {}).value; if (!w) { $('jEw').textContent = 'צריך לבחור חלון זמן'; return; } $('jEw').textContent = ''; S.win = w; S.picked = true; render(); });
+$('dBtn').addEventListener('click', e => e.preventDefault());
+render();
+</script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" defer></script>
+</body>
+</html>
