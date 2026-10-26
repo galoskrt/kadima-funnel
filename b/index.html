@@ -804,6 +804,15 @@ if (!PREVIEW) {
   const s = document.createElement('script'); s.src = '/track.js'; s.defer = true; document.body.appendChild(s);
 }
 function px(ev, p, custom){ if (PREVIEW) return; try { if (window.fbq) custom === false ? fbq('track', ev, p || {}) : fbq('trackCustom', ev, p || {}); } catch(e){} }
+/* פידבק מהשרת (גל 26/10: "לייצר לכל אירוע המרה פידבק חזרה למטא"). אותו מזהה כמו בדפדפן, כך שמטא סופרת פעם אחת */
+function capi(ev, eid, custom){ if (PREVIEW) return; try {
+  const ck = n => { const m = document.cookie.match('(^|;)\s*' + n + '\s*=\s*([^;]+)'); return m ? m.pop() : ''; };
+  let fbc = ck('_fbc'); if (!fbc && Q.get('fbclid')) fbc = 'fb.1.' + Date.now() + '.' + Q.get('fbclid');
+  let lid = ''; try { lid = (JSON.parse(localStorage.getItem('b_last') || 'null') || {}).lid || ''; } catch(e) {}
+  const body = JSON.stringify({ event: ev, event_id: eid, url: location.href.split('#')[0], fbp: ck('_fbp') || undefined, fbc: fbc || undefined, lead_id: lid || undefined, custom: custom || {} });
+  if (navigator.sendBeacon && navigator.sendBeacon(WORKER + '/capi-event', new Blob([body], { type:'text/plain;charset=UTF-8' }))) return;
+  fetch(WORKER + '/capi-event', { method:'POST', keepalive:true, headers:{ 'Content-Type':'text/plain;charset=UTF-8' }, body }).catch(() => {});
+} catch(e) {} }
 function fx(stage){ if (PREVIEW) return; let n = 0; (function go(){ if (window.THG_FX) THG_FX(stage); else if (n++ < 12) setTimeout(go, 700); })(); }
 function step(i, contact){ if (!PREVIEW && window.THG_STEP) THG_STEP(i, contact); }
 
@@ -930,7 +939,12 @@ function pick(qi, oi){
     if (qi < TOTAL - 1) { renderQ(qi + 1); show('q' + (qi + 1)); }
     else {
       /* סיום 4 השאלות בתוך הדף: האירוע שמטא לומדת ממנו (גל 20/10). פעם אחת לכל ביקור */
-      if (!doneSent) { doneSent = true; px('BPageSurveyDone', { variant:VARIANT, temperature:temperature(), score:score() }); }
+      /* 26/10: הקמפיין הראשי מתאפטם על סיום השאלון (גל). נשלח מהדפדפן ומהשרת עם אותו מזהה: האירוע המותאם BPageSurveyDone,
+         ולצדו האירוע הסטנדרטי SubmitApplication, כדי שאפשר יהיה לבחור כל אחד מהם כאירוע ההמרה */
+      if (!doneSent) { doneSent = true;
+        const sd = { variant:VARIANT, temperature:temperature(), score:score() }, sid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(16).slice(2));
+        if (!PREVIEW) { try { if (window.fbq) { fbq('trackCustom', 'BPageSurveyDone', sd, { eventID: 'sd-' + sid }); fbq('track', 'SubmitApplication', sd, { eventID: 'sa-' + sid }); } } catch(e) {}
+          capi('BPageSurveyDone', 'sd-' + sid, sd); capi('SubmitApplication', 'sa-' + sid, sd); } }
       show('capture');
     }
   }, 260);
@@ -1029,6 +1043,7 @@ renderQ(0); show('q0', true); $('svTop').hidden = false;
 (function resume(){
   let pr = null, last = null;
   try { pr = JSON.parse(localStorage.getItem('b_prog') || 'null'); last = localStorage.getItem('b_last'); } catch(e) {}
+  if (Q.get('utm_source') || Q.get('fbclid')) { try { localStorage.removeItem('b_prog'); } catch(e) {} return; }   /* גל 26/10: מי שמגיע ממודעה מתחיל מראש הדף ומהשאלה הראשונה, כמו בקמפיין הראשי */
   if (!pr || last || !pr.p || Date.now() - (pr.at || 0) > 180 * 864e5) return;
   ['b1', 'b2', 'b3', 'b4', '__branch'].forEach(k => { if (pr.p[k] != null) pickIdx[k] = pr.p[k]; });
   let n = 0; while (n < TOTAL && pickIdx[qAt(n).key] != null) n++;
@@ -1037,7 +1052,6 @@ renderQ(0); show('q0', true); $('svTop').hidden = false;
   const note = document.createElement('div'); note.className = 'resume-note';
   note.textContent = n < TOTAL ? 'ממשיכים מאיפה שעצרת: שאלה ' + (n + 1) + ' מתוך ' + TOTAL : 'ממשיכים מאיפה שעצרת: נשארו רק הפרטים';
   $('svc').prepend(note);
-  if ((Q.get('utm_campaign') || '') === 'rmk') setTimeout(() => toSv(), 400);
 })();
 /* מי שהגיע לשאלון (גלל או לחץ): נספר במונה "click" של B בדשבורד, פעם אחת */
 new IntersectionObserver((es, ob) => es.forEach(x => { if (x.isIntersecting) { fx('click'); if (cur === 'q0') step(1, false); ob.disconnect(); } }), { threshold:.35 }).observe($('svc'));
