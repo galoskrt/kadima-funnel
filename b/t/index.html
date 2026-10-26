@@ -134,7 +134,9 @@ const PIXEL_ID = '1002428386157716';
 fbq('init', PIXEL_ID); fbq('track', 'PageView');
 (function(){ try { const k = 'b_sched_' + (LID || 'x'); if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1');
   fbq('track', 'Schedule', { content_name:'b_thankyou', variant:'b' }, LID ? { eventID: 'schedule:' + LID } : undefined); } catch(e){} })();
-function pxContact(){ try { fbq('track', 'Contact', { content_name:'b_thankyou_wa', variant:'b' }); } catch(e){} }
+/* גל 26/10: לכל אירוע המרה גם פידבק מהשרת, עם אותו מזהה */
+function capiEv(ev,eid,lid,custom){try{var ck=function(n){var c=document.cookie.split(';').map(function(x){return x.trim();}).filter(function(x){return x.indexOf(n+'=')===0;})[0];return c?c.slice(n.length+1):'';};var q=new URLSearchParams(location.search),fbc=ck('_fbc');if(!fbc&&q.get('fbclid'))fbc='fb.1.'+Date.now()+'.'+q.get('fbclid');var body=JSON.stringify({event:ev,event_id:eid,url:location.href.split('#')[0],fbp:ck('_fbp')||undefined,fbc:fbc||undefined,lead_id:lid||undefined,custom:custom||{}});var W='https://tom-funnel.tom-harush.workers.dev/capi-event';if(navigator.sendBeacon&&navigator.sendBeacon(W,new Blob([body],{type:'text/plain;charset=UTF-8'})))return;fetch(W,{method:'POST',keepalive:true,headers:{'Content-Type':'text/plain;charset=UTF-8'},body:body}).catch(function(){});}catch(e){}}
+function pxContact(){ var eid = 'ct-' + (window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(16).slice(2)); try { fbq('track', 'Contact', { content_name:'b_thankyou_wa', variant:'b' }, { eventID: eid }); } catch(e){} capiEv('Contact', eid, (typeof LID !== 'undefined' && LID) || '', { content_name:'b_thankyou_wa', variant:'b' }); }
 </script>
 <script src="/track.js" defer></script>
 </body>

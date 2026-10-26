@@ -806,7 +806,7 @@ if (!PREVIEW) {
 function px(ev, p, custom){ if (PREVIEW) return; try { if (window.fbq) custom === false ? fbq('track', ev, p || {}) : fbq('trackCustom', ev, p || {}); } catch(e){} }
 /* פידבק מהשרת (גל 26/10: "לייצר לכל אירוע המרה פידבק חזרה למטא"). אותו מזהה כמו בדפדפן, כך שמטא סופרת פעם אחת */
 function capi(ev, eid, custom){ if (PREVIEW) return; try {
-  const ck = n => { const m = document.cookie.match('(^|;)\s*' + n + '\s*=\s*([^;]+)'); return m ? m.pop() : ''; };
+  const ck = n => { const c = document.cookie.split(';').map(x => x.trim()).find(x => x.indexOf(n + '=') === 0); return c ? c.slice(n.length + 1) : ''; };
   let fbc = ck('_fbc'); if (!fbc && Q.get('fbclid')) fbc = 'fb.1.' + Date.now() + '.' + Q.get('fbclid');
   let lid = ''; try { lid = (JSON.parse(localStorage.getItem('b_last') || 'null') || {}).lid || ''; } catch(e) {}
   const body = JSON.stringify({ event: ev, event_id: eid, url: location.href.split('#')[0], fbp: ck('_fbp') || undefined, fbc: fbc || undefined, lead_id: lid || undefined, custom: custom || {} });
