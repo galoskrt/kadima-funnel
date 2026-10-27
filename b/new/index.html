@@ -1066,7 +1066,8 @@ addEventListener('scroll', () => {
 /* ── סיכום הקריאה: זמן פעיל, באיזה מקטע עמד מרכז המסך בכל שנייה, איך הגיע לשאלון, שאלות וביקורות שפתח, כמה פעמים נכנס ── */
 (function(){
   const secs = [...document.querySelectorAll('[data-rd]')]; RD.order = secs.map(s => s.dataset.rd);
-  try { const v = JSON.parse(localStorage.getItem('b_rd') || 'null') || { n: 0, first: new Date().toISOString() }; v.n++; localStorage.setItem('b_rd', JSON.stringify(v)); RD.visits = v.n; RD.firstAt = v.first; } catch(e) {}
+  /* גל 27/10: "לא חזרתי לדף 4 פעמים". הכניסות לתצוגה המקדימה (/b/new/) נספרו באותו מכשיר. תצוגה מקדימה לא נספרת */
+  if (!PREVIEW) try { const v = JSON.parse(localStorage.getItem('b_rd') || 'null') || { n: 0, first: new Date().toISOString() }; v.n++; localStorage.setItem('b_rd', JSON.stringify(v)); RD.visits = v.n; RD.firstAt = v.first; } catch(e) {}
   const pct = () => { const h = document.documentElement.scrollHeight - innerHeight; return h > 0 ? Math.min(100, Math.round(scrollY / h * 100)) : 100; };
   addEventListener('scroll', () => { const p = pct(); if (p > RD.maxScroll) RD.maxScroll = p; }, { passive:true });
   setInterval(() => {

@@ -61,7 +61,7 @@ h1{font-size:var(--f-head);font-weight:900;line-height:1.12;letter-spacing:-.02e
   <h1 id="tH"></h1>
   <p class="sub" id="tS"></p>
 
-  <a class="btn" id="tSave" href="#" download="kadima-h.vcf"><span id="tCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a>
+  <a class="btn" id="tSave" href="/b/t/kadima-h.vcf"><span id="tCta"></span><svg class="arw" viewBox="0 0 36 11" aria-hidden="true"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a>
   <p class="after" id="tAfter"></p>
 
   <section class="next" aria-labelledby="tNextH">
@@ -123,7 +123,8 @@ function fmtPhone(p){ let d = String(p||'').replace(/\D/g,''); if (d.startsWith(
   $('tPrepH').textContent = COPY.PREP_H; $('tPrep').textContent = glue(COPY.PREP); $('tWa').textContent = COPY.WA;
   try { const r = sessionStorage.getItem('b_res'); if (r && r.indexOf('/b/p/') === 0) { $('tOwn').href = r; $('tOwn').textContent = glue(COPY.OWN); $('tOwn').hidden = false; } } catch(e){}   /* קישור חזרה לדף האישי */
   const vcf = 'BEGIN:VCARD\nVERSION:3.0\nFN:קדימה צורן · מתחם H\nORG:קבוצת תום הרוש\nTEL;TYPE=CELL:+972' + COPY.PHONE.replace(/\D/g,'').replace(/^0/,'') + '\nEND:VCARD';
-  $('tSave').href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcf);
+  /* גל 27/10: "הכפתור לשמירה באנשי הקשר לא עובד". קישור data: עם download נחסם בדפדפנים בטלפון; קובץ אמיתי נפתח ישר באנשי הקשר */
+  $('tSave').href = '/b/t/kadima-h.vcf';
 })();
 
 /* ═══════════ המרות ═══════════
