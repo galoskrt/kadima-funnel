@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<style>html.id-wait body{visibility:hidden}</style>
+<script>
+(function(){ try {
+  if (window.top !== window) return;
+  var q = new URLSearchParams(location.search);
+  if (q.get('demo') === '1' || q.has('m')) return;
+  var go = q.get('go') === 'place' ? 'place' : (q.get('go') ? 'docs' : '');
+  var keep = new URLSearchParams(); q.forEach(function(v, k){ if (/^utm_|^fbclid$/.test(k)) keep.set(k, v); });
+  function noAnswers(){
+    document.documentElement.classList.remove('id-wait');
+    var last = null; try { last = JSON.parse(localStorage.getItem('b_last') || 'null'); } catch(e) {}
+    if (last && last.url) {
+      var u = new URL(last.url, location.origin);
+      keep.forEach(function(v, k){ u.searchParams.set(k, v); });
+      if (go) u.searchParams.set('go', go);
+      location.replace(u.pathname + u.search); return;
+    }
+    if (!go) { location.replace('/b/' + (keep.toString() ? '?' + keep.toString() : '')); return; }
+    document.documentElement.classList.add('docs-mode');
+  }
+  /* הקישור האישי לפי מספר ליד (גל 20/10): /b/p/?id=<מספר ליד>. השרת מחזיר שם פרטי, תשובות ומועד שנבחר,
+     והדף נפתח כמו מהקישור המלא. מועד שנבחר נשמר במכשיר, כך שהדף לא שואל שוב גם בטלפון אחר. אם השרת לא עונה: כמו ביקור בלי תשובות */
+  var id = q.get('id') || '';
+  if (/^[A-Za-z0-9-]{12,64}$/.test(id)) {
+    document.documentElement.classList.add('id-wait');
+    var done = false, fail = function(){ if (!done) { done = true; noAnswers(); } };
+    setTimeout(fail, 6000);
+    fetch('https://tom-funnel.tom-harush.workers.dev/b/me?id=' + encodeURIComponent(id), { cache:'no-store' })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){
+        if (done) return;
+        var a = j && j.ok && /^\d,\d,\d,\d$/.test(j.bi || '') ? j.bi.split(',') : null;
+        if (!a) return fail();
+        done = true;
+        var u = new URLSearchParams({ t: j.t === 'hot' ? 'hot' : 'cold', lid: id, m: a[0], b: a[1], w: a[2], k: a[3] });
+        if (j.name) u.set('name', j.name);
+        keep.forEach(function(v, k){ u.set(k, v); }); if (q.get('go')) u.set('go', q.get('go'));
+        /* צפייה מהדשבורד: המועד שנבחר עובר בכתובת, ושום דבר לא נשמר במכשיר של מי שצופה */
+        if (q.get('staff') === '1') { u.set('staff', '1'); if (j.cb) u.set('cb', j.cb); location.replace('/b/p/?' + u.toString() + location.hash); return; }
+        if (j.cb) { try { var c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: id }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {} }
+        location.replace('/b/p/?' + u.toString() + location.hash);
+      }).catch(fail);
+    return;
+  }
+  noAnswers();
+} catch(e) {} })();
+</script>
+
+<meta name="theme-color" content="#F6F7F9"/>
+<title>בדיקת ההתאמה שלך · מתחם H · קבוצת תום הרוש</title>
+<meta name="robots" content="noindex"/>
+<link rel="preload" as="image" href="/b/media/hero-cpage-m.webp" media="(max-width:699px)"/>
+<link rel="preload" as="image" href="/b/media/hero-cpage.webp" media="(min-width:700px)"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+:root{
+  --bg:#F6F7F9; --gray:#ECEEF1; --card:#FFFFFF; --dark:#0f1216; --dark2:#181c22;
+  --ink:#0f1216; --muted:rgba(15,18,22,.60); --faint:rgba(15,18,22,.42);
+  --line:rgba(15,18,22,.10); --line-r:rgba(194,21,28,.20); --dline:rgba(255,255,255,.12);
+  --accent:#C2151C; --accent2:#7F0224; --green:#157a3a; --gold:#B8892B;
+  --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);
+  --tint:rgba(194,21,28,.055); --tintg:rgba(21,122,58,.07);
+  --sh:0 14px 44px rgba(16,16,16,.10); --sh-sm:0 6px 20px rgba(16,16,16,.07); --wa:#25d366;
+  --rad:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:'Heebo','Assistant','Segoe UI',sans-serif;color:var(--ink);background:var(--bg);line-height:1.7;overflow-x:clip}
+.wrap{max-width:840px;margin:0 auto;padding:0 20px}
+img{max-width:100%;display:block}
+.arw{width:36px;height:11px;stroke:currentColor;stroke-width:1.5;fill:none;flex:0 0 auto;stroke-linecap:round;stroke-linejoin:round}
+/* section backgrounds for rhythm */
+.sec{padding:52px 0}
+.sec-gray{background:var(--gray)}
+.sec-dark{background:var(--dark);color:#fff}
+.sec-tint{background:linear-gradient(180deg,transparent,var(--tint),transparent)}
+.sec-tintg{background:linear-gradient(180deg,transparent,var(--tintg),transparent)}
+/* header */
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:.3s}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
+header img{height:42px}
+.h-cta{display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:13.5px;padding:9px 17px;border-radius:11px;box-shadow:0 6px 18px rgba(194,21,28,.28);transition:.16s}
+.h-cta:hover{transform:translateY(-1px)}
+.h-cta .arw{width:24px}
+/* hero */
+.hero{position:relative;text-align:center;overflow:hidden;isolation:isolate;color:#fff}
+.hero-bg{position:absolute;inset:0;z-index:-1}
+.hero-bg img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,17,22,.34),rgba(14,17,22,.18) 45%,rgba(14,17,22,.52))}
+.hero-inner{padding:72px 0 58px;background:radial-gradient(ellipse 92% 76% at 50% 44%,rgba(8,10,14,.48),transparent 72%)}
+.hero h1{text-shadow:0 2px 30px rgba(0,0,0,.6),0 1px 4px rgba(0,0,0,.45)}
+.hero .sub{text-shadow:0 1px 14px rgba(0,0,0,.5)}
+.hero .eyebrow{text-shadow:none}
+.hero .eyebrow{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff}
+.hero h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.4)}
+.hero .hl{background:linear-gradient(135deg,#ff6167,#ff9a45);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .hl-g{color:#63e487}
+.hero .sub{color:rgba(255,255,255,.92)}
+.hero .note{color:rgba(255,255,255,.76)}
+.trustband{background:#fff;border-bottom:1px solid var(--line);padding:22px 0}
+/* hero with VSL (hot, no bg image) */
+.hero-v{position:relative;text-align:center;padding:46px 0 34px;background:radial-gradient(ellipse 70% 60% at 76% -12%,rgba(194,21,28,.10),transparent 60%),radial-gradient(ellipse 60% 50% at 8% 112%,rgba(21,122,58,.07),transparent 55%),var(--bg)}
+.hero-v h1{color:var(--ink);text-shadow:none;font-size:40px;line-height:1.14;margin-bottom:14px}
+.hero-v .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-v .sub-v{font-size:17.5px;color:var(--muted);max-width:600px;margin:0 auto 24px;font-weight:500}
+.vsl{max-width:720px;margin:0 auto 24px;background:#0f1216;border-radius:20px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:var(--sh);position:relative;overflow:hidden;cursor:pointer;border:1px solid var(--line)}
+.vsl-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 26%;z-index:0}
+.vsl::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,18,22,.28),rgba(15,18,22,.66));z-index:1}
+.vsl .play,.vsl .vt,.vsl small{z-index:2}
+.vsl .play{position:relative;width:72px;height:72px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 10px 30px rgba(194,21,28,.5);transition:.2s}
+.vsl:hover .play{transform:scale(1.08)}
+.vsl .play::after{content:'';border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent #fff;margin-right:-4px}
+.vsl .vt{position:relative;font-weight:800;font-size:18px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.vsl small{position:relative;opacity:.9;font-size:13px;margin-top:5px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+/* vertical-VSL modal (reels plays big only on click; page footprint stays the 16:9 card) */
+.vmodal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(6,7,10,.93);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:16px}
+.vmodal.on{display:flex}
+.vmodal-video{height:min(84vh,860px);width:auto;max-width:94vw;aspect-ratio:9/16;background:#000;border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.6);display:block}
+.vmodal-x{position:absolute;top:16px;left:16px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.16);border:none;color:#fff;font-size:22px;cursor:pointer;z-index:2;transition:.16s}
+.vmodal-x:hover{background:rgba(255,255,255,.28)}
+.hero-v .note-v{font-size:13.5px;color:var(--faint);margin-top:12px}
+@media(max-width:600px){.hero-v h1{font-size:29px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line-r);color:var(--accent);font-weight:800;font-size:12.5px;letter-spacing:.02em;padding:7px 16px;border-radius:30px;margin-bottom:18px;box-shadow:var(--sh-sm)}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+h1{font-size:39px;font-weight:900;line-height:1.15;letter-spacing:-.02em;margin-bottom:16px}
+.hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hl-g{color:var(--green)}
+.hero .sub{font-size:18px;color:rgba(255,255,255,.95);max-width:610px;margin:0 auto 26px;font-weight:500;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--grad);color:#fff;text-decoration:none;border:none;cursor:pointer;font-family:inherit;font-size:18px;font-weight:800;padding:17px 36px;border-radius:15px;box-shadow:0 12px 32px rgba(194,21,28,.34);transition:.18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(194,21,28,.46)}
+.btn .arw{width:40px}
+.hero .note{font-size:13.5px;color:rgba(255,255,255,.85);margin-top:13px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.fail .fi lottie-player,.jtl-lot lottie-player{width:100%;height:100%}
+.tl-lot{width:58px;height:58px;margin:0 auto 8px;position:relative;z-index:2}
+/* trust bar */
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.trust .t{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px 10px;box-shadow:var(--sh-sm)}
+.trust .v{font-size:24px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.trust .l{font-size:12px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.4}
+/* section headers */
+.kicker{text-align:center;color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.06em;margin-bottom:8px}
+.sec-dark .kicker{color:#ff6b6b}
+.sec-t{font-size:31px;font-weight:900;text-align:center;line-height:1.2;letter-spacing:-.01em;margin-bottom:10px}
+.sec-sub{text-align:center;color:var(--muted);max-width:610px;margin:0 auto 30px;font-size:16px}
+.sec-dark .sec-sub{color:rgba(255,255,255,.62)}
+/* thought bubble (problem) */
+.think{max-width:660px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px 30px 26px;box-shadow:var(--sh);position:relative;font-size:19px;line-height:1.8;color:#2a2f36;font-weight:500}
+.think::after{content:'';position:absolute;bottom:-16px;right:60px;width:30px;height:30px;background:#fff;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.think .lead-in{display:block;color:var(--accent);font-weight:800;font-size:15px;margin-bottom:12px;letter-spacing:.01em}
+.think .dots{display:flex;gap:6px;margin-top:16px}
+.think .dots i{width:8px;height:8px;border-radius:50%;background:var(--line-r)}
+.think-foot{text-align:center;margin-top:34px;font-size:17px;font-weight:700;color:var(--ink)}
+.think-foot b{color:var(--accent)}
+/* fails grid */
+.fails{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fail{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--sh-sm);transition:.2s}
+.fail:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+.fail .fi{width:66px;height:66px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.fail .fi svg{width:24px;height:24px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fail b{display:block;font-size:17px;margin-bottom:5px}
+.fail p{color:var(--muted);font-size:14.5px;line-height:1.65}
+/* JET scroll-fill timeline */
+.jtl{position:relative;padding-right:60px;max-width:680px;margin:0 auto}
+.jtl-line{position:absolute;right:29px;top:8px;bottom:8px;width:4px;background:var(--line-r);border-radius:4px}
+.sec-dark .jtl-line{background:rgba(255,255,255,.14)}
+.jtl-fill{position:absolute;right:29px;top:8px;width:4px;background:var(--grad);border-radius:4px;height:0}
+.jtl-item{position:relative;margin-bottom:22px}
+.jtl-item:last-child{margin-bottom:0}
+.jtl-node{position:absolute;right:-46px;top:0;width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid var(--line-r);display:flex;align-items:center;justify-content:center;transition:.35s;color:var(--faint);font-weight:900;font-size:18px}
+.sec-dark .jtl-node{background:#fff;border-color:rgba(194,21,28,.4)}
+.sec-dark .jtl-item.on .jtl-node{background:#fff;border-color:rgba(194,21,28,.95);color:var(--accent);box-shadow:0 0 24px rgba(194,21,28,.55),0 8px 20px rgba(0,0,0,.4)}
+.jtl-node lottie-player{width:32px;height:32px}
+.jtl-item.on .jtl-node{border-color:transparent;background:var(--grad);color:#fff;box-shadow:0 8px 22px rgba(194,21,28,.4);transform:scale(1.06)}
+.jtl-node svg{width:22px;height:22px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.jtl-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--sh-sm);transition:.4s cubic-bezier(.2,.7,.2,1);opacity:.5;transform:translateX(12px)}
+.sec-dark .jtl-card{background:linear-gradient(180deg,#1c222c,#12161d);border:1px solid rgba(255,255,255,.13);box-shadow:0 12px 34px rgba(0,0,0,.5)}
+.sec-dark .jtl-item.on .jtl-card{border-color:rgba(194,21,28,.55);box-shadow:0 16px 46px rgba(0,0,0,.6),0 0 26px rgba(194,21,28,.20)}
+.jtl-item.on .jtl-card{opacity:1;transform:none;box-shadow:var(--sh);border-color:var(--line-r)}
+.jtl-card h4{font-size:18px;font-weight:800;margin-bottom:5px}
+.jtl-card p{color:var(--ink);font-size:14.7px}
+.sec-dark .jtl-card p{color:rgba(255,255,255,.66)}
+/* value proof timeline (horizontal) */
+.tl{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px 24px 24px;box-shadow:var(--sh);position:relative;overflow:hidden;max-width:720px;margin:0 auto}
+.tl-track{display:flex;justify-content:space-between;position:relative;margin:20px 0 0}
+.tl-track::before{content:'';position:absolute;top:29px;right:6%;left:6%;height:4px;background:var(--line-r);border-radius:4px;opacity:.5}
+.tl-track::after{content:'';position:absolute;top:29px;right:6%;height:4px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--green));border-radius:4px;width:0;transition:width 1.6s ease}
+.tl.on .tl-track::after{width:88%}
+.tl-pt{position:relative;z-index:2;text-align:center;flex:1}
+.tl-pt .dot{width:42px;height:42px;border-radius:50%;background:#fff;border:4px solid var(--accent);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);box-shadow:0 4px 12px rgba(194,21,28,.2)}
+.tl-pt.g .dot{border-color:var(--green);color:var(--green)}
+.tl-pt .y{font-size:12.5px;color:var(--faint);font-weight:700}
+.tl-pt .p{font-size:18px;font-weight:900;margin-top:3px}
+.tl-note{text-align:center;margin-top:20px;font-size:15px;color:var(--muted)}
+.tl-note b{color:var(--green)}
+/* value 3-cards (was timeline) */
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:760px;margin:0 auto}
+.vcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 16px;text-align:center;box-shadow:var(--sh-sm);transition:.2s}
+.vcard:hover{transform:translateY(-3px);box-shadow:var(--sh);border-color:var(--line-r)}
+.vcard lottie-player{width:76px;height:76px;margin:0 auto 10px}
+.vcard .y{font-size:12.5px;color:var(--faint);font-weight:700}
+.vcard .p{font-size:23px;font-weight:900;margin-top:4px;color:var(--ink)}
+.vcard .p span{font-size:12px;font-weight:600;color:var(--muted)}
+.vcard.g .p{color:var(--green)}
+@media(max-width:600px){
+  .vgrid{grid-template-columns:1fr;gap:11px}
+  .vcard{display:flex;align-items:center;gap:16px;text-align:right;padding:16px 18px}
+  .vcard lottie-player{margin:0;flex:0 0 auto;width:62px;height:62px}
+  .vcard .p{font-size:20px}
+}
+/* testimonials */
+.revs{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 16px;-webkit-overflow-scrolling:touch}
+.revs::-webkit-scrollbar{height:6px}.revs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:6px}
+.revs img{scroll-snap-align:center;flex:0 0 78%;max-width:340px;height:auto;background:#fff;border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.4);cursor:zoom-in;object-fit:contain}
+@media(min-width:720px){.revs img{flex-basis:32%}}
+/* stories */
+.stories{display:flex;flex-direction:column;align-items:center;position:relative}
+.story{position:sticky;width:100%;max-width:640px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 -4px 24px rgba(16,16,16,.08),0 16px 44px rgba(16,16,16,.12);margin-bottom:44px}
+.stories .story:nth-child(1){top:92px}
+.stories .story:nth-child(2){top:110px}
+.stories .story:nth-child(3){top:128px}
+.stories .story:last-child{margin-bottom:0}
+@media(max-width:600px){.story{padding:22px;margin-bottom:34px}.stories .story:nth-child(1){top:78px}.stories .story:nth-child(2){top:92px}.stories .story:nth-child(3){top:106px}}
+.story .top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.story .av{width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;flex:0 0 auto}
+.story .nm{font-weight:800;font-size:17px}.story .ro{font-size:13px;color:var(--faint)}
+.story .big{background:var(--tintg);border:1px solid rgba(21,122,58,.18);color:var(--green);font-weight:900;font-size:15px;border-radius:12px;padding:9px 14px;display:inline-block;margin:4px 0 12px}
+.story p{font-size:15.5px;color:var(--ink);line-height:1.75}.story p b{color:var(--accent)}
+/* tom */
+.tom{display:grid;grid-template-columns:1fr 240px;gap:28px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--sh)}
+.tom img{width:100%;border-radius:16px;object-fit:contain;background:transparent}
+.tom h3{font-size:23px;font-weight:900;margin-bottom:10px}
+.tom h3 span{color:var(--accent)}
+.tom p{color:var(--muted);font-size:15.5px;margin-bottom:9px}.tom p b{color:var(--ink)}
+.tom .sig{color:var(--green);font-weight:800;font-size:15.5px;margin-top:4px}
+@media(max-width:620px){.tom{grid-template-columns:1fr;text-align:center}.tom img{max-width:230px;margin:0 auto}}
+/* faq */
+.faq details{background:#fff;border:1px solid var(--line);border-radius:15px;margin-bottom:11px;box-shadow:var(--sh-sm);overflow:hidden;transition:.2s}
+.faq details[open]{border-color:var(--line-r);box-shadow:var(--sh)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:800;font-size:16.5px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pl{width:26px;height:26px;flex:0 0 auto;border-radius:8px;background:var(--tint);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;transition:.25s}
+.faq details[open] summary .pl{transform:rotate(45deg)}
+.faq .a{padding:0 20px 18px;color:var(--muted);font-size:15px;line-height:1.7}
+/* convert (survey-language, inviting) */
+.join-card{max-width:520px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px 30px;box-shadow:var(--sh);text-align:center}
+.join-card .kicker{margin-bottom:6px}
+.join-card h2{font-size:26px;font-weight:900;margin-bottom:10px}
+.join-card p{color:var(--muted);font-size:16px;margin-bottom:22px}
+.jfield{text-align:right;margin-bottom:8px}
+.jfield label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}
+.jfield input{width:100%;background:#fff;border:1.6px solid var(--line);border-radius:13px;padding:15px;font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:.16s}
+.jfield input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.jfield input.err{border-color:var(--accent)}
+.jerr{color:var(--accent);font-size:12.5px;font-weight:700;min-height:16px;text-align:right;margin:4px 0 10px}
+.join-card .btn{width:100%}
+.join-card .note{font-size:13px;color:var(--faint);margin-top:14px}
+/* calendar embed (hot) */
+.cal-wrap{background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:var(--sh);overflow:hidden;max-width:760px;margin:0 auto}
+.cal-wrap iframe{width:100%;height:660px;border:0;border-radius:12px;display:block}
+@media(max-width:560px){.cal-wrap iframe{height:600px}}
+/* footer */
+footer{background:var(--dark);color:rgba(255,255,255,.66);padding:34px 0 26px;text-align:center}
+footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;border-radius:13px;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.foot-title{font-size:15px;font-weight:700;color:rgba(255,255,255,.85);max-width:440px;margin:0 auto 12px;line-height:1.55}
+.social{display:flex;justify-content:center;gap:10px;margin:2px 0 18px}
+.social a{width:48px;height:48px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.social a:hover{transform:translateY(-3px) scale(1.07)}
+.social lottie-player{width:100%;height:100%}
+.social svg{width:20px;height:20px;fill:#fff}
+.disc{font-size:12.5px;line-height:1.65;max-width:640px;margin:0 auto}
+.disc b{color:#ff6b6b}
+.foot-links{margin-top:12px;font-size:12.5px}
+.foot-links a{color:rgba(255,255,255,.55);text-decoration:underline;margin:0 8px}
+.copy{font-size:11.5px;color:rgba(255,255,255,.4);margin-top:12px}
+/* lightbox + float */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.lb.on{display:flex}.lb img{max-width:96vw;max-height:92vh;border-radius:10px}
+.lb .x{position:absolute;top:18px;left:18px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:24px;cursor:pointer}
+.float{position:fixed;left:0;right:0;bottom:0;z-index:55;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 16px;transform:translateY(120%);transition:.35s;box-shadow:0 -6px 24px rgba(16,16,16,.1)}
+.float.on{transform:translateY(0)}
+.float a{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:16px;padding:14px;border-radius:13px;max-width:820px;margin:0 auto;box-shadow:0 8px 22px rgba(194,21,28,.32)}
+.float a .arw{width:34px}
+.rv{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media(max-width:600px){
+  h1{font-size:29px}.hero .sub{font-size:16px}.sec-t{font-size:24px}
+  .trust{grid-template-columns:1fr 1fr}.fails{grid-template-columns:1fr}
+  .tl-pt .p{font-size:14px}.tl-pt .dot{width:34px;height:34px;font-size:12px}
+  .think{font-size:16.5px;padding:24px}.join-card h2{font-size:22px}
+}
+
+/* google reviews gallery */
+.rgal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+@media(max-width:720px){.rgal{grid-template-columns:repeat(2,1fr);gap:12px}}
+.rgal .rev{width:100%;height:auto;display:block;object-fit:contain;background:#fff;border-radius:12px;border:1px solid rgba(255,255,255,.18);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05),0 0 22px rgba(255,255,255,.13);cursor:zoom-in;transition:transform .2s ease,box-shadow .2s ease}
+.rgal .rev:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.6),0 0 30px rgba(255,255,255,.22)}
+.rgal .rev.hid{display:none}
+.rgal-more{text-align:center;margin-top:26px}
+.rgal-btn{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.26);color:#fff;font-family:inherit;font-weight:800;font-size:16px;padding:14px 32px;border-radius:100px;cursor:pointer;transition:.16s}
+.rgal-btn:hover{background:rgba(255,255,255,.16);transform:translateY(-1px)}
+
+.story .av img{width:100%!important;height:100%!important;object-fit:cover;border-radius:50%;display:block;max-width:none!important}
+.story .av{overflow:hidden}
+
+/* הוכחות מתחם H (גל 12/10): מסמכים אמיתיים, ברזולוציה מלאה, לחיצה פותחת את המקור */
+.proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:880px;margin:26px auto 0}
+.proof-card{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;color:var(--ink);box-shadow:var(--sh)}
+.proof-card img{width:100%;height:auto;aspect-ratio:16/10;object-fit:contain;object-position:center;border-radius:10px;border:1px solid var(--line);background:#f6f7f9;display:block}
+.proof-card span{font-size:14.5px;line-height:1.5;text-wrap:pretty}
+.proof-card b{color:var(--accent)}
+.proof-hint{text-align:center;font-size:13px;color:var(--muted);margin-top:12px}
+.sec-dark .proof-card{background:#fff}
+.proof-link{display:inline-block;margin-top:10px;font-size:14px;font-weight:700;color:var(--accent);text-decoration:none}
+.sec-dark .proof-link{color:#ff8a8f}
+.proof-thumb{display:block;margin-top:10px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.proof-thumb img{width:100%;height:auto;display:block}
+@media(max-width:700px){.proof{grid-template-columns:1fr}}
+
+/* ═══ גרסה B, דף התוצאה (19/10): רק תוספות על השפה של HPAGE. טוקנים: 8pt, רדיוסים 12/18/20, האדום של המותג לכוונת תשומת לב ═══ */
+:root{--s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px}
+.wrap-l{max-width:1120px;margin:0 auto;padding:0 20px}
+.sec{padding:var(--s6) 0}
+@media(max-width:600px){.sec{padding:var(--s5) 0}}
+.sec-t .hl,.pain-h .hl,.rc-sum .hl,h1 .hl{white-space:normal}
+.sec-dark .hl{background:linear-gradient(135deg,#ff6167,#ff8f6b);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.left{text-align:right}.left.kicker,.left .kicker{text-align:right}
+/* ── 1. התוצאה (גל 19/10, ח־67): על התמונה של CPAGE עם אוברליי כהה. בר התקדמות, כותרת, המשפט מתחת, ואז הכרטיס.
+   בטלפון התמונה רק מאחורי הטקסט וראש הכרטיס; במחשב הטקסט מימין והכרטיס משמאל, שניהם על התמונה ── */
+.rh{position:relative;isolation:isolate;overflow:hidden;color:#fff}
+.rh-bg{position:absolute;inset:0;z-index:-2}
+.rh-bg img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+.rh-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,17,22,.62),rgba(14,17,22,.42) 42%,rgba(14,17,22,.66))}
+.rh-grid{display:grid;gap:var(--s3);padding-block:var(--s3) var(--s4)}
+.rh-text{text-align:center}
+.rh h1{color:#fff;font-size:39px;line-height:1.18;margin:0;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+.rh h1 .hl{background:linear-gradient(135deg,#ff6167,#ff9a45);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.rh-sub{font-size:16.5px;color:rgba(255,255,255,.94);font-weight:500;line-height:1.6;margin-top:var(--s2);white-space:pre-line;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.rcard-wrap{position:relative}
+.rcard-wrap::before{content:'';position:absolute;top:72px;bottom:-400px;left:-100vw;right:-100vw;background:var(--bg);z-index:-1}
+/* בר ההתקדמות: מתמלא מימין לשמאל עד 88%, כמו "כמעט סיימנו" */
+.pbar{position:relative;display:block;max-width:440px;height:48px;margin:0 auto var(--s3);border-radius:999px;background:#E3E5E9;overflow:hidden;text-decoration:none;box-shadow:0 10px 28px rgba(0,0,0,.32)}
+.pfill{position:absolute;top:0;bottom:0;inset-inline-start:0;width:90%;border-radius:999px;background:var(--grad);overflow:hidden;animation:pgrow 1.9s cubic-bezier(.2,.7,.2,1) .3s both}
+.pfill::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(120%);animation:pshine 3.4s ease-in-out 2.4s infinite}
+.ptx{position:relative;display:flex;align-items:center;justify-content:center;height:100%;padding:0 14px;font-weight:900;font-size:16.5px;color:#2B2F36;white-space:nowrap}
+.ptx2{position:absolute;top:0;bottom:0;inset-inline-start:0;width:var(--bw,100%);color:#fff}
+.pbar.done .pfill{width:100%;animation:none}
+@keyframes pgrow{from{width:8%}to{width:90%}}
+@keyframes pshine{0%{transform:translateX(120%)}55%,100%{transform:translateX(-120%)}}
+@media(prefers-reduced-motion:reduce){.pfill,.pfill::after{animation:none}}
+.rcard{position:relative;color:var(--ink);background:#fff;border:2px solid var(--accent);border-radius:20px;padding:20px 20px 18px;box-shadow:0 14px 44px rgba(194,21,28,.12);text-align:right}
+.rc-intro{font-size:14.5px;color:var(--muted);font-weight:600;line-height:1.55}
+.rc-sum{font-size:21px;font-weight:900;line-height:1.38;margin-top:6px}
+.rc-rows{list-style:none;margin-top:var(--s2)}
+.rc-rows li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.rc-ic{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px;margin-top:2px}
+.rc-ic.ok{background:var(--green)}.rc-ic.ask{background:#8A8F98}.rc-ic.honest{background:var(--gold)}
+.rc-ic svg{width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.rc-nd{display:block;font-weight:800;font-size:15.5px;line-height:1.45}
+.rc-an{display:block;font-size:15px;color:var(--muted);margin-top:2px;line-height:1.6}
+.rc-rows li.open{background:var(--tint);border:0;border-radius:12px;padding:12px;margin-top:6px}
+.rc-rows li.open .rc-an{color:var(--ink)}
+.rcard .btn{width:100%;margin-top:var(--s2);font-size:17px;padding:15px 16px;white-space:nowrap}
+/* {{...}} בכותרת הכרטיס: קופסה בגרדיאנט המותג עם טקסט לבן (גל: "חייב להיות בולט") */
+.rc-next{font-size:17.5px;font-weight:500;color:var(--ink);line-height:1.5;margin-top:8px}
+.hlx{font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.rc-calm{text-align:center;font-size:13.5px;color:var(--faint);margin-top:10px;line-height:1.55}
+.rc-num{text-align:center;font-size:13.5px;color:var(--muted);margin-top:4px}
+.rc-num b{direction:ltr;unicode-bidi:isolate;color:var(--ink)}
+.rc-num a{color:var(--accent);font-weight:700;margin-inline-start:6px}
+.rc-booked{margin-top:var(--s2);background:var(--tintg);color:var(--green);font-weight:800;border-radius:12px;padding:12px 14px;line-height:1.55}
+@media(min-width:960px){
+  .rh-bg::after{background:linear-gradient(270deg,rgba(14,17,22,.74),rgba(14,17,22,.5) 55%,rgba(14,17,22,.38))}
+  .rh-grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s3);align-items:start;padding-block:var(--s5) var(--s6)}
+  .rh-text{grid-column:1/span 6;text-align:right;padding-top:var(--s4)}
+  .pbar{margin-inline:0}
+  .rh-sub{max-width:520px}
+  .rcard-wrap{grid-column:7/span 6}
+  .rcard-wrap::before{display:none}
+  .rcard{padding:26px 28px 22px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+}
+@media(max-width:600px){.rh h1{font-size:27px}.rh-sub{font-size:15.5px}.pbar{height:46px}.ptx{font-size:clamp(14px,4.1vw,16px);padding:0 10px}.rcard .btn{font-size:clamp(15px,4.3vw,17px);padding:15px 12px;gap:10px}.rcard .btn .arw{width:30px}}
+/* ── 2. יש לך כסף בצד (לפי העיצוב לדוגמה של גל) ── */
+.pain{background:#fff radial-gradient(rgba(15,18,22,.055) 1px,transparent 1.3px) 0 0/22px 22px;padding:var(--s6) 0}
+.pain-top{display:grid;gap:var(--s3);align-items:center}
+.pain-h{font-size:39px;font-weight:900;line-height:1.15;letter-spacing:-.02em;border-inline-start:5px solid var(--accent);padding-inline-start:18px;margin-top:6px}
+.pain-sub{font-size:17px;color:var(--muted);margin-top:var(--s2);max-width:580px;font-weight:500;line-height:1.7}
+.pain-ph{display:none}
+.pain-lead{font-weight:800;font-size:17px;margin:var(--s5) 0 var(--s2)}
+.thoughts{display:grid;gap:var(--s2)}
+.tc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 22px;box-shadow:var(--sh-sm)}
+.tico{width:56px;height:56px;border-radius:50%;background:var(--tint);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.tico svg{width:26px;height:26px;stroke:var(--accent);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tc h3{font-size:18px;font-weight:900;line-height:1.45;margin-top:var(--s2)}
+.tc .rule{display:block;width:36px;height:3px;background:var(--accent);border-radius:2px;margin:14px 0 12px}
+.tc p{color:var(--muted);font-size:15px;line-height:1.65}
+.punch{margin-top:var(--s4);background:var(--tint);border:1px solid var(--line-r);border-radius:20px;padding:24px;display:flex;gap:20px;align-items:center}
+.punch .p1,.punch .p2{font-size:28px;font-weight:900;line-height:1.22;letter-spacing:-.01em}
+.punch-after{text-align:center;margin:var(--s3) auto 0;max-width:640px}
+.punch-after .pk{font-weight:900;font-size:17px}
+.punch-after .pp{color:var(--muted);font-size:15.5px;margin-top:6px}
+.punch-after .pc{font-weight:800;font-size:16.5px;margin-top:10px}
+@media(min-width:960px){
+  .pain-top{grid-template-columns:repeat(12,minmax(0,1fr))}
+  .pain-head{grid-column:1/span 7}
+  .pain-ph{display:block;grid-column:10/span 3;position:relative;max-width:280px;justify-self:end}
+  .pain-ph img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:20px;position:relative;z-index:1}
+  .pain-ph::before{content:'';position:absolute;inset:18px -14px -14px 18px;border:1.5px solid var(--line-r);border-radius:22px}
+  .thoughts{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+}
+@media(max-width:600px){.pain{padding:var(--s5) 0}.pain-h{font-size:29px}.punch{padding:20px;gap:14px;align-items:flex-start}.punch .p1,.punch .p2{font-size:21px}.punch .tico{width:46px;height:46px}.punch .tico svg{width:22px;height:22px}}
+/* ── 3. ציר הזמן: כותרת בצד, הציר לידה (אסימטרי) ── */
+.split{display:grid;gap:var(--s3)}
+.split .kicker,.split .sec-t,.split .sec-sub{text-align:right;margin-inline:0}
+/* "אנחנו כאן" (גל 19/10, ח־67): ירוק, שאי אפשר לפספס גם בגלילה מהירה. נקודה ירוקה על הציר, מסגרת ירוקה עבה ורקע ירוק בהיר, תגית אדומה עם דגל לבן */
+.jtl-item.here .jtl-node{background:linear-gradient(135deg,#22a85c,#157A3A);border-color:transparent;color:#fff;box-shadow:0 0 0 8px rgba(21,122,58,.2),0 8px 22px rgba(21,122,58,.38);transform:scale(1.08)}
+.jtl-item.here .jtl-card{background:#EAF7EF;border:3px solid #157A3A;opacity:1;transform:none;box-shadow:0 14px 34px rgba(21,122,58,.2)}
+.jtl-item.here .jtl-card h4{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.jtl-item.here .jtl-card p{color:var(--ink)}
+.jtl-item.done .jtl-node svg{stroke:currentColor}
+.herepulse{width:12px;height:12px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
+.here-tag{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:900;color:#fff;background:var(--grad);border-radius:999px;padding:5px 13px;box-shadow:0 6px 16px rgba(194,21,28,.32)}
+.here-tag svg{width:15px;height:15px;fill:#fff;stroke:#fff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.jtl-item.next .jtl-card h4{color:var(--muted)}
+@media(min-width:960px){.split{grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s3)}.split-head{grid-column:1/span 5;position:sticky;top:110px;align-self:start}.split-body{grid-column:7/span 6}.split .jtl{margin:0}}
+/* ── 4. למה דווקא עכשיו ── */
+.now{text-align:center}
+.now .dateb{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,107,107,.5);color:#ff8a8f;font-weight:800;font-size:13px;border-radius:999px;padding:6px 14px;margin-bottom:var(--s2)}
+.now .sec-t{font-size:39px}
+.now .sec-sub{max-width:560px;font-size:17px}
+.now lottie-player{width:84px;height:84px;margin:0 auto var(--s1)}
+@media(max-width:600px){.now .sec-t{font-size:29px}}
+/* ── 5. החלופות (הכרטיסים של CPAGE) ── */
+.fails{max-width:840px;margin:0 auto}
+.alt-close{text-align:center;max-width:620px;margin:var(--s4) auto 0;font-size:17px;font-weight:800;line-height:1.55}
+/* ── 6. שלוש חותמות ── */
+.dgrid{display:grid;gap:var(--s2);max-width:960px;margin:0 auto}
+.dcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--sh-sm);display:grid;grid-template-columns:64px 1fr;gap:4px 14px;align-items:center}
+.dcard lottie-player{grid-row:1/span 2}
+.dcard b{font-size:16.5px;line-height:1.45}
+.dcard span{font-size:13.5px;color:var(--faint);font-weight:600}
+.doc-close{text-align:center;margin-top:var(--s3);font-weight:800;font-size:16.5px}
+@media(min-width:960px){.dgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.dcard{grid-template-columns:1fr;text-align:center;justify-items:center;padding:26px 20px}.dcard lottie-player{grid-row:auto}}
+/* ── 7. היישוב לפניך ── */
+.facts4{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
+.facts4 .t{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 14px;box-shadow:var(--sh-sm);text-align:center}
+.facts4 .v{font-size:23px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.15}
+.facts4 .l{font-size:13px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.45}
+.mapcard{max-width:560px;margin:var(--s4) auto 0}
+.mapcard img{max-height:320px;aspect-ratio:auto}
+.town-note{text-align:center;font-size:12.5px;color:var(--faint);margin-top:10px}
+/* ── 8. היציאה ── */
+.exitcard{max-width:760px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--sh);display:grid;grid-template-columns:72px 1fr;gap:var(--s2);align-items:start}
+.exitcard .kicker,.exitcard .sec-t{text-align:right}
+.exitcard .sec-t{font-size:26px;margin-bottom:8px}
+.exitcard p{color:var(--muted);font-size:16px;line-height:1.7}
+@media(max-width:600px){.exitcard{grid-template-columns:1fr;text-align:right}.exitcard .sec-t{font-size:22px}}
+/* ── 9. הביקורות ── */
+.revq{font-size:29px}
+.rev-src{text-align:center;color:rgba(255,255,255,.62);font-size:14px;margin-top:-4px}
+.gline{display:flex;align-items:center;justify-content:center;gap:10px;margin:var(--s2) 0 var(--s3)}
+.gline .gw{font:700 22px/1 Arial,Helvetica,sans-serif;letter-spacing:-.5px;direction:ltr}
+.gline .st{display:flex;gap:2px;direction:ltr}
+.gline b{font-size:18px}
+@media(max-width:600px){.revq{font-size:22px}}
+/* ── 10. תום ── */
+.tom .kicker{text-align:right}
+.tom .vis{color:var(--ink);font-weight:800;font-size:16px}
+.tom .grp{font-size:14px;color:var(--faint)}
+.vals{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.vals span{background:var(--tint);color:var(--accent2);font-weight:800;font-size:13px;border-radius:999px;padding:5px 13px}
+@media(max-width:620px){.tom .kicker{text-align:center}.vals{justify-content:center}}
+/* ── 11. בחירת מועד (הכרטיס של HPAGE) ── */
+.join-card{max-width:560px}
+.join-card h2 .hl{white-space:normal}
+.mynum{background:var(--bg);border-radius:12px;padding:10px 14px;font-size:14.5px;margin:-8px 0 14px}
+.mynum b{direction:ltr;unicode-bidi:isolate}
+.wins{display:grid;gap:10px;border:0;margin-bottom:14px}
+.win input{position:absolute;opacity:0;pointer-events:none}
+.win label{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--bg);border:1.6px solid var(--line);border-radius:13px;padding:14px 16px;cursor:pointer;transition:.16s}
+.win label:hover{border-color:var(--line-r)}
+.win .wn{font-weight:900;font-size:17px}
+.win .wt{font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.win input:checked + label{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.win input:focus-visible + label{outline:3px solid var(--ink);outline-offset:2px}
+.consent{display:flex;gap:10px;align-items:flex-start;text-align:right;font-size:15px;font-weight:700;line-height:1.5;margin:6px 0 4px;cursor:pointer}
+.consent input{width:22px;height:22px;flex:0 0 auto;margin-top:1px;accent-color:var(--accent)}
+.join-card .btn{font-size:17px;padding:16px 18px;white-space:nowrap}
+.join-card .after{font-size:13px;color:var(--faint);margin-top:12px}
+.join-card .alt{font-size:14px;margin-top:10px}
+.join-card .alt a{color:var(--ink);font-weight:700}
+.done-box .big{width:64px;height:64px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.done-box .big svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+/* ── ח־68: ההערות של גל, 19/10 ── */
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.wa-btn span{text-decoration:underline;text-underline-offset:3px}
+.wa-btn .wa-ic{width:18px;height:18px;fill:#25D366}
+.wa-btn[hidden]{display:none}
+.join-card .alt a{display:inline-flex;align-items:center;gap:6px}
+.join-card .alt .wa-ic{width:18px;height:18px;fill:#25D366}
+.punch-after .pk{display:inline-block;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.nowbox{display:flex;align-items:center;gap:14px;max-width:600px;margin:var(--s3) auto 0;background:#fff;border-radius:16px;padding:16px 20px;text-align:right;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.nowbox .nb-ic{flex:none;width:50px;height:50px;border-radius:50%;background:var(--tint);display:flex;align-items:center;justify-content:center}
+.nowbox .nb-ic svg{width:26px;height:26px;stroke:var(--accent);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.nowbox p{margin:0;font-weight:900;font-size:17px;line-height:1.45;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.mid-cta{text-align:center;margin-top:var(--s4)}
+.mid-cta p{font-weight:800;font-size:16px;color:var(--ink);margin-bottom:10px}
+.mid-cta .btn{width:100%;max-width:440px;justify-content:center;white-space:nowrap}
+.tom .kicker{color:var(--ink)}
+.tom .vh{color:var(--accent);font-weight:800;font-size:13.5px;letter-spacing:.03em;margin-top:14px}
+.tom .vals{margin:8px 0 12px}
+.tom .tnote{margin-top:14px;background:var(--tintg);color:var(--ink);border-radius:12px;padding:11px 14px;font-size:14.5px;font-weight:700;line-height:1.55}
+.tom{padding-bottom:0;align-items:end}
+.tom>div{padding-bottom:28px;align-self:center}
+.tom img{align-self:end;display:block;border-radius:0;margin-bottom:0}
+.win label{border-width:2px}
+.win .wico{flex:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.win .wico svg{width:24px;height:24px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* אייקון | שם החלון + השעות בשורה אחת, והמיקרו קופי בשורה משלו לכל הרוחב */
+.win label{display:grid;grid-template-columns:40px 1fr auto;column-gap:12px;row-gap:1px;align-items:center}
+.win .wtx{display:contents}
+.win .wico{grid-column:1;grid-row:1/3}
+.win .wn{grid-column:2;grid-row:1;text-align:right}
+.win .wt{grid-column:3;grid-row:1}
+.win .wm{grid-column:2/4;grid-row:2;text-align:right;font-size:13.5px;color:var(--muted);font-weight:600}
+.w-m label{border-color:#F5B800}.w-m .wico{background:#FFF6D6}.w-m .wico svg{stroke:#E0A400}
+.w-n label{border-color:#3B82F6}.w-n .wico{background:#E6F0FF}.w-n .wico svg{stroke:#2563EB}
+.w-e label{border-color:#14161B}.w-e .wico{background:#ECEDF0}.w-e .wico svg{stroke:#14161B}
+.w-m input:checked + label{border-color:#F5B800;background:#FFFBEA;box-shadow:0 0 0 4px rgba(245,184,0,.25)}
+.w-n input:checked + label{border-color:#3B82F6;background:#F2F7FF;box-shadow:0 0 0 4px rgba(59,130,246,.22)}
+.w-e input:checked + label{border-color:#14161B;background:#F4F5F7;box-shadow:0 0 0 4px rgba(20,22,27,.18)}
+#jAltBox{margin:2px 0 8px}
+@media(max-width:620px){.tom>div{padding-bottom:8px}.tom img{max-width:200px}}
+@media(max-width:600px){.punch{flex-direction:column;align-items:center;text-align:center}.nowbox p{font-size:15.5px}.nowbox{padding:14px 16px}}
+.rgal .rev{cursor:zoom-in}
+.rlb{position:fixed;inset:0;z-index:300;background:rgba(10,12,16,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(76px + env(safe-area-inset-top,0px)) 16px calc(22px + env(safe-area-inset-bottom,0px))}
+.rlb[hidden]{display:none!important}
+.rlb-x{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));inset-inline-end:14px;display:flex;align-items:center;gap:8px;background:#fff;color:#14161B;border:0;border-radius:999px;padding:11px 20px 11px 16px;font:inherit;font-weight:900;font-size:18px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.rlb-x svg{width:24px;height:24px;stroke:currentColor;stroke-width:3;fill:none;stroke-linecap:round}
+.rlb-st{flex:1;min-height:0;width:100%;max-width:760px;display:flex;align-items:center;justify-content:center}
+.rlb-st img{max-width:100%;max-height:100%;border-radius:14px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.rlb-nav{display:flex;align-items:center;gap:22px;margin-top:18px}
+.rlb-b{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.4);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.rlb-b svg{width:26px;height:26px;stroke:currentColor;stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.rlb-n{color:#fff;font-weight:800;font-size:16px;font-variant-numeric:tabular-nums;min-width:72px;text-align:center;direction:ltr}
+.rlb-x:focus-visible,.rlb-b:focus-visible{outline:3px solid #fff;outline-offset:3px}
+/* ── 12. שאלות ── */
+.faq .a{white-space:pre-line}
+/* ── צף ── */
+.float a{font-size:16px}
+/* ── סרגל הדמו (רק עם ?demo=1) ── */
+.demo{background:#1C1933;color:#fff;font-size:12.5px}
+.demo .wrap-l{display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;align-items:center;padding-block:8px}
+.demo .wrap-l>b{grid-column:1/-1}
+.demo label{display:flex;gap:4px;align-items:center;min-width:0}
+.demo select,.demo input{font:inherit;font-size:12.5px;border-radius:8px;border:0;padding:5px 6px;width:100%;min-width:0}
+@media(min-width:820px){.demo .wrap-l{display:flex;flex-wrap:wrap}.demo select,.demo input{width:auto}}
+/* ── רימרקטינג C (ח־74): העוגן מתחת לכותרת הדביקה, וגרסת המסמכים בלי החלקים האישיים ── */
+#docs,#place{scroll-margin-top:64px}
+.docs-mode .rh,.docs-mode #join,.docs-mode #float,.docs-mode .mid-cta p,.docs-mode .foot-title{display:none!important}
+</style>
+</head>
+<body>
+<header id="hdr"><div class="wrap-l" style="display:flex;align-items:center;justify-content:space-between;padding-block:10px">
+  <img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/>
+  <a class="h-cta" href="#join" onclick="scrollJoin(event)"><span data-t="HDR.cta"></span> <svg class="arw" viewBox="0 0 36 11"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a>
+</div></header>
+<div class="demo" id="demo" hidden><div class="wrap-l" id="demoIn"></div></div>
+
+<!-- 1. התוצאה, על התמונה של CPAGE: בר ההתקדמות, הכותרת, המשפט שמתחתיה, וכרטיס הנקודות שסומנו (אאוטליין אדום) -->
+<div class="rh">
+  <div class="rh-bg"><picture><source media="(min-width:700px)" srcset="/b/media/hero-cpage.webp"/><img src="/b/media/hero-cpage-m.webp" width="900" height="600" alt="" fetchpriority="high"/></picture></div>
+  <div class="wrap-l rh-grid">
+    <div class="rh-text">
+      <a class="pbar" id="pbar" href="#join" onclick="scrollJoin(event)"><span class="ptx" id="pbarT"></span><span class="pfill" aria-hidden="true"><span class="ptx ptx2" id="pbarT2"></span></span></a>
+      <h1 id="hH"></h1>
+      <p class="rh-sub" data-t="H.sub"></p>
+    </div>
+    <div class="rcard-wrap"><div class="rcard" id="res">
+      <p class="rc-intro" data-t="C.title"></p>
+      <div id="cSum"><p class="rc-sum" id="cS"></p><p class="rc-next" id="cN"></p></div>
+      <ul class="rc-rows" id="pts"></ul>
+      <div id="ctaBox">
+        <a class="btn" href="#join" onclick="scrollJoin(event)"><span data-t="C.cta"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
+        <p class="rc-calm" data-t="C.call"></p>
+        <p class="rc-num"><span id="cNum"></span><a id="dSave" href="#" download="kadima-h.vcf"></a></p>
+      </div>
+      <p class="rc-booked" id="cBooked" hidden></p>
+      <a class="wa-btn" id="cWa" href="https://wa.me/972533025464" target="_blank" rel="noopener" hidden><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35m-5.42 7.4a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/></svg><span data-t="C.wa"></span></a>
+    </div></div>
+  </div>
+</div>
+
+<!-- 2. יש לך כסף בצד (לפי העיצוב לדוגמה של גל: כותרת עם פס אדום, 3 מחשבות, קופסת מחץ) -->
+<section class="pain" aria-labelledby="pH"><div class="wrap-l">
+  <div class="pain-top">
+    <div class="pain-head">
+      <div class="kicker left rv" data-t="PAIN.k"></div>
+      <h2 class="pain-h rv" id="pH"><span data-t="PAIN.h1"></span><br/><span class="hl" data-t="PAIN.h2"></span></h2>
+      <p class="pain-sub rv" data-t="PAIN.sub"></p>
+    </div>
+    <div class="pain-ph rv"><img src="/b/media/life.webp" width="640" height="800" alt="רחוב מגורים, מתוך הסרטון של תום" loading="lazy"/></div>
+  </div>
+  <p class="pain-lead rv" data-t="PAIN.lead"></p>
+  <div class="thoughts">
+      <article class="tc rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><h3 data-tq="PAIN.t1"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t1"></p></article>
+      <article class="tc rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></span><h3 data-tq="PAIN.t2"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t2"></p></article>
+      <article class="tc rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><h3 data-tq="PAIN.t3"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t3"></p></article>
+  </div>
+  <div class="punch rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><div><p class="p1" data-t="PUNCH.1"></p><p class="p2 hl" data-t="PUNCH.2"></p></div></div>
+  <div class="punch-after rv"><p class="pk" data-t="PUNCH.k"></p><p class="pp" data-t="PUNCH.p"></p><p class="pc" data-t="PUNCH.c"></p></div>
+</div></section>
+
+<!-- 3. איפה מתחם H עומד היום: כותרת בצד, הציר לידה -->
+<section class="sec sec-tint"><div class="wrap-l split">
+  <div class="split-head">
+    <div class="kicker rv" data-t="K.tl"></div>
+    <div class="sec-t rv" data-th="E3H"></div>
+    <div class="sec-sub rv" data-t="E3S"></div>
+  </div>
+  <div class="split-body">
+    <div class="jtl" data-jet>
+      <div class="jtl-line"></div><div class="jtl-fill"></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 4. למה דווקא עכשיו (במקום ה־VSL) -->
+<section class="sec sec-dark now"><div class="wrap">
+  <lottie-player src="/lot-year-w.json" background="transparent" speed="1" autoplay loop></lottie-player>
+  <div class="dateb" data-t="NOW.badge"></div>
+  <div class="kicker" data-t="NOW.h"></div>
+  <div class="sec-t rv" data-th="NOW.big"></div>
+  <div class="sec-sub rv" data-t="NOW.p"></div>
+  <div class="nowbox rv"><span class="nb-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><p data-t="NOW.box"></p></div>
+</div></section>
+
+<!-- 5. כל חלופה פותרת רק חצי (הכרטיסים של CPAGE) -->
+<section class="sec sec-gray"><div class="wrap-l">
+  <div class="kicker" data-t="K.alt"></div>
+  <div class="sec-t rv" data-th="ALT.h"></div>
+  <div class="fails" style="margin-top:28px">
+      <div class="fail rv"><div class="fi"><lottie-player src="/lot-oash.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.1h"></b><p data-t="ALT.1p"></p></div>
+      <div class="fail rv"><div class="fi"><lottie-player src="/lot-dira.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.2h"></b><p data-t="ALT.2p"></p></div>
+      <div class="fail rv"><div class="fi"><lottie-player src="/lot-shuk.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.3h"></b><p data-t="ALT.3p"></p></div>
+      <div class="fail rv"><div class="fi"><lottie-player src="/lot-ads.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.4h"></b><p data-t="ALT.4p"></p></div>
+  </div>
+  <p class="alt-close rv" data-t="ALT.f"></p>
+</div></section>
+
+<!-- 6. שלוש חותמות (id=docs: לכאן מגיעים מרימרקטינג C) -->
+<section class="sec" id="docs"><div class="wrap-l">
+  <div class="kicker" data-t="K.docs"></div>
+  <div class="sec-t rv" data-th="E2H"></div>
+  <div class="sec-sub rv" data-t="E2L"></div>
+  <div class="dgrid">
+      <div class="dcard rv"><lottie-player src="/lot-cert1.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b data-t="E2.1"></b><span data-t="E2S.1"></span></div>
+      <div class="dcard rv"><lottie-player src="/lot-cert2.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b data-t="E2.2"></b><span data-t="E2S.2"></span></div>
+      <div class="dcard rv"><lottie-player src="/lot-cert3.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b data-t="E2.3"></b><span data-t="E2S.3"></span></div>
+  </div>
+  <div class="proof rv">
+    <div class="proof-card"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"><span data-tb="PROOF.1"></span></div>
+    <div class="proof-card"><img src="/proof/location-in-h.jpg" alt="מיקום החלקה בתוך מתחם H, מתוך הערכת השמאי" loading="lazy"><span data-tb="PROOF.2"></span></div>
+  </div>
+  <p class="doc-close rv" data-t="E2F"></p>
+  <div class="mid-cta rv"><p data-t="MID.micro"></p><a class="btn" href="#join" onclick="scrollJoin(event)"><span data-t="MID.cta"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a></div>
+</div></section>
+
+<!-- 7. היישוב לפניך (id=place: לכאן מגיעים ממודעת המפה) -->
+<section class="sec sec-gray" id="place"><div class="wrap-l split">
+  <div class="split-head">
+    <div class="kicker rv" data-t="K.town"></div>
+    <div class="sec-t rv" data-th="E4H"></div>
+    <div class="sec-sub rv" data-t="E4P"></div>
+  </div>
+  <div class="split-body"><div class="facts4 rv" id="eFacts"></div></div>
+</div>
+<div class="wrap-l"><div class="mapcard proof-card rv"><img src="/proof/subcompounds-map.jpg" alt="מפת מתחמי התכנון של קדימה צורן, ומתחם H במרכז היישוב" loading="lazy"><span data-tb="PROOF.3"></span></div>
+<p class="town-note" data-t="E4N"></p></div>
+</section>
+
+<!-- 8. מה אם ארצה לצאת -->
+<section class="sec"><div class="wrap-l">
+  <div class="exitcard rv"><lottie-player src="/lot-cert4.json" background="transparent" speed="1" autoplay loop style="width:72px;height:72px"></lottie-player><div><div class="kicker" data-t="K.exit"></div><div class="sec-t" data-th="EXITH"></div><p data-t="E5"></p></div></div>
+  <div class="mid-cta rv"><p data-t="MID.micro"></p><a class="btn" href="#join" onclick="scrollJoin(event)"><span data-t="MID.cta"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a></div>
+</div></section>
+
+<!-- 9. הביקורות -->
+<section class="sec sec-dark"><div class="wrap-l">
+  <div class="kicker" data-t="K.rev"></div>
+  <div class="sec-t revq rv" id="eRevH"></div>
+  <p class="rev-src rv" id="eRevS"></p>
+  <div class="gline rv"><span class="gw"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></span><span class="st"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg></span><b>5.0</b></div>
+  <div class="rgal rv">
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-13.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-15.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-21.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-18.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-12.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-23.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-25.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-22.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-10.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-19.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-17.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-4.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-5.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-11.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-8.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-14.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-16.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-20.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-7.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-6.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
+  </div>
+</div></section>
+
+<!-- 10. תום הרוש (הכרטיס של HPAGE, מהאודות של תום) -->
+<section class="sec"><div class="wrap">
+  <div class="tom rv">
+    <div>
+      <div class="kicker" data-th="TOM.k"></div>
+      <h3 data-th="TOM.h"></h3>
+      <p data-t="TOM.bio"></p>
+      <p class="vis" data-t="TOM.vision"></p>
+      <div class="vh" data-t="TOM.vh"></div>
+      <div class="vals" id="tVals"></div>
+      <p class="grp" data-t="TOM.group"></p>
+      <div class="sig" data-t="TOM.sig"></div>
+      <p class="tnote" data-t="TOM.note"></p>
+    </div>
+    <img src="https://tom-harush.co.il/wp-content/uploads/%D7%A2%D7%99%D7%A6%D7%95%D7%91-%D7%9C%D7%9C%D7%90-%D7%A9%D7%9D-17.png" alt="תום הרוש" loading="lazy"/>
+  </div>
+</div></section>
+
+<!-- 11. בחירת מועד -->
+<section class="sec sec-gray" id="join"><div class="wrap">
+  <div class="join-card rv" id="jcard">
+    <form id="jform" novalidate>
+      <div class="kicker" data-t="K.join"></div>
+      <h2 id="jH" data-th="JH"></h2>
+      <p id="jL"></p>
+      <div class="mynum" id="jMy" hidden></div>
+      <fieldset class="wins">
+        <legend style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">חלון הזמן לחזרה</legend>
+        <div class="win w-m"><input type="radio" name="w" id="w1" value="morning"/><label for="w1" data-tw="0"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="wtx"><span class="wn"></span><span class="wm"></span></span><span class="wt"></span></label></div>
+        <div class="win w-n"><input type="radio" name="w" id="w2" value="noon"/><label for="w2" data-tw="1"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></span><span class="wtx"><span class="wn"></span><span class="wm"></span></span><span class="wt"></span></label></div>
+        <div class="win w-e"><input type="radio" name="w" id="w3" value="evening"/><label for="w3" data-tw="2"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/><path d="M20 3v4M22 5h-4"/></svg></span><span class="wtx"><span class="wn"></span><span class="wm"></span></span><span class="wt"></span></label></div>
+      </fieldset>
+      <div class="jerr" id="jEw" aria-live="polite"></div>
+      <label class="consent"><input type="checkbox" id="jOk" name="phone_ok"/><span id="jOkT" data-t="JOK"></span></label>
+      <label class="consent"><input type="checkbox" id="jOk2" name="phone_alt"/><span data-t="JOK2"></span></label>
+      <div class="jfield" id="jAltBox" hidden><input id="jAlt" name="alt_phone" type="tel" inputmode="numeric" autocomplete="tel"/></div>
+      <div class="jerr" id="jEo" aria-live="polite"></div>
+      <button class="btn" type="submit" id="jBtn"><span id="jCta" data-t="JCTA"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
+      <p class="after" data-t="JAFTER"></p>
+      <p class="alt"><a href="https://wa.me/972533025464" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35m-5.42 7.4a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/></svg><span data-t="JWA"></span></a></p>
+    </form>
+    <div class="done-box" id="jDone" hidden><div class="big"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><h2 id="jDH"></h2><p id="jDP"></p></div>
+  </div>
+</div></section>
+
+<!-- 12. שאלות -->
+<section class="sec"><div class="wrap faq">
+  <div class="kicker" data-t="K.faq"></div>
+  <div class="sec-t rv" data-th="FAQ.h"></div>
+  <div class="rv" id="faqs" style="margin-top:24px"></div>
+</div></section>
+
+<footer>
+  <img class="flogo" src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" loading="lazy"/>
+  <div class="foot-title" data-t="OWN"></div>
+  <div class="social">
+    <a href="https://wa.me/972533025464" target="_blank" rel="noopener" aria-label="וואטסאפ"><lottie-player src="/lot-s-wa.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+    <a href="https://www.instagram.com/tom_harush/" target="_blank" rel="noopener" aria-label="אינסטגרם"><lottie-player src="/lot-s-ig.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+    <a href="https://www.facebook.com/appartmentforsaleinramatgan" target="_blank" rel="noopener" aria-label="פייסבוק"><lottie-player src="/lot-s-fb.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
+  </div>
+  <div class="wrap"><div class="disc" id="fDisc"></div></div>
+  <div class="foot-links"><a href="/privacy-kadima/">מדיניות פרטיות</a></div>
+  <div class="copy">© הקרן להשבחת הון ונכסים בע״מ מקבוצת תום הרוש · <a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a></div>
+</footer>
+<div class="rlb" id="rlb" hidden role="dialog" aria-modal="true" aria-label="ביקורות גוגל על קבוצת תום הרוש">
+  <button class="rlb-x" id="rlbX" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>סגירה</button>
+  <div class="rlb-st" id="rlbSt"><img id="rlbImg" alt=""/></div>
+  <div class="rlb-nav">
+    <button class="rlb-b" id="rlbPrev" type="button" aria-label="הביקורת הקודמת"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+    <span class="rlb-n" id="rlbN"></span>
+    <button class="rlb-b" id="rlbNext" type="button" aria-label="הביקורת הבאה"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+  </div>
+</div>
+<div class="float" id="float"><a href="#join" onclick="scrollJoin(event)"><span data-t="C.cta"></span> <svg class="arw" viewBox="0 0 36 11"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a></div>
+<script>
+/* ═══ דף התוצאה הדינמי של B (גרסה 4). הטקסטים מהלוגיקה שגל אישר. [[...]] = צבע המותג ═══ */
+const D = {"tx": {"H.w0": "{שם}, שאלת איפה כן.\nהנה [[התשובה שלנו]], נקודה אחרי נקודה.", "H.w1": "{שם}, [[אנחנו לא ממהרים]].\nחשוב לנו להבין מה נכון לך.", "H.w2": "{שם}, הנה כל מה שכדאי לך\nלדעת עכשיו כדי\n[[להחליט בקצב שלך]].", "H.sub": "בנינו את הדף הזה רק מהתשובות שלך. הוא שלך, וקיבלת אותו גם בוואטסאפ!\nאפשר לחזור אליו מתי שנוח לך.", "C.title": "תיאום ציפיות הוא מה שמוביל כל השקעה טובה.\nהנה מה שהבטחנו:", "C.sum4": "כל 4 הציפיות שלך מהשקעה [[מתאימות]].\n{{זה הזמן לתאם לנו 10 דקות}} ונדבר על הצעד הבא.", "C.sumN": "{n} מתוך 4 הציפיות שלך מהשקעה [[כבר מתאימות]].\n{{זה הזמן לתאם לנו 10 דקות}} ונדבר על השאר.", "C.need": "כל שורה מתחילה במה שהוא בחר, מילה במילה מהשאלון שלך (התשובה והמיקרו קופי שלה), ואחריה התשובה שלנו.", "R1.0": "אצלנו אנשים לפני עסקים. לא נמכור לך מה שלא מתאים לך, ובדיוק בגלל זה אנחנו מודדים התאמה.", "R1.1": "למטה מחכים לך מסמכים מהעסקה, משלב התכנון ועד היציאה. הכל מוסבר בגובה העיניים.", "R1.2": "המקום שלך בטוח: התוכנית הכוללנית כבר אושרה. גם הקצב בטוח: התזמון כאן משחק לטובתך, והרווח הגדול הוא בשלב התכנוני, לפני שהתוכנית הבאה תאושר.", "R1.3": "אנחנו מתאימים לך מודל השקעה ונקודת יציאה, בדיוק בהיקף שנכון לך. אפשר להגיע להון של דירה מההון שכבר יש לך, ובלי משכנתא חונקת.", "R2.0.0": "שלושה מסמכים שנעבור עליהם יחד: התוכנית הכוללנית שאושרה, השמאות לפי תקן 22, ונקודות היציאה שאנחנו מספקים.", "R2.0.1": "כאן הבסיס הוא ודאות: התוכנית הכוללנית כבר אושרה, והצפי שקוף לשנים הקרובות. אם מישהו היה מציע לי תשואה גבוהה בלי שום סיכון, הייתי משאיר את הכסף מתחת לכרית.", "R2.0.2": "בעסקאות כאלו הרווח הגדול הוא דווקא בשנים של התכנון, וכניסה מוקדמת תעשה את העבודה השחורה בשבילך. אבל זה לא הכל. על השאר עוברים בשיחה, מול השמאות.", "R2.1.0": "אפשר למכור בכל שלב! בנוסף יש נקודות יציאה שקופות וברורות, וכל התנאים שקופים מראש בחוזה. עוברים עליהם יחד, סעיף אחרי סעיף.", "R2.1.1": "התוכנית הכוללנית אושרה ב־18/12/2024, ומתחם H נמצא היום בשלב הוועדה המקומית, אחרי אישור התוכנית הכוללנית. כרגע על הפרק: תוכנית מפורטת. ציר הזמן המלא מחכה לך כאן למטה.", "R2.1.2": "שמאות מקרקעין 2026 לפי תקן 22 קבעה: 3,700 ש״ח למטר, כלומר 462,500 ש״ח ליחידת קרקע של 125 מ״ר.\nהמחיר מתעדכן לפי התקדמות הסטטוס התכנוני.", "R2.2.0": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים.", "R2.2.1": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים, בתוך הטווח שסימנת.", "R2.2.2": "קרקע בשלבי תכנון צריכה בדיוק את זה: סבלנות. ובינתיים, הכסף שלך שיושב בצד מקבל משמעות.", "R2.3.0": "זה אפשרי, בהיקף שמותאם אליך, במודל שנבנה יחד. משקיעים בדיוק בתקופת ההשבחה: אחרי שהתוכנית הכוללנית אושרה, ולפני התוכנית המפורטת.", "R2.3.1": "השקעה מותאמת אישית, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R2.3.2": "בשיחה נבדוק אם ניתן להתאים לך מודל אישי, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R3.0": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.\nבינתיים, יש בדף הזה הרבה מידע שחשוב לי להעביר לך. גלילה נעימה.", "R3.1": "אני מבין אותך, רוב המשקיעים שלי נמצאים בדיוק בנקודה הזו. אשמח להבין לעומק את הצורך שלך ולעזור לך לקבל את ההחלטה המושכלת ביותר עבורך.", "R3.2": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.\nבינתיים, יש בדף הזה הרבה מידע שחשוב לי להעביר לך. גלילה נעימה.", "R4.0": "זה מה שמאפשר להיכנס עכשיו, ולהשביח את ההון כבר מהשלב הנוכחי של התכנון.", "R4.1": "בכנות, אנו לא מאפשרים מימון. אפשר להיכנס גם עם הון מלווה, וזה בסדר גמור מבחינתנו. אבל לפני שרצים לקחת הלוואה, נשוחח ונבין יחד היקף ולוח זמנים שיתאימו גם ליעדים שלך.", "R4.2": "התזמון משחק כאן תפקיד מפתח. לפני שממהרים, מומלץ קודם לתאם ציפיות באופן אישי, בשיחה איתי.", "R5": "מה שעוד פתוח: איזה היקף מתאים לך, ובאיזה לוח זמנים. את זה מאבחנים ישירות בשיחה של 10 דקות איתי.", "C.call": "10 דקות בטלפון, בזמן שנוח לך ובלי לנסוע לשום מקום. שואלים, ומקבלים תשובות.", "C.cta": "לתיאום השיחה עם תום", "C.num": "תום מתקשר מ־053-302-5464 · שמירה באנשי הקשר", "C.booked": "השיחה שלך שמורה {w}. אם צריך לשנות, אפשר לכתוב לנו בוואטסאפ.", "PAIN.k": "רגע לפני שמדברים על השקעה", "PAIN.h1": "אולי יש לך כסף בצד.", "PAIN.h2": "אבל אין לך שקט.", "PAIN.sub": "עבדת קשה בשביל הכסף שלך. חסכת, ויתרת, ועכשיו ברור לך שהוא יכול לעשות יותר, אבל אין לך שום כוונה לסכן אותו בשביל עוד הבטחה יפה.", "PAIN.lead": "ואולי גם המחשבות האלה עברו לך בראש:", "PAIN.t1": "״כל פעם שמציעים לי ׳להשקיע את הכסף שלי׳, הדבר הראשון שעולה לי בראש: איפה הקאץ׳?!״\nכולם מבטיחים תשואות ורווחים. אבל למי באמת אפשר להאמין?", "PAIN.t2": "״חסכתי כסף, אבל הוא פשוט לא עושה כלום.״\nברור לי שהכסף שלי יכול לעבוד יותר טוב. רק לא ברור לי איפה לשים אותו.", "PAIN.t3": "״אני רואה אחרים מתקדמים, ואני עדיין על הגדר.״\nמצד אחד, אני לא רוצה לפספס שוב. מצד שני, אני לא אהמר על הכסף שלקח לי שנים לבנות.", "PUNCH.1": "לא מפחיד אותך שהכסף שלך יעבוד.", "PUNCH.2": "מפחיד אותך שהוא יעבוד נגדך.", "PUNCH.k": "וזה בדיוק ההבדל.", "PUNCH.p": "לא חסר לך עוד מישהו שיגיד לך שההשקעה שלו מדהימה. חסר לך מישהו שיראה לך את המספרים, את המסמכים, את הסיכונים ואת האפשרויות שלך, וייתן לך להחליט בעצמך.", "PUNCH.c": "כי לפני שהכסף שלך מתחיל לעבוד, מגיע לך להבין בדיוק מה צפוי לו.", "ALT.h": "שמוצעת בשוק, פותרת רק [[חצי מהציפיות הפיננסיות]] שלך", "ALT.1": "העו״ש והפיקדון הבנקאי: הכסף נח בשקט, אבל לא עובד בשבילך. ובכל שנה שהכסף שלך יושב שם, הוא שווה לך קצת פחות בכיס.", "ALT.2": "דירה להשקעה: 2-3% תשואה בשנה על הנכס, בנוסף לשכר הדירה. ועדיין, זה בקושי מכסה את המשכנתא שלקחת ל־20 שנה. כדי שהכסף יעבוד בשבילך, צריך לעבוד בשביל הבנק.", "ALT.3": "שוק ההון: אולי יש תשואה, אבל זה הימור. ובקזינו כמו בקזינו, אף אחד לא נותן לך גב. המחיר זז כל יום, והשליטה לא אצלך.", "ALT.4": "עוד הזדמנות מפרסומת: הרבה הבטחות, הרבה פגישות, ומעט מאוד הוכחות במסמכים.", "ALT.f": "מה שחסר בכולן הוא השילוב: כסף שעובד, בהיקף שנכון לך, ועם מסמך מאחורי כל טענה. וזה בדיוק מה שאנחנו מציעים לך לבדוק כאן.", "NOW.h": "אז למה דווקא עכשיו?", "NOW.big": "השנים המתישות [[כבר מאחורינו.]]", "NOW.p": "ב־18/12/2024 ההמתנה לתוכנית במתחם H נגמרה, והתוכנית הכוללנית אושרה. מי שנכנס עכשיו, נכנס אחרי ההחלטה הגדולה ולפני התוכנית המפורטת.", "E2H": "לדעת איך נכנסים, [[ואיך יוצאים.]]", "E2L": "כל מה שלא מספיק שקוף בעסקאות קרקע, כאן מול העיניים שלך.", "E2.1": "תוכנית מתאר כוללנית מספר 457-0112086 כבר אושרה ב־18/12/2024, ופורסמה לתוקף.", "E2.2": "שמאי מקרקעין מוסמך קבע שווי של 3,700 ש״ח למטר, וזה בדיוק מחיר הכניסה שאנחנו מציעים.", "E2.3": "נקודת יציאה שקופה ובטוחה עם התחייבות שלנו, שמצוינת בחוזה הקנייה.", "E2F": "את שלושתן אני פותח יחד איתך בפגישה, מסמך אחרי מסמך, ועונים על כל שאלה.", "E3H": "איפה הרווח בעסקה [[עומד היום]]", "E3S": "השלב שבו קרקעות נתקעות שנים, כבר מאחור. הבא בתור: תוכנית מפורטת למתחם.", "STAGES": "קרקע חקלאית: נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.\nועדה ארצית: הקווים הגדולים של המדינה: איך והאם הרעיון יתרום לעתיד היישוב.\nועדה מחוזית: ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.\nועדה מקומית (אנחנו כאן): כאן אנחנו היום. התכנון הגדול אושר ויורד לרמת המתחם.\nאישור תוכנית מפורטת: תוכנית מפורטת אחת לכל מתחם H: מה מניחים איפה. בשלב זה עסקאות קרקע דומות, מזוהות עם רווחים של עשרות ומאות אחוזים.\nאישור תוכנית פיתוח: כבישים, מים וניקוז. מתכוננים לשלבי הבנייה.\nזמינות לבנייה: מנופים, שופלים ודחפורים. משלמים לקבלן ובונים, או מוכרים ליזם ונהנים מההשבחה של התכנון.", "E4H": "קדימה צורן [[ומתחם H המרכזי]]", "E4P": "היישוב קדימה צורן מתוכנן להכפיל את עצמו, בזכות התוכנית הכוללנית המאושרת ותוכניות נוספות. היום גרים בו כ־23,000 תושבים על כ־11,000 דונם, שטח גדול פי 3 מגבעתיים, שבה גרים כ־60,000 תושבים.", "FACTS": "1,230 · יחידות דיור במתחם H, בשכונה החדשה ובמרכז היישוב\nכ־64,000 מ״ר · מסחר, הלב המסחרי החדש של קדימה צורן\nכ־60,000 מ״ר · תעסוקה ומשרדים, ועוד כ־120 יחידות אירוח\nכ־10 ק״מ · מחוף הים, שוכנת בין כפר סבא לנתניה, קרובה לרעננה והרצליה.", "EXITH": "ומה אם [[ארצה לצאת?]]", "E5": "אפשר למכור בכל שלב! בנוסף אנו מספקים מודל שקוף וברור עם נקודות יציאה, הכל מגובה בכתב מצדנו, וכל התנאים כתובים מראש בחוזה. בפגישה עוברים עליהם יחד, סעיף אחרי סעיף.", "REVH": "״חיפשנו הרבה זמן [[מישהו שאפשר לסמוך עליו]] בתחום הנדל״ן״\nמתוך ביקורת בגוגל על קבוצת תום הרוש", "TOM.k": "מבינים אנשים. [[מומחים בנדל״ן.]]", "TOM.h": "אני שמח לראות אותך כאן.\n[[אני תום הרוש]]", "TOM.bio": "יותר מ־15 שנה אני בעולם הנדל״ן: השקעות, תיווך, יזמות והתחדשות עירונית. יחד עם השותפים שלי לאורך השנים יזמנו, הקמנו ומסרנו מעל 1,000 יחידות דיור.", "TOM.vision": "החזון של קבוצת תום הרוש: לאפשר לאנשים לעבור לרמה הכלכלית הבאה שלהם באמצעות נדל״ן.", "TOM.group": "שלוש חברות בת שפועלות תחת הקבוצה: SUPERB, REBUILD ו־ELITA ONE.", "TOM.values": "שותפות · מנהיגות · מצוינות · חדשנות", "TOM.sig": "אשמח לעזור לך להגיע לרמה הכלכלית הבאה שלך.", "JH": "מתי הכי נוח [[שנחזור אליך?]]", "JL": "בוחרים חלון זמן, ואנחנו מתקשרים בתוכו. אם ההחלטה משותפת, כדאי לבחור זמן שנוח לשניכם.", "JL.w1": "אין לחץ. בוחרים חלון זמן לשיחת היכרות קצרה, ואם זה לא הזמן, הדף הזה מחכה לך.", "JMY": "נתקשר למספר שמסתיים ב־{4 ספרות}", "JOK": "המספר שהזנתי בטופס זה הטלפון לחזור אליי", "JCTA": "לשריין את 10 הדקות שלי", "JAFTER": "בשיחה עונים על כל השאלות ובוחנים האם ההשקעה תתאים לך לפני שנתקדם לפגישה.", "JWA": "עדיף לכתוב עכשיו? אפשר בוואטסאפ", "JDP": "השיחה שלך שמורה.\nנחזור אליך {w}, למספר {n}.", "JERR": "צריך לבחור חלון זמן", "FAQ.h": "שאלות נפוצות [[לפני השיחה]]", "FAQ.1": "מה בדיוק קונים?\nקרקע פרטית בטאבו, לפי מטר, בתוך מתחם H בקדימה צורן. התוכנית הכוללנית של היישוב אושרה ב־18/12/2024, והשלב הבא הוא תוכנית מפורטת.", "FAQ.2": "זו הפעם הראשונה שלי בקרקע. זה מתאים לי?\nרוב מי שפונים אלינו עושים את זה בפעם הראשונה. לכן בשיחה מתחילים מהבסיס, ומסבירים כל מונח במילים פשוטות: מה זה טאבו, מה זו תוכנית מפורטת, ואיך יוצאים מהעסקה.", "FAQ.3": "איך נקבע המחיר?\nשמאי מקרקעין קבע שווי של 3,700 ש״ח למטר, וזה בדיוק מחיר הכניסה. את השמאות עצמה פותחים יחד בפגישה.", "FAQ.4": "מתי אפשר לבנות?\nהשאלה היא לא מתי בונים, אלא כמה מוקדם נכנסים כדי ליהנות מההשבחה של הסטטוס התכנוני. הקרקע עדיין אינה זמינה לבנייה מיידית. לבנייה נדרשת תוכנית מפורטת, ועל לוחות הזמנים הצפויים עוברים בפגישה, מול המסמכים: בזום, או פרונטלית במגדל ב.ס.ר 3, קומה 30.", "FAQ.5": "ומה לגבי מיסוי?\nכמו בכל עסקת נדל״ן יש מס רכישה בכניסה ומס שבח במכירה. עוברים על התמונה המלאה בשיחה, ומומלץ ללוות את זה עם יועץ המס שלך.", "OWN": "יצרתי את הדף הזה עם התשובות שלך ובמיוחד בשבילך. אפשר לחזור אליו מכל מכשיר, מהקישור האישי שקיבלת בוואטסאפ.", "DISC": "*הקרקע עדיין אינה זמינה לבנייה מיידית. הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.", "T.H": "השיחה שלך שמורה.", "T.S": "נחזור אליך {w}, למספר {n}.\nבלי חלון: נחזור אליך בקרוב.", "T.CTA": "שמירת המספר שלנו באנשי הקשר\nככה השיחה מ־053-302-5464 לא תיפול על מספר לא מוכר.", "T.STEPS": "מה קורה עכשיו\n1. בחלון שבחרת מגיעה שיחה מ־053-302-5464.\n2. בשיחה משלימים את בדיקת ההתאמה: איזה היקף מתאים לך, ובאיזה לוח זמנים.\n3. אם יש התאמה, קובעים פגישה אישית עם תום, מול המסמכים.", "T.PREP": "כדי שהשיחה תלך ישר לעניין\nכדאי לחשוב מראש על ההיקף שנוח לך ועל אופק הזמן. ואם ההחלטה משותפת, שווה ששניכם תהיו בשיחה. ככה מדברים מהדקה הראשונה על מה שרלוונטי לכם.", "T.WA": "יש שאלה לפני השיחה? אפשר לכתוב לנו בוואטסאפ", "T.OWN": "הדף האישי שלך נשאר פתוח: אפשר לחזור אליו מכל מכשיר.", "HDR.cta": "לתיאום 10 דקות שיחה עם תום", "K.tl": "שקיפות המסלול התכנוני", "NOW.badge": "18.12.2024 · התוכנית הכוללנית אושרה", "K.alt": "כל חלופה אחרת היום", "K.docs": "אנחנו רוצים לדאוג לביטחון שלך", "E2S.1": "אפשר לבדוק בעצמך באתר מינהל התכנון", "E2S.2": "מתוך הערכת השמאי, לפי תקן 22 בשנת 2026", "E2S.3": "כתוב בחוזה, ונקרא יחד בפגישה", "PROOF.1": "מתוך אתר מינהל התכנון: [[תכנית 457-0112086, אישור 18/12/2024]]", "PROOF.2": "מיקום החלקה בתוך מתחם H, [[מתוך הערכת השמאי]]", "K.town": "התכנית להכפלת היישוב", "PROOF.3": "מתחמי התכנון של קדימה צורן. [[מתחם H, במרכז היישוב]]", "E4N": "מתוך התוכנית הכוללנית המאושרת (סעיף 6.1.4, H1 ו־H2 יחד) והערכת השמאי.", "K.exit": "רק רגע אחד, תום..", "K.rev": "המשקיעים שלנו מספרים על הליווי", "K.join": "לפני שנתקשר אליך", "JERR.alt": "המספר האחר לא תקין. צריך 10 ספרות שמתחילות ב־05", "JERR.ok": "צריך לבחור לאיזה מספר נחזור אליך", "K.faq": "חשבנו עליך הרבה", "C.mark": "הציפיות שלך:", "JWIN": "בבוקר · 09:00 עד 12:00 · אני טיפוס של בוקר\nבצהריים · 12:00 עד 16:00 · דברו איתי בצהריים\nבערב · 16:00 עד 20:00 · הכי טוב בערב", "JSAVING": "שומרים…", "META.title": "בדיקת ההתאמה שלך · מתחם H · קבוצת תום הרוש", "TOP.bar": "רגע, עוד לא סיימנו. נשאר שלב אחרון", "TOP.done": "סיימנו! השיחה שלך שמורה.", "C.wa": "לכתוב לנו בוואטסאפ", "NOW.box": "בשלב זה עסקאות קרקע דומות מזוהות עם רווחים של עשרות ומאות אחוזים.", "MID.micro": "לפני פגישה, בואו נבין בכלל אם זה מתאים לך", "MID.cta": "לתיאום 10 דקות שיחה עם תום", "TOM.vh": "4 הערכים שמובילים את הקבוצה שלי", "TOM.note": "לאחר 10 דקות של שיחה, אם נמצא התאמה, נוכל לתאם פגישה. הפגישה היא איתי, באופן אישי.", "JOK2": "עדיף להתקשר למספר אחר שלי", "JALT.ph": "מספר טלפון לחזרה"}, "st": {"R1.0": "ok", "R1.1": "ok", "R1.2": "ok", "R1.3": "ok", "R2.0.0": "ok", "R2.0.1": "honest", "R2.0.2": "ok", "R2.1.0": "ok", "R2.1.1": "ok", "R2.1.2": "ok", "R2.2.0": "honest", "R2.2.1": "ok", "R2.2.2": "ok", "R2.3.0": "ok", "R2.3.1": "ok", "R2.3.2": "ask", "R3.0": "ok", "R3.1": "ok", "R3.2": "ok", "R4.0": "ok", "R4.1": "ask", "R4.2": "ok", "R5": "ask"}, "q1": [["ודאות וביטחון", "ליווי רגוע והתאמת הצורך האישי."], ["להבין לעומק לפני החלטה", "לראות הכל בעיניים, ולבדוק בקצב שלי."], ["תשואה בטוחה", "שהכסף יגדל, במקום וקצב בטוח."], ["רף כניסה נמוך", "להתחיל עם ההון שיש לי עכשיו."]], "q2": [[["גם וגם", "השקעה שתניב רווח בריא, עם מסמכים וגיבוי"], ["כן. אצלי תשואה קודמת להכל", "הסיכון שאקח מחושב בהתאם לתשואה."], ["תלוי כמה גבוהה", "אני קודם רוצה לראות את המספרים"]], [["מה קורה אם ארצה לצאת", "איך יוצאים, ומה כתוב על זה בחוזה."], ["את התוכנית הכוללנית ושלבי התכנון", "איפה המתחם עומד היום, ומה נשאר עד הבנייה."], ["איך בדיוק נקבע המחיר", "מי קבע אותו, ולפי מה."]], [["גג 3 שנים", "מתאימה לי השקעה לטווח הקצר."], ["3 עד 7 שנים", "הקצב הטבעי של קרקע עם ודאות."], ["אין לי לחץ של זמן", "יש לי כסף שיושב בצד ולא עובד."]], [["מהלך אחד משמעותי", "להרוויח בעיקר מהשלבים התכנוניים."], ["מההון שכבר יש לי", "הכסף שלי מחכה להחלטה."], ["עוד לא החלטתי", "את ההיקף בונים יחד בשיחה."]]], "q3": [["יש לי מוכנות לקבל החלטה", "השאלה שלי היא \"איפה כן\" ולא \"מה מתאים לי\""], ["לא עכשיו", "צריך כאן מישהו שיבין אותי.. השארתי פרטים בהרבה מקומות."], ["בחודשים הקרובים", "לאסוף מידע מעכשיו, להחליט עם עצמי בקרוב."]], "q4": [["כן, יושב ומחכה", "ובינתיים לא עובד בשבילי."], ["עוד לא", "שקלתי ללוות הון."], ["חלק זמין, חלק בדרך", "נבדוק יחד מה הכי נכון לך ומתי."]], "docsCta": "לבדיקת התאמה לצורך הפיננסי שלי"};
+const TX = D.tx, ST = D.st;
+const PHONE = '053-302-5464', WORKER = 'https://tom-funnel.tom-harush.workers.dev', PIXEL_ID = '1002428386157716';
+/* חלונות הזמן מהטקסט "שם · 09:00 עד 12:00", ומהם גם הניסוח במשפט ("בבוקר, בין 09:00 ל־12:00") */
+const WKEYS = ['morning', 'noon', 'evening'];
+let WINL = [], WINS = {};
+function winsFrom(){
+  WINL = TX['JWIN'].split('\n').map(l => { const p = l.split('·'); return [p[0].trim(), (p[1] || '').trim(), (p[2] || '').trim()]; });
+  WINS = {};
+  WKEYS.forEach((key, i) => { const [n, h] = WINL[i] || ['', '']; const hh = h.split(' עד '); WINS[key] = hh.length === 2 ? n + ', בין ' + hh[0] + ' ל־' + hh[1] : (n + ' ' + h).trim(); });
+}
+function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s\[])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g,'$1$2\u00a0'); return t.split('\n').map(function(l){ const i=l.lastIndexOf(' '); return i>0 ? l.slice(0,i)+'\u00a0'+l.slice(i+1) : l; }).join('\n'); }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const plain = t => String(t || '').replace(/\[\[|\]\]|\{\{|\}\}/g, '');
+const $ = id => document.getElementById(id);
+const set = (el, t) => { if (el) el.textContent = glue(plain(t)); };
+/* כותרות: [[...]] = צבע המותג, {{...}} = קופסה אדומה עם טקסט לבן */
+const setH = (el, t) => { if (el) el.innerHTML = esc(glue(t)).replace(/\{\{(.+?)\}\}/g, '<span class="hlx">$1</span>').replace(/\[\[(.+?)\]\]/g, '<span class="hl">$1</span>').replace(/\n/g, '<br/>'); };
+/* כיתובים: [[...]] = מודגש, ומספרים עם מקף נשארים בשורה אחת ומשמאל לימין */
+const setB = (el, t) => { if (el) el.innerHTML = esc(glue(t)).replace(/\[\[(.+?)\]\]/g, '<b>$1</b>').replace(/(\d+(?:-\d+)+)/g, '<span dir="ltr" style="white-space:nowrap;unicode-bidi:isolate">$1</span>').replace(/\n/g, '<br/>'); };
+function topQS(){ try{ return window.top.location.search || location.search; }catch(e){ return location.search; } }
+const Q = new URLSearchParams(topQS());
+/* staff=1: צפייה מהדשבורד בדף של ליד (גל 20/10). כמו דמו: לא נספר, לא שולח ולא בוחר מועד בשמו, אבל בלי לוח ההחלפה */
+const DEMO = Q.get('demo') === '1', STAFF = Q.get('staff') === '1', VIEW = DEMO || STAFF, LID = Q.get('lid') || '';
+const num = (k, max, d) => { const v = parseInt(Q.get(k), 10); return (v >= 0 && v < max) ? v : d; };
+const m = num('m', 4, 0), b = num('b', 3, 0), w = num('w', 3, 2), k = num('k', 3, 0);
+const NAME = (Q.get('name') || '').trim().split(/\s+/)[0] || '';
+function myPhone(){ try{ const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); const r = a.slice().reverse().find(x => !LID || x.lead_id === LID); return r ? String(r.phone || '') : ''; }catch(e){ return ''; } }
+function fmtPhone(p){ let d = String(p||'').replace(/\D/g,''); if (d.startsWith('972')) d = '0' + d.slice(3); return d.length === 10 ? d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6) : ''; }
+/* מועד שנבחר נזכר גם בביקור הבא מאותו מכשיר (למשל מהרימרקטינג), רק לאותו ליד */
+function booked(){ if (VIEW) return WKEYS.includes(Q.get('cb')) ? Q.get('cb') : ''; try{ const c = JSON.parse(sessionStorage.getItem('b_cb') || localStorage.getItem('b_cb') || '{}'); return WKEYS.includes(c.w) && (!c.lid || !LID || c.lid === LID) ? c.w : ''; }catch(e){ return ''; } }
+const CB = booked();
+
+const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' };
+const LBL = { ok:'מתאים', ask:'נסגר בשיחה', honest:'בודקים בכנות' };
+const rows = [['R1.' + m, D.q1[m]], ['R2.' + m + '.' + b, D.q2[m][b]], ['R3.' + w, D.q3[w]], ['R4.' + k, D.q4[k]]];
+const okN = rows.filter(r => ST[r[0]] === 'ok').length;
+const ph = fmtPhone(myPhone());
+const vcf = 'BEGIN:VCARD\nVERSION:3.0\nFN:קדימה צורן · מתחם H\nORG:קבוצת תום הרוש\nTEL;TYPE=CELL:+972' + PHONE.replace(/\D/g,'').replace(/^0/,'') + '\nEND:VCARD';
+$('dSave').href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcf);
+function showBooked(win, n){
+  $('cBooked').textContent = glue(TX['C.booked'].replace('{w}', WINS[win])); $('cBooked').hidden = false; $('ctaBox').hidden = true;
+  const dp = TX['JDP'].split('\n'); set($('jDH'), dp[0]); set($('jDP'), (dp[1] || '').replace('{w}', WINS[win]).replace('{n}', n || 'שהזנת'));
+  $('jform').hidden = true; $('jDone').hidden = false; window.__cbDone = true; $('float').classList.remove('on');
+  $('pbar').classList.add('done'); set($('pbarT'), TX['TOP.done']); set($('pbarT2'), TX['TOP.done']);
+  $('cWa').hidden = false; document.querySelectorAll('.mid-cta').forEach(x => { x.hidden = true; });
+}
+
+/* כל הטקסטים של הדף נכתבים כאן, וזה בטוח להריץ שוב: התצוגה המקדימה בארטיפקט הקופי מריצה את render אחרי כל עריכה.
+   data-t = טקסט, data-th = כותרת עם צבע המותג, data-tb = כיתוב עם הדגשה, data-tq/tp = כרטיסי המחשבות, ALT.n h/p = כרטיסי החלופות */
+function render(){
+  winsFrom();
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const id = el.getAttribute('data-t'), mm = id.match(/^(ALT\.\d)(h|p)$/);
+    if (mm) { const t = plain(TX[mm[1]]); const i = t.indexOf(':'); set(el, mm[2] === 'h' ? t.slice(0, i) : t.slice(i + 1).trim()); return; }
+    set(el, TX[id]);
+  });
+  $('jAlt').placeholder = plain(TX['JALT.ph']); $('jAlt').setAttribute('aria-label', plain(TX['JALT.ph']));
+  document.querySelectorAll('[data-th]').forEach(el => setH(el, TX[el.getAttribute('data-th')]));
+  document.querySelectorAll('[data-tb]').forEach(el => setB(el, TX[el.getAttribute('data-tb')]));
+  document.querySelectorAll('[data-tw]').forEach(el => { const p = WINL[+el.getAttribute('data-tw')] || ['', '']; set(el.querySelector('.wn'), p[0]); set(el.querySelector('.wt'), p[1]); set(el.querySelector('.wm'), p[2] || ''); });
+  const d = String(TX['DISC'] || ''), di = d.indexOf('.') + 1; $('fDisc').innerHTML = di > 0 ? '<b>' + esc(d.slice(0, di)) + '</b>' + esc(glue(d.slice(di))) : esc(glue(d));
+  document.querySelectorAll('[data-tq]').forEach(el => set(el, TX[el.getAttribute('data-tq')].split('\n')[0]));
+  document.querySelectorAll('[data-tp]').forEach(el => set(el, TX[el.getAttribute('data-tp')].split('\n').slice(1).join(' ')));
+
+  /* 3. ציר הזמן: וי עד "(אנחנו כאן)", ואחריו מספרים */
+  const jtl = document.querySelector('.jtl'); let seen = false;
+  jtl.querySelectorAll('.jtl-item').forEach(x => x.remove());
+  TX['STAGES'].split('\n').forEach((ln, i) => {
+    const j = ln.indexOf(':'), here = ln.slice(0, j).includes('(אנחנו כאן)'), name = ln.slice(0, j).replace('(אנחנו כאן)', '').trim();
+    const s = here ? 'here' : (seen ? 'next' : 'done'); seen = seen || here;
+    const it = document.createElement('div'); it.className = 'jtl-item ' + s;
+    it.innerHTML = '<div class="jtl-node">' + (s === 'done' ? ICON.ok : s === 'here' ? '<span class="herepulse"></span>' : String(i + 1)) + '</div><div class="jtl-card"><h4>' + esc(name) + (here ? '<span class="here-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7" fill="none"/></svg>אנחנו כאן</span>' : '') + '</h4><p>' + esc(glue(ln.slice(j + 1).trim())) + '</p></div>';
+    jtl.appendChild(it);
+  });
+
+  /* 1. התוצאה: הבר (מלא אצל מי שכבר בחר מועד, ב־showBooked), הכותרת והכרטיס */
+  set($('pbarT'), TX['TOP.bar']); set($('pbarT2'), TX['TOP.bar']);
+  const hw = TX['H.w' + w];
+  setH($('hH'), NAME ? hw.replace('{שם}', NAME) : hw.replace(/^\{שם\},\s*/, ''));
+  const sum = (okN === 4 ? TX['C.sum4'] : TX['C.sumN'].replace('{n}', okN)).split('\n');
+  setH($('cS'), sum[0]); setH($('cN'), sum.slice(1).join(' ')); $('cN').hidden = sum.length < 2;
+  $('pts').innerHTML = '';
+  rows.forEach(r => {
+    const s = ST[r[0]] || 'ok', li = document.createElement('li'); li.setAttribute('data-id', r[0]);
+    li.innerHTML = '<span class="rc-ic ' + s + '" role="img" aria-label="' + LBL[s] + '">' + ICON[s] + '</span><div><span class="rc-nd"></span><span class="rc-an"></span></div>';
+    set(li.querySelector('.rc-nd'), TX['C.mark'] + ' ' + r[1][0]); set(li.querySelector('.rc-an'), TX[r[0]]);
+    $('pts').appendChild(li);
+  });
+  const lo = document.createElement('li'); lo.className = 'open';
+  lo.innerHTML = '<span class="rc-ic ask" aria-hidden="true">?</span><div><span class="rc-an"></span></div>'; set(lo.querySelector('.rc-an'), TX['R5']); $('pts').appendChild(lo);
+  const np = String(TX['C.num'] || '').split('·'); $('cNum').innerHTML = esc(glue(np[0].trim())).replace(/(0\d{1,2}-\d{3}-\d{4})/, '<b>$1</b>'); set($('dSave'), (np[1] || '').trim());
+
+  /* 9-12 */
+  const rq = TX['REVH'].split('\n'); setH($('eRevH'), rq[0]); set($('eRevS'), rq[1] || '');
+  $('tVals').innerHTML = TX['TOM.values'].split('·').map(v => '<span>' + esc(v.trim()) + '</span>').join('');
+  $('eFacts').innerHTML = TX['FACTS'].split('\n').map(l => { const p = l.split('·'); return '<div class="t"><div class="v">' + esc(p[0].trim()) + '</div><div class="l">' + esc(glue((p[1] || '').trim())) + '</div></div>'; }).join('');
+  $('faqs').innerHTML = ['FAQ.1','FAQ.2','FAQ.3','FAQ.4','FAQ.5'].map((id, i) => { const p = TX[id].split('\n'); return '<details' + (i === 0 ? ' open' : '') + '><summary>' + esc(p[0]) + ' <span class="pl">+</span></summary><div class="a">' + esc(glue(p.slice(1).join('\n'))) + '</div></details>'; }).join('');
+
+  /* 11. בורר המועד: לפי שאלה 3, וזוכר מועד שכבר נבחר */
+  set($('jL'), w === 1 ? TX['JL.w1'] : TX['JL']);
+  if (ph) { $('jMy').innerHTML = esc(glue(TX['JMY'])).replace(/\{(\d)[\s\u00a0]ספרות\}/, (x, d) => '<b>' + ph.slice(-d) + '</b>'); $('jMy').hidden = false; }
+  document.title = plain(TX['META.title']);
+  if (CB) showBooked(CB, ph);
+}
+render();
+/* קישור מלא (נשלח לפני 20/10) או מכשיר אחר: שואלים את השרת אם כבר נבחר מועד, כדי שהדף לא יבקש לבחור שוב */
+if (LID && !CB && !VIEW && window.top === window) fetch(WORKER + '/b/me?id=' + encodeURIComponent(LID), { cache:'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
+  if (!j || !j.ok || !WKEYS.includes(j.cb) || window.__cbDone) return;
+  try { const c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: LID }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {}
+  showBooked(j.cb, ph);
+}).catch(() => {});
+function validPhone(p){ let d=(p||'').replace(/\D/g,''); if(d.startsWith('972')) d='0'+d.slice(3); return /^05\d{8}$/.test(d); }
+/* שתי תיבות הסימון: אחת חובה, לא שתיהן יחד. השנייה פותחת את שדה הטלפון */
+function syncAlt(){ $('jAltBox').hidden = !$('jOk2').checked; }
+$('jOk').addEventListener('change', () => { if ($('jOk').checked) $('jOk2').checked = false; syncAlt(); $('jEo').textContent = ''; });
+$('jOk2').addEventListener('change', () => { if ($('jOk2').checked) $('jOk').checked = false; syncAlt(); $('jEo').textContent = ''; if ($('jOk2').checked) $('jAlt').focus(); });
+$('jform').addEventListener('submit', async e => {
+  e.preventDefault();
+  const win = (document.querySelector('input[name="w"]:checked') || {}).value || '', useAlt = $('jOk2').checked, alt = useAlt ? $('jAlt').value.trim() : '';
+  $('jEw').textContent = ''; $('jEo').textContent = '';
+  let ok = true;
+  if (!win) { $('jEw').textContent = TX['JERR']; ok = false; }
+  if (!$('jOk').checked && !useAlt) { $('jEo').textContent = TX['JERR.ok']; ok = false; }
+  else if (useAlt && !validPhone(alt)) { $('jEo').textContent = TX['JERR.alt']; ok = false; }
+  if (!ok) { (!win ? $('w1') : (!$('jOk').checked && !useAlt) ? $('jOk') : $('jAlt')).focus(); return; }
+  const n = fmtPhone(alt) || ph;
+  if (VIEW || !LID) { showBooked(win, n); return; }   /* דמו או צפייה מהדשבורד: לא שולחים ולא עוברים לדף התודה */
+  $('jBtn').disabled = true; $('jCta').textContent = TX['JSAVING'];
+  const body = JSON.stringify({ lead_id: LID, window: win, alt_phone: alt || '', confirmed: true, at: new Date().toISOString() });
+  let sent = false;
+  try { const r = await fetch(WORKER + '/callback', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body }); sent = r.ok; } catch(err) {}
+  if (!sent) { try { navigator.sendBeacon && navigator.sendBeacon(WORKER + '/callback', new Blob([body], {type:'text/plain;charset=UTF-8'})); } catch(err) {} }
+  try { const cbv = JSON.stringify({ w: win, alt: alt || '', at: Date.now(), lid: LID }); sessionStorage.setItem('b_cb', cbv); localStorage.setItem('b_cb', cbv); } catch(err) {}
+  showBooked(win, n);
+  const tq = new URLSearchParams({ w: win }); if (LID) tq.set('lid', LID);
+  setTimeout(() => { try { window.top.location.href = '/b/t/?' + tq.toString(); } catch(err) { location.href = '/b/t/?' + tq.toString(); } }, 350);
+});
+try { sessionStorage.setItem('b_res', location.pathname + location.search); } catch(e) {}
+
+/* סרגל הדמו */
+if (DEMO) {
+  const mk = (lbl, key, opts, cur) => '<label>' + lbl + ' <select data-k="' + key + '">' + opts.map((o, i) => '<option value="' + i + '"' + (i === cur ? ' selected' : '') + '>' + esc(o) + '</option>').join('') + '</select></label>';
+  $('demoIn').innerHTML = '<b>דמו: מחליפים תשובות ורואים את הדף של כל ליד</b><label>שם <input data-k="name" value="' + esc(NAME || 'דנה') + '"/></label>' +
+    mk('שאלה 1', 'm', D.q1.map(o => o[0]), m) + mk('שאלה 2', 'b', D.q2[m].map(o => o[0]), b) + mk('שאלה 3', 'w', D.q3.map(o => o[0]), w) + mk('שאלה 4', 'k', D.q4.map(o => o[0]), k) +
+    '<label>מועד <select data-k="cb"><option value="">עוד לא בחר</option>' + ['morning','noon','evening'].map((x, i) => '<option value="' + x + '"' + (CB === x ? ' selected' : '') + '>' + ['בוקר','צהריים','ערב'][i] + '</option>').join('') + '</select></label>';
+  $('demo').hidden = false;
+  $('demoIn').addEventListener('change', e => { const p = new URLSearchParams(location.search); const kk = e.target.getAttribute('data-k'); p.set(kk, e.target.value); if (kk === 'm') p.set('b', '0'); if (!e.target.value) p.delete(kk); p.set('demo', '1'); location.search = p.toString(); });
+}
+
+/* ההירו בטלפון: התמונה נגמרת קצת אחרי ראש הכרטיס, ולכן ממורכזת על מה שרואים. בר ההתקדמות: רוחב לשכבת הטקסט הלבן */
+function sizeHero(){
+  const bg = document.querySelector('.rh-bg'), rh = document.querySelector('.rh');
+  $('pbar').style.setProperty('--bw', $('pbar').offsetWidth + 'px');
+  if (matchMedia('(min-width:960px)').matches) { bg.style.height = ''; bg.style.bottom = ''; return; }
+  bg.style.bottom = 'auto'; bg.style.height = Math.round($('res').getBoundingClientRect().top - rh.getBoundingClientRect().top + 72) + 'px';
+}
+sizeHero(); addEventListener('resize', sizeHero); addEventListener('load', sizeHero);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeHero);
+
+/* לייטבוקס לביקורות: חצים, החלקה, מקלדת, X גדול. "חזרה" בטלפון סוגרת את הלייטבוקס ולא יוצאת מהדף */
+(function(){
+  const imgs = [...document.querySelectorAll('.rgal .rev')], lb = $('rlb'), im = $('rlbImg'); let i = 0, pushed = false, x0 = null;
+  function show(n){ i = (n + imgs.length) % imgs.length; im.src = imgs[i].src; im.alt = imgs[i].alt; $('rlbN').textContent = (i + 1) + ' / ' + imgs.length; }
+  function open(n){ show(n); lb.hidden = false; document.body.style.overflow = 'hidden'; try { history.pushState({ rlb: 1 }, ''); pushed = true; } catch(e) {} $('rlbX').focus(); }
+  function close(fromPop){ if (lb.hidden) return; lb.hidden = true; document.body.style.overflow = ''; const back = pushed && !fromPop; pushed = false; if (back) { try { history.back(); } catch(e) {} } }
+  imgs.forEach((el, n) => { el.setAttribute('tabindex', '0'); el.setAttribute('role', 'button'); el.addEventListener('click', () => open(n)); el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(n); } }); });
+  $('rlbX').addEventListener('click', () => close());
+  $('rlbNext').addEventListener('click', () => show(i + 1)); $('rlbPrev').addEventListener('click', () => show(i - 1));
+  lb.addEventListener('click', e => { if (e.target === lb || e.target === $('rlbSt')) close(); });
+  addEventListener('keydown', e => { if (lb.hidden) return; if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') show(i + 1); else if (e.key === 'ArrowRight') show(i - 1); });
+  addEventListener('popstate', () => close(true));
+  lb.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive:true });
+  lb.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 45) show(dx > 0 ? i + 1 : i - 1); }, { passive:true });
+})();
+
+/* פיקסל ומדידה: לא בדמו, ולא בזמן שקישור לפי מספר ליד מחכה לשרת (הדף נטען שוב מיד עם התשובות, ושם נמדד פעם אחת) */
+if (STAFF) {
+  const sb = document.createElement('div');
+  sb.textContent = 'תצוגה מהדשבורד: כך הליד רואה את הדף. לחיצות כאן לא נשלחות ולא נספרות.';
+  sb.style.cssText = 'position:sticky;top:0;z-index:60;background:#14161b;color:#fff;font:700 13px/1.5 Heebo,Arial,sans-serif;text-align:center;padding:7px 12px';
+  document.body.prepend(sb);
+}
+if (!VIEW && !document.documentElement.classList.contains('id-wait')) {
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', PIXEL_ID); fbq('track', 'PageView'); fbq('track', 'ViewContent', { content_name:'b_page', variant:'b' });
+  const s = document.createElement('script'); s.src = '/track.js'; s.defer = true; document.body.appendChild(s);
+}
+
+/* תנועה: חשיפה בגלילה, ציר JET, כפתור צף, עוד ביקורות */
+function scrollJoin(e){ if(e) e.preventDefault(); $('join').scrollIntoView({behavior:'smooth', block:'start'}); }
+const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), {threshold:.12});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+function initJet(el){
+  const fill = el.querySelector('.jtl-fill');
+  function upd(){
+    const items = [...el.querySelectorAll('.jtl-item')], here = el.querySelector('.jtl-item.here .jtl-node');
+    const r = el.getBoundingClientRect(), center = innerHeight * .6;
+    const stop = here ? (here.getBoundingClientRect().top - r.top + 23) : el.offsetHeight;
+    fill.style.height = Math.min(Math.max(center - r.top, 0), stop) + 'px';
+    items.forEach(it => { const nr = it.querySelector('.jtl-node').getBoundingClientRect(); it.classList.toggle('on', nr.top < center); });
+  }
+  addEventListener('scroll', upd, {passive:true}); addEventListener('resize', upd); upd();
+}
+document.querySelectorAll('[data-jet]').forEach(initJet);
+/* רימרקטינג C (גל 19/10, ח־74). גרסת המסמכים (ממכשיר אחר, בלי התשובות): הכפתורים מובילים לשאלון, בנוסח של השאלון.
+   ובכל כניסה עם go=docs/place: קופצים לחלק שהכפתור במודעה הבטיח, בלי אנימציה, ופעם נוספת אחרי הטעינה רק אם עוד לא גללו */
+const DOCS = document.documentElement.classList.contains('docs-mode');
+if (DOCS) {
+  const sq = new URLSearchParams(); Q.forEach((v, kk) => { if (/^utm_/.test(kk)) sq.set(kk, v); });
+  const href = '/b/' + (sq.toString() ? '?' + sq.toString() : '');
+  document.querySelectorAll('.h-cta,.mid-cta .btn').forEach(a => { a.href = href; a.removeAttribute('onclick'); const s = a.querySelector('span'); if (s) { s.removeAttribute('data-t'); s.textContent = glue(D.docsCta); } });
+}
+/* קפיצה לחלק בדף: go=docs/place מהרימרקטינג, ו־#join מהכפתור בדף המידע (גל 20/10, בבדיקת הקצה לקצה: הקפיצה של הדפדפן קורית
+   לפני שהתמונות והגופנים נטענים, והחלק זז למטה). אותה קפיצה חוזרת אחרי הטעינה, עד שהליד נוגע במסך */
+const GO = ['docs', 'place'].includes(Q.get('go')) ? Q.get('go') : (location.hash === '#join' ? 'join' : '');
+if (GO && !VIEW) {
+  let touched = false; ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, () => { touched = true; }, { once:true, passive:true }));
+  const jump = () => { if (!touched) $(GO).scrollIntoView({ behavior:'instant', block:'start' }); };
+  jump(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(jump); addEventListener('load', jump, { once:true });
+}
+const fl = $('float'), res = $('res'), join = $('join');
+addEventListener('scroll', () => {
+  const past = res.getBoundingClientRect().bottom < 0, before = join.getBoundingClientRect().top > innerHeight * .9;
+  fl.classList.toggle('on', past && before && !window.__cbDone);
+}, {passive:true});
+</script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" defer></script>
+</body>
+</html>

@@ -9,22 +9,15 @@
   if (window.top !== window) return;
   var q = new URLSearchParams(location.search);
   if (q.get('demo') === '1' || q.has('m')) return;
-  var go = q.get('go') === 'place' ? 'place' : (q.get('go') ? 'docs' : '');
+  var PV = /\/new\/?$/.test(location.pathname);
   var keep = new URLSearchParams(); q.forEach(function(v, k){ if (/^utm_|^fbclid$/.test(k)) keep.set(k, v); });
   function noAnswers(){
     document.documentElement.classList.remove('id-wait');
+    if (PV) return;
     var last = null; try { last = JSON.parse(localStorage.getItem('b_last') || 'null'); } catch(e) {}
-    if (last && last.url) {
-      var u = new URL(last.url, location.origin);
-      keep.forEach(function(v, k){ u.searchParams.set(k, v); });
-      if (go) u.searchParams.set('go', go);
-      location.replace(u.pathname + u.search); return;
-    }
-    if (!go) { location.replace('/b/' + (keep.toString() ? '?' + keep.toString() : '')); return; }
-    document.documentElement.classList.add('docs-mode');
+    if (last && last.url) { var u = new URL(last.url, location.origin); keep.forEach(function(v, k){ u.searchParams.set(k, v); }); location.replace(u.pathname + u.search); return; }
+    location.replace('/b/' + (keep.toString() ? '?' + keep.toString() : ''));
   }
-  /* הקישור האישי לפי מספר ליד (גל 20/10): /b/p/?id=<מספר ליד>. השרת מחזיר שם פרטי, תשובות ומועד שנבחר,
-     והדף נפתח כמו מהקישור המלא. מועד שנבחר נשמר במכשיר, כך שהדף לא שואל שוב גם בטלפון אחר. אם השרת לא עונה: כמו ביקור בלי תשובות */
   var id = q.get('id') || '';
   if (/^[A-Za-z0-9-]{12,64}$/.test(id)) {
     document.documentElement.classList.add('id-wait');
@@ -37,25 +30,24 @@
         var a = j && j.ok && /^\d,\d,\d,\d$/.test(j.bi || '') ? j.bi.split(',') : null;
         if (!a) return fail();
         done = true;
-        var u = new URLSearchParams({ t: j.t === 'hot' ? 'hot' : 'cold', lid: id, m: a[0], b: a[1], w: a[2], k: a[3] });
+        var u = new URLSearchParams({ lid: id, m: a[0], b: a[1], w: a[2], k: a[3] });
         if (j.name) u.set('name', j.name);
-        keep.forEach(function(v, k){ u.set(k, v); }); if (q.get('go')) u.set('go', q.get('go'));
-        /* צפייה מהדשבורד: המועד שנבחר עובר בכתובת, ושום דבר לא נשמר במכשיר של מי שצופה */
-        if (q.get('staff') === '1') { u.set('staff', '1'); if (j.cb) u.set('cb', j.cb); location.replace('/b/p/?' + u.toString() + location.hash); return; }
-        if (j.cb) { try { var c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: id }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {} }
-        location.replace('/b/p/?' + u.toString() + location.hash);
+        if (j.cb) u.set('w8', j.cb);
+        keep.forEach(function(v, k){ u.set(k, v); });
+        if (q.get('staff') === '1') u.set('staff', '1');
+        else if (j.cb) { try { var c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: id }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {} }
+        location.replace(location.pathname + '?' + u.toString() + location.hash);
       }).catch(fail);
     return;
   }
   noAnswers();
 } catch(e) {} })();
 </script>
-
-<meta name="theme-color" content="#F6F7F9"/>
+<meta name="theme-color" content="#FFFFFF"/>
 <title>בדיקת ההתאמה שלך · מתחם H · קבוצת תום הרוש</title>
 <meta name="robots" content="noindex"/>
-<link rel="preload" as="image" href="/b/media/hero-cpage-m.webp" media="(max-width:699px)"/>
-<link rel="preload" as="image" href="/b/media/hero-cpage.webp" media="(min-width:700px)"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
 :root{
@@ -563,465 +555,370 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 /* ── רימרקטינג C (ח־74): העוגן מתחת לכותרת הדביקה, וגרסת המסמכים בלי החלקים האישיים ── */
 #docs,#place{scroll-margin-top:64px}
 .docs-mode .rh,.docs-mode #join,.docs-mode #float,.docs-mode .mid-cta p,.docs-mode .foot-title{display:none!important}
+
+/* ═══ דף הנחיתה של B (21/10): סדר וטקסטים מהסקיצה, השפה של דף התוצאה והשאלון. רקע מתחלף, כך ששני סקשנים שכנים לא חולקים רקע ═══ */
+[hidden]{display:none!important}   /* כלל עיצוב עם display לא דורס הסתרה (פס ההתקדמות נשאר מעל התשובות) */
+.bg-w{background:#fff}.bg-g{background:var(--bg)}
+.bg-p{background:linear-gradient(180deg,#FBEDEE,#F6E0E2)}
+.btn{border-radius:15px;white-space:nowrap}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sec-t{text-align:center}
+.split .sec-t{text-align:right}
+/* 1. הפתיחה: כמו מסך הפתיחה של השאלון (גל 20/10): התמונה, כותרת בשתי שורות, הכפתור המרחף, הסימנים */
+.lh{background:#fff;padding:0 0 var(--s5)}
+.lh-grid{display:grid;gap:var(--s3);padding-inline:0}
+.lh-ph{aspect-ratio:1200/640;background:var(--gray);overflow:hidden}
+.lh-ph img{width:100%;height:100%;object-fit:cover}
+.lh-tx{text-align:center;padding:0 20px;max-width:620px;margin:0 auto}
+.lh-eb{display:inline-block;font-weight:800;font-size:14px;color:var(--accent);letter-spacing:.04em;margin-bottom:10px}
+.lh h1{font-size:clamp(30px,8vw,48px);font-weight:900;line-height:1.12;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+.hlg{display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+.lh-sub{font-size:17px;line-height:1.65;color:var(--ink);margin:0 auto 22px;max-width:540px;text-wrap:pretty}
+.lh-btn{width:100%;max-width:460px}
+@keyframes btnFloat{0%,100%{translate:0 0;box-shadow:0 10px 24px rgba(194,21,28,.26)}50%{translate:0 -4px;box-shadow:0 18px 34px rgba(194,21,28,.36)}}
+.lh-btn,.sv-go{animation:btnFloat 3s ease-in-out infinite}
+.sv-go:disabled{animation:none}
+/* ההזמנה לגלול לציר הזמן, במקום הכפתור (22/10) */
+.lh-cue{display:inline-flex;flex-direction:column;align-items:center;gap:2px;color:var(--accent);font-weight:800;font-size:16px;text-decoration:none;padding:6px 14px}
+.lh-cue svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;animation:cueDrop 2.2s ease-in-out infinite}
+.lh-cue:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:10px}
+@keyframes cueDrop{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.lh-disc{font-size:12.5px;color:var(--faint);margin-top:16px}
+@media(min-width:960px){
+  .lh{padding:var(--s5) 0}
+  .lh-grid{grid-template-columns:repeat(12,minmax(0,1fr));align-items:center;padding-inline:20px}
+  .lh-ph{grid-column:7/span 6;grid-row:1;border-radius:20px;box-shadow:var(--sh)}
+  .lh-tx{grid-column:1/span 6;grid-row:1;text-align:right;padding:0;margin:0}
+  .lh-sub{margin-inline:0}
+  .lh-cue{flex-direction:row;padding-inline:0}
+}
+/* הביקורות: קרוסלה רצה של כרטיסי טקסט (ח־94). הטקסט קריא בלי לפתוח, הצילום מגוגל בלחיצה */
+.rvs .wrap-l{padding-bottom:0}
+.rcar{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:6px 0 var(--s2);margin-top:var(--s1);-webkit-overflow-scrolling:touch}
+.rcar::-webkit-scrollbar{display:none}
+.rcar:focus-visible{outline:2px solid #fff;outline-offset:-2px}
+.rtrack{display:flex;gap:14px;padding-inline:20px;width:max-content;align-items:stretch}
+.rcd{all:unset;box-sizing:border-box;width:min(300px,80vw);background:#fff;color:var(--ink);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px;text-align:right;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.rcd:focus-visible{outline:3px solid #ff8f93;outline-offset:2px}
+.rcd-h{display:flex;align-items:center;gap:10px}
+.rcd-av{width:36px;height:36px;border-radius:50%;background:var(--accent2);color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;flex:none}
+.rcd:nth-child(3n+2) .rcd-av{background:var(--green)}.rcd:nth-child(3n) .rcd-av{background:#2B2F36}
+.rcd-h b{font-size:16px;font-weight:800}
+.rcd-st{display:flex;gap:2px;direction:ltr;justify-content:flex-end}
+.rcd-t{font-size:15.5px;line-height:1.6;white-space:pre-line;flex:1}
+.rcd-src{font-size:12.5px;color:var(--muted);font-weight:600}
+/* מה בדיוק קונים: שלושה כרטיסים, כמו כרטיסי היישוב */
+.buy3{display:grid;gap:var(--s2);max-width:960px;margin:var(--s3) auto 0}
+.buy3 .t,.facts4 .t{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 16px;box-shadow:var(--sh-sm);text-align:center}
+.buy3 .v,.facts4 .v{font-size:26px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.15}
+.buy3 .l,.facts4 .l{font-size:14px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.5}
+.facts4 .v{font-size:23px}   /* כמו כרטיסי היישוב בדף התוצאה: "כ־64,000 מ״ר" בשורה אחת גם בשני טורים בטלפון */
+.buy-note{text-align:center;color:var(--muted);font-size:15px;margin-top:var(--s3)}
+@media(min-width:960px){.buy3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tl-disc{font-size:12.5px;color:var(--faint);text-align:center;margin-top:var(--s2)}
+.mavat{max-width:560px;margin:var(--s4) auto 0}
+.mavat img{width:100%;height:auto;border-radius:16px;border:1px solid var(--line);box-shadow:var(--sh)}
+.exitcard .sec-t{text-align:right}
+/* בדיקת ההתאמה בתוך הדף: הכרטיס והמסכים של השאלון של B */
+.svc{background:#fff;border-radius:20px;box-shadow:0 18px 50px rgba(127,2,36,.14);padding:18px 20px 22px;max-width:560px;margin:0 auto;scroll-margin-top:72px}
+.sv-top{display:grid;gap:4px}
+.back{background:transparent;border:none;color:var(--muted);font:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:4px 0;justify-self:start;visibility:hidden}
+.back.show{visibility:visible}
+.back:hover{color:var(--accent)}
+.prog-row{display:flex;align-items:center;gap:12px}
+.prog{flex:1;height:6px;border-radius:99px;background:#ECEEF1;overflow:hidden}
+.prog>i{display:block;height:100%;width:0;border-radius:99px;background:var(--accent);transition:width .45s cubic-bezier(.4,0,.2,1)}
+.prog-n{font-size:14px;font-weight:700;color:var(--muted);min-width:58px;text-align:left;font-variant-numeric:tabular-nums}
+.screen{display:none}
+.screen.active{display:block;animation:rise .42s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.qtitle{font-size:23px;font-weight:900;line-height:1.28;letter-spacing:-.01em;margin:14px 0 18px;text-wrap:pretty}
+.opt{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:right;background:var(--bg);border:0;border-radius:14px;padding:16px;margin-bottom:12px;cursor:pointer;font-family:inherit;font-size:17px;font-weight:700;color:var(--ink);box-shadow:0 1px 2px rgba(15,18,22,.06),0 4px 12px rgba(15,18,22,.07);transition:background .16s,transform .16s,box-shadow .16s}
+.opt:hover{background:#ECEEF1;transform:translateY(-1px)}
+.opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.opt .tick{width:24px;height:24px;border-radius:50%;border:2px solid #B9BEC6;flex:0 0 auto;margin-top:1px;display:flex;align-items:center;justify-content:center;background:#fff}
+.opt.sel{background:#FBF1F1;box-shadow:inset -4px 0 0 var(--accent),0 4px 12px rgba(194,21,28,.10)}
+.opt.sel .tick{background:var(--accent);border-color:var(--accent)}
+.opt.sel .tick::after{content:'';width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translateY(-1px)}
+.opt .txt{flex:1;line-height:1.35}
+.opt .mc{display:block;font-size:15px;font-weight:400;color:var(--muted);margin-top:4px;line-height:1.45}
+.field{margin-bottom:10px;text-align:right}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:4px}
+.field input,.jfield input{width:100%;background:#fff;border:1.5px solid #D5D9DF;border-radius:12px;padding:10px 14px;font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:border-color .16s,box-shadow .16s}
+.field input:focus,.jfield input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(194,21,28,.10)}
+.field input.err{border-color:var(--accent)}
+.field input[type=tel],.jfield input{direction:ltr;text-align:right}
+.field .hint{font-size:14px;color:var(--muted);line-height:1.5;max-height:0;opacity:0;overflow:hidden;transition:max-height .22s ease,opacity .22s ease,margin-top .22s ease}
+.field:focus-within .hint{max-height:5em;opacity:1;margin-top:5px}
+.err-msg,.jerr{color:var(--accent);font-size:14px;font-weight:700;margin-top:4px}
+.err-msg:empty,.jerr:empty{display:none}
+.sv-consent{font-size:14px;font-weight:500;margin:6px 0 8px}
+.sv-consent a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+.svc .btn{width:100%;margin-top:8px;font-size:17px;padding:16px 18px}
+.svc .after{text-align:center;font-size:14px;color:var(--muted);margin-top:10px}
+.landload{width:96px;height:96px;margin:26px auto 18px;position:relative}
+.landload .plot{position:absolute;inset:0;border-radius:12px;overflow:hidden;background:#FBF1F1}
+.landload .fill{position:absolute;left:0;right:0;bottom:0;height:12%;background:rgba(194,21,28,.35);animation:thgGrow 1.7s ease-in-out infinite}
+.landload .pin{position:absolute;top:50%;left:50%;width:12px;height:12px;border-radius:50% 50% 50% 0;background:var(--accent);transform:translate(-50%,-70%) rotate(-45deg);animation:thgPin 1.7s ease-in-out infinite}
+@keyframes thgGrow{0%,100%{height:12%}50%{height:78%}}
+@keyframes thgPin{0%,100%{transform:translate(-50%,-70%) rotate(-45deg)}50%{transform:translate(-50%,-95%) rotate(-45deg)}}
+.load-txt{text-align:center;font-size:20px;font-weight:900}
+.load-sub{text-align:center;font-size:15px;color:var(--muted);margin:6px 0 20px}
+.res-h{font-size:22px;font-weight:900;line-height:1.3;margin:8px 0 6px;text-wrap:balance}
+#jform .res-h{margin-top:var(--s4)}
+#jform .wins{margin-top:14px}
+.resume-note{background:#FFF5E6;color:#8a5a00;border:1px solid #f3d9a8;border-radius:12px;font-weight:800;font-size:15px;text-align:center;padding:8px 12px;margin-bottom:12px}
+.done-box{text-align:center;padding:var(--s3) 0}
+.done-box h3{font-size:21px;font-weight:900}
+.done-box p{color:var(--muted);margin-top:6px}
+.float a{border-radius:15px}
+@media(max-width:440px){.qtitle{font-size:21px}.opt{font-size:16px;padding:15px 14px}.svc{padding:16px 16px 20px}.btn{font-size:clamp(14px,4.1vw,17px);padding:16px 12px;gap:8px}.btn .arw{width:26px}}
+@media(prefers-reduced-motion:reduce){.lh-btn,.sv-go,.screen.active,.landload .fill,.landload .pin,.lh-cue svg{animation:none}.field .hint{transition:none}}
+
+/* ═══ הדף האישי האחד (25/10) ═══ */
+.op-hdr{background:#fff;border-bottom:1px solid var(--line);text-align:center;padding:10px 0}
+.op-hdr img{height:40px;width:auto;display:block;margin:0 auto}
+.pv{position:sticky;top:0;z-index:70;background:#14161b;color:#fff;font:600 13px/1.4 Heebo,Arial,sans-serif;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:center}
+.pv b{font-weight:800;color:#ffb3b6}
+.pv .grp{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.pv button{font:700 12.5px Heebo,Arial,sans-serif;border:1px solid #3a3d45;background:#23262d;color:#fff;border-radius:999px;padding:4px 10px;cursor:pointer}
+.pv button[aria-pressed="true"]{background:#C2151C;border-color:#C2151C}
+.op-hero{padding-top:var(--s5)}
+.op-tag{display:inline-block;background:var(--redsoft,#fbeceb);color:var(--accent);border:1px solid #f1c4c6;border-radius:999px;font-weight:800;font-size:15px;padding:6px 14px;margin-bottom:12px}
+.op-h1{font-size:clamp(28px,7.2vw,44px);font-weight:900;line-height:1.15;letter-spacing:-.02em;text-wrap:balance}
+.op-sub{font-size:19px;color:var(--muted);margin-top:12px;max-width:40ch}
+.op-lede{text-align:center;color:var(--muted);font-size:17px;margin-top:8px}
+.qa-list{display:grid;gap:14px;margin-top:var(--s3)}
+.qa{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 16px;box-shadow:var(--sh-sm)}
+.qa .qn{display:block;font-size:13px;font-weight:800;color:var(--faint,#8A8F98);letter-spacing:.02em}
+.qa .qq{font-size:18px;font-weight:900;margin:4px 0 10px;line-height:1.35}
+.qa .pick{display:flex;gap:10px;align-items:flex-start;background:#F7F7F9;border:2px solid var(--accent);border-radius:14px;padding:10px 12px}
+.qa .pick .tk{flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.qa .pick .tk svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.qa .pick b{display:block;font-size:16.5px;font-weight:800}
+.qa .pick span.mc{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+.qa .ours{display:grid;grid-template-columns:28px 1fr;gap:10px;margin-top:12px}
+.qa .ours .ol{display:block;font-size:13.5px;font-weight:800;color:var(--muted)}
+.qa .ours .ol em{font-style:normal}
+.qa .ours .ol em.ok{color:var(--green)} .qa .ours .ol em.ask{color:#B8892B} .qa .ours .ol em.honest{color:var(--accent)}
+.qa .ours p{font-size:16px;line-height:1.55;margin-top:2px}
+.op-open{background:#fff;border-right:4px solid var(--accent);border-radius:12px;padding:14px 16px;margin-top:var(--s3);font-size:17px;font-weight:700;line-height:1.5}
+.ang-open{text-align:center;margin:var(--s3) auto 0;max-width:30ch}
+.ang-a{font-size:clamp(24px,6vw,34px);font-weight:900;line-height:1.2;text-wrap:balance}
+.ang-b{font-size:clamp(24px,6vw,34px);font-weight:900;line-height:1.2;color:var(--accent);margin-top:6px;text-wrap:balance}
+.facts{grid-template-columns:repeat(3,1fr)}
+.facts .t .v{font-size:22px}
+@media(max-width:600px){.facts{grid-template-columns:1fr}}
+.ang-card{background:#fff;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:20px;padding:20px 16px;margin-top:var(--s4);box-shadow:var(--sh-sm)}
+.ang-card h3{font-size:22px;font-weight:900;margin-bottom:12px}
+.ang-card .tx{font-size:17px;line-height:1.6;white-space:pre-line}
+.ang-card .ft{font-size:17px;font-weight:800;color:var(--accent);margin-top:14px;white-space:pre-line}
+.cmp{display:grid;grid-template-columns:auto 1fr 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:15.5px}
+.cmp>div{padding:11px 10px;border-top:1px solid var(--line)}
+.cmp .hd{border-top:0;font-weight:900;font-size:14px}
+.cmp .hd.land{background:var(--accent);color:#fff}
+.cmp .hd.apt{background:#F7F7F9}
+.cmp .k{font-weight:800;color:var(--muted)}
+.cmp .apt{color:var(--faint,#8A8F98);text-decoration:line-through}
+.cmp .hd.apt{text-decoration:none;color:var(--ink)}
+.cmp .land{background:#F1F7F3;font-weight:800}
+.stp{list-style:none;counter-reset:s;display:grid;gap:10px}
+.stp li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;font-size:17px;line-height:1.5}
+.stp li:before{content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+.exit-box{text-align:center;margin-top:var(--s5)}
+.exit-box h3{font-size:clamp(24px,6vw,32px);font-weight:900}
+.exit-box p{font-size:17px;line-height:1.6;max-width:44ch;margin:10px auto 0}
+.op-tom{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:var(--s4)}
+.op-tom img{width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:top}
+.op-tom b{font-size:16.5px;font-weight:900;line-height:1.4;display:block}
+.op-tom .vals{margin:8px 0 0}
+#cta .res-h{text-align:center}
+#cta .op-p{text-align:center;font-size:17px;color:var(--muted);margin-top:6px;white-space:pre-line}
+#cta .alt{text-align:center;margin-top:14px}
+#cta .alt a{color:var(--ink);font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.wa-ic{width:18px;height:18px;fill:#25D366}
+#cta .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:440px;margin:18px auto 0;box-sizing:border-box}
+.op-tom .sm{display:block;font-size:14px;font-weight:600;color:var(--muted);margin-top:2px}
+.op-tom .vals span{font-size:13px}
 </style>
 </head>
 <body>
-<header id="hdr"><div class="wrap-l" style="display:flex;align-items:center;justify-content:space-between;padding-block:10px">
-  <img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/>
-  <a class="h-cta" href="#join" onclick="scrollJoin(event)"><span data-t="HDR.cta"></span> <svg class="arw" viewBox="0 0 36 11"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a>
-</div></header>
-<div class="demo" id="demo" hidden><div class="wrap-l" id="demoIn"></div></div>
-
-<!-- 1. התוצאה, על התמונה של CPAGE: בר ההתקדמות, הכותרת, המשפט שמתחתיה, וכרטיס הנקודות שסומנו (אאוטליין אדום) -->
-<div class="rh">
-  <div class="rh-bg"><picture><source media="(min-width:700px)" srcset="/b/media/hero-cpage.webp"/><img src="/b/media/hero-cpage-m.webp" width="900" height="600" alt="" fetchpriority="high"/></picture></div>
-  <div class="wrap-l rh-grid">
-    <div class="rh-text">
-      <a class="pbar" id="pbar" href="#join" onclick="scrollJoin(event)"><span class="ptx" id="pbarT"></span><span class="pfill" aria-hidden="true"><span class="ptx ptx2" id="pbarT2"></span></span></a>
-      <h1 id="hH"></h1>
-      <p class="rh-sub" data-t="H.sub"></p>
-    </div>
-    <div class="rcard-wrap"><div class="rcard" id="res">
-      <p class="rc-intro" data-t="C.title"></p>
-      <div id="cSum"><p class="rc-sum" id="cS"></p><p class="rc-next" id="cN"></p></div>
-      <ul class="rc-rows" id="pts"></ul>
-      <div id="ctaBox">
-        <a class="btn" href="#join" onclick="scrollJoin(event)"><span data-t="C.cta"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
-        <p class="rc-calm" data-t="C.call"></p>
-        <p class="rc-num"><span id="cNum"></span><a id="dSave" href="#" download="kadima-h.vcf"></a></p>
-      </div>
-      <p class="rc-booked" id="cBooked" hidden></p>
-      <a class="wa-btn" id="cWa" href="https://wa.me/972533025464" target="_blank" rel="noopener" hidden><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35m-5.42 7.4a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/></svg><span data-t="C.wa"></span></a>
-    </div></div>
-  </div>
+<header class="op-hdr"><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש"/></header>
+<div class="pv" id="pv">
+  <span><b>תצוגה מקדימה</b> · שום דבר לא נשלח</span>
+  <span class="grp" id="pvM"><span>תשובה ראשונה:</span></span>
+  <span class="grp" id="pvS"><span>מצב:</span><button type="button" data-s="0">עוד לא בחר מועד</button><button type="button" data-s="1">כבר בחר מועד</button></span>
 </div>
-
-<!-- 2. יש לך כסף בצד (לפי העיצוב לדוגמה של גל: כותרת עם פס אדום, 3 מחשבות, קופסת מחץ) -->
-<section class="pain" aria-labelledby="pH"><div class="wrap-l">
-  <div class="pain-top">
-    <div class="pain-head">
-      <div class="kicker left rv" data-t="PAIN.k"></div>
-      <h2 class="pain-h rv" id="pH"><span data-t="PAIN.h1"></span><br/><span class="hl" data-t="PAIN.h2"></span></h2>
-      <p class="pain-sub rv" data-t="PAIN.sub"></p>
-    </div>
-    <div class="pain-ph rv"><img src="/b/media/life.webp" width="640" height="800" alt="רחוב מגורים, מתוך הסרטון של תום" loading="lazy"/></div>
-  </div>
-  <p class="pain-lead rv" data-t="PAIN.lead"></p>
-  <div class="thoughts">
-      <article class="tc rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><h3 data-tq="PAIN.t1"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t1"></p></article>
-      <article class="tc rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></span><h3 data-tq="PAIN.t2"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t2"></p></article>
-      <article class="tc rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><h3 data-tq="PAIN.t3"></h3><span class="rule" aria-hidden="true"></span><p data-tp="PAIN.t3"></p></article>
-  </div>
-  <div class="punch rv"><span class="tico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><div><p class="p1" data-t="PUNCH.1"></p><p class="p2 hl" data-t="PUNCH.2"></p></div></div>
-  <div class="punch-after rv"><p class="pk" data-t="PUNCH.k"></p><p class="pp" data-t="PUNCH.p"></p><p class="pc" data-t="PUNCH.c"></p></div>
+<main>
+<section class="sec bg-w op-hero"><div class="wrap">
+  <span class="op-tag" id="hTag"></span>
+  <h1 class="op-h1" id="hH1"></h1>
+  <p class="op-sub" id="hSub"></p>
 </div></section>
-
-<!-- 3. איפה מתחם H עומד היום: כותרת בצד, הציר לידה -->
-<section class="sec sec-tint"><div class="wrap-l split">
-  <div class="split-head">
-    <div class="kicker rv" data-t="K.tl"></div>
-    <div class="sec-t rv" data-th="E3H"></div>
-    <div class="sec-sub rv" data-t="E3S"></div>
-  </div>
-  <div class="split-body">
-    <div class="jtl" data-jet>
-      <div class="jtl-line"></div><div class="jtl-fill"></div>
-    </div>
-  </div>
+<section class="sec bg-g" id="ans"><div class="wrap">
+  <h2 class="sec-t" id="aH2"></h2>
+  <p class="op-lede" id="aSub"></p>
+  <div class="qa-list" id="qaList"></div>
+  <p class="op-open" id="aOpen"></p>
 </div></section>
-
-<!-- 4. למה דווקא עכשיו (במקום ה־VSL) -->
-<section class="sec sec-dark now"><div class="wrap">
-  <lottie-player src="/lot-year-w.json" background="transparent" speed="1" autoplay loop></lottie-player>
-  <div class="dateb" data-t="NOW.badge"></div>
-  <div class="kicker" data-t="NOW.h"></div>
-  <div class="sec-t rv" data-th="NOW.big"></div>
-  <div class="sec-sub rv" data-t="NOW.p"></div>
-  <div class="nowbox rv"><span class="nb-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><p data-t="NOW.box"></p></div>
+<section class="sec bg-w" id="info"><div class="wrap">
+  <h2 class="sec-t" id="iH2"></h2>
+  <div class="ang-open"><p class="ang-a" id="iA"></p><p class="ang-b" id="iB"></p></div>
+  <div class="buy3 facts" id="facts"></div>
+  <div class="ang-card" id="angCard"></div>
+  <div class="exit-box"><h3 id="xH"></h3><p id="xP"></p></div>
+  <div class="op-tom"><img src="https://tom-harush.co.il/wp-content/uploads/%D7%A2%D7%99%D7%A6%D7%95%D7%91-%D7%9C%D7%9C%D7%90-%D7%A9%D7%9D-17.png" alt="תום הרוש" loading="lazy"/><div><b id="tomLine"></b><div class="vals" id="chips"></div></div></div>
 </div></section>
-
-<!-- 5. כל חלופה פותרת רק חצי (הכרטיסים של CPAGE) -->
-<section class="sec sec-gray"><div class="wrap-l">
-  <div class="kicker" data-t="K.alt"></div>
-  <div class="sec-t rv" data-th="ALT.h"></div>
-  <div class="fails" style="margin-top:28px">
-      <div class="fail rv"><div class="fi"><lottie-player src="/lot-oash.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.1h"></b><p data-t="ALT.1p"></p></div>
-      <div class="fail rv"><div class="fi"><lottie-player src="/lot-dira.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.2h"></b><p data-t="ALT.2p"></p></div>
-      <div class="fail rv"><div class="fi"><lottie-player src="/lot-shuk.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.3h"></b><p data-t="ALT.3p"></p></div>
-      <div class="fail rv"><div class="fi"><lottie-player src="/lot-ads.json" background="transparent" speed="1" autoplay loop></lottie-player></div><b data-t="ALT.4h"></b><p data-t="ALT.4p"></p></div>
-  </div>
-  <p class="alt-close rv" data-t="ALT.f"></p>
-</div></section>
-
-<!-- 6. שלוש חותמות (id=docs: לכאן מגיעים מרימרקטינג C) -->
-<section class="sec" id="docs"><div class="wrap-l">
-  <div class="kicker" data-t="K.docs"></div>
-  <div class="sec-t rv" data-th="E2H"></div>
-  <div class="sec-sub rv" data-t="E2L"></div>
-  <div class="dgrid">
-      <div class="dcard rv"><lottie-player src="/lot-cert1.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b data-t="E2.1"></b><span data-t="E2S.1"></span></div>
-      <div class="dcard rv"><lottie-player src="/lot-cert2.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b data-t="E2.2"></b><span data-t="E2S.2"></span></div>
-      <div class="dcard rv"><lottie-player src="/lot-cert3.json" background="transparent" speed="1" autoplay loop style="width:64px;height:64px"></lottie-player><b data-t="E2.3"></b><span data-t="E2S.3"></span></div>
-  </div>
-  <div class="proof rv">
-    <div class="proof-card"><img src="/proof/mavat-approved.png" alt="אתר מינהל התכנון: תוכנית 457-0112086, אישור 18/12/2024" loading="lazy"><span data-tb="PROOF.1"></span></div>
-    <div class="proof-card"><img src="/proof/location-in-h.jpg" alt="מיקום החלקה בתוך מתחם H, מתוך הערכת השמאי" loading="lazy"><span data-tb="PROOF.2"></span></div>
-  </div>
-  <p class="doc-close rv" data-t="E2F"></p>
-  <div class="mid-cta rv"><p data-t="MID.micro"></p><a class="btn" href="#join" onclick="scrollJoin(event)"><span data-t="MID.cta"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a></div>
-</div></section>
-
-<!-- 7. היישוב לפניך (id=place: לכאן מגיעים ממודעת המפה) -->
-<section class="sec sec-gray" id="place"><div class="wrap-l split">
-  <div class="split-head">
-    <div class="kicker rv" data-t="K.town"></div>
-    <div class="sec-t rv" data-th="E4H"></div>
-    <div class="sec-sub rv" data-t="E4P"></div>
-  </div>
-  <div class="split-body"><div class="facts4 rv" id="eFacts"></div></div>
-</div>
-<div class="wrap-l"><div class="mapcard proof-card rv"><img src="/proof/subcompounds-map.jpg" alt="מפת מתחמי התכנון של קדימה צורן, ומתחם H במרכז היישוב" loading="lazy"><span data-tb="PROOF.3"></span></div>
-<p class="town-note" data-t="E4N"></p></div>
-</section>
-
-<!-- 8. מה אם ארצה לצאת -->
-<section class="sec"><div class="wrap-l">
-  <div class="exitcard rv"><lottie-player src="/lot-cert4.json" background="transparent" speed="1" autoplay loop style="width:72px;height:72px"></lottie-player><div><div class="kicker" data-t="K.exit"></div><div class="sec-t" data-th="EXITH"></div><p data-t="E5"></p></div></div>
-  <div class="mid-cta rv"><p data-t="MID.micro"></p><a class="btn" href="#join" onclick="scrollJoin(event)"><span data-t="MID.cta"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a></div>
-</div></section>
-
-<!-- 9. הביקורות -->
-<section class="sec sec-dark"><div class="wrap-l">
-  <div class="kicker" data-t="K.rev"></div>
-  <div class="sec-t revq rv" id="eRevH"></div>
-  <p class="rev-src rv" id="eRevS"></p>
-  <div class="gline rv"><span class="gw"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></span><span class="st"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#FBBC05"><path d="M12 2.5l2.9 6.2 6.6.6-5 4.5 1.5 6.6L12 17l-6 3.4 1.5-6.6-5-4.5 6.6-.6z"/></svg></span><b>5.0</b></div>
-  <div class="rgal rv">
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-13.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-15.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-21.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-18.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-12.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-23.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-25.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-22.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-10.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-19.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-17.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-4.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-5.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-11.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-8.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-14.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-16.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-20.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-7.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-    <img class="rev lbx" src="https://tom-harush.co.il/wp-content/uploads/review-6.png" alt="ביקורת גוגל 5 כוכבים · קבוצת תום הרוש" loading="lazy"/>
-  </div>
-</div></section>
-
-<!-- 10. תום הרוש (הכרטיס של HPAGE, מהאודות של תום) -->
-<section class="sec"><div class="wrap">
-  <div class="tom rv">
-    <div>
-      <div class="kicker" data-th="TOM.k"></div>
-      <h3 data-th="TOM.h"></h3>
-      <p data-t="TOM.bio"></p>
-      <p class="vis" data-t="TOM.vision"></p>
-      <div class="vh" data-t="TOM.vh"></div>
-      <div class="vals" id="tVals"></div>
-      <p class="grp" data-t="TOM.group"></p>
-      <div class="sig" data-t="TOM.sig"></div>
-      <p class="tnote" data-t="TOM.note"></p>
-    </div>
-    <img src="https://tom-harush.co.il/wp-content/uploads/%D7%A2%D7%99%D7%A6%D7%95%D7%91-%D7%9C%D7%9C%D7%90-%D7%A9%D7%9D-17.png" alt="תום הרוש" loading="lazy"/>
-  </div>
-</div></section>
-
-<!-- 11. בחירת מועד -->
-<section class="sec sec-gray" id="join"><div class="wrap">
-  <div class="join-card rv" id="jcard">
+<section class="sec bg-p" id="cta"><div class="wrap">
+  <div id="ctaPick">
+    <h2 class="res-h" id="pH"></h2>
+    <p class="op-p" id="pP"></p>
     <form id="jform" novalidate>
-      <div class="kicker" data-t="K.join"></div>
-      <h2 id="jH" data-th="JH"></h2>
-      <p id="jL"></p>
-      <div class="mynum" id="jMy" hidden></div>
-      <fieldset class="wins">
-        <legend style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">חלון הזמן לחזרה</legend>
-        <div class="win w-m"><input type="radio" name="w" id="w1" value="morning"/><label for="w1" data-tw="0"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="wtx"><span class="wn"></span><span class="wm"></span></span><span class="wt"></span></label></div>
-        <div class="win w-n"><input type="radio" name="w" id="w2" value="noon"/><label for="w2" data-tw="1"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></span><span class="wtx"><span class="wn"></span><span class="wm"></span></span><span class="wt"></span></label></div>
-        <div class="win w-e"><input type="radio" name="w" id="w3" value="evening"/><label for="w3" data-tw="2"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/><path d="M20 3v4M22 5h-4"/></svg></span><span class="wtx"><span class="wn"></span><span class="wm"></span></span><span class="wt"></span></label></div>
-      </fieldset>
+      <fieldset class="wins"><legend class="vh">חלון הזמן לחזרה</legend><div class="win w-m"><input type="radio" name="w" id="w1" value="morning"/><label for="w1"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="wtx"><span class="wn">בבוקר</span><span class="wm">אני טיפוס של בוקר</span></span><span class="wt">09:00 עד 12:00</span></label></div><div class="win w-n"><input type="radio" name="w" id="w2" value="noon"/><label for="w2"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></span><span class="wtx"><span class="wn">בצהריים</span><span class="wm">דברו איתי בצהריים</span></span><span class="wt">12:00 עד 16:00</span></label></div><div class="win w-e"><input type="radio" name="w" id="w3" value="evening"/><label for="w3"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/><path d="M20 3v4M22 5h-4"/></svg></span><span class="wtx"><span class="wn">בערב</span><span class="wm">הכי טוב בערב</span></span><span class="wt">16:00 עד 20:00</span></label></div></fieldset>
       <div class="jerr" id="jEw" aria-live="polite"></div>
-      <label class="consent"><input type="checkbox" id="jOk" name="phone_ok"/><span id="jOkT" data-t="JOK"></span></label>
-      <label class="consent"><input type="checkbox" id="jOk2" name="phone_alt"/><span data-t="JOK2"></span></label>
-      <div class="jfield" id="jAltBox" hidden><input id="jAlt" name="alt_phone" type="tel" inputmode="numeric" autocomplete="tel"/></div>
+      <label class="consent"><input type="checkbox" id="jOk2" name="phone_alt"/><span id="jOk2T"></span></label>
+      <div class="jfield" id="jAltBox" hidden><input id="jAlt" name="alt_phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="מספר נייד אחר" aria-label="מספר נייד אחר"/></div>
       <div class="jerr" id="jEo" aria-live="polite"></div>
-      <button class="btn" type="submit" id="jBtn"><span id="jCta" data-t="JCTA"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
-      <p class="after" data-t="JAFTER"></p>
-      <p class="alt"><a href="https://wa.me/972533025464" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35m-5.42 7.4a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/></svg><span data-t="JWA"></span></a></p>
+      <button class="btn sv-go" type="submit" id="jBtn"><span id="pBtn"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
     </form>
-    <div class="done-box" id="jDone" hidden><div class="big"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div><h2 id="jDH"></h2><p id="jDP"></p></div>
+    <p class="alt"><a id="pWaA" href="https://wa.me/972533025464" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35m-5.42 7.4a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/></svg><span id="pWa"></span></a></p>
+  </div>
+  <div id="ctaDone" hidden>
+    <div class="done-box"><div class="big"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div></div>
+    <h2 class="res-h" id="dH"></h2>
+    <p class="op-p" id="dP"></p>
+    <a class="btn sv-go" id="dBtn" href="/join/"><span id="dBtnT"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
   </div>
 </div></section>
-
-<!-- 12. שאלות -->
-<section class="sec"><div class="wrap faq">
-  <div class="kicker" data-t="K.faq"></div>
-  <div class="sec-t rv" data-th="FAQ.h"></div>
-  <div class="rv" id="faqs" style="margin-top:24px"></div>
-</div></section>
-
+</main>
 <footer>
   <img class="flogo" src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" loading="lazy"/>
-  <div class="foot-title" data-t="OWN"></div>
   <div class="social">
     <a href="https://wa.me/972533025464" target="_blank" rel="noopener" aria-label="וואטסאפ"><lottie-player src="/lot-s-wa.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
     <a href="https://www.instagram.com/tom_harush/" target="_blank" rel="noopener" aria-label="אינסטגרם"><lottie-player src="/lot-s-ig.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
     <a href="https://www.facebook.com/appartmentforsaleinramatgan" target="_blank" rel="noopener" aria-label="פייסבוק"><lottie-player src="/lot-s-fb.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
   </div>
-  <div class="wrap"><div class="disc" id="fDisc"></div></div>
+  <div class="wrap"><div class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b> הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.</div></div>
   <div class="foot-links"><a href="/privacy-kadima/">מדיניות פרטיות</a></div>
   <div class="copy">© הקרן להשבחת הון ונכסים בע״מ מקבוצת תום הרוש · <a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a></div>
 </footer>
-<div class="rlb" id="rlb" hidden role="dialog" aria-modal="true" aria-label="ביקורות גוגל על קבוצת תום הרוש">
-  <button class="rlb-x" id="rlbX" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>סגירה</button>
-  <div class="rlb-st" id="rlbSt"><img id="rlbImg" alt=""/></div>
-  <div class="rlb-nav">
-    <button class="rlb-b" id="rlbPrev" type="button" aria-label="הביקורת הקודמת"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
-    <span class="rlb-n" id="rlbN"></span>
-    <button class="rlb-b" id="rlbNext" type="button" aria-label="הביקורת הבאה"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
-  </div>
-</div>
-<div class="float" id="float"><a href="#join" onclick="scrollJoin(event)"><span data-t="C.cta"></span> <svg class="arw" viewBox="0 0 36 11"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a></div>
 <script>
-/* ═══ דף התוצאה הדינמי של B (גרסה 4). הטקסטים מהלוגיקה שגל אישר. [[...]] = צבע המותג ═══ */
-const D = {"tx": {"H.w0": "{שם}, שאלת איפה כן.\nהנה [[התשובה שלנו]], נקודה אחרי נקודה.", "H.w1": "{שם}, [[אנחנו לא ממהרים]].\nחשוב לנו להבין מה נכון לך.", "H.w2": "{שם}, הנה כל מה שכדאי לך\nלדעת עכשיו כדי\n[[להחליט בקצב שלך]].", "H.sub": "בנינו את הדף הזה רק מהתשובות שלך. הוא שלך, וקיבלת אותו גם בוואטסאפ!\nאפשר לחזור אליו מתי שנוח לך.", "C.title": "תיאום ציפיות הוא מה שמוביל כל השקעה טובה.\nהנה מה שהבטחנו:", "C.sum4": "כל 4 הציפיות שלך מהשקעה [[מתאימות]].\n{{זה הזמן לתאם לנו 10 דקות}} ונדבר על הצעד הבא.", "C.sumN": "{n} מתוך 4 הציפיות שלך מהשקעה [[כבר מתאימות]].\n{{זה הזמן לתאם לנו 10 דקות}} ונדבר על השאר.", "C.need": "כל שורה מתחילה במה שהוא בחר, מילה במילה מהשאלון שלך (התשובה והמיקרו קופי שלה), ואחריה התשובה שלנו.", "R1.0": "אצלנו אנשים לפני עסקים. לא נמכור לך מה שלא מתאים לך, ובדיוק בגלל זה אנחנו מודדים התאמה.", "R1.1": "למטה מחכים לך מסמכים מהעסקה, משלב התכנון ועד היציאה. הכל מוסבר בגובה העיניים.", "R1.2": "המקום שלך בטוח: התוכנית הכוללנית כבר אושרה. גם הקצב בטוח: התזמון כאן משחק לטובתך, והרווח הגדול הוא בשלב התכנוני, לפני שהתוכנית הבאה תאושר.", "R1.3": "אנחנו מתאימים לך מודל השקעה ונקודת יציאה, בדיוק בהיקף שנכון לך. אפשר להגיע להון של דירה מההון שכבר יש לך, ובלי משכנתא חונקת.", "R2.0.0": "שלושה מסמכים שנעבור עליהם יחד: התוכנית הכוללנית שאושרה, השמאות לפי תקן 22, ונקודות היציאה שאנחנו מספקים.", "R2.0.1": "כאן הבסיס הוא ודאות: התוכנית הכוללנית כבר אושרה, והצפי שקוף לשנים הקרובות. אם מישהו היה מציע לי תשואה גבוהה בלי שום סיכון, הייתי משאיר את הכסף מתחת לכרית.", "R2.0.2": "בעסקאות כאלו הרווח הגדול הוא דווקא בשנים של התכנון, וכניסה מוקדמת תעשה את העבודה השחורה בשבילך. אבל זה לא הכל. על השאר עוברים בשיחה, מול השמאות.", "R2.1.0": "אפשר למכור בכל שלב! בנוסף יש נקודות יציאה שקופות וברורות, וכל התנאים שקופים מראש בחוזה. עוברים עליהם יחד, סעיף אחרי סעיף.", "R2.1.1": "התוכנית הכוללנית אושרה ב־18/12/2024, ומתחם H נמצא היום בשלב הוועדה המקומית, אחרי אישור התוכנית הכוללנית. כרגע על הפרק: תוכנית מפורטת. ציר הזמן המלא מחכה לך כאן למטה.", "R2.1.2": "שמאות מקרקעין 2026 לפי תקן 22 קבעה: 3,700 ש״ח למטר, כלומר 462,500 ש״ח ליחידת קרקע של 125 מ״ר.\nהמחיר מתעדכן לפי התקדמות הסטטוס התכנוני.", "R2.2.0": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים.", "R2.2.1": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים, בתוך הטווח שסימנת.", "R2.2.2": "קרקע בשלבי תכנון צריכה בדיוק את זה: סבלנות. ובינתיים, הכסף שלך שיושב בצד מקבל משמעות.", "R2.3.0": "זה אפשרי, בהיקף שמותאם אליך, במודל שנבנה יחד. משקיעים בדיוק בתקופת ההשבחה: אחרי שהתוכנית הכוללנית אושרה, ולפני התוכנית המפורטת.", "R2.3.1": "השקעה מותאמת אישית, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R2.3.2": "בשיחה נבדוק אם ניתן להתאים לך מודל אישי, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R3.0": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.\nבינתיים, יש בדף הזה הרבה מידע שחשוב לי להעביר לך. גלילה נעימה.", "R3.1": "אני מבין אותך, רוב המשקיעים שלי נמצאים בדיוק בנקודה הזו. אשמח להבין לעומק את הצורך שלך ולעזור לך לקבל את ההחלטה המושכלת ביותר עבורך.", "R3.2": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.\nבינתיים, יש בדף הזה הרבה מידע שחשוב לי להעביר לך. גלילה נעימה.", "R4.0": "זה מה שמאפשר להיכנס עכשיו, ולהשביח את ההון כבר מהשלב הנוכחי של התכנון.", "R4.1": "בכנות, אנו לא מאפשרים מימון. אפשר להיכנס גם עם הון מלווה, וזה בסדר גמור מבחינתנו. אבל לפני שרצים לקחת הלוואה, נשוחח ונבין יחד היקף ולוח זמנים שיתאימו גם ליעדים שלך.", "R4.2": "התזמון משחק כאן תפקיד מפתח. לפני שממהרים, מומלץ קודם לתאם ציפיות באופן אישי, בשיחה איתי.", "R5": "מה שעוד פתוח: איזה היקף מתאים לך, ובאיזה לוח זמנים. את זה מאבחנים ישירות בשיחה של 10 דקות איתי.", "C.call": "10 דקות בטלפון, בזמן שנוח לך ובלי לנסוע לשום מקום. שואלים, ומקבלים תשובות.", "C.cta": "לתיאום השיחה עם תום", "C.num": "תום מתקשר מ־053-302-5464 · שמירה באנשי הקשר", "C.booked": "השיחה שלך שמורה {w}. אם צריך לשנות, אפשר לכתוב לנו בוואטסאפ.", "PAIN.k": "רגע לפני שמדברים על השקעה", "PAIN.h1": "אולי יש לך כסף בצד.", "PAIN.h2": "אבל אין לך שקט.", "PAIN.sub": "עבדת קשה בשביל הכסף שלך. חסכת, ויתרת, ועכשיו ברור לך שהוא יכול לעשות יותר, אבל אין לך שום כוונה לסכן אותו בשביל עוד הבטחה יפה.", "PAIN.lead": "ואולי גם המחשבות האלה עברו לך בראש:", "PAIN.t1": "״כל פעם שמציעים לי ׳להשקיע את הכסף שלי׳, הדבר הראשון שעולה לי בראש: איפה הקאץ׳?!״\nכולם מבטיחים תשואות ורווחים. אבל למי באמת אפשר להאמין?", "PAIN.t2": "״חסכתי כסף, אבל הוא פשוט לא עושה כלום.״\nברור לי שהכסף שלי יכול לעבוד יותר טוב. רק לא ברור לי איפה לשים אותו.", "PAIN.t3": "״אני רואה אחרים מתקדמים, ואני עדיין על הגדר.״\nמצד אחד, אני לא רוצה לפספס שוב. מצד שני, אני לא אהמר על הכסף שלקח לי שנים לבנות.", "PUNCH.1": "לא מפחיד אותך שהכסף שלך יעבוד.", "PUNCH.2": "מפחיד אותך שהוא יעבוד נגדך.", "PUNCH.k": "וזה בדיוק ההבדל.", "PUNCH.p": "לא חסר לך עוד מישהו שיגיד לך שההשקעה שלו מדהימה. חסר לך מישהו שיראה לך את המספרים, את המסמכים, את הסיכונים ואת האפשרויות שלך, וייתן לך להחליט בעצמך.", "PUNCH.c": "כי לפני שהכסף שלך מתחיל לעבוד, מגיע לך להבין בדיוק מה צפוי לו.", "ALT.h": "שמוצעת בשוק, פותרת רק [[חצי מהציפיות הפיננסיות]] שלך", "ALT.1": "העו״ש והפיקדון הבנקאי: הכסף נח בשקט, אבל לא עובד בשבילך. ובכל שנה שהכסף שלך יושב שם, הוא שווה לך קצת פחות בכיס.", "ALT.2": "דירה להשקעה: 2-3% תשואה בשנה על הנכס, בנוסף לשכר הדירה. ועדיין, זה בקושי מכסה את המשכנתא שלקחת ל־20 שנה. כדי שהכסף יעבוד בשבילך, צריך לעבוד בשביל הבנק.", "ALT.3": "שוק ההון: אולי יש תשואה, אבל זה הימור. ובקזינו כמו בקזינו, אף אחד לא נותן לך גב. המחיר זז כל יום, והשליטה לא אצלך.", "ALT.4": "עוד הזדמנות מפרסומת: הרבה הבטחות, הרבה פגישות, ומעט מאוד הוכחות במסמכים.", "ALT.f": "מה שחסר בכולן הוא השילוב: כסף שעובד, בהיקף שנכון לך, ועם מסמך מאחורי כל טענה. וזה בדיוק מה שאנחנו מציעים לך לבדוק כאן.", "NOW.h": "אז למה דווקא עכשיו?", "NOW.big": "השנים המתישות [[כבר מאחורינו.]]", "NOW.p": "ב־18/12/2024 ההמתנה לתוכנית במתחם H נגמרה, והתוכנית הכוללנית אושרה. מי שנכנס עכשיו, נכנס אחרי ההחלטה הגדולה ולפני התוכנית המפורטת.", "E2H": "לדעת איך נכנסים, [[ואיך יוצאים.]]", "E2L": "כל מה שלא מספיק שקוף בעסקאות קרקע, כאן מול העיניים שלך.", "E2.1": "תוכנית מתאר כוללנית מספר 457-0112086 כבר אושרה ב־18/12/2024, ופורסמה לתוקף.", "E2.2": "שמאי מקרקעין מוסמך קבע שווי של 3,700 ש״ח למטר, וזה בדיוק מחיר הכניסה שאנחנו מציעים.", "E2.3": "נקודת יציאה שקופה ובטוחה עם התחייבות שלנו, שמצוינת בחוזה הקנייה.", "E2F": "את שלושתן אני פותח יחד איתך בפגישה, מסמך אחרי מסמך, ועונים על כל שאלה.", "E3H": "איפה הרווח בעסקה [[עומד היום]]", "E3S": "השלב שבו קרקעות נתקעות שנים, כבר מאחור. הבא בתור: תוכנית מפורטת למתחם.", "STAGES": "קרקע חקלאית: נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.\nועדה ארצית: הקווים הגדולים של המדינה: איך והאם הרעיון יתרום לעתיד היישוב.\nועדה מחוזית: ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.\nועדה מקומית (אנחנו כאן): כאן אנחנו היום. התכנון הגדול אושר ויורד לרמת המתחם.\nאישור תוכנית מפורטת: תוכנית מפורטת אחת לכל מתחם H: מה מניחים איפה. בשלב זה עסקאות קרקע דומות, מזוהות עם רווחים של עשרות ומאות אחוזים.\nאישור תוכנית פיתוח: כבישים, מים וניקוז. מתכוננים לשלבי הבנייה.\nזמינות לבנייה: מנופים, שופלים ודחפורים. משלמים לקבלן ובונים, או מוכרים ליזם ונהנים מההשבחה של התכנון.", "E4H": "קדימה צורן [[ומתחם H המרכזי]]", "E4P": "היישוב קדימה צורן מתוכנן להכפיל את עצמו, בזכות התוכנית הכוללנית המאושרת ותוכניות נוספות. היום גרים בו כ־23,000 תושבים על כ־11,000 דונם, שטח גדול פי 3 מגבעתיים, שבה גרים כ־60,000 תושבים.", "FACTS": "1,230 · יחידות דיור במתחם H, בשכונה החדשה ובמרכז היישוב\nכ־64,000 מ״ר · מסחר, הלב המסחרי החדש של קדימה צורן\nכ־60,000 מ״ר · תעסוקה ומשרדים, ועוד כ־120 יחידות אירוח\nכ־10 ק״מ · מחוף הים, שוכנת בין כפר סבא לנתניה, קרובה לרעננה והרצליה.", "EXITH": "ומה אם [[ארצה לצאת?]]", "E5": "אפשר למכור בכל שלב! בנוסף אנו מספקים מודל שקוף וברור עם נקודות יציאה, הכל מגובה בכתב מצדנו, וכל התנאים כתובים מראש בחוזה. בפגישה עוברים עליהם יחד, סעיף אחרי סעיף.", "REVH": "״חיפשנו הרבה זמן [[מישהו שאפשר לסמוך עליו]] בתחום הנדל״ן״\nמתוך ביקורת בגוגל על קבוצת תום הרוש", "TOM.k": "מבינים אנשים. [[מומחים בנדל״ן.]]", "TOM.h": "אני שמח לראות אותך כאן.\n[[אני תום הרוש]]", "TOM.bio": "יותר מ־15 שנה אני בעולם הנדל״ן: השקעות, תיווך, יזמות והתחדשות עירונית. יחד עם השותפים שלי לאורך השנים יזמנו, הקמנו ומסרנו מעל 1,000 יחידות דיור.", "TOM.vision": "החזון של קבוצת תום הרוש: לאפשר לאנשים לעבור לרמה הכלכלית הבאה שלהם באמצעות נדל״ן.", "TOM.group": "שלוש חברות בת שפועלות תחת הקבוצה: SUPERB, REBUILD ו־ELITA ONE.", "TOM.values": "שותפות · מנהיגות · מצוינות · חדשנות", "TOM.sig": "אשמח לעזור לך להגיע לרמה הכלכלית הבאה שלך.", "JH": "מתי הכי נוח [[שנחזור אליך?]]", "JL": "בוחרים חלון זמן, ואנחנו מתקשרים בתוכו. אם ההחלטה משותפת, כדאי לבחור זמן שנוח לשניכם.", "JL.w1": "אין לחץ. בוחרים חלון זמן לשיחת היכרות קצרה, ואם זה לא הזמן, הדף הזה מחכה לך.", "JMY": "נתקשר למספר שמסתיים ב־{4 ספרות}", "JOK": "המספר שהזנתי בטופס זה הטלפון לחזור אליי", "JCTA": "לשריין את 10 הדקות שלי", "JAFTER": "בשיחה עונים על כל השאלות ובוחנים האם ההשקעה תתאים לך לפני שנתקדם לפגישה.", "JWA": "עדיף לכתוב עכשיו? אפשר בוואטסאפ", "JDP": "השיחה שלך שמורה.\nנחזור אליך {w}, למספר {n}.", "JERR": "צריך לבחור חלון זמן", "FAQ.h": "שאלות נפוצות [[לפני השיחה]]", "FAQ.1": "מה בדיוק קונים?\nקרקע פרטית בטאבו, לפי מטר, בתוך מתחם H בקדימה צורן. התוכנית הכוללנית של היישוב אושרה ב־18/12/2024, והשלב הבא הוא תוכנית מפורטת.", "FAQ.2": "זו הפעם הראשונה שלי בקרקע. זה מתאים לי?\nרוב מי שפונים אלינו עושים את זה בפעם הראשונה. לכן בשיחה מתחילים מהבסיס, ומסבירים כל מונח במילים פשוטות: מה זה טאבו, מה זו תוכנית מפורטת, ואיך יוצאים מהעסקה.", "FAQ.3": "איך נקבע המחיר?\nשמאי מקרקעין קבע שווי של 3,700 ש״ח למטר, וזה בדיוק מחיר הכניסה. את השמאות עצמה פותחים יחד בפגישה.", "FAQ.4": "מתי אפשר לבנות?\nהשאלה היא לא מתי בונים, אלא כמה מוקדם נכנסים כדי ליהנות מההשבחה של הסטטוס התכנוני. הקרקע עדיין אינה זמינה לבנייה מיידית. לבנייה נדרשת תוכנית מפורטת, ועל לוחות הזמנים הצפויים עוברים בפגישה, מול המסמכים: בזום, או פרונטלית במגדל ב.ס.ר 3, קומה 30.", "FAQ.5": "ומה לגבי מיסוי?\nכמו בכל עסקת נדל״ן יש מס רכישה בכניסה ומס שבח במכירה. עוברים על התמונה המלאה בשיחה, ומומלץ ללוות את זה עם יועץ המס שלך.", "OWN": "יצרתי את הדף הזה עם התשובות שלך ובמיוחד בשבילך. אפשר לחזור אליו מכל מכשיר, מהקישור האישי שקיבלת בוואטסאפ.", "DISC": "*הקרקע עדיין אינה זמינה לבנייה מיידית. הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.", "T.H": "השיחה שלך שמורה.", "T.S": "נחזור אליך {w}, למספר {n}.\nבלי חלון: נחזור אליך בקרוב.", "T.CTA": "שמירת המספר שלנו באנשי הקשר\nככה השיחה מ־053-302-5464 לא תיפול על מספר לא מוכר.", "T.STEPS": "מה קורה עכשיו\n1. בחלון שבחרת מגיעה שיחה מ־053-302-5464.\n2. בשיחה משלימים את בדיקת ההתאמה: איזה היקף מתאים לך, ובאיזה לוח זמנים.\n3. אם יש התאמה, קובעים פגישה אישית עם תום, מול המסמכים.", "T.PREP": "כדי שהשיחה תלך ישר לעניין\nכדאי לחשוב מראש על ההיקף שנוח לך ועל אופק הזמן. ואם ההחלטה משותפת, שווה ששניכם תהיו בשיחה. ככה מדברים מהדקה הראשונה על מה שרלוונטי לכם.", "T.WA": "יש שאלה לפני השיחה? אפשר לכתוב לנו בוואטסאפ", "T.OWN": "הדף האישי שלך נשאר פתוח: אפשר לחזור אליו מכל מכשיר.", "HDR.cta": "לתיאום 10 דקות שיחה עם תום", "K.tl": "שקיפות המסלול התכנוני", "NOW.badge": "18.12.2024 · התוכנית הכוללנית אושרה", "K.alt": "כל חלופה אחרת היום", "K.docs": "אנחנו רוצים לדאוג לביטחון שלך", "E2S.1": "אפשר לבדוק בעצמך באתר מינהל התכנון", "E2S.2": "מתוך הערכת השמאי, לפי תקן 22 בשנת 2026", "E2S.3": "כתוב בחוזה, ונקרא יחד בפגישה", "PROOF.1": "מתוך אתר מינהל התכנון: [[תכנית 457-0112086, אישור 18/12/2024]]", "PROOF.2": "מיקום החלקה בתוך מתחם H, [[מתוך הערכת השמאי]]", "K.town": "התכנית להכפלת היישוב", "PROOF.3": "מתחמי התכנון של קדימה צורן. [[מתחם H, במרכז היישוב]]", "E4N": "מתוך התוכנית הכוללנית המאושרת (סעיף 6.1.4, H1 ו־H2 יחד) והערכת השמאי.", "K.exit": "רק רגע אחד, תום..", "K.rev": "המשקיעים שלנו מספרים על הליווי", "K.join": "לפני שנתקשר אליך", "JERR.alt": "המספר האחר לא תקין. צריך 10 ספרות שמתחילות ב־05", "JERR.ok": "צריך לבחור לאיזה מספר נחזור אליך", "K.faq": "חשבנו עליך הרבה", "C.mark": "הציפיות שלך:", "JWIN": "בבוקר · 09:00 עד 12:00 · אני טיפוס של בוקר\nבצהריים · 12:00 עד 16:00 · דברו איתי בצהריים\nבערב · 16:00 עד 20:00 · הכי טוב בערב", "JSAVING": "שומרים…", "META.title": "בדיקת ההתאמה שלך · מתחם H · קבוצת תום הרוש", "TOP.bar": "רגע, עוד לא סיימנו. נשאר שלב אחרון", "TOP.done": "סיימנו! השיחה שלך שמורה.", "C.wa": "לכתוב לנו בוואטסאפ", "NOW.box": "בשלב זה עסקאות קרקע דומות מזוהות עם רווחים של עשרות ומאות אחוזים.", "MID.micro": "לפני פגישה, בואו נבין בכלל אם זה מתאים לך", "MID.cta": "לתיאום 10 דקות שיחה עם תום", "TOM.vh": "4 הערכים שמובילים את הקבוצה שלי", "TOM.note": "לאחר 10 דקות של שיחה, אם נמצא התאמה, נוכל לתאם פגישה. הפגישה היא איתי, באופן אישי.", "JOK2": "עדיף להתקשר למספר אחר שלי", "JALT.ph": "מספר טלפון לחזרה"}, "st": {"R1.0": "ok", "R1.1": "ok", "R1.2": "ok", "R1.3": "ok", "R2.0.0": "ok", "R2.0.1": "honest", "R2.0.2": "ok", "R2.1.0": "ok", "R2.1.1": "ok", "R2.1.2": "ok", "R2.2.0": "honest", "R2.2.1": "ok", "R2.2.2": "ok", "R2.3.0": "ok", "R2.3.1": "ok", "R2.3.2": "ask", "R3.0": "ok", "R3.1": "ok", "R3.2": "ok", "R4.0": "ok", "R4.1": "ask", "R4.2": "ok", "R5": "ask"}, "q1": [["ודאות וביטחון", "ליווי רגוע והתאמת הצורך האישי."], ["להבין לעומק לפני החלטה", "לראות הכל בעיניים, ולבדוק בקצב שלי."], ["תשואה בטוחה", "שהכסף יגדל, במקום וקצב בטוח."], ["רף כניסה נמוך", "להתחיל עם ההון שיש לי עכשיו."]], "q2": [[["גם וגם", "השקעה שתניב רווח בריא, עם מסמכים וגיבוי"], ["כן. אצלי תשואה קודמת להכל", "הסיכון שאקח מחושב בהתאם לתשואה."], ["תלוי כמה גבוהה", "אני קודם רוצה לראות את המספרים"]], [["מה קורה אם ארצה לצאת", "איך יוצאים, ומה כתוב על זה בחוזה."], ["את התוכנית הכוללנית ושלבי התכנון", "איפה המתחם עומד היום, ומה נשאר עד הבנייה."], ["איך בדיוק נקבע המחיר", "מי קבע אותו, ולפי מה."]], [["גג 3 שנים", "מתאימה לי השקעה לטווח הקצר."], ["3 עד 7 שנים", "הקצב הטבעי של קרקע עם ודאות."], ["אין לי לחץ של זמן", "יש לי כסף שיושב בצד ולא עובד."]], [["מהלך אחד משמעותי", "להרוויח בעיקר מהשלבים התכנוניים."], ["מההון שכבר יש לי", "הכסף שלי מחכה להחלטה."], ["עוד לא החלטתי", "את ההיקף בונים יחד בשיחה."]]], "q3": [["יש לי מוכנות לקבל החלטה", "השאלה שלי היא \"איפה כן\" ולא \"מה מתאים לי\""], ["לא עכשיו", "צריך כאן מישהו שיבין אותי.. השארתי פרטים בהרבה מקומות."], ["בחודשים הקרובים", "לאסוף מידע מעכשיו, להחליט עם עצמי בקרוב."]], "q4": [["כן, יושב ומחכה", "ובינתיים לא עובד בשבילי."], ["עוד לא", "שקלתי ללוות הון."], ["חלק זמין, חלק בדרך", "נבדוק יחד מה הכי נכון לך ומתי."]], "docsCta": "לבדיקת התאמה לצורך הפיננסי שלי"};
-const TX = D.tx, ST = D.st;
-const PHONE = '053-302-5464', WORKER = 'https://tom-funnel.tom-harush.workers.dev', PIXEL_ID = '1002428386157716';
-/* חלונות הזמן מהטקסט "שם · 09:00 עד 12:00", ומהם גם הניסוח במשפט ("בבוקר, בין 09:00 ל־12:00") */
-const WKEYS = ['morning', 'noon', 'evening'];
-let WINL = [], WINS = {};
-function winsFrom(){
-  WINL = TX['JWIN'].split('\n').map(l => { const p = l.split('·'); return [p[0].trim(), (p[1] || '').trim(), (p[2] || '').trim()]; });
-  WINS = {};
-  WKEYS.forEach((key, i) => { const [n, h] = WINL[i] || ['', '']; const hh = h.split(' עד '); WINS[key] = hh.length === 2 ? n + ', בין ' + hh[0] + ' ל־' + hh[1] : (n + ' ' + h).trim(); });
-}
-function glue(t){ if(!t) return t; t=String(t).replace(/(^|[\s\[])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g,'$1$2\u00a0'); return t.split('\n').map(function(l){ const i=l.lastIndexOf(' '); return i>0 ? l.slice(0,i)+'\u00a0'+l.slice(i+1) : l; }).join('\n'); }
+const ONE = {"txt": {"msg.body": "רגע לפני שהיום שלך ממשיך, הנה מה שהבטחתי לך.\n\nהדף האישי שלך מחכה כאן: התשובות שלך ומה הצעד הבא: {{1}}\n\nכל שאלה, אפשר פשוט לכתוב לי כאן. אני עונה על הכל בעצמי.", "hero.tag": "{שם}, הנה בדיקת ההתאמה שלך", "hero.h1": "שאלנו מה הכי חשוב לך בהשקעה, והתשובה שלך הייתה [[{תשובה 1}]].", "hero.sub.0": "אז כל תשובה כאן מגובה במסמך שאפשר לבדוק.", "hero.sub.1": "אז הכל כאן מוסבר פשוט, בגובה העיניים, ובקצב שלך.", "hero.sub.2": "אז כאן רואים איפה נוצר הערך בקרקע, בלי הבטחות ועם מסמכים.", "hero.sub.3": "אז כאן רואים בדיוק כמה זה עולה, ומאיזה הון אפשר להתחיל.", "ans.h2": "[[התשובות שלך]] מתוך שאלון ההתאמה", "ans.sub": "מה שאלנו, מה סימנת, ומה זה אומר בשבילך.", "ans.ours": "איך לדעת אם זה מתאים לך?", "ans.open": "מה שעוד פתוח: איזה היקף מתאים לך, ובאיזה לוח זמנים. את זה מאבחנים ישירות בשיחה של 10 דקות איתי.", "info.h2": "ועכשיו, [[המידע שהבטחנו לך]]", "info.investor.h1a": "הזדמנות טובה לא נמדדת בכמה רועש מוכרים אותה,", "info.investor.h1b": "אלא בכמה מסמכים עומדים מאחוריה.", "info.investor.title": "למה דווקא עכשיו", "info.investor.text": "משקיעים לפי השווי של הקרקע היום, כשהמחיר עדיין נמוך, וכל שלב תכנוני שמתקדם מעלה את צפי ההשבחה, לפי הערכות השמאי.", "info.beginner.h1a": "להתעניין בהשקעה בקרקעות מרגיש לפעמים כמו לשתות מזרנוק של כבאים.", "info.beginner.h1b": "כולם רועשים וכולם בטוחים בעצמם, אבל אף אחד לא מראה מסמך.", "info.beginner.title": "אז הנה זה, פשוט ובגובה העיניים", "info.beginner.step0": "קונים יחידת קרקע במתחם H שכבר עברה אישור של תוכנית כוללנית.", "info.beginner.step1": "הסטטוס התכנוני מתקדם, שלב אחרי שלב.", "info.beginner.step2": "בכל שלב שהקרקע מתקרבת לבנייה, צפי ההשבחה עולה.", "info.beginner.foot": "לא צריך מיליונים או משכנתא.\nובפגישה ללא התחייבות, מקבלים מתום את המסמכים שמגבים את העסקה לעיונך.", "info.apartment.h1a": "אם שקלת דירה להשקעה, כבר הכרת את החבילה:", "info.apartment.h1b": "משכנתא, שוכרים, ודוד שמש שמחליט להתפוצץ בדיוק בליל שבת.", "info.apartment.title": "קרקע עובדת אחרת", "info.apartment.row0": "מימון · משכנתא לשלושים שנה · מהון קיים, בלי משכנתא", "info.apartment.row1": "ניהול · שוכרים ותיקונים · בלי שוכרים ובלי תיקונים", "info.apartment.row2": "מחיר · מה שהשוק מבקש · 3,700 ש״ח למ״ר, השווי שקבע השמאי", "info.apartment.foot": "לפי מספרים, לא לפי תחושה.", "info.idle_money.h1a": "כסף שיושב בעו״ש כל שנה קונה לך פחות.", "info.idle_money.h1b": "הוא נמס לאט, כמו קוביית קרח על השיש באוגוסט.", "info.idle_money.title": "השקעה בקרקע שעברה אישור תוכנית כוללנית זה בדיוק הפוך:", "info.idle_money.text": "להעביר הון קיים, בלי משכנתא ובלי חוב, לקרקע בתוך תוכנית מאושרת.\nולהשביח את ההון לאורך התקדמות התכנון, לפי הערכות השמאי.", "info.fact1": "אושרה · התוכנית הכוללנית, דצמבר 2024", "info.fact2": "3,700 ₪ · למטר, לפי הערכת שמאי בתקן 22", "info.fact3": "125 מ״ר · קרקע פרטית בטאבו, החל מ־462,500 ₪", "info.exit.h": "ומה אם [[ארצה לצאת?]]", "info.exit.p": "תמיד יישאר הביקוש, אנחנו נמכור את החלקה שלך, יש נקודות יציאה שקופות וברורות, וכל התנאים כתובים מראש בחוזה. עוברים עליהם יחד, סעיף אחרי סעיף.", "info.tom": "תום הרוש · קבוצת תום הרוש · מעל 15 שנים של נדל״ן ויזמות", "info.chips": "קבוצת תום הרוש מושקעת בעצמה במתחם H המדובר · יחד עם קהילה של אלפי משקיעים · נדל״ן ללא פשרות", "cta.pick.h": "מתי הכי נוח [[שנחזור אליך?]]", "cta.pick.p": "10 דקות בטלפון, בזמן שנוח לך. בוחרים חלון, ואנחנו מתקשרים אליך.", "cta.pick.btn": "לשריין את 10 הדקות שלי", "cta.wa": "עדיף לכתוב עכשיו? אפשר בוואטסאפ", "cta.done.h": "השיחה שלך שמורה, {חלון}.", "cta.done.p": "אנו מזמינים אותך לקהילת המשקיעים שלנו.\nאנחנו משתפים נתונים, הוכחות ועדכונים על עסקת הקרקע בקדימה צורן. בשקיפות מלאה, בלי התחייבות.", "cta.done.btn": "להצטרפות לקהילה"}, "qi": {"investor": {"h1a": "הזדמנות טובה לא נמדדת בכמה רועש מוכרים אותה,", "h1b": "אלא בכמה מסמכים עומדים מאחוריה.", "kind": "text", "title": "למה דווקא עכשיו", "text": "משקיעים לפי השווי של הקרקע היום, כשהמחיר עדיין נמוך, וכל שלב תכנוני שמתקדם מעלה את צפי ההשבחה, לפי הערכות השמאי."}, "idle_money": {"h1a": "כסף שיושב בעו״ש כל שנה קונה לך פחות.", "h1b": "הוא נמס לאט, כמו קוביית קרח על השיש באוגוסט.", "kind": "text", "title": "השקעה בקרקע שעברה אישור תוכנית כוללנית זה בדיוק הפוך:", "text": "להעביר הון קיים, בלי משכנתא ובלי חוב, לקרקע בתוך תוכנית מאושרת.\nולהשביח את ההון לאורך התקדמות התכנון, לפי הערכות השמאי."}, "apartment": {"h1a": "אם שקלת דירה להשקעה, כבר הכרת את החבילה:", "h1b": "משכנתא, שוכרים, ודוד שמש שמחליט להתפוצץ בדיוק בליל שבת.", "kind": "compare", "title": "קרקע עובדת אחרת", "rows": [["מימון", "משכנתא לשלושים שנה", "מהון קיים, בלי משכנתא"], ["ניהול", "שוכרים ותיקונים", "בלי שוכרים ובלי תיקונים"], ["מחיר", "מה שהשוק מבקש", "3,700 ש״ח למ״ר, השווי שקבע השמאי"]], "foot": "לפי מספרים, לא לפי תחושה."}, "beginner": {"h1a": "להתעניין בהשקעה בקרקעות מרגיש לפעמים כמו לשתות מזרנוק של כבאים.", "h1b": "כולם רועשים וכולם בטוחים בעצמם, אבל אף אחד לא מראה מסמך.", "kind": "steps", "title": "אז הנה זה, פשוט ובגובה העיניים", "steps": ["קונים יחידת קרקע במתחם H שכבר עברה אישור של תוכנית כוללנית.", "הסטטוס התכנוני מתקדם, שלב אחרי שלב.", "בכל שלב שהקרקע מתקרבת לבנייה, צפי ההשבחה עולה."], "foot": "לא צריך מיליונים או משכנתא.\nובפגישה ללא התחייבות, מקבלים מתום את המסמכים שמגבים את העסקה לעיונך."}}, "ang": ["investor", "beginner", "apartment", "idle_money"], "d": {"qm": {"key": "b1", "title": "כשהכסף שלך יוצא לעבוד, מה הכי חשוב לך?", "options": [{"t": "ודאות וביטחון", "mc": "ליווי רגוע והתאמת הצורך האישי.", "canon": "ודאות וביטחון"}, {"t": "להבין לעומק לפני החלטה", "mc": "לראות הכל בעיניים, ולבדוק בקצב שלי.", "canon": "להבין לעומק לפני החלטה"}, {"t": "תשואה בטוחה", "mc": "שהכסף יגדל, במקום וקצב בטוח.", "canon": "תשואה גבוהה"}, {"t": "רף כניסה נמוך", "mc": "להתחיל עם ההון שיש לי עכשיו.", "canon": "רף כניסה נמוך"}]}, "qb": [{"key": "b2", "title": "השקעה עם תשואה גבוהה יותר, אבל עם פחות ודאות: זה מתאים לך?", "options": [{"t": "גם וגם", "mc": "השקעה שתניב רווח בריא, עם מסמכים וגיבוי", "v": 2}, {"t": "כן. אצלי תשואה קודמת להכל", "mc": "הסיכון שאקח מחושב בהתאם לתשואה.", "v": 1}, {"t": "תלוי כמה גבוהה", "mc": "אני קודם רוצה לראות את המספרים", "v": 1}]}, {"key": "b2", "title": "מה הדבר הראשון שהיית רוצה לראות במו עיניך?", "options": [{"t": "מה קורה אם ארצה לצאת", "mc": "איך יוצאים, ומה כתוב על זה בחוזה.", "v": 1}, {"t": "את התוכנית הכוללנית ושלבי התכנון", "mc": "איפה המתחם עומד היום, ומה נשאר עד הבנייה.", "v": 2}, {"t": "איך בדיוק נקבע המחיר", "mc": "מי קבע אותו, ולפי מה.", "v": 2}]}, {"key": "b2", "title": "לכמה זמן הכסף הזה יכול לצאת לעבוד?", "options": [{"t": "גג 3 שנים", "mc": "מתאימה לי השקעה לטווח הקצר.", "v": 0}, {"t": "3 עד 7 שנים", "mc": "הקצב הטבעי של קרקע עם ודאות.", "v": 2}, {"t": "אין לי לחץ של זמן", "mc": "יש לי כסף שיושב בצד ולא עובד.", "v": 2}]}, {"key": "b2", "title": "איך נוח לך להתחיל?", "options": [{"t": "מהלך אחד משמעותי", "mc": "להרוויח בעיקר מהשלבים התכנוניים.", "v": 2}, {"t": "מההון שכבר יש לי", "mc": "הכסף שלי מחכה להחלטה.", "v": 2}, {"t": "עוד לא החלטתי", "mc": "את ההיקף בונים יחד בשיחה.", "v": 0}]}], "qw": {"key": "b3", "title": "מתי נכון לך להתחיל?", "options": [{"t": "יש לי מוכנות לקבל החלטה", "mc": "השאלה שלי היא \"איפה כן\" ולא \"מה מתאים לי\"", "v": 2, "canon": "מיד, אני מוכן להתקדם"}, {"t": "לא עכשיו", "mc": "צריך כאן מישהו שיבין אותי.. השארתי פרטים בהרבה מקומות.", "v": 0, "canon": "רק בודק אפשרויות בשלב זה"}, {"t": "בחודשים הקרובים", "mc": "לאסוף מידע מעכשיו, להחליט עם עצמי בקרוב.", "v": 1, "canon": "בחודשים הקרובים"}]}, "qk": {"key": "b4", "title": "ההון האישי שלך זמין?", "options": [{"t": "כן, יושב ומחכה", "mc": "ובינתיים לא עובד בשבילי.", "v": 2}, {"t": "עוד לא", "mc": "שקלתי ללוות הון.", "v": 1}, {"t": "חלק זמין, חלק בדרך", "mc": "נבדוק יחד מה הכי נכון לך ומתי.", "v": 1}]}, "rows": {"R1.0": "אצלנו אנשים לפני עסקים. לא נמכור לך מה שלא מתאים לך, ובדיוק בגלל זה אנחנו מודדים התאמה.", "R1.1": "את המסמכים מהעסקה, משלב התכנון ועד היציאה, פותחים יחד בשיחה. הכל מוסבר בגובה העיניים.", "R1.2": "המקום שלך בטוח: התוכנית הכוללנית כבר אושרה. גם הקצב בטוח: התזמון כאן משחק לטובתך, והרווח הגדול הוא בשלב התכנוני, לפני שהתוכנית הבאה תאושר.", "R1.3": "אנחנו מתאימים לך מודל השקעה ונקודת יציאה, בדיוק בהיקף שנכון לך. אפשר להגיע להון של דירה מההון שכבר יש לך, ובלי משכנתא חונקת.", "R2.0.0": "שלושה מסמכים שנעבור עליהם יחד: התוכנית הכוללנית שאושרה, השמאות לפי תקן 22, ונקודות היציאה שאנחנו מספקים.", "R2.0.1": "כאן הבסיס הוא ודאות: התוכנית הכוללנית כבר אושרה, והצפי שקוף לשנים הקרובות. אם מישהו היה מציע לי תשואה גבוהה בלי שום סיכון, הייתי משאיר את הכסף מתחת לכרית.", "R2.0.2": "בעסקאות כאלו הרווח הגדול הוא דווקא בשנים של התכנון, וכניסה מוקדמת תעשה את העבודה השחורה בשבילך. אבל זה לא הכל. על השאר עוברים בשיחה, מול השמאות.", "R2.1.0": "אפשר למכור בכל שלב! בנוסף יש נקודות יציאה שקופות וברורות, וכל התנאים שקופים מראש בחוזה. עוברים עליהם יחד, סעיף אחרי סעיף.", "R2.1.1": "התוכנית הכוללנית אושרה ב־18/12/2024, ומתחם H נמצא היום בשלב הוועדה המקומית, אחרי אישור התוכנית הכוללנית. כרגע על הפרק: תוכנית מפורטת.", "R2.1.2": "שמאות מקרקעין 2026 לפי תקן 22 קבעה: 3,700 ש״ח למטר, כלומר 462,500 ש״ח ליחידת קרקע של 125 מ״ר.\nהמחיר מתעדכן לפי התקדמות הסטטוס התכנוני.", "R2.2.0": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים.", "R2.2.1": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים, בתוך הטווח שסימנת.", "R2.2.2": "קרקע בשלבי תכנון צריכה בדיוק את זה: סבלנות. ובינתיים, הכסף שלך שיושב בצד מקבל משמעות.", "R2.3.0": "זה אפשרי, בהיקף שמותאם אליך, במודל שנבנה יחד. משקיעים בדיוק בתקופת ההשבחה: אחרי שהתוכנית הכוללנית אושרה, ולפני התוכנית המפורטת.", "R2.3.1": "השקעה מותאמת אישית, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R2.3.2": "בשיחה נבדוק אם ניתן להתאים לך מודל אישי, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R3.0": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.", "R3.1": "אני מבין אותך, רוב המשקיעים שלי נמצאים בדיוק בנקודה הזו. אשמח להבין לעומק את הצורך שלך ולעזור לך לקבל את ההחלטה המושכלת ביותר עבורך.", "R3.2": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.", "R4.0": "זה מה שמאפשר להיכנס עכשיו, ולהשביח את ההון כבר מהשלב הנוכחי של התכנון.", "R4.1": "בכנות, אנו לא מאפשרים מימון. אפשר להיכנס גם עם הון מלווה, וזה בסדר גמור מבחינתנו. אבל לפני שרצים לקחת הלוואה, נשוחח ונבין יחד היקף ולוח זמנים שיתאימו גם ליעדים שלך.", "R4.2": "התזמון משחק כאן תפקיד מפתח. לפני שממהרים, מומלץ קודם לתאם ציפיות באופן אישי, בשיחה איתי."}, "st": {"R1.0": "ok", "R1.1": "ok", "R1.2": "ok", "R1.3": "ok", "R2.0.0": "ok", "R2.0.1": "honest", "R2.0.2": "ok", "R2.1.0": "ok", "R2.1.1": "ok", "R2.1.2": "ok", "R2.2.0": "honest", "R2.2.1": "ok", "R2.2.2": "ok", "R2.3.0": "ok", "R2.3.1": "ok", "R2.3.2": "ask", "R3.0": "ok", "R3.1": "ok", "R3.2": "ok", "R4.0": "ok", "R4.1": "ask", "R4.2": "ok"}, "wins": [["בבוקר", "09:00 עד 12:00", "אני טיפוס של בוקר"], ["בצהריים", "12:00 עד 16:00", "דברו איתי בצהריים"], ["בערב", "16:00 עד 20:00", "הכי טוב בערב"]], "tx": {"JERR": "צריך לבחור חלון זמן", "JERR.alt": "המספר האחר לא תקין. צריך 10 ספרות שמתחילות ב־05", "JSAVING": "שומרים…", "JDP": "השיחה שלך שמורה.\nנחזור אליך {w}, למספר {n}."}, "copy": {"submit": "מרכיבים את בדיקת ההתאמה…", "load": "מרכיבים את בדיקת ההתאמה שלך", "loadSub": "מהתשובות שסימנת", "intro": "הנה מה שהבטחנו:"}, "stages": [{"n": "קרקע חקלאית", "d": "נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.", "here": false}, {"n": "ועדה ארצית", "d": "הקווים הגדולים של המדינה: איך והאם הרעיון יתרום לעתיד היישוב.", "here": false}, {"n": "ועדה מחוזית", "d": "ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.", "here": false}, {"n": "ועדה מקומית", "d": "התכנון הגדול אושר ויורד לרמת המתחם.", "here": true}, {"n": "אישור תוכנית מפורטת", "d": "תוכנית מפורטת אחת לכל מתחם H: מה מניחים איפה. לפי הערכת השמאי, צפויה להיות מאושרת בתוך כ־5 שנים.", "here": false}, {"n": "אישור תוכנית פיתוח", "d": "כבישים, מים וניקוז. מתכוננים לשלבי הבנייה.", "here": false}, {"n": "זמינות לבנייה", "d": "הקרקע מוכנה לבנייה.", "here": false}]}, "jwa": "עדיף לכתוב עכשיו? אפשר בוואטסאפ", "jok2": "עדיף להתקשר למספר אחר שלי", "jerr": "צריך לבחור חלון זמן", "jerra": "המספר האחר לא תקין. צריך 10 ספרות שמתחילות ב־05", "jsaving": "שומרים…"};
+const T = ONE.txt, D = ONE.d, $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const plain = t => String(t || '').replace(/\[\[|\]\]|\{\{|\}\}/g, '');
-const $ = id => document.getElementById(id);
-const set = (el, t) => { if (el) el.textContent = glue(plain(t)); };
-/* כותרות: [[...]] = צבע המותג, {{...}} = קופסה אדומה עם טקסט לבן */
-const setH = (el, t) => { if (el) el.innerHTML = esc(glue(t)).replace(/\{\{(.+?)\}\}/g, '<span class="hlx">$1</span>').replace(/\[\[(.+?)\]\]/g, '<span class="hl">$1</span>').replace(/\n/g, '<br/>'); };
-/* כיתובים: [[...]] = מודגש, ומספרים עם מקף נשארים בשורה אחת ומשמאל לימין */
-const setB = (el, t) => { if (el) el.innerHTML = esc(glue(t)).replace(/\[\[(.+?)\]\]/g, '<b>$1</b>').replace(/(\d+(?:-\d+)+)/g, '<span dir="ltr" style="white-space:nowrap;unicode-bidi:isolate">$1</span>').replace(/\n/g, '<br/>'); };
-function topQS(){ try{ return window.top.location.search || location.search; }catch(e){ return location.search; } }
-const Q = new URLSearchParams(topQS());
-/* staff=1: צפייה מהדשבורד בדף של ליד (גל 20/10). כמו דמו: לא נספר, לא שולח ולא בוחר מועד בשמו, אבל בלי לוח ההחלפה */
-const DEMO = Q.get('demo') === '1', STAFF = Q.get('staff') === '1', VIEW = DEMO || STAFF, LID = Q.get('lid') || '';
-const num = (k, max, d) => { const v = parseInt(Q.get(k), 10); return (v >= 0 && v < max) ? v : d; };
-const m = num('m', 4, 0), b = num('b', 3, 0), w = num('w', 3, 2), k = num('k', 3, 0);
-const NAME = (Q.get('name') || '').trim().split(/\s+/)[0] || '';
-function myPhone(){ try{ const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); const r = a.slice().reverse().find(x => !LID || x.lead_id === LID); return r ? String(r.phone || '') : ''; }catch(e){ return ''; } }
-function fmtPhone(p){ let d = String(p||'').replace(/\D/g,''); if (d.startsWith('972')) d = '0' + d.slice(3); return d.length === 10 ? d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6) : ''; }
-/* מועד שנבחר נזכר גם בביקור הבא מאותו מכשיר (למשל מהרימרקטינג), רק לאותו ליד */
-function booked(){ if (VIEW) return WKEYS.includes(Q.get('cb')) ? Q.get('cb') : ''; try{ const c = JSON.parse(sessionStorage.getItem('b_cb') || localStorage.getItem('b_cb') || '{}'); return WKEYS.includes(c.w) && (!c.lid || !LID || c.lid === LID) ? c.w : ''; }catch(e){ return ''; } }
-const CB = booked();
+/* מילה קצרה נצמדת למילה שאחריה, והמילה האחרונה לא נשארת לבד בשורה */
+function glue(t){ t = String(t).replace(/(^|[\s])(ללא|בלי|לא|עם|של|על|את|כל|גם|רק|עד|לפי|כמו|אם|או|מול|בין|אל|כדי|זה) (?=\S)/g, '$1$2\u00a0'); return t.split('\n').map(l => { const i = l.lastIndexOf(' '); return i > 0 ? l.slice(0, i) + '\u00a0' + l.slice(i + 1) : l; }).join('\n'); }
+/* [[...]] = צבע המותג, כמו בכל המשפך */
+const rich = t => esc(glue(t)).replace(/\[\[(.*?)\]\]/g, '<span class="hl">$1</span>');
+const Q = new URLSearchParams(location.search);
+const WORKER = 'https://tom-funnel.tom-harush.workers.dev', PIXEL_ID = '1002428386157716';
+/* 27/10: ליד אמיתי = lid בכתובת (מהקישור ?id= שהשרת פותח, או מהשאלון). staff=1 = צפייה מהדשבורד. demo=1 או בלי ליד = תצוגה מקדימה.
+   רק ליד אמיתי שולח ונמדד */
+const LID = /^[A-Za-z0-9-]{12,64}$/.test(Q.get('lid') || '') ? Q.get('lid') : '';
+const STAFF = Q.get('staff') === '1';
+const LIVE = !!LID && !STAFF && Q.get('demo') !== '1' && window.top === window;
+const PREVIEW = !LIVE && !STAFF;
+const WKEY = ['morning', 'noon', 'evening'];
+const int = (k, d, n) => { const v = parseInt(Q.get(k), 10); return (v >= 0 && v < n) ? v : d; };
+/* מועד שכבר נבחר: מהכתובת (השרת), או מהמכשיר הזה לאותו ליד */
+function booked(){ if (WKEY.includes(Q.get('w8'))) return Q.get('w8'); if (!LIVE) return '';
+  try { const c = JSON.parse(sessionStorage.getItem('b_cb') || localStorage.getItem('b_cb') || '{}'); return WKEY.includes(c.w) && (!c.lid || c.lid === LID) ? c.w : ''; } catch(e){ return ''; } }
+const S = { m: int('m', 0, D.qm.options.length), b: int('b', 0, 3), w: int('w', 1, D.qw.options.length), k: int('k', 1, D.qk.options.length),
+  name: (Q.get('name') || (PREVIEW ? 'דנה' : '')).trim().split(/\s+/)[0], win: booked() };
+S.picked = !!S.win;
+const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' }, LBL = { ok:'מתאים', ask:'נסגר בשיחה', honest:'בודקים בכנות' };
+function winText(k){ const i = WKEY.indexOf(k); if (i < 0) return ''; const w = D.wins[i], hh = w[1].split(' עד '); return hh.length === 2 ? w[0] + ', בין ' + hh[0] + ' ל־' + hh[1] : w[0]; }
 
-const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' };
-const LBL = { ok:'מתאים', ask:'נסגר בשיחה', honest:'בודקים בכנות' };
-const rows = [['R1.' + m, D.q1[m]], ['R2.' + m + '.' + b, D.q2[m][b]], ['R3.' + w, D.q3[w]], ['R4.' + k, D.q4[k]]];
-const okN = rows.filter(r => ST[r[0]] === 'ok').length;
-const ph = fmtPhone(myPhone());
-const vcf = 'BEGIN:VCARD\nVERSION:3.0\nFN:קדימה צורן · מתחם H\nORG:קבוצת תום הרוש\nTEL;TYPE=CELL:+972' + PHONE.replace(/\D/g,'').replace(/^0/,'') + '\nEND:VCARD';
-$('dSave').href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcf);
-function showBooked(win, n){
-  $('cBooked').textContent = glue(TX['C.booked'].replace('{w}', WINS[win])); $('cBooked').hidden = false; $('ctaBox').hidden = true;
-  const dp = TX['JDP'].split('\n'); set($('jDH'), dp[0]); set($('jDP'), (dp[1] || '').replace('{w}', WINS[win]).replace('{n}', n || 'שהזנת'));
-  $('jform').hidden = true; $('jDone').hidden = false; window.__cbDone = true; $('float').classList.remove('on');
-  $('pbar').classList.add('done'); set($('pbarT'), TX['TOP.done']); set($('pbarT2'), TX['TOP.done']);
-  $('cWa').hidden = false; document.querySelectorAll('.mid-cta').forEach(x => { x.hidden = true; });
-}
-
-/* כל הטקסטים של הדף נכתבים כאן, וזה בטוח להריץ שוב: התצוגה המקדימה בארטיפקט הקופי מריצה את render אחרי כל עריכה.
-   data-t = טקסט, data-th = כותרת עם צבע המותג, data-tb = כיתוב עם הדגשה, data-tq/tp = כרטיסי המחשבות, ALT.n h/p = כרטיסי החלופות */
 function render(){
-  winsFrom();
-  document.querySelectorAll('[data-t]').forEach(el => {
-    const id = el.getAttribute('data-t'), mm = id.match(/^(ALT\.\d)(h|p)$/);
-    if (mm) { const t = plain(TX[mm[1]]); const i = t.indexOf(':'); set(el, mm[2] === 'h' ? t.slice(0, i) : t.slice(i + 1).trim()); return; }
-    set(el, TX[id]);
-  });
-  $('jAlt').placeholder = plain(TX['JALT.ph']); $('jAlt').setAttribute('aria-label', plain(TX['JALT.ph']));
-  document.querySelectorAll('[data-th]').forEach(el => setH(el, TX[el.getAttribute('data-th')]));
-  document.querySelectorAll('[data-tb]').forEach(el => setB(el, TX[el.getAttribute('data-tb')]));
-  document.querySelectorAll('[data-tw]').forEach(el => { const p = WINL[+el.getAttribute('data-tw')] || ['', '']; set(el.querySelector('.wn'), p[0]); set(el.querySelector('.wt'), p[1]); set(el.querySelector('.wm'), p[2] || ''); });
-  const d = String(TX['DISC'] || ''), di = d.indexOf('.') + 1; $('fDisc').innerHTML = di > 0 ? '<b>' + esc(d.slice(0, di)) + '</b>' + esc(glue(d.slice(di))) : esc(glue(d));
-  document.querySelectorAll('[data-tq]').forEach(el => set(el, TX[el.getAttribute('data-tq')].split('\n')[0]));
-  document.querySelectorAll('[data-tp]').forEach(el => set(el, TX[el.getAttribute('data-tp')].split('\n').slice(1).join(' ')));
-
-  /* 3. ציר הזמן: וי עד "(אנחנו כאן)", ואחריו מספרים */
-  const jtl = document.querySelector('.jtl'); let seen = false;
-  jtl.querySelectorAll('.jtl-item').forEach(x => x.remove());
-  TX['STAGES'].split('\n').forEach((ln, i) => {
-    const j = ln.indexOf(':'), here = ln.slice(0, j).includes('(אנחנו כאן)'), name = ln.slice(0, j).replace('(אנחנו כאן)', '').trim();
-    const s = here ? 'here' : (seen ? 'next' : 'done'); seen = seen || here;
-    const it = document.createElement('div'); it.className = 'jtl-item ' + s;
-    it.innerHTML = '<div class="jtl-node">' + (s === 'done' ? ICON.ok : s === 'here' ? '<span class="herepulse"></span>' : String(i + 1)) + '</div><div class="jtl-card"><h4>' + esc(name) + (here ? '<span class="here-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7" fill="none"/></svg>אנחנו כאן</span>' : '') + '</h4><p>' + esc(glue(ln.slice(j + 1).trim())) + '</p></div>';
-    jtl.appendChild(it);
-  });
-
-  /* 1. התוצאה: הבר (מלא אצל מי שכבר בחר מועד, ב־showBooked), הכותרת והכרטיס */
-  set($('pbarT'), TX['TOP.bar']); set($('pbarT2'), TX['TOP.bar']);
-  const hw = TX['H.w' + w];
-  setH($('hH'), NAME ? hw.replace('{שם}', NAME) : hw.replace(/^\{שם\},\s*/, ''));
-  const sum = (okN === 4 ? TX['C.sum4'] : TX['C.sumN'].replace('{n}', okN)).split('\n');
-  setH($('cS'), sum[0]); setH($('cN'), sum.slice(1).join(' ')); $('cN').hidden = sum.length < 2;
-  $('pts').innerHTML = '';
-  rows.forEach(r => {
-    const s = ST[r[0]] || 'ok', li = document.createElement('li'); li.setAttribute('data-id', r[0]);
-    li.innerHTML = '<span class="rc-ic ' + s + '" role="img" aria-label="' + LBL[s] + '">' + ICON[s] + '</span><div><span class="rc-nd"></span><span class="rc-an"></span></div>';
-    set(li.querySelector('.rc-nd'), TX['C.mark'] + ' ' + r[1][0]); set(li.querySelector('.rc-an'), TX[r[0]]);
-    $('pts').appendChild(li);
-  });
-  const lo = document.createElement('li'); lo.className = 'open';
-  lo.innerHTML = '<span class="rc-ic ask" aria-hidden="true">?</span><div><span class="rc-an"></span></div>'; set(lo.querySelector('.rc-an'), TX['R5']); $('pts').appendChild(lo);
-  const np = String(TX['C.num'] || '').split('·'); $('cNum').innerHTML = esc(glue(np[0].trim())).replace(/(0\d{1,2}-\d{3}-\d{4})/, '<b>$1</b>'); set($('dSave'), (np[1] || '').trim());
-
-  /* 9-12 */
-  const rq = TX['REVH'].split('\n'); setH($('eRevH'), rq[0]); set($('eRevS'), rq[1] || '');
-  $('tVals').innerHTML = TX['TOM.values'].split('·').map(v => '<span>' + esc(v.trim()) + '</span>').join('');
-  $('eFacts').innerHTML = TX['FACTS'].split('\n').map(l => { const p = l.split('·'); return '<div class="t"><div class="v">' + esc(p[0].trim()) + '</div><div class="l">' + esc(glue((p[1] || '').trim())) + '</div></div>'; }).join('');
-  $('faqs').innerHTML = ['FAQ.1','FAQ.2','FAQ.3','FAQ.4','FAQ.5'].map((id, i) => { const p = TX[id].split('\n'); return '<details' + (i === 0 ? ' open' : '') + '><summary>' + esc(p[0]) + ' <span class="pl">+</span></summary><div class="a">' + esc(glue(p.slice(1).join('\n'))) + '</div></details>'; }).join('');
-
-  /* 11. בורר המועד: לפי שאלה 3, וזוכר מועד שכבר נבחר */
-  set($('jL'), w === 1 ? TX['JL.w1'] : TX['JL']);
-  if (ph) { $('jMy').innerHTML = esc(glue(TX['JMY'])).replace(/\{(\d)[\s\u00a0]ספרות\}/, (x, d) => '<b>' + ph.slice(-d) + '</b>'); $('jMy').hidden = false; }
-  document.title = plain(TX['META.title']);
-  if (CB) showBooked(CB, ph);
+  const m = S.m, qb = D.qb[m], b = Math.min(S.b, qb.options.length - 1);
+  // 1. הפתיחה
+  $('hTag').textContent = S.name ? T['hero.tag'].replace('{שם}', S.name) : 'הנה בדיקת ההתאמה שלך';
+  $('hH1').innerHTML = rich(T['hero.h1'].replace('{תשובה 1}', D.qm.options[m].t));
+  $('hSub').innerHTML = rich(T['hero.sub.' + m]);
+  // 2. השאלות שלנו והתשובות
+  $('aH2').innerHTML = rich(T['ans.h2']); $('aSub').innerHTML = rich(T['ans.sub']);
+  const cards = [[D.qm.title, D.qm.options[m], 'R1.' + m], [qb.title, qb.options[b], 'R2.' + m + '.' + b], [D.qw.title, D.qw.options[S.w], 'R3.' + S.w], [D.qk.title, D.qk.options[S.k], 'R4.' + S.k]];
+  $('qaList').innerHTML = cards.map((c, i) => { const st = D.st[c[2]] || 'ok';
+    return '<div class="qa"><span class="qn">שאלה ' + (i + 1) + ' מתוך 4</span><p class="qq">' + esc(glue(c[0])) + '</p>'
+      + '<div class="pick"><span class="tk">' + ICON.ok + '</span><span><b>' + esc(c[1].t) + '</b><span class="mc">' + esc(glue(c[1].mc)) + '</span></span></div>'
+      + '<div class="ours"><span class="rc-ic ' + st + '" role="img" aria-label="' + LBL[st] + '">' + ICON[st] + '</span><div><span class="ol">' + esc(T['ans.ours']) + ' · <em class="' + st + '">' + LBL[st] + '</em></span><p>' + esc(glue(D.rows[c[2]] || '')) + '</p></div></div></div>'; }).join('');
+  $('aOpen').innerHTML = rich(T['ans.open']);
+  // 3. המידע, לפי התשובה הראשונה
+  const a = ONE.ang[m], q = ONE.qi[a];
+  $('iH2').innerHTML = rich(T['info.h2']); $('iA').innerHTML = rich(q.h1a); $('iB').innerHTML = rich(q.h1b);
+  $('facts').innerHTML = ['info.fact1', 'info.fact2', 'info.fact3'].map(k => { const p = T[k].split('·'); return '<div class="t"><div class="v">' + esc(p[0].trim()) + '</div><div class="l">' + esc(glue((p[1] || '').trim())) + '</div></div>'; }).join('');
+  let body = '';
+  if (q.kind === 'compare') body = '<div class="cmp"><div class="hd"></div><div class="hd apt">דירה להשקעה</div><div class="hd land">קרקע במתחם H</div>' + q.rows.map(r => '<div class="k">' + esc(r[0]) + '</div><div class="apt">' + esc(r[1]) + '</div><div class="land">' + esc(glue(r[2])) + '</div>').join('') + '</div>';
+  else if (q.kind === 'steps') body = '<ol class="stp">' + q.steps.map(s => '<li>' + esc(glue(s)) + '</li>').join('') + '</ol>';
+  else body = '<p class="tx">' + esc(glue(q.text)) + '</p>';
+  $('angCard').innerHTML = '<h3>' + rich(q.title) + '</h3>' + body + (q.foot ? '<p class="ft">' + esc(glue(q.foot)) + '</p>' : '');
+  $('xH').innerHTML = rich(T['info.exit.h'].trim()); $('xP').innerHTML = rich(T['info.exit.p']);
+  { const tp = T['info.tom'].split('·'); $('tomLine').innerHTML = esc(tp[0].trim()) + '<span class="sm">' + esc(tp.slice(1).map(x => x.trim()).join(' · ')) + '</span>'; } $('chips').innerHTML = T['info.chips'].split('·').map(c => '<span>' + esc(c.trim()) + '</span>').join('');
+  // 4. הצעד הבא, לפי המצב
+  $('ctaPick').hidden = S.picked; $('ctaDone').hidden = !S.picked;
+  $('pH').innerHTML = rich(T['cta.pick.h']); $('pP').innerHTML = rich(T['cta.pick.p']); $('pBtn').textContent = T['cta.pick.btn']; $('pWa').textContent = ONE.jwa; $('jOk2T').textContent = ONE.jok2;
+  $('dH').innerHTML = rich(T['cta.done.h'].replace('{חלון}', winText(S.win || 'morning'))); $('dP').innerHTML = rich(T['cta.done.p']); $('dBtnT').textContent = T['cta.done.btn'];
+  // הפס העליון
+  document.querySelectorAll('#pvM button').forEach(x => x.setAttribute('aria-pressed', String(+x.dataset.m === m)));
+  document.querySelectorAll('#pvS button').forEach(x => x.setAttribute('aria-pressed', String((x.dataset.s === '1') === S.picked)));
 }
-render();
-/* קישור מלא (נשלח לפני 20/10) או מכשיר אחר: שואלים את השרת אם כבר נבחר מועד, כדי שהדף לא יבקש לבחור שוב */
-if (LID && !CB && !VIEW && window.top === window) fetch(WORKER + '/b/me?id=' + encodeURIComponent(LID), { cache:'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
-  if (!j || !j.ok || !WKEYS.includes(j.cb) || window.__cbDone) return;
-  try { const c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: LID }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {}
-  showBooked(j.cb, ph);
-}).catch(() => {});
-function validPhone(p){ let d=(p||'').replace(/\D/g,''); if(d.startsWith('972')) d='0'+d.slice(3); return /^05\d{8}$/.test(d); }
-/* שתי תיבות הסימון: אחת חובה, לא שתיהן יחד. השנייה פותחת את שדה הטלפון */
-function syncAlt(){ $('jAltBox').hidden = !$('jOk2').checked; }
-$('jOk').addEventListener('change', () => { if ($('jOk').checked) $('jOk2').checked = false; syncAlt(); $('jEo').textContent = ''; });
-$('jOk2').addEventListener('change', () => { if ($('jOk2').checked) $('jOk').checked = false; syncAlt(); $('jEo').textContent = ''; if ($('jOk2').checked) $('jAlt').focus(); });
-$('jform').addEventListener('submit', async e => {
-  e.preventDefault();
-  const win = (document.querySelector('input[name="w"]:checked') || {}).value || '', useAlt = $('jOk2').checked, alt = useAlt ? $('jAlt').value.trim() : '';
-  $('jEw').textContent = ''; $('jEo').textContent = '';
-  let ok = true;
-  if (!win) { $('jEw').textContent = TX['JERR']; ok = false; }
-  if (!$('jOk').checked && !useAlt) { $('jEo').textContent = TX['JERR.ok']; ok = false; }
-  else if (useAlt && !validPhone(alt)) { $('jEo').textContent = TX['JERR.alt']; ok = false; }
-  if (!ok) { (!win ? $('w1') : (!$('jOk').checked && !useAlt) ? $('jOk') : $('jAlt')).focus(); return; }
-  const n = fmtPhone(alt) || ph;
-  if (VIEW || !LID) { showBooked(win, n); return; }   /* דמו או צפייה מהדשבורד: לא שולחים ולא עוברים לדף התודה */
-  $('jBtn').disabled = true; $('jCta').textContent = TX['JSAVING'];
-  const body = JSON.stringify({ lead_id: LID, window: win, alt_phone: alt || '', confirmed: true, at: new Date().toISOString() });
-  let sent = false;
-  try { const r = await fetch(WORKER + '/callback', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body }); sent = r.ok; } catch(err) {}
-  if (!sent) { try { navigator.sendBeacon && navigator.sendBeacon(WORKER + '/callback', new Blob([body], {type:'text/plain;charset=UTF-8'})); } catch(err) {} }
-  try { const cbv = JSON.stringify({ w: win, alt: alt || '', at: Date.now(), lid: LID }); sessionStorage.setItem('b_cb', cbv); localStorage.setItem('b_cb', cbv); } catch(err) {}
-  showBooked(win, n);
-  const tq = new URLSearchParams({ w: win }); if (LID) tq.set('lid', LID);
-  setTimeout(() => { try { window.top.location.href = '/b/t/?' + tq.toString(); } catch(err) { location.href = '/b/t/?' + tq.toString(); } }, 350);
-});
-try { sessionStorage.setItem('b_res', location.pathname + location.search); } catch(e) {}
-
-/* סרגל הדמו */
-if (DEMO) {
-  const mk = (lbl, key, opts, cur) => '<label>' + lbl + ' <select data-k="' + key + '">' + opts.map((o, i) => '<option value="' + i + '"' + (i === cur ? ' selected' : '') + '>' + esc(o) + '</option>').join('') + '</select></label>';
-  $('demoIn').innerHTML = '<b>דמו: מחליפים תשובות ורואים את הדף של כל ליד</b><label>שם <input data-k="name" value="' + esc(NAME || 'דנה') + '"/></label>' +
-    mk('שאלה 1', 'm', D.q1.map(o => o[0]), m) + mk('שאלה 2', 'b', D.q2[m].map(o => o[0]), b) + mk('שאלה 3', 'w', D.q3.map(o => o[0]), w) + mk('שאלה 4', 'k', D.q4.map(o => o[0]), k) +
-    '<label>מועד <select data-k="cb"><option value="">עוד לא בחר</option>' + ['morning','noon','evening'].map((x, i) => '<option value="' + x + '"' + (CB === x ? ' selected' : '') + '>' + ['בוקר','צהריים','ערב'][i] + '</option>').join('') + '</select></label>';
-  $('demo').hidden = false;
-  $('demoIn').addEventListener('change', e => { const p = new URLSearchParams(location.search); const kk = e.target.getAttribute('data-k'); p.set(kk, e.target.value); if (kk === 'm') p.set('b', '0'); if (!e.target.value) p.delete(kk); p.set('demo', '1'); location.search = p.toString(); });
-}
-
-/* ההירו בטלפון: התמונה נגמרת קצת אחרי ראש הכרטיס, ולכן ממורכזת על מה שרואים. בר ההתקדמות: רוחב לשכבת הטקסט הלבן */
-function sizeHero(){
-  const bg = document.querySelector('.rh-bg'), rh = document.querySelector('.rh');
-  $('pbar').style.setProperty('--bw', $('pbar').offsetWidth + 'px');
-  if (matchMedia('(min-width:960px)').matches) { bg.style.height = ''; bg.style.bottom = ''; return; }
-  bg.style.bottom = 'auto'; bg.style.height = Math.round($('res').getBoundingClientRect().top - rh.getBoundingClientRect().top + 72) + 'px';
-}
-sizeHero(); addEventListener('resize', sizeHero); addEventListener('load', sizeHero);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeHero);
-
-/* לייטבוקס לביקורות: חצים, החלקה, מקלדת, X גדול. "חזרה" בטלפון סוגרת את הלייטבוקס ולא יוצאת מהדף */
-(function(){
-  const imgs = [...document.querySelectorAll('.rgal .rev')], lb = $('rlb'), im = $('rlbImg'); let i = 0, pushed = false, x0 = null;
-  function show(n){ i = (n + imgs.length) % imgs.length; im.src = imgs[i].src; im.alt = imgs[i].alt; $('rlbN').textContent = (i + 1) + ' / ' + imgs.length; }
-  function open(n){ show(n); lb.hidden = false; document.body.style.overflow = 'hidden'; try { history.pushState({ rlb: 1 }, ''); pushed = true; } catch(e) {} $('rlbX').focus(); }
-  function close(fromPop){ if (lb.hidden) return; lb.hidden = true; document.body.style.overflow = ''; const back = pushed && !fromPop; pushed = false; if (back) { try { history.back(); } catch(e) {} } }
-  imgs.forEach((el, n) => { el.setAttribute('tabindex', '0'); el.setAttribute('role', 'button'); el.addEventListener('click', () => open(n)); el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(n); } }); });
-  $('rlbX').addEventListener('click', () => close());
-  $('rlbNext').addEventListener('click', () => show(i + 1)); $('rlbPrev').addEventListener('click', () => show(i - 1));
-  lb.addEventListener('click', e => { if (e.target === lb || e.target === $('rlbSt')) close(); });
-  addEventListener('keydown', e => { if (lb.hidden) return; if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') show(i + 1); else if (e.key === 'ArrowRight') show(i - 1); });
-  addEventListener('popstate', () => close(true));
-  lb.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive:true });
-  lb.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 45) show(dx > 0 ? i + 1 : i - 1); }, { passive:true });
-})();
-
-/* פיקסל ומדידה: לא בדמו, ולא בזמן שקישור לפי מספר ליד מחכה לשרת (הדף נטען שוב מיד עם התשובות, ושם נמדד פעם אחת) */
+if (PREVIEW) {
+  ONE.d.qm.options.forEach((o, i) => { const bt = document.createElement('button'); bt.type = 'button'; bt.dataset.m = i; bt.textContent = o.t; bt.onclick = () => { S.m = i; render(); }; $('pvM').appendChild(bt); });
+  document.querySelectorAll('#pvS button').forEach(x => x.onclick = () => { S.picked = x.dataset.s === '1'; if (S.picked && !S.win) S.win = 'morning'; render(); scrollTo({ top: document.getElementById('cta').offsetTop - 60, behavior: 'smooth' }); });
+} else $('pv').remove();
 if (STAFF) {
   const sb = document.createElement('div');
   sb.textContent = 'תצוגה מהדשבורד: כך הליד רואה את הדף. לחיצות כאן לא נשלחות ולא נספרות.';
   sb.style.cssText = 'position:sticky;top:0;z-index:60;background:#14161b;color:#fff;font:700 13px/1.5 Heebo,Arial,sans-serif;text-align:center;padding:7px 12px';
   document.body.prepend(sb);
 }
-if (!VIEW && !document.documentElement.classList.contains('id-wait')) {
+$('jOk2').addEventListener('change', () => { $('jAltBox').hidden = !$('jOk2').checked; $('jEo').textContent = ''; if ($('jOk2').checked) $('jAlt').focus(); });
+function validPhone(p){ let d = String(p || '').replace(/\D/g, ''); if (d.startsWith('972')) d = '0' + d.slice(3); return /^05\d{8}$/.test(d); }
+/* בחירת מועד. ליד אמיתי: נשלחת לשרת כמו בדף הנחיתה (השרת מעדכן את הדשבורד, שולח אישור בוואטסאפ ו־Schedule למטא), ועוברים לדף התודה.
+   בתצוגה המקדימה ובצפייה מהדשבורד: רק מחליפה את המצב */
+$('jform').addEventListener('submit', async e => {
+  e.preventDefault();
+  const w = (document.querySelector('input[name="w"]:checked') || {}).value || '', useAlt = $('jOk2').checked, alt = useAlt ? $('jAlt').value.trim() : '';
+  $('jEw').textContent = ''; $('jEo').textContent = '';
+  if (!w) { $('jEw').textContent = ONE.jerr; const f = document.querySelector('input[name="w"]'); if (f) f.focus(); return; }
+  if (useAlt && !validPhone(alt)) { $('jEo').textContent = ONE.jerra; $('jAlt').focus(); return; }
+  if (!LIVE) { S.win = w; S.picked = true; render(); return; }
+  $('jBtn').disabled = true; $('pBtn').textContent = ONE.jsaving;
+  const body = JSON.stringify({ lead_id: LID, window: w, alt_phone: alt || '', confirmed: true, at: new Date().toISOString() });
+  let sent = false;
+  try { const r = await fetch(WORKER + '/callback', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body }); sent = r.ok; } catch(err) {}
+  if (!sent) { try { navigator.sendBeacon && navigator.sendBeacon(WORKER + '/callback', new Blob([body], { type:'text/plain;charset=UTF-8' })); } catch(err) {} }
+  try { const c = JSON.stringify({ w, alt: alt || '', at: Date.now(), lid: LID }); sessionStorage.setItem('b_cb', c); localStorage.setItem('b_cb', c); } catch(err) {}
+  S.win = w; S.picked = true; render();
+  const tq = new URLSearchParams({ w, lid: LID });
+  setTimeout(() => { location.href = '/b/t/?' + tq.toString(); }, 350);
+});
+/* כפתור הקהילה: רק אצל ליד אמיתי (דף הקהילה סופר הצטרפות למטא, צפייה של הצוות לא צריכה להיספר) */
+if (!LIVE) $('dBtn').addEventListener('click', e => e.preventDefault());
+render();
+/* ליד שהגיע בלי המועד בכתובת (למשל מהקישור שנשמר במכשיר): שואלים את השרת אם כבר בחר, כדי שהדף לא יבקש שוב */
+if (LIVE && !S.picked) fetch(WORKER + '/b/me?id=' + encodeURIComponent(LID), { cache:'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
+  if (!j || !j.ok || !WKEY.includes(j.cb) || S.picked) return;
+  try { const c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: LID }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {}
+  S.win = j.cb; S.picked = true; render();
+}).catch(() => {});
+/* פידבק מהשרת לאותו אירוע, עם אותו מזהה כמו בדפדפן, כך שמטא סופרת פעם אחת (גל 26/10) */
+function capiEv(ev, eid, custom){ try {
+  const ck = n => { const c = document.cookie.split(';').map(x => x.trim()).find(x => x.indexOf(n + '=') === 0); return c ? c.slice(n.length + 1) : ''; };
+  let fbc = ck('_fbc'); if (!fbc && Q.get('fbclid')) fbc = 'fb.1.' + Date.now() + '.' + Q.get('fbclid');
+  const body = JSON.stringify({ event: ev, event_id: eid, url: location.href.split('#')[0], fbp: ck('_fbp') || undefined, fbc: fbc || undefined, lead_id: LID || undefined, custom: custom || {} });
+  if (navigator.sendBeacon && navigator.sendBeacon(WORKER + '/capi-event', new Blob([body], { type:'text/plain;charset=UTF-8' }))) return;
+  fetch(WORKER + '/capi-event', { method:'POST', keepalive:true, headers:{ 'Content-Type':'text/plain;charset=UTF-8' }, body }).catch(() => {});
+} catch(e) {} }
+/* מדידה, רק אצל ליד אמיתי: פיקסל, ו־track.js (כניסות לדף, זמן קריאה וגלילה לפי ליד, לדשבורד) */
+if (LIVE) {
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', PIXEL_ID); fbq('track', 'PageView'); fbq('track', 'ViewContent', { content_name:'b_page', variant:'b' });
-  const s = document.createElement('script'); s.src = '/track.js'; s.defer = true; document.body.appendChild(s);
+  const ts = document.createElement('script'); ts.src = '/track.js'; ts.defer = true; document.body.appendChild(ts);
+  /* וואטסאפ לתום = Contact */
+  $('pWaA').addEventListener('click', () => { const eid = 'ct-' + (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(16).slice(2));
+    try { fbq('track', 'Contact', { content_name:'b_page_wa', variant:'b' }, { eventID: eid }); } catch(e) {} capiEv('Contact', eid, { content_name:'b_page_wa', variant:'b' }); });
 }
-
-/* תנועה: חשיפה בגלילה, ציר JET, כפתור צף, עוד ביקורות */
-function scrollJoin(e){ if(e) e.preventDefault(); $('join').scrollIntoView({behavior:'smooth', block:'start'}); }
-const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), {threshold:.12});
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
-function initJet(el){
-  const fill = el.querySelector('.jtl-fill');
-  function upd(){
-    const items = [...el.querySelectorAll('.jtl-item')], here = el.querySelector('.jtl-item.here .jtl-node');
-    const r = el.getBoundingClientRect(), center = innerHeight * .6;
-    const stop = here ? (here.getBoundingClientRect().top - r.top + 23) : el.offsetHeight;
-    fill.style.height = Math.min(Math.max(center - r.top, 0), stop) + 'px';
-    items.forEach(it => { const nr = it.querySelector('.jtl-node').getBoundingClientRect(); it.classList.toggle('on', nr.top < center); });
-  }
-  addEventListener('scroll', upd, {passive:true}); addEventListener('resize', upd); upd();
-}
-document.querySelectorAll('[data-jet]').forEach(initJet);
-/* רימרקטינג C (גל 19/10, ח־74). גרסת המסמכים (ממכשיר אחר, בלי התשובות): הכפתורים מובילים לשאלון, בנוסח של השאלון.
-   ובכל כניסה עם go=docs/place: קופצים לחלק שהכפתור במודעה הבטיח, בלי אנימציה, ופעם נוספת אחרי הטעינה רק אם עוד לא גללו */
-const DOCS = document.documentElement.classList.contains('docs-mode');
-if (DOCS) {
-  const sq = new URLSearchParams(); Q.forEach((v, kk) => { if (/^utm_/.test(kk)) sq.set(kk, v); });
-  const href = '/b/' + (sq.toString() ? '?' + sq.toString() : '');
-  document.querySelectorAll('.h-cta,.mid-cta .btn').forEach(a => { a.href = href; a.removeAttribute('onclick'); const s = a.querySelector('span'); if (s) { s.removeAttribute('data-t'); s.textContent = glue(D.docsCta); } });
-}
-/* קפיצה לחלק בדף: go=docs/place מהרימרקטינג, ו־#join מהכפתור בדף המידע (גל 20/10, בבדיקת הקצה לקצה: הקפיצה של הדפדפן קורית
-   לפני שהתמונות והגופנים נטענים, והחלק זז למטה). אותה קפיצה חוזרת אחרי הטעינה, עד שהליד נוגע במסך */
-const GO = ['docs', 'place'].includes(Q.get('go')) ? Q.get('go') : (location.hash === '#join' ? 'join' : '');
-if (GO && !VIEW) {
-  let touched = false; ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, () => { touched = true; }, { once:true, passive:true }));
-  const jump = () => { if (!touched) $(GO).scrollIntoView({ behavior:'instant', block:'start' }); };
-  jump(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(jump); addEventListener('load', jump, { once:true });
-}
-const fl = $('float'), res = $('res'), join = $('join');
-addEventListener('scroll', () => {
-  const past = res.getBoundingClientRect().bottom < 0, before = join.getBoundingClientRect().top > innerHeight * .9;
-  fl.classList.toggle('on', past && before && !window.__cbDone);
-}, {passive:true});
 </script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" defer></script>
 </body>
