@@ -613,6 +613,13 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 .err-msg:empty,.jerr:empty{display:none}
 .sv-consent{font-size:14px;font-weight:500;margin:6px 0 8px}
 .sv-consent a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+.send-fail{border:1.5px solid var(--accent);background:#fff6f6;border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.send-fail b{display:block;color:var(--accent);font-size:16px}
+.send-fail p{margin:4px 0 10px}
+.sf-row{display:flex;flex-wrap:wrap;gap:8px}
+.sf-btn,.sf-wa{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:15px;font-family:inherit;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer}
+.sf-btn{background:var(--ink);color:#fff;border:0}
+.sf-wa{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
 .svc .btn{width:100%;margin-top:8px;font-size:17px;padding:16px 18px}
 .svc .after{text-align:center;font-size:14px;color:var(--muted);margin-top:10px}
 .landload{width:96px;height:96px;margin:26px auto 18px;position:relative}
@@ -720,6 +727,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
   <div class="sec-sub rv">4 שאלות קצרות. בסוף תקבל את התשובה שלנו לכל מה שסימנת, ותבחר מתי נוח שנחזור אליך.</div>
   <div class="svc" id="svc">
     <div class="sv-top" id="svTop"><button class="back" id="backBtn" type="button">‹ חזרה</button><div class="prog-row"><div class="prog"><i id="progBar"></i></div><span class="prog-n" id="progN" aria-live="polite"></span></div></div>
+    <div class="send-fail" id="sendFail" role="alert" hidden><b>הפרטים עוד לא נשלחו</b><p>כנראה תקלה רגעית בחיבור. הפרטים שלך שמורים במכשיר, אז אפשר פשוט לנסות שוב. ואם זה לא מסתדר, אפשר לכתוב לנו בוואטסאפ ונחזור&nbsp;אליך.</p><div class="sf-row"><button class="sf-btn" id="sendRetry" type="button">לנסות שוב</button><a class="sf-wa" href="https://wa.me/972533025464" target="_blank" rel="noopener">וואטסאפ 053-302-5464</a></div></div>
     <div id="qMount"></div>
     <div class="screen" data-screen="capture">
       <div class="qtitle">בדיקת ההתאמה שלך כמעט מוכנה. נשאר רק שנכיר אותך =)</div>
@@ -755,7 +763,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 </div></section>
 <section class="sec bg-g" data-rd="faq"><div class="wrap faq">
   <h2 class="sec-t rv">שאלות נפוצות <span class="hl">לפני השיחה</span></h2>
-  <div class="rv" style="margin-top:24px"><details open><summary>מה בדיוק קונים? <span class="pl">+</span></summary><div class="a">יחידת קרקע פרטית בטאבו של 125 מ״ר, בתוך מתחם H בקדימה צורן. 3,700 ₪ למטר לפי שמאות תקן 22, כלומר 462,500 ₪ ליחידה.</div></details><details><summary>מתי אפשר לבנות? <span class="pl">+</span></summary><div class="a">הקרקע עדיין אינה זמינה לבנייה מיידית. לבנייה נדרשת תוכנית מפורטת, ולפי הערכת השמאי היא צפויה להיות מאושרת בתוך כ־5 שנים.</div></details><details><summary>אפשר להיכנס עם הון מלווה? <span class="pl">+</span></summary><div class="a">בכנות, אנו לא מאפשרים מימון. אפשר להיכנס גם עם הון מלווה, וזה בסדר גמור מבחינתנו. לפני שרצים לקחת הלוואה, נשוחח ונבין יחד היקף ולוח זמנים.</div></details><details><summary>זו הפעם הראשונה שלי בקרקע. זה מתאים לי? <span class="pl">+</span></summary><div class="a">רוב מי שפונים אלינו עושים את זה בפעם הראשונה. לכן בשיחה מתחילים מהבסיס, ומסבירים כל מונח במילים פשוטות.</div></details><details><summary>ומה לגבי מיסוי? <span class="pl">+</span></summary><div class="a">כמו בכל עסקת נדל״ן יש מס רכישה בכניסה ומס שבח במכירה. עוברים על התמונה המלאה בשיחה, ומומלץ ללוות את זה עם יועץ המס שלך.</div></details></div>
+  <div class="rv" style="margin-top:24px"><details open><summary>מה בדיוק קונים? <span class="pl">+</span></summary><div class="a">יחידת קרקע פרטית בטאבו של 125 מ״ר, בתוך מתחם H בקדימה צורן. 3,700 ₪ למטר לפי שמאות תקן 22, כלומר 462,500 ₪ ליחידה.</div></details><details><summary>מתי אפשר לבנות? <span class="pl">+</span></summary><div class="a">הקרקע עדיין אינה זמינה לבנייה מיידית. לבנייה נדרשת תוכנית מפורטת, ולפי הערכת השמאי היא צפויה להיות מאושרת בתוך כ־5 שנים.</div></details><details><summary>אפשר להיכנס עם הון מלווה? <span class="pl">+</span></summary><div class="a">בכנות, אנחנו לא מעמידים מימון בעצמנו. אפשר בהחלט לרכוש גם עם כסף מלווה, וזה בסדר גמור מבחינתנו. לפני שרצים לקחת הלוואה, נשוחח ונבין יחד היקף ולוח זמנים.</div></details><details><summary>זו הפעם הראשונה שלי בקרקע. זה מתאים לי? <span class="pl">+</span></summary><div class="a">רוב מי שפונים אלינו עושים את זה בפעם הראשונה. לכן בשיחה מתחילים מהבסיס, ומסבירים כל מונח במילים פשוטות.</div></details><details><summary>ומה לגבי מיסוי? <span class="pl">+</span></summary><div class="a">כמו בכל עסקת נדל״ן יש מס רכישה בכניסה ומס שבח במכירה. עוברים על התמונה המלאה בשיחה, ומומלץ ללוות את זה עם יועץ המס שלך.</div></details></div>
 </div></section>
 <footer>
   <img class="flogo" src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" loading="lazy"/>
@@ -765,7 +773,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
     <a href="https://www.facebook.com/appartmentforsaleinramatgan" target="_blank" rel="noopener" aria-label="פייסבוק"><lottie-player src="/lot-s-fb.json" background="transparent" speed="1" autoplay loop></lottie-player></a>
   </div>
   <div class="wrap"><div class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b> הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.</div></div>
-  <div class="foot-links"><a href="/privacy-kadima/">מדיניות פרטיות</a></div>
+  <div class="foot-links"><a href="/privacy-kadima/">מדיניות פרטיות</a><a href="/accessibility-kadima/">הצהרת נגישות</a></div>
   <div class="copy">© הקרן להשבחת הון ונכסים בע״מ מקבוצת תום הרוש · <a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a></div>
 </footer>
 <div class="rlb" id="rlb" hidden role="dialog" aria-modal="true" aria-label="ביקורות גוגל על קבוצת תום הרוש">
@@ -780,7 +788,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 <div class="float" id="float"><a href="#sv" data-go="sv"><span>לבדיקת התאמה · 4 שאלות</span> <svg class="arw" viewBox="0 0 36 11"><path d="M35 5.5H3M9 1.5 3 5.5l6 4"/></svg></a></div>
 <script>
 /* ═══ דף הנחיתה של B. כל התוכן כבר ב־HTML; כאן: השאלון בתוך הדף, התשובות ובחירת המועד, הקרוסלה, ציר הזמן, הפיקסל והמדידה ═══ */
-const D = {"qm": {"key": "b1", "title": "כשהכסף שלך יוצא לעבוד, מה הכי חשוב לך?", "options": [{"t": "ודאות וביטחון", "mc": "ליווי רגוע והתאמת הצורך האישי.", "canon": "ודאות וביטחון"}, {"t": "להבין לעומק לפני החלטה", "mc": "לראות הכל בעיניים, ולבדוק בקצב שלי.", "canon": "להבין לעומק לפני החלטה"}, {"t": "תשואה בטוחה", "mc": "שהכסף יגדל, במקום וקצב בטוח.", "canon": "תשואה גבוהה"}, {"t": "רף כניסה נמוך", "mc": "להתחיל עם ההון שיש לי עכשיו.", "canon": "רף כניסה נמוך"}]}, "qb": [{"key": "b2", "title": "השקעה עם תשואה גבוהה יותר, אבל עם פחות ודאות: זה מתאים לך?", "options": [{"t": "גם וגם", "mc": "השקעה שתניב רווח בריא, עם מסמכים וגיבוי", "v": 2}, {"t": "כן. אצלי תשואה קודמת להכל", "mc": "הסיכון שאקח מחושב בהתאם לתשואה.", "v": 1}, {"t": "תלוי כמה גבוהה", "mc": "אני קודם רוצה לראות את המספרים", "v": 1}]}, {"key": "b2", "title": "מה הדבר הראשון שהיית רוצה לראות במו עיניך?", "options": [{"t": "מה קורה אם ארצה לצאת", "mc": "איך יוצאים, ומה כתוב על זה בחוזה.", "v": 1}, {"t": "את התוכנית הכוללנית ושלבי התכנון", "mc": "איפה המתחם עומד היום, ומה נשאר עד הבנייה.", "v": 2}, {"t": "איך בדיוק נקבע המחיר", "mc": "מי קבע אותו, ולפי מה.", "v": 2}]}, {"key": "b2", "title": "לכמה זמן הכסף הזה יכול לצאת לעבוד?", "options": [{"t": "גג 3 שנים", "mc": "מתאימה לי השקעה לטווח הקצר.", "v": 0}, {"t": "3 עד 7 שנים", "mc": "הקצב הטבעי של קרקע עם ודאות.", "v": 2}, {"t": "אין לי לחץ של זמן", "mc": "יש לי כסף שיושב בצד ולא עובד.", "v": 2}]}, {"key": "b2", "title": "איך נוח לך להתחיל?", "options": [{"t": "מהלך אחד משמעותי", "mc": "להרוויח בעיקר מהשלבים התכנוניים.", "v": 2}, {"t": "מההון שכבר יש לי", "mc": "הכסף שלי מחכה להחלטה.", "v": 2}, {"t": "עוד לא החלטתי", "mc": "את ההיקף בונים יחד בשיחה.", "v": 0}]}], "qw": {"key": "b3", "title": "מתי נכון לך להתחיל?", "options": [{"t": "יש לי מוכנות לקבל החלטה", "mc": "השאלה שלי היא \"איפה כן\" ולא \"מה מתאים לי\"", "v": 2, "canon": "מיד, אני מוכן להתקדם"}, {"t": "לא עכשיו", "mc": "צריך כאן מישהו שיבין אותי.. השארתי פרטים בהרבה מקומות.", "v": 0, "canon": "רק בודק אפשרויות בשלב זה"}, {"t": "בחודשים הקרובים", "mc": "לאסוף מידע מעכשיו, להחליט עם עצמי בקרוב.", "v": 1, "canon": "בחודשים הקרובים"}]}, "qk": {"key": "b4", "title": "ההון האישי שלך זמין?", "options": [{"t": "כן, יושב ומחכה", "mc": "ובינתיים לא עובד בשבילי.", "v": 2}, {"t": "עוד לא", "mc": "שקלתי ללוות הון.", "v": 1}, {"t": "חלק זמין, חלק בדרך", "mc": "נבדוק יחד מה הכי נכון לך ומתי.", "v": 1}]}, "rows": {"R1.0": "אצלנו אנשים לפני עסקים. לא נמכור לך מה שלא מתאים לך, ובדיוק בגלל זה אנחנו מודדים התאמה.", "R1.1": "את המסמכים מהעסקה, משלב התכנון ועד היציאה, פותחים יחד בשיחה. הכל מוסבר בגובה העיניים.", "R1.2": "המקום שלך בטוח: התוכנית הכוללנית כבר אושרה. גם הקצב בטוח: התזמון כאן משחק לטובתך, והרווח הגדול הוא בשלב התכנוני, לפני שהתוכנית הבאה תאושר.", "R1.3": "אנחנו מתאימים לך מודל השקעה ונקודת יציאה, בדיוק בהיקף שנכון לך. אפשר להגיע להון של דירה מההון שכבר יש לך, ובלי משכנתא חונקת.", "R2.0.0": "שלושה מסמכים שנעבור עליהם יחד: התוכנית הכוללנית שאושרה, השמאות לפי תקן 22, ונקודות היציאה שאנחנו מספקים.", "R2.0.1": "כאן הבסיס הוא ודאות: התוכנית הכוללנית כבר אושרה, והצפי שקוף לשנים הקרובות. אם מישהו היה מציע לי תשואה גבוהה בלי שום סיכון, הייתי משאיר את הכסף מתחת לכרית.", "R2.0.2": "בעסקאות כאלו הרווח הגדול הוא דווקא בשנים של התכנון, וכניסה מוקדמת תעשה את העבודה השחורה בשבילך. אבל זה לא הכל. על השאר עוברים בשיחה, מול השמאות.", "R2.1.0": "אפשר למכור בכל שלב! בנוסף יש נקודות יציאה שקופות וברורות, וכל התנאים שקופים מראש בחוזה. עוברים עליהם יחד, סעיף אחרי סעיף.", "R2.1.1": "התוכנית הכוללנית אושרה ב־18/12/2024, ומתחם H נמצא היום בשלב הוועדה המקומית, אחרי אישור התוכנית הכוללנית. כרגע על הפרק: תוכנית מפורטת.", "R2.1.2": "שמאות מקרקעין 2026 לפי תקן 22 קבעה: 3,700 ש״ח למטר, כלומר 462,500 ש״ח ליחידת קרקע של 125 מ״ר.\nהמחיר מתעדכן לפי התקדמות הסטטוס התכנוני.", "R2.2.0": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים.", "R2.2.1": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים, בתוך הטווח שסימנת.", "R2.2.2": "קרקע בשלבי תכנון צריכה בדיוק את זה: סבלנות. ובינתיים, הכסף שלך שיושב בצד מקבל משמעות.", "R2.3.0": "זה אפשרי, בהיקף שמותאם אליך, במודל שנבנה יחד. משקיעים בדיוק בתקופת ההשבחה: אחרי שהתוכנית הכוללנית אושרה, ולפני התוכנית המפורטת.", "R2.3.1": "השקעה מותאמת אישית, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R2.3.2": "בשיחה נבדוק אם ניתן להתאים לך מודל אישי, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R3.0": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.", "R3.1": "אני מבין אותך, רוב המשקיעים שלי נמצאים בדיוק בנקודה הזו. אשמח להבין לעומק את הצורך שלך ולעזור לך לקבל את ההחלטה המושכלת ביותר עבורך.", "R3.2": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.", "R4.0": "זה מה שמאפשר להיכנס עכשיו, ולהשביח את ההון כבר מהשלב הנוכחי של התכנון.", "R4.1": "בכנות, אנו לא מאפשרים מימון. אפשר להיכנס גם עם הון מלווה, וזה בסדר גמור מבחינתנו. אבל לפני שרצים לקחת הלוואה, נשוחח ונבין יחד היקף ולוח זמנים שיתאימו גם ליעדים שלך.", "R4.2": "התזמון משחק כאן תפקיד מפתח. לפני שממהרים, מומלץ קודם לתאם ציפיות באופן אישי, בשיחה איתי."}, "st": {"R1.0": "ok", "R1.1": "ok", "R1.2": "ok", "R1.3": "ok", "R2.0.0": "ok", "R2.0.1": "honest", "R2.0.2": "ok", "R2.1.0": "ok", "R2.1.1": "ok", "R2.1.2": "ok", "R2.2.0": "honest", "R2.2.1": "ok", "R2.2.2": "ok", "R2.3.0": "ok", "R2.3.1": "ok", "R2.3.2": "ask", "R3.0": "ok", "R3.1": "ok", "R3.2": "ok", "R4.0": "ok", "R4.1": "ask", "R4.2": "ok"}, "wins": [["בבוקר", "09:00 עד 12:00", "אני טיפוס של בוקר"], ["בצהריים", "12:00 עד 16:00", "דברו איתי בצהריים"], ["בערב", "16:00 עד 20:00", "הכי טוב בערב"]], "tx": {"JERR": "צריך לבחור חלון זמן", "JERR.alt": "המספר האחר לא תקין. צריך 10 ספרות שמתחילות ב־05", "JSAVING": "שומרים…", "JDP": "השיחה שלך שמורה.\nנחזור אליך {w}, למספר {n}."}, "copy": {"submit": "מרכיבים את בדיקת ההתאמה…", "load": "מרכיבים את בדיקת ההתאמה שלך", "loadSub": "מהתשובות שסימנת", "intro": "הנה מה שהבטחנו:"}, "stages": [{"n": "קרקע חקלאית", "d": "נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.", "here": false}, {"n": "ועדה ארצית", "d": "הקווים הגדולים של המדינה: איך והאם הרעיון יתרום לעתיד היישוב.", "here": false}, {"n": "ועדה מחוזית", "d": "ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.", "here": false}, {"n": "ועדה מקומית", "d": "התכנון הגדול אושר ויורד לרמת המתחם.", "here": true}, {"n": "אישור תוכנית מפורטת", "d": "תוכנית מפורטת אחת לכל מתחם H: מה מניחים איפה. לפי הערכת השמאי, צפויה להיות מאושרת בתוך כ־5 שנים.", "here": false}, {"n": "אישור תוכנית פיתוח", "d": "כבישים, מים וניקוז. מתכוננים לשלבי הבנייה.", "here": false}, {"n": "זמינות לבנייה", "d": "הקרקע מוכנה לבנייה.", "here": false}]};
+const D = {"qm": {"key": "b1", "title": "כשהכסף שלך יוצא לעבוד, מה הכי חשוב לך?", "options": [{"t": "ודאות וביטחון", "mc": "ליווי רגוע והתאמת הצורך האישי.", "canon": "ודאות וביטחון"}, {"t": "להבין לעומק לפני החלטה", "mc": "לראות הכל בעיניים, ולבדוק בקצב שלי.", "canon": "להבין לעומק לפני החלטה"}, {"t": "תשואה בטוחה", "mc": "שהכסף יגדל, במקום וקצב בטוח.", "canon": "תשואה גבוהה"}, {"t": "רף כניסה נמוך", "mc": "להתחיל עם ההון שיש לי עכשיו.", "canon": "רף כניסה נמוך"}]}, "qb": [{"key": "b2", "title": "השקעה עם תשואה גבוהה יותר, אבל עם פחות ודאות: זה מתאים לך?", "options": [{"t": "גם וגם", "mc": "השקעה שתניב רווח בריא, עם מסמכים וגיבוי", "v": 2}, {"t": "כן. אצלי תשואה קודמת להכל", "mc": "הסיכון שאקח מחושב בהתאם לתשואה.", "v": 1}, {"t": "תלוי כמה גבוהה", "mc": "אני קודם רוצה לראות את המספרים", "v": 1}]}, {"key": "b2", "title": "מה הדבר הראשון שהיית רוצה לראות במו עיניך?", "options": [{"t": "מה קורה אם ארצה לצאת", "mc": "איך יוצאים, ומה כתוב על זה בחוזה.", "v": 1}, {"t": "את התוכנית הכוללנית ושלבי התכנון", "mc": "איפה המתחם עומד היום, ומה נשאר עד הבנייה.", "v": 2}, {"t": "איך בדיוק נקבע המחיר", "mc": "מי קבע אותו, ולפי מה.", "v": 2}]}, {"key": "b2", "title": "לכמה זמן הכסף הזה יכול לצאת לעבוד?", "options": [{"t": "גג 3 שנים", "mc": "מתאימה לי השקעה לטווח הקצר.", "v": 0}, {"t": "3 עד 7 שנים", "mc": "הקצב הטבעי של קרקע עם ודאות.", "v": 2}, {"t": "אין לי לחץ של זמן", "mc": "יש לי כסף שיושב בצד ולא עובד.", "v": 2}]}, {"key": "b2", "title": "איך נוח לך להתחיל?", "options": [{"t": "מהלך אחד משמעותי", "mc": "להרוויח בעיקר מהשלבים התכנוניים.", "v": 2}, {"t": "מההון שכבר יש לי", "mc": "הכסף שלי מחכה להחלטה.", "v": 2}, {"t": "עוד לא החלטתי", "mc": "את ההיקף בונים יחד בשיחה.", "v": 0}]}], "qw": {"key": "b3", "title": "מתי נכון לך להתחיל?", "options": [{"t": "יש לי מוכנות לקבל החלטה", "mc": "השאלה שלי היא \"איפה כן\" ולא \"מה מתאים לי\"", "v": 2, "canon": "מיד, אני מוכן להתקדם"}, {"t": "לא עכשיו", "mc": "צריך כאן מישהו שיבין אותי.. השארתי פרטים בהרבה מקומות.", "v": 0, "canon": "רק בודק אפשרויות בשלב זה"}, {"t": "בחודשים הקרובים", "mc": "לאסוף מידע מעכשיו, להחליט עם עצמי בקרוב.", "v": 1, "canon": "בחודשים הקרובים"}]}, "qk": {"key": "b4", "title": "ההון האישי שלך זמין?", "options": [{"t": "כן, יושב ומחכה", "mc": "ובינתיים לא עובד בשבילי.", "v": 2}, {"t": "עוד לא", "mc": "שקלתי ללוות הון.", "v": 1}, {"t": "חלק זמין, חלק בדרך", "mc": "נבדוק יחד מה הכי נכון לך ומתי.", "v": 1}]}, "rows": {"R1.0": "אצלנו אנשים לפני עסקים. לא נמכור לך מה שלא מתאים לך, ובדיוק בגלל זה אנחנו מודדים התאמה.", "R1.1": "את המסמכים מהעסקה, משלב התכנון ועד היציאה, פותחים יחד בשיחה. הכל מוסבר בגובה העיניים.", "R1.2": "המקום שלך בטוח: התוכנית הכוללנית כבר אושרה. גם הקצב בטוח: התזמון כאן משחק לטובתך, והרווח הגדול הוא בשלב התכנוני, לפני שהתוכנית הבאה תאושר.", "R1.3": "אנחנו מתאימים לך מודל השקעה ונקודת יציאה, בדיוק בהיקף שנכון לך. אפשר להגיע להון של דירה מההון שכבר יש לך, ובלי משכנתא חונקת.", "R2.0.0": "שלושה מסמכים שנעבור עליהם יחד: התוכנית הכוללנית שאושרה, השמאות לפי תקן 22, ונקודות היציאה שאנחנו מספקים.", "R2.0.1": "כאן הבסיס הוא ודאות: התוכנית הכוללנית כבר אושרה, והצפי שקוף לשנים הקרובות. אם מישהו היה מציע לי תשואה גבוהה בלי שום סיכון, הייתי משאיר את הכסף מתחת לכרית.", "R2.0.2": "בעסקאות כאלו הרווח הגדול הוא דווקא בשנים של התכנון, וכניסה מוקדמת תעשה את העבודה השחורה בשבילך. אבל זה לא הכל. על השאר עוברים בשיחה, מול השמאות.", "R2.1.0": "אפשר למכור בכל שלב! בנוסף יש נקודות יציאה שקופות וברורות, וכל התנאים שקופים מראש בחוזה. עוברים עליהם יחד, סעיף אחרי סעיף.", "R2.1.1": "התוכנית הכוללנית אושרה ב־18/12/2024, ומתחם H נמצא היום בשלב הוועדה המקומית, אחרי אישור התוכנית הכוללנית. כרגע על הפרק: תוכנית מפורטת.", "R2.1.2": "שמאות מקרקעין 2026 לפי תקן 22 קבעה: 3,700 ש״ח למטר, כלומר 462,500 ש״ח ליחידת קרקע של 125 מ״ר.\nהמחיר מתעדכן לפי התקדמות הסטטוס התכנוני.", "R2.2.0": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים.", "R2.2.1": "לפי הערכת השמאי, התוכנית המפורטת צפויה להיות מאושרת בתוך כ־5 שנים, בתוך הטווח שסימנת.", "R2.2.2": "קרקע בשלבי תכנון צריכה בדיוק את זה: סבלנות. ובינתיים, הכסף שלך שיושב בצד מקבל משמעות.", "R2.3.0": "זה אפשרי, בהיקף שמותאם אליך, במודל שנבנה יחד. משקיעים בדיוק בתקופת ההשבחה: אחרי שהתוכנית הכוללנית אושרה, ולפני התוכנית המפורטת.", "R2.3.1": "השקעה מותאמת אישית, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R2.3.2": "בשיחה נבדוק אם ניתן להתאים לך מודל אישי, בדיוק בתנאים שלך ובהיקף של ההון שמחכה להחלטה.", "R3.0": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.", "R3.1": "אני מבין אותך, רוב המשקיעים שלי נמצאים בדיוק בנקודה הזו. אשמח להבין לעומק את הצורך שלך ולעזור לך לקבל את ההחלטה המושכלת ביותר עבורך.", "R3.2": "אם ככה, השיחה שלנו תהיה יותר ממוקדת בך ובצורך האישי שלך.", "R4.0": "זה מה שמאפשר להיכנס עכשיו, ולהשביח את ההון כבר מהשלב הנוכחי של התכנון.", "R4.1": "בכנות, אנחנו לא מעמידים מימון בעצמנו. אפשר בהחלט לרכוש גם עם כסף מלווה, וזה בסדר גמור מבחינתנו. אבל לפני שרצים לקחת הלוואה, נשוחח ונבין יחד היקף ולוח זמנים שיתאימו גם ליעדים שלך.", "R4.2": "התזמון משחק כאן תפקיד מפתח. לפני שממהרים, מומלץ קודם לתאם ציפיות באופן אישי, בשיחה איתי."}, "st": {"R1.0": "ok", "R1.1": "ok", "R1.2": "ok", "R1.3": "ok", "R2.0.0": "ok", "R2.0.1": "honest", "R2.0.2": "ok", "R2.1.0": "ok", "R2.1.1": "ok", "R2.1.2": "ok", "R2.2.0": "honest", "R2.2.1": "ok", "R2.2.2": "ok", "R2.3.0": "ok", "R2.3.1": "ok", "R2.3.2": "ask", "R3.0": "ok", "R3.1": "ok", "R3.2": "ok", "R4.0": "ok", "R4.1": "ask", "R4.2": "ok"}, "wins": [["בבוקר", "09:00 עד 12:00", "אני טיפוס של בוקר"], ["בצהריים", "12:00 עד 16:00", "דברו איתי בצהריים"], ["בערב", "16:00 עד 20:00", "הכי טוב בערב"]], "tx": {"JERR": "צריך לבחור חלון זמן", "JERR.alt": "המספר האחר לא תקין. צריך 10 ספרות שמתחילות ב־05", "JSAVING": "שומרים…", "JDP": "השיחה שלך שמורה.\nנחזור אליך {w}, למספר {n}."}, "copy": {"submit": "מרכיבים את בדיקת ההתאמה…", "load": "מרכיבים את בדיקת ההתאמה שלך", "loadSub": "מהתשובות שסימנת", "intro": "הנה מה שהבטחנו:"}, "stages": [{"n": "קרקע חקלאית", "d": "נקודת המוצא של כל קרקע, לפני שמתחיל תכנון.", "here": false}, {"n": "ועדה ארצית", "d": "הקווים הגדולים של המדינה: איך והאם הרעיון יתרום לעתיד היישוב.", "here": false}, {"n": "ועדה מחוזית", "d": "ב־18/12/2024 אושרה התוכנית הכוללנית של קדימה צורן, ומתחם H בתוכה.", "here": false}, {"n": "ועדה מקומית", "d": "התכנון הגדול אושר ויורד לרמת המתחם.", "here": true}, {"n": "אישור תוכנית מפורטת", "d": "תוכנית מפורטת אחת לכל מתחם H: מה מניחים איפה. לפי הערכת השמאי, צפויה להיות מאושרת בתוך כ־5 שנים.", "here": false}, {"n": "אישור תוכנית פיתוח", "d": "כבישים, מים וניקוז. מתכוננים לשלבי הבנייה.", "here": false}, {"n": "זמינות לבנייה", "d": "הקרקע מוכנה לבנייה.", "here": false}]};
 const WORKER = 'https://tom-funnel.tom-harush.workers.dev', PIXEL_ID = '1002428386157716', HOT_MIN = 4, VARIANT = 'b';
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -964,7 +972,48 @@ function utm(){ const g = k => Q.get(k) || ''; return { source:g('utm_source'), 
   ad_id:g('ad_id'), adset_id:g('adset_id'), campaign_id:g('campaign_id'), fbclid:g('fbclid'), ref:document.referrer || '', variant:VARIANT }; }
 let LID = '', PHONE = '';
 $('submitBtn').addEventListener('click', submitLead);
+/* 27/10 (ת־02): הליד נשלח לשרת עם ניסיון חוזר, ולא מראים הצלחה לפני שהשרת אישר.
+   ניסיון חוזר רק אחרי כישלון ברור (שגיאת שרת או ניתוק), ותמיד עם אותו lead_id: השרת מזהה כפילות לפי lead_id.
+   בקשה איטית לא מבטלים באמצע, כי השרת עוד עלול לעבד אותה, ושליחה נוספת הייתה יוצרת ליד כפול.
+   כישלון סופי: הליד נשאר בתור במכשיר (th_leads עם pending), מופיעה הודעה עם וואטסאפ, והתור נשלח שוב בכניסה הבאה.
+   Lead בדפדפן רק אחרי ok מהשרת, עם אותו מזהה שהשרת שולח ב־CAPI */
+const SUBMIT_HTML = $('submitT').innerHTML, LEAD_WAITS = [1500, 3500];
+let INFLIGHT = null, QUEUE = null, scSent = false;
+function leadsGet(){ try { return JSON.parse(localStorage.getItem('th_leads') || '[]'); } catch(e) { return []; } }
+function leadsSet(a){ try { localStorage.setItem('th_leads', JSON.stringify(a)); } catch(e) {} }
+function leadPut(p){ const a = leadsGet(), i = a.findIndex(x => x.lead_id === p.lead_id); if (i >= 0) a[i] = p; else a.push(p); leadsSet(a); }
+function digits(p){ let d = String(p || '').replace(/[^0-9]/g, ''); if (d.indexOf('972') === 0) d = '0' + d.slice(3); return d; }
+function postLead(p){
+  return new Promise(done => {
+    let n = 0;
+    const once = () => fetch(WORKER + '/lead', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body: JSON.stringify(p) })
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(j => { if (j && j.ok && j.lead_id) done(j); else throw 0; })
+      .catch(() => { if (n < LEAD_WAITS.length) setTimeout(once, LEAD_WAITS[n++]); else done(null); });
+    once();
+  });
+}
+/* השרת אישר: יוצא מהתור, ונשלח Lead מהדפדפן. ליד שחוזר עם אותו טלפון: השרת מחזיר את המזהה הקיים, וממשיכים איתו */
+function leadOk(p, j){
+  const a = leadsGet(), it = a.find(x => x.lead_id === p.lead_id);
+  if (it) { delete it.pending; it.lead_id = j.lead_id; leadsSet(a); }
+  try { if (window.fbq) fbq('track', 'Lead', { content_name:'survey_b', temperature:p.temperature, value: p.temperature === 'hot' ? 2 : 1, currency:'ILS' }, { eventID: p.lead_id }); } catch(e) {}
+}
+function sendFail(on){ $('sendFail').hidden = !on; }
+/* התור: מה שלא הגיע לשרת בביקור קודם (עד שבוע אחורה) נשלח שוב, שנייה וחצי אחרי הטעינה */
+function retryQueue(){
+  if (PREVIEW || INFLIGHT || QUEUE) return QUEUE;
+  const week = Date.now() - 7 * 864e5, items = leadsGet().filter(x => x.pending && Date.parse(x.ts || 0) > week);
+  if (!items.length) return null;
+  QUEUE = Promise.all(items.map(it => { const p = Object.assign({}, it); delete p.pending;
+      return postLead(p).then(j => { if (j) { if (p.lead_id === LID) LID = j.lead_id; leadOk(p, j); } return !!j; }); }))
+    .then(r => { QUEUE = null; const ok = r.every(Boolean); if (ok) sendFail(false); return ok; });
+  return QUEUE;
+}
+if (!PREVIEW) setTimeout(retryQueue, 1500);
+$('sendRetry').addEventListener('click', () => { if (cur === 'capture') submitLead(); else retryQueue(); });
 function submitLead(){
+  if (INFLIGHT) return;
   const iN = $('fName'), iP = $('fPhone'), iE = $('fEmail'), name = iN.value.trim(), phone = iP.value.trim(), email = iE.value.trim();
   let ok = true;
   ['eName', 'ePhone', 'eEmail', 'eConsent'].forEach(x => { $(x).textContent = ''; }); [iN, iP, iE].forEach(x => x.classList.remove('err'));
@@ -973,9 +1022,12 @@ function submitLead(){
   if (!validEmail(email)) { $('eEmail').textContent = 'נא למלא אימייל תקין'; iE.classList.add('err'); ok = false; }
   if (!$('fConsent').checked) { $('eConsent').textContent = 'צריך לסמן את האישור כדי להמשיך'; ok = false; }
   if (!ok) { const f = [iN, iP, iE].find(x => x.classList.contains('err')) || $('fConsent'); try { f.focus(); } catch(_) {} return; }
-  $('submitBtn').disabled = true; $('submitT').textContent = D.copy.submit;
+  if (QUEUE) { $('submitBtn').disabled = true; QUEUE.then(() => { $('submitBtn').disabled = false; submitLead(); }); return; }
+  $('submitBtn').disabled = true; $('submitT').textContent = D.copy.submit; sendFail(false);
   const temp = temperature(), mo = QM.options[pickIdx.b1], br = QB[pickIdx.b1].options[pickIdx.b2], wh = QW.options[pickIdx.b3], mn = QK.options[pickIdx.b4];
-  const leadId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(16).slice(2));
+  /* ניסיון חוזר אחרי כישלון: אותו טלפון שעדיין בתור = אותו lead_id, כדי שלא ייווצר ליד שני */
+  const pend = leadsGet().find(x => x.pending && digits(x.phone) === digits(phone));
+  const leadId = pend ? pend.lead_id : (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(16).slice(2));
   LID = leadId; PHONE = phone;
   const ck = n => { const m = document.cookie.match('(^|;)\\s*' + n + '\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; };
   let fbc = ck('_fbc'); if (!fbc && Q.get('fbclid')) fbc = 'fb.1.' + Date.now() + '.' + Q.get('fbclid');
@@ -987,18 +1039,16 @@ function submitLead(){
   show('load');
   let done = false; const go = () => { if (done) return; done = true; result(name); };
   if (PREVIEW) { setTimeout(go, 900); return; }
-  try { if (window.fbq) fbq('track', 'Lead', { content_name:'survey_b', temperature:temp, value: temp === 'hot' ? 2 : 1, currency:'ILS' }, { eventID: leadId }); } catch(e) {}
-  px('SurveyComplete', { temperature:temp, score:score(), variant:VARIANT, page:'landing' }); fx('done');
-  try { const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); a.push(payload); localStorage.setItem('th_leads', JSON.stringify(a)); } catch(e) {}
-  /* ליד שחוזר עם אותו טלפון: השרת מחזיר את המזהה הקיים, וממשיכים איתו (אחרת המועד נשלח למזהה שלא קיים) */
-  fetch(WORKER + '/lead', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
-    .then(r => r.json()).then(j => {
-      if (j && j.lead_id && j.lead_id !== leadId) {
-        LID = j.lead_id;
-        try { const a = JSON.parse(localStorage.getItem('th_leads') || '[]'); const it = a.find(x => x.lead_id === leadId); if (it) { it.lead_id = j.lead_id; localStorage.setItem('th_leads', JSON.stringify(a)); } } catch(e) {}
-      }
-    }).catch(() => {}).then(go);
-  setTimeout(go, 2500);
+  if (!scSent) { scSent = true; px('SurveyComplete', { temperature:temp, score:score(), variant:VARIANT, page:'landing' }); fx('done'); }
+  leadPut(Object.assign({}, payload, { pending: 1 }));
+  /* השרת לא ענה תוך 12 שניות: ממשיכים לתשובות, והבקשה ממשיכה ברקע. אם בסוף נכשלה, ההודעה מופיעה גם שם */
+  const slow = setTimeout(go, 12000);
+  INFLIGHT = postLead(payload).then(j => {
+    INFLIGHT = null; clearTimeout(slow);
+    if (j) { if (j.lead_id !== leadId) LID = j.lead_id; leadOk(payload, j); sendFail(false); go(); return; }
+    if (!done) { show('capture', true); $('submitBtn').disabled = false; $('submitT').innerHTML = SUBMIT_HTML; }
+    sendFail(true);
+  });
 }
 /* ── התשובות ובחירת המועד, באותו מקום בדף ── */
 const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' }, LBL = { ok:'מתאים', ask:'נסגר בשיחה', honest:'בודקים בכנות' };

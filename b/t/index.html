@@ -50,6 +50,7 @@ h1{font-size:var(--f-head);font-weight:900;line-height:1.12;letter-spacing:-.02e
 .disc b{color:var(--ink)}
 .cr{text-align:center;padding:16px 12px 0;font-size:var(--f-small);color:#5F646C}
 .cr a{color:inherit;text-decoration:none}
+.cr-l a{text-decoration:underline;text-underline-offset:2px;margin:0 8px}
 @media(prefers-reduced-motion:reduce){.check{animation:none}.btn,.arw,.social a{transition:none}}
 </style>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" defer></script>
@@ -84,6 +85,7 @@ h1{font-size:var(--f-head);font-weight:900;line-height:1.12;letter-spacing:-.02e
   </div>
 </main>
 <p class="disc"><b>*הקרקע עדיין אינה זמינה לבנייה מיידית.</b> הקרקע בשלבי תכנון. התמונות להמחשה בלבד. אין באמור הבטחת תשואה. כל השקעה כרוכה בסיכון. המידע אינו מהווה ייעוץ או שיווק השקעות.</p>
+<p class="cr cr-l"><a href="/privacy-kadima/">מדיניות פרטיות</a><a href="/accessibility-kadima/">הצהרת נגישות</a></p>
 <p class="cr">© הקרן להשבחת הון ונכסים בע״מ מקבוצת תום הרוש · <a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener">נבנה על ידי <b>דיוק דיגיטלי</b></a></p>
 
 <script>
@@ -133,8 +135,9 @@ function fmtPhone(p){ let d = String(p||'').replace(/\D/g,''); if (d.startsWith(
 const PIXEL_ID = '1002428386157716';
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', PIXEL_ID); fbq('track', 'PageView');
-(function(){ try { const k = 'b_sched_' + (LID || 'x'); if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1');
-  fbq('track', 'Schedule', { content_name:'b_thankyou', variant:'b' }, LID ? { eventID: 'schedule:' + LID } : undefined); } catch(e){} })();
+/* 27/10 (ת־01): כניסה ישירה לדף בלי lid לא נספרת כקביעת שיחה. Schedule רק עם lid, ועם אותו מזהה כמו ב־CAPI */
+(function(){ try { if (!LID) return; const k = 'b_sched_' + LID; if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1');
+  fbq('track', 'Schedule', { content_name:'b_thankyou', variant:'b' }, { eventID: 'schedule:' + LID }); } catch(e){} })();
 /* גל 26/10: לכל אירוע המרה גם פידבק מהשרת, עם אותו מזהה */
 function capiEv(ev,eid,lid,custom){try{var ck=function(n){var c=document.cookie.split(';').map(function(x){return x.trim();}).filter(function(x){return x.indexOf(n+'=')===0;})[0];return c?c.slice(n.length+1):'';};var q=new URLSearchParams(location.search),fbc=ck('_fbc');if(!fbc&&q.get('fbclid'))fbc='fb.1.'+Date.now()+'.'+q.get('fbclid');var body=JSON.stringify({event:ev,event_id:eid,url:location.href.split('#')[0],fbp:ck('_fbp')||undefined,fbc:fbc||undefined,lead_id:lid||undefined,custom:custom||{}});var W='https://tom-funnel.tom-harush.workers.dev/capi-event';if(navigator.sendBeacon&&navigator.sendBeacon(W,new Blob([body],{type:'text/plain;charset=UTF-8'})))return;fetch(W,{method:'POST',keepalive:true,headers:{'Content-Type':'text/plain;charset=UTF-8'},body:body}).catch(function(){});}catch(e){}}
 function pxContact(){ var eid = 'ct-' + (window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(16).slice(2)); try { fbq('track', 'Contact', { content_name:'b_thankyou_wa', variant:'b' }, { eventID: eid }); } catch(e){} capiEv('Contact', eid, (typeof LID !== 'undefined' && LID) || '', { content_name:'b_thankyou_wa', variant:'b' }); }
