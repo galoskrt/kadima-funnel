@@ -681,6 +681,11 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 .float a{border-radius:15px}
 @media(max-width:440px){.qtitle{font-size:21px}.opt{font-size:16px;padding:15px 14px}.svc{padding:16px 16px 20px}.btn{font-size:clamp(14px,4.1vw,17px);padding:16px 12px;gap:8px}.btn .arw{width:26px}}
 @media(prefers-reduced-motion:reduce){.lh-btn,.sv-go,.screen.active,.landload .fill,.landload .pin,.lh-cue svg{animation:none}.field .hint{transition:none}}
+/* ניגודיות 4.5:1 (גל 28/10, "רוץ על זה"): רק הטקסטים שנכשלו. --faint (הסתייגויות, מקור הנתונים, "שאלה 1 מתוך 4") היה 2.78 ועכשיו 4.58 גם על הרקע האפור.
+   כרטיסי ציר הזמן נטענו חצי שקופים עד הגלילה אליהם (3.57, ושלבים עתידיים 2.05), ועכשיו הם מלאים מההתחלה והכניסה נשארת בתזוזה ובצל. שורת הזכויות 3.83 ועכשיו 6.18 */
+:root{--faint:#6e7175}
+.jtl-card{opacity:1}
+.copy{color:rgba(255,255,255,.55)}
 
 /* ═══ הדף האישי האחד (25/10) ═══ */
 .op-hdr{background:#fff;border-bottom:1px solid var(--line);text-align:center;padding:10px 0}
@@ -707,7 +712,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 .qa .ours{display:grid;grid-template-columns:28px 1fr;gap:10px;margin-top:12px}
 .qa .ours .ol{display:block;font-size:13.5px;font-weight:800;color:var(--muted)}
 .qa .ours .ol em{font-style:normal}
-.qa .ours .ol em.ok{color:var(--green)} .qa .ours .ol em.ask{color:#B8892B} .qa .ours .ol em.honest{color:var(--accent)}
+.qa .ours .ol em.ok{color:var(--green)} .qa .ours .ol em.ask{color:#8A6516} .qa .ours .ol em.honest{color:var(--accent)}
 .qa .ours p{font-size:16px;line-height:1.55;margin-top:2px}
 .op-open{background:#fff;border-right:4px solid var(--accent);border-radius:12px;padding:14px 16px;margin-top:var(--s3);font-size:17px;font-weight:700;line-height:1.5}
 .ang-open{text-align:center;margin:var(--s3) auto 0;max-width:30ch}
@@ -928,5 +933,6 @@ if (LIVE) {
 }
 </script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" defer></script>
+<script src="/lottie-pause.js" defer></script>
 </body>
 </html>

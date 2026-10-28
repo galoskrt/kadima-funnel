@@ -8,7 +8,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap');
 :root{
-  --bg:#F7F7F7; --card:#FFFFFF; --ink:#0a0a0a; --muted:rgba(10,10,10,.55);
+  --bg:#F7F7F7; --card:#FFFFFF; --ink:#0a0a0a; --muted:rgba(10,10,10,.6);
   --line:rgba(194,21,28,.16); --line2:rgba(194,21,28,.30);
   --accent:#C2151C; --accent2:#7F0224;
   --grad:linear-gradient(135deg,#C2151C,#A20C22,#7F0224);
@@ -42,11 +42,13 @@ h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;
 .feat .ic svg{width:15px;height:15px;stroke:var(--accent);stroke-width:2.4;fill:none}
 .cta{
   display:flex;align-items:center;justify-content:center;gap:11px;width:100%;
-  background:var(--wa);color:#fff;border:none;border-radius:16px;padding:18px 20px;
+  background:var(--ok);color:#fff;border:none;border-radius:16px;padding:18px 20px;
   font-family:inherit;font-size:18px;font-weight:800;cursor:pointer;text-decoration:none;
-  box-shadow:0 8px 24px rgba(37,211,102,.32);transition:.18s;animation:float 3.4s ease-in-out infinite;
+  box-shadow:0 8px 24px rgba(21,122,58,.30);transition:.18s;animation:float 3.4s ease-in-out infinite;
 }
-.cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(37,211,102,.42)}
+.cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(21,122,58,.40)}
+/* 28/10 (גל, ניגודיות): לבן על הירוק של וואטסאפ היה 1.98, על הירוק הכהה של הדפים 5.42. הכפתור הצף עומד אצל מי שביקש הפחתת תנועה */
+@media(prefers-reduced-motion:reduce){.cta{animation:none;transition:none}}
 .cta:active{transform:scale(.99)}
 .cta svg{width:24px;height:24px;fill:#fff}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
@@ -75,7 +77,7 @@ h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;
   <p class="star">*הקרקע עדיין אינה זמינה לבנייה מיידית.</p>
 </div>
 <div style="text-align:center;padding:16px 12px 0;font-size:12.5px"><a href="/privacy-kadima/" style="color:#55595f;text-decoration:underline;text-underline-offset:2px;margin:0 8px">מדיניות פרטיות</a><a href="/accessibility-kadima/" style="color:#55595f;text-decoration:underline;text-underline-offset:2px;margin:0 8px">הצהרת נגישות</a></div>
-<div style="text-align:center;padding:18px 12px;font-size:11px;color:#8a8f98"><a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a> · © כל הזכויות שמורות</div>
+<div style="text-align:center;padding:18px 12px;font-size:11px;color:#62666d"><a href="https://wa.me/972509928400?text=%D7%94%D7%99%D7%99%20%D7%92%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%90%D7%9C%D7%99%D7%9A%20%D7%93%D7%A8%D7%9A%20%D7%A0%D7%9B%D7%A1%20%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99%20%D7%A9%D7%99%D7%A6%D7%A8%D7%AA%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%A7%D7%91%D7%95%D7%A6%D7%AA%20%D7%AA%D7%95%D7%9D%20%D7%94%D7%A8%D7%95%D7%A9%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">נבנה על ידי <b>דיוק דיגיטלי</b></a> · © כל הזכויות שמורות</div>
 <script>
 // מדידה מחוברת: מי שהגיע דרך הדף הקר עם lid ולחץ להיכנס לקבוצה, מסמנים שהשלים את המשפך. תוספתי, לא חוסם.
 /* גל 26/10: פיקסל בדף הקהילה, והצטרפות = Contact מהדפדפן ומהשרת עם אותו מזהה (פידבק למטא על כל המרה) */

@@ -640,6 +640,11 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 .float a{border-radius:15px}
 @media(max-width:440px){.qtitle{font-size:21px}.opt{font-size:16px;padding:15px 14px}.svc{padding:16px 16px 20px}.btn{font-size:clamp(14px,4.1vw,17px);padding:16px 12px;gap:8px}.btn .arw{width:26px}}
 @media(prefers-reduced-motion:reduce){.lh-btn,.sv-go,.screen.active,.landload .fill,.landload .pin,.lh-cue svg{animation:none}.field .hint{transition:none}}
+/* ניגודיות 4.5:1 (גל 28/10, "רוץ על זה"): רק הטקסטים שנכשלו. --faint (הסתייגויות, מקור הנתונים, "שאלה 1 מתוך 4") היה 2.78 ועכשיו 4.58 גם על הרקע האפור.
+   כרטיסי ציר הזמן נטענו חצי שקופים עד הגלילה אליהם (3.57, ושלבים עתידיים 2.05), ועכשיו הם מלאים מההתחלה והכניסה נשארת בתזוזה ובצל. שורת הזכויות 3.83 ועכשיו 6.18 */
+:root{--faint:#6e7175}
+.jtl-card{opacity:1}
+.copy{color:rgba(255,255,255,.55)}
 </style>
 </head>
 <body>
@@ -1144,5 +1149,6 @@ function reading(){
 window.THG_RD = reading;   /* לבדיקות בלבד: מה יישלח עכשיו */
 </script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" defer></script>
+<script src="/lottie-pause.js" defer></script>
 </body>
 </html>
