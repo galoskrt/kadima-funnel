@@ -13,7 +13,7 @@
    "מה מחכה לך" על לבן עם שלוש התמונות מהפיגמה בתוך הכרטיסים, מילה מודגשת בקופסה (פתיחה + "מתאימה"),
    אייקונים קטנים, נתונים על זכוכית נוזלית, הצ'אט אחרון, ומפריד חץ במקום הסלסול. */
 :root{
-  --wine:#7F0224; --red:#C2151C; --soil:#6B4529; --sand:#F1E7D4; --earth-l:#F4EEE8; --bubble:#DCF3C4;
+  --wine:#7F0224; --red:#C2151C; --soil:#6B4529; --sand:#F1E7D4; --earth-l:#F4EEE8; --grey:#F7F7F7; --bubble:#DCF3C4;
   --ink:#0B0B0B; --paper:#FFFFFF; --muted:#4F4740;
   --grad:linear-gradient(100deg, #7F0224 0%, #C2151C 60%, #9E0A2A 100%);
   --m:max(18px, env(safe-area-inset-left, 0px));
@@ -39,14 +39,29 @@ h1,h2{text-wrap:balance}
   background:linear-gradient(110deg, #5E0119 0%, #7F0224 22%, #C2151C 45%, #7F0224 68%, #5E0119 100%);background-size:250% 100%;animation:flow 6s linear infinite;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.24), inset 0 -3px 0 rgba(0,0,0,.2), 0 12px 22px -8px rgba(194,21,28,.6), 0 28px 44px -18px rgba(80,0,20,.6);
   transition:transform .2s ease, box-shadow .25s ease}
-.btn::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(105deg, transparent 38%, rgba(255,255,255,.3) 50%, transparent 62%);background-size:300% 100%;animation:shine 4.2s ease-in-out infinite}
 .btn::after{content:"";position:absolute;left:12%;right:12%;bottom:-12px;height:24px;border-radius:50%;z-index:-1;pointer-events:none;background:linear-gradient(90deg, #C2151C, #7F0224, #C2151C);background-size:250% 100%;filter:blur(14px);opacity:.7;animation:flow 6s linear infinite}
 .btn:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.24), inset 0 -3px 0 rgba(0,0,0,.2), 0 16px 28px -8px rgba(194,21,28,.7), 0 34px 54px -18px rgba(80,0,20,.65)}
 .btn:active{transform:scale(.98)}
 .btn .ar{width:44px;height:12px;flex:0 0 44px;animation:nudge 2.6s ease-in-out infinite}
 .btn.light{background:linear-gradient(110deg, #fff 0%, #fff 36%, #F4E3E6 50%, #fff 64%, #fff 100%);background-size:250% 100%;color:var(--wine);box-shadow:inset 0 -3px 0 rgba(127,2,36,.12), 0 16px 34px -12px rgba(0,0,0,.5)}
-.btn.light::before{background:linear-gradient(105deg, transparent 38%, rgba(127,2,36,.1) 50%, transparent 62%);background-size:300% 100%}
 .btn.light::after{display:none}
+/* טופס קטן ועדין: שם + טלפון בשורה אחת, הסכמה, כפתור (גל 02/11) */
+.mini{display:grid;gap:10px}
+.mini .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mini input[type=text],.mini input[type=tel]{min-width:0;width:100%;height:50px;border:1.5px solid #E6D9D2;border-radius:12px;padding:0 13px;font:500 16px 'Heebo',sans-serif;background:#fff;color:var(--ink);transition:border-color .2s, box-shadow .2s}
+.mini input::placeholder{color:#8a7f78}
+.mini input:focus{outline:none;border-color:var(--wine);box-shadow:0 0 0 3px rgba(127,2,36,.14)}
+.mini input.bad{border-color:var(--red)}
+.mini .ok{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.45;cursor:pointer}
+.mini .ok input{width:17px;height:17px;flex:0 0 17px;margin-top:1px;accent-color:var(--wine)}
+.mini .ok.bad span{color:var(--red)}
+.mini .err{min-height:0;font-size:13px;font-weight:700;color:var(--red)}
+.mini .err:empty{display:none}
+.mini .micro{margin-top:0}
+.on-dark .mini input[type=text],.on-dark .mini input[type=tel]{border-color:transparent}
+.on-dark .mini .ok{color:rgba(255,255,255,.88)}
+.on-dark .mini .ok a{color:#fff}
+.on-dark .mini .err{color:#FFD5D8}
 .btn:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:3px}
 .join{margin-top:18px}
 .micro{font-size:13.5px;color:var(--muted);margin-top:9px}
@@ -121,18 +136,19 @@ h1{font-size:var(--h1);line-height:1.18;font-weight:900;letter-spacing:-.02em;ma
 .fstep p{font-size:16px;margin-top:6px;color:#2b2420}
 
 /* ── 4. מי עומד מאחורי הקבוצה ── */
-.behind{position:relative;z-index:2;background:var(--soil);color:#fff;padding:30px var(--m) 50px}
+/* הרקע: האפור של המותג של תום (גל 02/11), הטקסט כהה */
+.behind{position:relative;z-index:2;background:var(--grey);color:var(--ink);padding:30px var(--m) 50px}
 .edge{position:absolute;left:0;width:100%;height:58px;display:block}
 .edge.t{top:-57px}
 .wgrid{display:grid;grid-template-columns:1fr;gap:6px}
 .wtom{position:relative;height:330px;margin-top:-120px}
-.wtom img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;width:auto;filter:drop-shadow(0 16px 26px rgba(20,8,2,.4))}
+.wtom img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;width:auto;filter:drop-shadow(0 16px 26px rgba(20,8,2,.22))}
 .wtom::before{content:"";position:absolute;left:50%;bottom:-10px;width:250px;height:250px;transform:translateX(-50%);border-radius:50%;background:var(--wine)}
 .behind .h2{margin-top:10px}
-.behind p.ti{font-size:16.5px;margin-top:8px;opacity:.94;max-width:46ch}
+.behind p.ti{font-size:16.5px;margin-top:8px;color:#2b2420;max-width:46ch}
 .sig{margin-top:14px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
-.sig b{font-size:20px;font-weight:900}
-.sig span{font-size:14px;opacity:.85}
+.sig b{font-size:20px;font-weight:900;color:var(--wine)}
+.sig span{font-size:14px;color:var(--muted)}
 /* הבמה של הנתונים: צילום הרחפן מאחור, ועליו זכוכית נוזלית */
 .gstage{position:relative;isolation:isolate;overflow:hidden;margin-top:22px;border-radius:26px;padding:16px 12px;box-shadow:0 26px 60px rgba(25,8,2,.4)}
 .gstage > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;transform:scale(1.1);animation:drift 30s ease-in-out infinite alternate}
@@ -210,7 +226,6 @@ footer a{color:#fff}
 @keyframes drift{from{transform:scale(1.12) translate(0,0)}to{transform:scale(1.22) translate(-3%,2%)}}
 @keyframes float{from{transform:translate(0,0)}to{transform:translate(-30px,18px)}}
 @keyframes flow{from{background-position:0% 50%}to{background-position:250% 50%}}
-@keyframes shine{0%,55%{background-position:100% 0}100%{background-position:-100% 0}}
 @keyframes nudge{0%,70%,100%{transform:translateX(0)}82%{transform:translateX(-7px)}}
 @keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
 
@@ -277,7 +292,7 @@ footer a{color:#fff}
       <div class="chip c4"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><span><b>ללא עלות</b><small>ואפשר לצאת בכל רגע</small></span></div>
     </div>
     <div class="act">
-      <div class="join"></div>
+      <div class="join" data-n="1"></div>
       <div class="frame rv"><p>כל הטיפים שאסור לפספס לפני שמשקיעים, כל מה שחייב לבדוק אחרי שכבר משלמים, ומה הכי חשוב לדעת אם רק התחלת להתעניין בהשקעה בקרקעות.</p></div>
     </div>
   </div>
@@ -318,7 +333,7 @@ footer a{color:#fff}
 
 <!-- 4. מי עומד מאחורי הקבוצה -->
 <section class="behind" aria-labelledby="tH">
-  <svg class="edge t" viewBox="0 0 1440 58" preserveAspectRatio="none" aria-hidden="true"><path d="M0 58V34C110 14 220 6 360 22s240 34 400 26 260-38 410-40 210 18 270 26V58z" fill="#6B4529"/></svg>
+  <svg class="edge t" viewBox="0 0 1440 58" preserveAspectRatio="none" aria-hidden="true"><path d="M0 58V34C110 14 220 6 360 22s240 34 400 26 260-38 410-40 210 18 270 26V58z" fill="#F7F7F7"/></svg>
   <div class="wgrid">
     <div class="wtom"><img src="/rpage/k/img/tom-arms.webp" alt="תום הרוש" width="760" height="894" loading="lazy"></div>
     <div>
@@ -366,7 +381,7 @@ footer a{color:#fff}
 <section class="final on-dark" id="final" aria-labelledby="xH">
   <svg class="arrow" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V0L720 80Z" fill="#F1E7D4"/></svg>
   <h2 id="xH" class="h2 rv">רוצים לעקוב מקרוב אחרי מתחם H?</h2>
-  <div class="join" data-light="1"></div>
+  <div class="join" data-n="2" data-light="1"></div>
 </section>
 <footer>
   <div class="in">
@@ -386,13 +401,37 @@ footer a{color:#fff}
 (function(){
   var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ARROW = '<svg class="ar" viewBox="0 0 44 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M43 6H1.5M7 1L1.5 6 7 11"/></svg>';
-  /* כפתור ישיר לקבוצה (גל 02/11: בלי טופס) */
+  /* טופס קטן: שם + טלפון, מתחת לפתיחה ובסוף הדף (גל 02/11, חזר לטופס) */
   [].slice.call(document.querySelectorAll('.join')).forEach(function(j){
-    j.innerHTML = '<a class="btn go' + (j.dataset.light ? ' light' : '') + '" href="#">להצטרפות לקבוצה ולעדכונים' + ARROW + '</a><p class="micro">בלחיצה עוברים ישר לקבוצה בוואטסאפ. ללא עלות, ואפשר לצאת בכל רגע.</p>';
+    var n = j.dataset.n;
+    j.innerHTML = '<form class="mini" novalidate><div class="row">'
+      + '<input type="text" name="name" autocomplete="name" placeholder="שם" aria-label="שם" id="nm' + n + '">'
+      + '<input type="tel" name="phone" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="טלפון נייד" aria-label="טלפון נייד"></div>'
+      + '<label class="ok"><input type="checkbox" name="c"><span>קראתי את <a href="/privacy-kadima/" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ואפשר ליצור איתי קשר בטלפון ובוואטסאפ.</span></label>'
+      + '<p class="err" role="alert"></p>'
+      + '<button class="btn' + (j.dataset.light ? ' light' : '') + '" type="submit">להצטרפות לקבוצה ולעדכונים' + ARROW + '</button>'
+      + '<p class="micro">מיד אחרי השליחה עוברים לקבוצה בוואטסאפ. ללא עלות, ואפשר לצאת בכל רגע.</p></form>';
   });
   var toast = document.getElementById('toast'), tt;
   function say(t){ toast.textContent = t; toast.classList.add('on'); clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove('on'); }, 2600); }
-  document.addEventListener('click', function(e){ var a = e.target.closest('a.go'); if (!a) return; e.preventDefault(); say('בדף החי: מכאן ישר לקבוצה בוואטסאפ'); });
+  /* הכפתור הדביק והכפתור בצ'אט: גוללים לטופס הקרוב ופותחים את השם */
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a.go'); if (!a) return; e.preventDefault();
+    var fs = [].slice.call(document.querySelectorAll('.mini')), best = fs[0], bd = 1e9;
+    fs.forEach(function(f){ var d = Math.abs(f.getBoundingClientRect().top - innerHeight / 2); if (d < bd) { bd = d; best = f; } });
+    best.scrollIntoView({ behavior: rm ? 'auto' : 'smooth', block: 'center' });
+    setTimeout(function(){ best.querySelector('input').focus({ preventScroll: true }); }, rm ? 0 : 550);
+  });
+  document.addEventListener('submit', function(e){
+    var f = e.target; if (!f.classList.contains('mini')) return; e.preventDefault();
+    var nm = f.name.value.trim(), ph = f.phone.value.replace(/\D/g, '').replace(/^972/, '0'), ok = f.c.checked, er = f.querySelector('.err');
+    f.name.classList.toggle('bad', nm.length < 2); f.phone.classList.toggle('bad', !/^05\d{8}$/.test(ph)); f.querySelector('.ok').classList.toggle('bad', !ok);
+    if (nm.length < 2) { er.textContent = 'רק השם, כדי שנדע איך לפנות אליך.'; f.name.focus(); return; }
+    if (!/^05\d{8}$/.test(ph)) { er.textContent = 'מספר נייד של 10 ספרות, שמתחיל ב־05.'; f.phone.focus(); return; }
+    if (!ok) { er.textContent = 'צריך לסמן את האישור כדי להצטרף.'; return; }
+    er.textContent = ''; say('בדף החי: השם והטלפון נשמרים, ומיד עוברים לקבוצה');
+  });
+  document.addEventListener('input', function(e){ var f = e.target.form; if (f && f.classList.contains('mini')) { e.target.classList.remove('bad'); var l = e.target.closest('.ok'); if (l) l.classList.remove('bad'); f.querySelector('.err').textContent = ''; } });
 
   /* כניסה מדורגת */
   var els = [].slice.call(document.querySelectorAll('.rv'));
@@ -433,7 +472,7 @@ footer a{color:#fff}
   var st = document.getElementById('sticky'), vis = new Set();
   if ('IntersectionObserver' in window) {
     var so2 = new IntersectionObserver(function(es){ es.forEach(function(x){ if (x.isIntersecting) vis.add(x.target); else vis.delete(x.target); }); st.classList.toggle('hide', vis.size > 0); }, { threshold: 0 });
-    [document.querySelector('.act .btn'), document.querySelector('#final .btn'), document.querySelector('footer')].forEach(function(t){ so2.observe(t); });
+    [document.querySelector('.act .mini'), document.querySelector('#final .mini'), document.querySelector('footer')].forEach(function(t){ so2.observe(t); });
   }
 })();
 </script>
