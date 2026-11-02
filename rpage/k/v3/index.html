@@ -141,9 +141,10 @@ h1{font-size:var(--h1);line-height:1.18;font-weight:900;letter-spacing:-.02em;ma
 .edge{position:absolute;left:0;width:100%;height:58px;display:block}
 .edge.t{top:-57px}
 .wgrid{display:grid;grid-template-columns:1fr;gap:6px}
-.wtom{position:relative;height:330px;margin-top:-120px}
-.wtom img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;width:auto;filter:drop-shadow(0 16px 26px rgba(20,8,2,.22))}
-.wtom::before{content:"";position:absolute;left:50%;bottom:-10px;width:250px;height:250px;transform:translateX(-50%);border-radius:50%;background:var(--wine)}
+/* תום יוצא מהעיגול: למעלה הוא חורג, למטה הוא נחתך בדיוק בקשת של העיגול (גל 02/11: "חייב לחתוך למטה... שתשב בתוך העיגול") */
+.wtom{position:relative;width:250px;height:330px;margin:-120px auto 0;overflow:hidden;border-radius:0 0 125px 125px}
+.wtom::before{content:"";position:absolute;left:0;bottom:0;width:100%;aspect-ratio:1;border-radius:50%;background:var(--wine)}
+.wtom img{position:absolute;bottom:-5%;left:50%;transform:translateX(-50%);height:105%;width:auto;max-width:none}
 .behind .h2{margin-top:10px}
 .behind p.ti{font-size:16.5px;margin-top:8px;color:#2b2420;max-width:46ch}
 .sig{margin-top:14px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
@@ -253,8 +254,7 @@ footer a{color:#fff}
   .fstep{min-height:44vh}
   .behind{padding-bottom:80px}
   .wgrid{grid-template-columns:.9fr 1.1fr;align-items:end;max-width:1180px;margin:0 auto;gap:48px}
-  .wtom{height:460px;margin-top:-170px}
-  .wtom::before{width:340px;height:340px}
+  .wtom{width:340px;height:460px;margin-top:-170px;border-radius:0 0 170px 170px}
   .gstage{padding:22px}
   .stats{grid-template-columns:repeat(4,1fr);gap:14px}
   .glass{padding:22px 18px}
