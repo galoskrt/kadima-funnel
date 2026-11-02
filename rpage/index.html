@@ -147,7 +147,7 @@ footer .credit a{color:inherit;text-decoration:none}
 </style>
 </head>
 <body>
-<div class="ab" role="note">תצוגה לאישור: הטופס לא שולח כלום</div>
+<div class="ab" role="note">דף בבדיקה, עוד לא פורסם. הטופס עובד ומעביר לקבוצה</div>
 <main>
 <header class="hero">
   <div class="in">
@@ -247,12 +247,25 @@ footer .credit a{color:inherit;text-decoration:none}
   </div>
 </div>
 <script>
-/* LIVE כבוי: זו תצוגה לאישור. הטופס בודק את השדות, מסביר מה יקרה בדף החי, ולא שולח כלום.
-   כשגל יחליט איך מטפלים בליד מהטופס (ליד קיים = חזרה, טלפון חדש = ליד חדש עם מקור "קהילה"),
-   נבנה את sendLead מול ה־worker, נוסיף את הפיקסל (Contact בהצטרפות, דפדפן ושרת עם אותו מזהה) ונדליק את LIVE. */
-const LIVE = false, GROUP = 'https://chat.whatsapp.com/Cj06TmvbsPP28U2zXYgkCh';
+/* הטופס (גל 02/11): שם וטלפון לשרת, ומיד לקבוצה. השרת מחליט: ליד קיים = סימון בכרטיס וחזרה, בלי הודעות.
+   מספר חדש = ליד במקור "קהילה" בלי רצף. אם השרת לא עונה תוך 3.5 שניות עוברים לקבוצה בכל זאת: ההצטרפות לא נחסמת בגלל תקלה.
+   מטא: Contact עם event_id אחד לדפדפן ולשרת, כך שנספר פעם אחת. בלי פיקסל בדף, fbq לא קיים ורק השרת מדווח. */
+const LIVE = true, GROUP = 'https://chat.whatsapp.com/Cj06TmvbsPP28U2zXYgkCh', API = 'https://tom-funnel.tom-harush.workers.dev/community-join';
 const $ = id => document.getElementById(id);
-function sendLead(){ return Promise.reject(new Error('not built')); }
+const EID = 'community:' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+function sendLead(d){
+  const q = new URLSearchParams(location.search), utm = {};
+  ['source', 'medium', 'campaign', 'content', 'term', 'id'].forEach(k => { const v = q.get('utm_' + k); if (v) utm[k] = v; });
+  let lid = ''; try { lid = (JSON.parse(localStorage.getItem('b_last') || 'null') || {}).lid || ''; } catch (e) {}
+  const ck = n => (document.cookie.match('(?:^|; )' + n + '=([^;]*)') || [])[1] || '';
+  const body = JSON.stringify({ name: d.name, phone: d.phone, utm, ref_url: location.href.slice(0, 300), lead_id: lid,
+    consent: { privacy: true, contact: true, at: new Date().toISOString() }, event_id: EID, fbp: ck('_fbp'), fbc: ck('_fbc') });
+  try { if (window.fbq) fbq('track', 'Contact', { content_name: 'community_join' }, { eventID: EID }); } catch (e) {}
+  const ctl = ('AbortController' in window) ? new AbortController() : null;
+  const t = setTimeout(() => { if (ctl) ctl.abort(); }, 3500);
+  return fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body, keepalive: true, signal: ctl ? ctl.signal : undefined })
+    .finally(() => clearTimeout(t));
+}
 function digits(p){ let d = String(p || '').replace(/\D/g, ''); if (d.startsWith('972')) d = '0' + d.slice(3); return d; }
 
 let lastFocus = null;
@@ -272,6 +285,10 @@ document.querySelectorAll('.jform').forEach(f => f.addEventListener('submit', ev
   if (!c.checked){ ec.textContent = 'כדי להצטרף צריך לסמן את האישור'; bad = bad || c; }
   if (bad){ bad.focus(); return; }
   if (!LIVE){ openOv(name); return; }
+  if (f.dataset.busy) return;
+  f.dataset.busy = '1';
+  const btn = f.querySelector('button[type=submit]'), lbl = btn.querySelector('.lbl');
+  btn.disabled = true; btn.setAttribute('aria-busy', 'true'); lbl.textContent = 'מעבירים אותך לקבוצה...';
   sendLead({ name, phone: d }).catch(() => {}).then(() => { location.href = GROUP; });
 }));
 
