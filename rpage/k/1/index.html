@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>כיוון 1 · העיגול · דף הקהילה</title>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="theme-color" content="#7F0224"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap">
+<style>
+/* כיוון 1 · "העיגול" (02/11). ההשראה של גל: דמות חתוכה מול עיגול, ובולטים מרחפים סביבה; מיכל בצורה גלית במקום מלבן.
+   מה שעושה את זה שלנו: העיגול הוא עדשת רחפן על השטח האמיתי של מתחם H, והבולטים הם עובדות מהקופי המאושר. */
+:root{
+  --wine:#7F0224; --red:#C2151C; --soil:#6B4529; --soil-2:#55361F; --sand:#F3ECE4;
+  --ink:#0B0B0B; --paper:#FFFFFF; --muted:#4A4440;
+  --m:max(18px, env(safe-area-inset-left, 0px));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+.pv{position:sticky;top:0;z-index:60;background:var(--ink);color:#fff;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px var(--m)}
+.pv a{color:#fff;text-decoration:underline;text-underline-offset:3px;font-weight:500}
+
+/* ── הפתיחה ── */
+.hero{position:relative;padding:18px var(--m) 0;overflow:hidden}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top img{width:54px;height:54px}
+.top span{font-size:14px;font-weight:700;color:var(--wine)}
+.hgrid{display:grid;gap:8px}
+.lead-in{font-size:17px;font-weight:500;color:var(--muted);margin-top:20px;max-width:30ch}
+h1{font-size:min(8.6vw, 70px);white-space:nowrap;line-height:1.02;font-weight:900;letter-spacing:-.025em;margin-top:8px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--wine)}
+
+.stage{position:relative;height:min(112vw, 620px);margin:6px calc(-1 * var(--m)) 0}
+.disc{position:absolute;left:50%;bottom:7%;width:min(84vw, 470px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;overflow:hidden;background:var(--wine)}
+.disc img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(1.05);mix-blend-mode:multiply;opacity:.9;transform:scale(1.12);animation:drift 26s ease-in-out infinite alternate}
+.ring{position:absolute;left:50%;bottom:calc(7% - min(5vw, 28px));width:min(94vw, 526px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;border:2px dashed rgba(127,2,36,.38);animation:spin 70s linear infinite}
+.ring::after{content:"";position:absolute;top:8%;left:12%;width:14px;height:14px;border-radius:50%;background:var(--red)}
+.tom{position:absolute;left:50%;bottom:-4%;height:100%;width:auto;max-width:none;transform:translateX(-46%);z-index:2;filter:drop-shadow(0 18px 30px rgba(40,6,14,.25))}
+.chip{position:absolute;z-index:3;display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:9px 13px 9px 15px;box-shadow:0 14px 34px rgba(50,8,20,.18);animation:bob 5.5s ease-in-out infinite;max-width:58vw}
+.chip i{flex:0 0 36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--wine)}
+.chip i svg{width:19px;height:19px}
+.chip b{display:block;font-size:17px;font-weight:900;line-height:1.1}
+.chip small{display:block;font-size:13px;font-weight:500;color:var(--muted);line-height:1.25}
+.c1{top:14%;right:3%}
+.c2{top:38%;left:3%;animation-delay:-1.4s}.c2 i{background:var(--soil)}
+.c3{top:61%;right:2%;animation-delay:-2.8s}.c3 i{background:var(--ink)}
+.c4{bottom:9%;left:5%;animation-delay:-4.1s}.c4 i{background:var(--red)}
+
+.act{position:relative;z-index:4;background:var(--paper);margin:0 calc(-1 * var(--m));padding:22px var(--m) 30px;border-radius:26px 26px 0 0;margin-top:-26px;box-shadow:0 -10px 30px rgba(40,6,14,.08)}
+.act p{font-size:17px;max-width:44ch}
+.act p.l2{margin-top:16px}
+.btn{display:flex;justify-content:center;align-items:center;gap:12px;width:100%;margin-top:18px;min-height:58px;border:0;border-radius:14px;background:var(--wine);color:#fff;font:800 18px/1.2 'Heebo',sans-serif;text-decoration:none;cursor:pointer;transition:transform .15s ease, background .2s ease}
+.btn:hover{background:var(--red)}.btn:active{transform:scale(.98)}
+.btn svg{width:20px;height:20px}
+.micro{font-size:13.5px;color:var(--muted);margin-top:10px;text-align:center}
+
+/* ── מה מחכה לך: מיכל אדמה עם קצה גלי, כמו קווי גובה של השטח ── */
+.awaits{position:relative;background:var(--soil);color:#fff;margin-top:64px;padding:26px 0 30px}
+.edge{position:absolute;left:0;width:100%;height:58px;display:block}
+.edge.t{top:-57px}.edge.b{bottom:-57px;transform:scaleY(-1)}
+.awaits h2{font-size:clamp(30px, 8.4vw, 54px);line-height:1.05;font-weight:900;letter-spacing:-.02em;padding:0 var(--m);text-wrap:balance}
+.awaits .sub{font-size:16px;opacity:.86;padding:6px var(--m) 0;max-width:40ch}
+.track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:22px var(--m) 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.track::-webkit-scrollbar{display:none}
+.card{flex:0 0 min(78vw, 340px);scroll-snap-align:start;background:#fff;color:var(--ink);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.ph{position:relative;height:150px;background:var(--wine);overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05) sepia(.18)}
+.ph .n{position:absolute;bottom:10px;right:12px;background:#fff;color:var(--wine);font-weight:900;font-size:13px;border-radius:9px;padding:3px 10px}
+.card h3{font-size:21px;font-weight:900;line-height:1.15;padding:14px 16px 0}
+.card p{font-size:15.5px;line-height:1.5;padding:6px 16px 18px;color:#2a2522}
+.dots{display:flex;gap:7px;justify-content:center;margin-top:12px}
+.dots span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);transition:width .25s, background .25s}
+.dots span.on{width:24px;border-radius:5px;background:#fff}
+.quiet{margin:22px var(--m) 0;font-size:16px;font-weight:700;display:flex;gap:10px;align-items:center}
+.quiet i{flex:0 0 30px;height:30px;border-radius:50%;background:rgba(255,255,255,.16);display:grid;place-items:center}
+.awaits .btn{width:auto;margin:20px var(--m) 0;background:#fff;color:var(--wine)}
+.awaits .btn:hover{background:var(--sand)}
+.after{height:110px}
+
+/* כניסה מדורגת */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes spin{to{transform:translateX(-50%) rotate(360deg)}}
+@keyframes drift{from{transform:scale(1.12) translate(0,0)}to{transform:scale(1.22) translate(-3%,2%)}}
+
+@media (min-width:900px){
+  .hero{padding-top:26px}
+  .hgrid{grid-template-columns:1fr 1.05fr;grid-template-areas:"txt stage" "act stage";align-items:center;column-gap:40px;row-gap:0;max-width:1240px;margin:0 auto}
+  .txt{grid-area:txt;align-self:end}.act{grid-area:act;align-self:start}
+  .stage{grid-area:stage;height:640px;margin:0}
+  .act{margin:0;padding:0;box-shadow:none;border-radius:0;background:none}
+  .act .btn{width:auto;padding:0 34px;display:inline-flex}
+  .micro{text-align:right}
+  .chip{max-width:none}
+  .awaits{margin-top:120px}
+  .awaits h2,.awaits .sub,.quiet{max-width:1240px;margin-left:auto;margin-right:auto}
+  .track{max-width:1240px;margin:0 auto;overflow:visible}
+  .card{flex:1 1 0}
+  .dots{display:none}
+  .awaits .btn{display:inline-flex;margin-right:max(var(--m), calc((100vw - 1240px)/2))}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="pv" role="note"><span>כיוון 1 מתוך 3 · העיגול · טיוטה לבחירה</span><a href="/rpage/k/">לכל הכיוונים</a></div>
+
+<header class="hero">
+  <div class="top"><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" width="54" height="54"><span>מתחם H · קדימה צורן</span></div>
+  <div class="hgrid">
+    <div class="txt">
+      <p class="lead-in rv">אם חשבת להפיק יותר מההשקעה שלך בקרקעות, זו הקבוצה עבורך.</p>
+      <h1 class="rv">קהילת המשקיעים של<br><em>תום הרוש</em> בוואטסאפ</h1>
+    </div>
+    <div class="stage" aria-hidden="false">
+      <div class="ring" aria-hidden="true"></div>
+      <div class="disc"><img src="/b/media/hero-land.webp" alt="השטח של מתחם H מלמעלה, צילום רחפן" width="1600" height="854"></div>
+      <img class="tom" src="/rpage/k/img/tom-stand.webp" alt="תום הרוש" width="725" height="1400">
+      <div class="chip c1"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.2c2.4.2 4 1.8 4.6 4.8"/></svg></i><span><b>עשרות</b><small>משקיעים כבר בקבוצה</small></span></div>
+      <div class="chip c2"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M9.5 10a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5"/><path d="M12 16.5h.01"/></svg></i><span><b>אחת לשבועיים</b><small>שאלות ותשובות עם תום</small></span></div>
+      <div class="chip c3"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></i><span><b>+15</b><small>שנים בעולם הנדל״ן</small></span></div>
+      <div class="chip c4"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><span><b>ללא עלות</b><small>ואפשר לצאת בכל רגע</small></span></div>
+    </div>
+    <div class="act" id="act">
+        <a class="btn rv" href="#join">להצטרפות לקבוצה ולעדכונים<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+        <p class="micro rv">אחרי הלחיצה עוברים ישר לקבוצה בוואטסאפ. אפשר לצאת ממנה בכל רגע.</p>
+    
+        <p class="rv l2">כל הטיפים שאסור לפספס לפני שמשקיעים, כל מה שחייב לבדוק אחרי שכבר משלמים, ומה הכי חשוב לדעת אם רק התחלת להתעניין בהשקעה בקרקעות.</p>
+    </div>
+  </div>
+</header>
+
+<section class="awaits" aria-labelledby="awH">
+  <svg class="edge t" viewBox="0 0 1440 58" preserveAspectRatio="none" aria-hidden="true"><path d="M0 58V34C110 14 220 6 360 22s240 34 400 26 260-38 410-40 210 18 270 26V58z" fill="#6B4529"/></svg>
+  <h2 id="awH" class="rv">מה מחכה לך בקבוצת המשקיעים</h2>
+  <p class="sub rv">שלושה דברים, בלי רעש. מחליקים הצידה.</p>
+  <div class="track" id="track">
+    <article class="card rv"><div class="ph"><img src="/b/media/place-rows.webp" alt="שורות שדה מלמעלה" loading="lazy" width="1080" height="480"><span class="n">לפני שקונים</span></div><h3>קרקע או חרטא?</h3><p>איך מזהים קרקע שיכולה להיות שווה לנו הרבה כסף, איך למזער סיכונים ולהתנהל מול המשווקים שמציעים לנו "קרקעות מבטיחות".</p></article>
+    <article class="card rv"><div class="ph"><img src="/b/media/future-h-1200.webp" alt="מתחם H מלמעלה, עם גבול המתחם" loading="lazy" width="1200" height="640"><span class="n">מתחם H</span></div><h3>עדכונים על מתחם H ועל התכנון</h3><p>הערכות השמאים, דוחות וסטטוס תכנוני בכל שלב, כדי שתראו בעצמכם איך נראית קרקע לבנייה בכל שלב ומה זה אומר לגבי הרווח שלכם.</p></article>
+    <article class="card rv"><div class="ph"><img src="/rpage/k/img/tom-portrait.webp" alt="תום הרוש" loading="lazy" width="1200" height="900" style="object-position:50% 20%"><span class="n">אחת לשבועיים</span></div><h3>שאלות ותשובות עם תום</h3><p>הקבוצה נפתחת לשאלות, ותום עונה בגובה העיניים, באופן אישי או מרוכז. הידע של המתקדמים והמתחילים, יחד.</p></article>
+  </div>
+  <div class="dots" id="dots" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+  <p class="quiet rv"><i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M3 3l18 18"/></svg></i>בשאר הזמן רק ההנהלה כותבת. קבוצה שקטה, בלי הצפה.</p>
+  <a class="btn rv" href="#join" id="join">להצטרפות לקבוצה ולעדכונים<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+  <svg class="edge b" viewBox="0 0 1440 58" preserveAspectRatio="none" aria-hidden="true"><path d="M0 58V30C140 8 280 4 420 22s250 32 410 22 270-36 400-34 170 14 210 20V58z" fill="#6B4529"/></svg>
+</section>
+<div class="after"></div>
+
+<script>
+/* כניסה מדורגת: כל חלק בסקשן עולה בנפרד, 70ms אחרי הקודם. בלי סקריפט הכל גלוי (המחלקה rv מתווספת רק כאן) */
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.rv'));
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){var sib=[].slice.call(x.target.parentNode.querySelectorAll(':scope > .rv'));x.target.style.transitionDelay=(Math.max(0,sib.indexOf(x.target))*70)+'ms';x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.15});
+  els.forEach(function(e){io.observe(e)});
+  var t=document.getElementById('track'),d=[].slice.call(document.querySelectorAll('#dots span'));
+  t.addEventListener('scroll',function(){var c=t.children,best=0,bd=1e9,r=t.getBoundingClientRect();for(var i=0;i<c.length;i++){var b=c[i].getBoundingClientRect(),dd=Math.abs(b.right-r.right);if(dd<bd){bd=dd;best=i}}d.forEach(function(s,i){s.classList.toggle('on',i===best)})},{passive:true});
+})();
+</script>
+</body>
+</html>

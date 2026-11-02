@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>כיוון 2 · האות H · דף הקהילה</title>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="theme-color" content="#7F0224"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap">
+<style>
+/* כיוון 2 · "האות H" (02/11). השם של המתחם הופך לאנדרטה: H ענקית שהיא חלון לצילום הרחפן של השטח עצמו.
+   הסקשן השני: השאלות שמשקיעים שואלים לפני שמצטרפים, כשיחת וואטסאפ (ההשראה של גל, אקורדיון צ'אט).
+   התשובות לקוחות רק מהקופי המאושר וממדיניות הפרטיות. */
+:root{
+  --wine:#7F0224; --wine-2:#5E011A; --red:#C2151C; --soil:#6B4529; --sand:#EFE6DA; --bubble:#DCF3C4;
+  --ink:#0B0B0B; --paper:#FFFFFF; --muted:#5A524C;
+  --m:max(18px, env(safe-area-inset-left, 0px));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--sand);color:var(--ink);line-height:1.5;overflow-x:hidden}
+img{display:block;max-width:100%}
+.pv{position:sticky;top:0;z-index:60;background:var(--ink);color:#fff;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px var(--m)}
+.pv a{color:#fff;text-decoration:underline;text-underline-offset:3px;font-weight:500}
+
+/* ── הפתיחה: H שהיא חלון ── */
+.hero{position:relative;background:var(--wine);color:#fff;padding:16px var(--m) 34px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top .lg{background:#fff;border-radius:14px;padding:5px}
+.top .lg img{width:44px;height:44px}
+.top span{font-size:14px;font-weight:700;opacity:.9}
+.hgrid{display:grid;gap:10px}
+.mono{position:relative;width:min(88vw, 560px);aspect-ratio:100/112;margin:22px auto 0}
+.win{position:absolute;inset:0;-webkit-mask:var(--H) center/100% 100% no-repeat;mask:var(--H) center/100% 100% no-repeat;background:#3a0010;overflow:hidden}
+.win img{width:100%;height:100%;object-fit:cover;transform:scale(1.25);animation:drift 22s ease-in-out infinite alternate}
+.mono{--H:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 112'%3E%3Cpath d='M0 5a5 5 0 0 1 5-5h22a5 5 0 0 1 5 5v41h36V5a5 5 0 0 1 5-5h22a5 5 0 0 1 5 5v102a5 5 0 0 1-5 5H73a5 5 0 0 1-5-5V67H32v40a5 5 0 0 1-5 5H5a5 5 0 0 1-5-5z'/%3E%3C/svg%3E")}
+.cap{position:absolute;bottom:-26px;right:0;font-size:13px;opacity:.8}
+.chip{position:absolute;z-index:3;display:flex;align-items:center;gap:9px;background:#fff;color:var(--ink);border-radius:15px;padding:8px 12px;box-shadow:0 14px 30px rgba(20,0,6,.35);animation:bob 5.5s ease-in-out infinite}
+.chip i{flex:0 0 34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--wine)}
+.chip i svg{width:18px;height:18px}
+.chip b{display:block;font-size:16px;font-weight:900;line-height:1.1}
+.chip small{display:block;font-size:13px;color:var(--muted);line-height:1.25}
+.k1{top:12%;left:-2%}
+.k2{bottom:12%;right:-2%;animation-delay:-2.6s}.k2 i{background:var(--soil)}
+.txt{margin-top:46px}
+.lead-in{font-size:17px;font-weight:500;opacity:.88;max-width:32ch}
+h1{font-size:min(8.6vw, 68px);white-space:nowrap;line-height:1.02;font-weight:900;letter-spacing:-.025em;margin-top:8px;text-wrap:balance}
+.txt p.l{font-size:17px;opacity:.92;margin-top:14px;max-width:44ch}
+.btn{display:flex;justify-content:center;align-items:center;gap:12px;width:100%;margin-top:20px;min-height:58px;border:0;border-radius:14px;background:#fff;color:var(--wine);font:800 18px/1.2 'Heebo',sans-serif;text-decoration:none;cursor:pointer;transition:transform .15s ease, background .2s ease}
+.btn:hover{background:#F6E9EC}.btn:active{transform:scale(.98)}
+.btn svg{width:20px;height:20px}
+.micro{font-size:13.5px;opacity:.8;margin-top:10px;text-align:center}
+/* קצה מסולסל: עיגולים שנשארים עגולים בכל רוחב */
+.scallop{height:30px;background:radial-gradient(circle at 50% 0, var(--wine) 29px, transparent 30px) 0 0/60px 30px repeat-x}
+
+/* ── שיחת וואטסאפ: השאלות לפני שמצטרפים ── */
+.chat{position:relative;padding:34px var(--m) 70px;overflow:hidden}
+.chat::before{content:"H";position:absolute;z-index:0;left:-6vw;top:40px;font-size:min(130vw, 980px);font-weight:900;line-height:.8;color:rgba(127,2,36,.07);pointer-events:none}
+.chat > *{position:relative;z-index:1}
+.chat h2{font-size:clamp(30px, 8.4vw, 54px);line-height:1.05;font-weight:900;letter-spacing:-.02em;text-wrap:balance;max-width:16ch}
+.chat .sub{font-size:16px;color:var(--muted);margin-top:6px}
+.phone{margin-top:22px;background:#E9DED0;border-radius:26px;overflow:hidden;box-shadow:0 24px 60px rgba(60,30,10,.16)}
+.ch{display:flex;align-items:center;gap:11px;background:var(--wine);color:#fff;padding:12px 14px}
+.ch img{width:42px;height:42px;border-radius:50%;object-fit:cover;object-position:50% 25%;background:#fff}
+.ch b{display:block;font-size:16px;font-weight:800;line-height:1.2}
+.ch small{display:block;font-size:13px;opacity:.82}
+.thread{padding:16px 12px 10px;display:flex;flex-direction:column;gap:12px}
+details{display:flex;flex-direction:column}
+summary{list-style:none;cursor:pointer;align-self:flex-end;max-width:84%;background:var(--bubble);border-radius:18px 18px 18px 4px;padding:10px 14px 10px 44px;font-size:16px;font-weight:700;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.08);transition:background .2s, transform .15s}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:#CDEDB0}
+summary:active{transform:scale(.98)}
+summary::after{content:"";position:absolute;left:12px;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237F0224' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M12 6v12M6 12h12'/%3E%3C/svg%3E") center/14px no-repeat;transition:transform .3s ease}
+details[open] summary::after{transform:rotate(45deg)}
+.ans{align-self:flex-start;display:flex;gap:8px;align-items:flex-end;margin-top:8px;max-width:88%}
+.ans img{width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:50% 25%;flex:0 0 30px}
+.bub{background:#fff;border-radius:18px 18px 4px 18px;padding:9px 13px 10px;font-size:16px;line-height:1.5;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.bub .who{display:block;font-size:13px;font-weight:800;color:var(--wine)}
+.typing{display:inline-flex;gap:4px;padding:6px 2px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#9b8f86;animation:dot 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+.bub .txt2{display:none}
+.bub.done .typing{display:none}.bub.done .txt2{display:inline}
+.compose{display:flex;gap:8px;align-items:center;padding:10px 10px 12px;background:#E9DED0}
+.compose span{flex:1;background:#fff;border-radius:22px;padding:11px 16px;font-size:15px;color:var(--muted)}
+.compose a{flex:0 0 auto;display:flex;align-items:center;gap:8px;min-height:46px;padding:0 16px;border-radius:23px;background:var(--wine);color:#fff;font-weight:800;font-size:15px;text-decoration:none}
+.compose a:active{transform:scale(.97)}
+
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes drift{from{transform:scale(1.25) translate(2%,0)}to{transform:scale(1.35) translate(-3%,3%)}}
+@keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+
+@media (min-width:900px){
+  .hgrid{grid-template-columns:1fr 1fr;align-items:center;gap:56px;max-width:1240px;margin:0 auto}
+  .mono{width:100%;max-width:520px;margin:20px auto 30px}
+  .txt{margin-top:0}
+  .btn{width:auto;display:inline-flex;padding:0 34px}
+  .micro{text-align:right}
+  .chat{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;max-width:1240px;margin:0 auto;align-items:start;padding-top:80px}
+  .phone{margin-top:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="pv" role="note"><span>כיוון 2 מתוך 3 · האות H · טיוטה לבחירה</span><a href="/rpage/k/">לכל הכיוונים</a></div>
+
+<header class="hero">
+  <div class="top"><span class="lg"><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" width="44" height="44"></span><span>מתחם H · קדימה צורן</span></div>
+  <div class="hgrid">
+    <div class="mono">
+      <div class="win"><img src="/b/media/hero-land.webp" alt="השטח של מתחם H, צילום רחפן" width="1600" height="854"></div>
+      <div class="chip k1"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.2c2.4.2 4 1.8 4.6 4.8"/></svg></i><span><b>עשרות</b><small>משקיעים כבר בקבוצה</small></span></div>
+      <div class="chip k2"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg></i><span><b>אחת לשבועיים</b><small>שאלות ותשובות עם תום</small></span></div>
+      <span class="cap">השטח של מתחם H היום, מלמעלה</span>
+    </div>
+    <div class="txt">
+      <p class="lead-in rv">אם חשבת להפיק יותר מההשקעה שלך בקרקעות, זו הקבוצה עבורך.</p>
+      <h1 class="rv">קהילת המשקיעים של<br>תום הרוש בוואטסאפ</h1>
+      <p class="l rv">כל הטיפים שאסור לפספס לפני שמשקיעים, כל מה שחייב לבדוק אחרי שכבר משלמים, ומה הכי חשוב לדעת אם רק התחלת להתעניין בהשקעה בקרקעות.</p>
+      <a class="btn rv" href="#chat">להצטרפות לקבוצה ולעדכונים<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+      <p class="micro rv">ההצטרפות ללא עלות. אפשר לצאת בכל רגע.</p>
+    </div>
+  </div>
+</header>
+<div class="scallop" aria-hidden="true"></div>
+
+<section class="chat" id="chat" aria-labelledby="chH">
+  <div>
+    <h2 id="chH" class="rv">מה שואלים לפני שמצטרפים</h2>
+    <p class="sub rv">לוחצים על שאלה, ותום עונה.</p>
+  </div>
+  <div class="phone rv">
+    <div class="ch"><img src="/rpage/img/tom-face.webp" alt="" width="600" height="600"><span><b>קהילת המשקיעים · מתחם H</b><small>עשרות משקיעים כבר בקבוצה</small></span></div>
+    <div class="thread">
+      <details open><summary>מה קורה בקבוצה בפועל?</summary><div class="ans"><img src="/rpage/img/tom-face.webp" alt="" width="600" height="600"><div class="bub done"><span class="who">תום הרוש</span><span class="typing" aria-hidden="true"><i></i><i></i><i></i></span><span class="txt2">עדכונים על מתחם H ועל התכנון: הערכות השמאים, דוחות וסטטוס תכנוני בכל שלב. ולפני זה, איך מזהים קרקע שיכולה להיות שווה הרבה כסף, ואיך מתנהלים מול משווקים של "קרקעות מבטיחות".</span></div></div></details>
+      <details><summary>כמה הודעות יגיעו אליי?</summary><div class="ans"><img src="/rpage/img/tom-face.webp" alt="" width="600" height="600"><div class="bub"><span class="who">תום הרוש</span><span class="typing" aria-hidden="true"><i></i><i></i><i></i></span><span class="txt2">רוב הזמן רק ההנהלה כותבת. קבוצה שקטה, בלי הצפה של הודעות.</span></div></div></details>
+      <details><summary>אפשר לשאול אותך שאלות?</summary><div class="ans"><img src="/rpage/img/tom-face.webp" alt="" width="600" height="600"><div class="bub"><span class="who">תום הרוש</span><span class="typing" aria-hidden="true"><i></i><i></i><i></i></span><span class="txt2">אחת לשבועיים הקבוצה נפתחת לשאלות, ואני עונה בגובה העיניים, באופן אישי או מרוכז.</span></div></div></details>
+      <details><summary>זה עולה משהו?</summary><div class="ans"><img src="/rpage/img/tom-face.webp" alt="" width="600" height="600"><div class="bub"><span class="who">תום הרוש</span><span class="typing" aria-hidden="true"><i></i><i></i><i></i></span><span class="txt2">ההצטרפות ללא עלות, ואפשר לצאת בכל רגע.</span></div></div></details>
+      <details><summary>המספר שלי יהיה גלוי?</summary><div class="ans"><img src="/rpage/img/tom-face.webp" alt="" width="600" height="600"><div class="bub"><span class="who">תום הרוש</span><span class="typing" aria-hidden="true"><i></i><i></i><i></i></span><span class="txt2">זו קבוצת וואטסאפ רגילה, אז חברי הקבוצה רואים את מספרי הטלפון של שאר החברים.</span></div></div></details>
+    </div>
+    <div class="compose"><span>רוצים לעקוב מקרוב אחרי מתחם H?</span><a href="#chat">להצטרפות<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els=[].slice.call(document.querySelectorAll('.rv'));
+  if(!('IntersectionObserver' in window)||rm){els.forEach(function(e){e.classList.add('in')});}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){var sib=[].slice.call(x.target.parentNode.querySelectorAll(':scope > .rv'));x.target.style.transitionDelay=(Math.max(0,sib.indexOf(x.target))*70)+'ms';x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.15});els.forEach(function(e){io.observe(e)});}
+  /* פתיחת שאלה: תום "מקליד" חצי שנייה, ואז התשובה. בלי סקריפט או בהפחתת תנועה התשובה פשוט מופיעה */
+  [].slice.call(document.querySelectorAll('details')).forEach(function(d){
+    d.addEventListener('toggle',function(){var b=d.querySelector('.bub');if(!d.open){if(!rm)b.classList.remove('done');return;}
+      if(rm){b.classList.add('done');return;} setTimeout(function(){b.classList.add('done')},650);});
+  });
+})();
+</script>
+</body>
+</html>

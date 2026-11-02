@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>כיוון 3 · גבול המגרש · דף הקהילה</title>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="theme-color" content="#6B4529"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap">
+<style>
+/* כיוון 3 · "גבול המגרש" (02/11). פלטת האדמה של גל: חום אדמה, לבן, שחור, בורדו.
+   המוטיב החוזר: קו הגבול של המגרש. הוא חותך את צילום הרחפן בפתיחה, והוא הסימן ליד כל כותרת.
+   תום יוצא מהתמונה וזולג לסקשן הבא. הסקשן השני: מסך מפוצל (ההדרכה ששלח גל): התמונה נשארת, והטקסט עובר לידה. */
+:root{
+  --soil:#6B4529; --soil-d:#3E3830; --sand:#F1E7D4; --sand-2:#E6D7BB; --wine:#7F0224; --red:#C2151C;
+  --ink:#000000; --paper:#FFFFFF; --muted:#4F4740;
+  --m:max(18px, env(safe-area-inset-left, 0px));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--sand);color:var(--ink);line-height:1.5;overflow-x:hidden}
+img{display:block;max-width:100%}
+.pv{position:sticky;top:0;z-index:60;background:var(--ink);color:#fff;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px var(--m)}
+.pv a{color:#fff;text-decoration:underline;text-underline-offset:3px;font-weight:500}
+.mk{display:inline-block;width:28px;height:22px;vertical-align:-2px;margin-left:8px}
+
+/* ── הפתיחה: צילום הרחפן חתוך בקו הגבול, ותום חוצה אותו ── */
+.hero{position:relative;overflow-x:clip}
+.shotwrap{position:relative}
+.shot{position:relative;height:min(66svh, 640px);min-height:420px;clip-path:polygon(0 0,100% 0,100% 78%,64% 100%,0 86%);overflow:hidden;background:var(--soil)}
+.shot img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05) sepia(.18);transform:scale(1.08);animation:drift 24s ease-in-out infinite alternate}
+.shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42),rgba(0,0,0,0) 34%)}
+.top{position:absolute;z-index:3;top:14px;right:var(--m);left:var(--m);display:flex;justify-content:space-between;align-items:center;color:#fff}
+.top .lg{background:#fff;border-radius:14px;padding:5px}.top .lg img{width:44px;height:44px}
+.top span{font-size:14px;font-weight:700}
+.line{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.line path{stroke:#fff;stroke-width:3;fill:none;stroke-dasharray:10 8;vector-effect:non-scaling-stroke}
+.tag{position:absolute;z-index:3;right:var(--m);bottom:24%;background:var(--paper);color:var(--ink);border-radius:12px;padding:7px 12px;font-size:13.5px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.22)}
+.tag b{color:var(--wine)}
+.stamp{position:absolute;z-index:3;top:16%;left:7%;width:132px;height:132px;transform:rotate(-12deg);animation:stampin 1s .4s cubic-bezier(.2,1.4,.4,1) both}
+.stamp svg{width:100%;height:100%}
+@keyframes stampin{from{opacity:0;transform:rotate(-30deg) scale(1.6)}to{opacity:1;transform:rotate(-12deg) scale(1)}}
+.tom{position:absolute;z-index:4;left:2%;bottom:0;height:47%;width:auto;filter:drop-shadow(0 16px 28px rgba(30,12,4,.35))}
+.body{position:relative;z-index:5;padding:14px var(--m) 30px;width:100%}
+.lead-in{font-size:17px;font-weight:500;color:var(--muted);max-width:24ch}
+h1{font-size:min(8.6vw, 70px);white-space:nowrap;line-height:1.02;font-weight:900;letter-spacing:-.025em;margin-top:10px;text-wrap:balance}
+h1 .w{display:inline-block;background:var(--soil);color:#fff;padding:0 .18em .06em;border-radius:.14em;margin-top:.08em}
+.body p.l{font-size:17px;margin-top:14px;max-width:44ch}
+.btn{display:flex;justify-content:center;align-items:center;gap:12px;width:100%;margin-top:20px;min-height:58px;border:0;border-radius:14px;background:var(--wine);color:#fff;font:800 18px/1.2 'Heebo',sans-serif;text-decoration:none;cursor:pointer;transition:transform .15s ease, background .2s ease}
+.btn:hover{background:var(--red)}.btn:active{transform:scale(.98)}
+.btn svg{width:20px;height:20px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:14.5px;font-weight:700}
+.facts span{display:flex;align-items:center;gap:6px}
+.facts i{width:8px;height:8px;border-radius:2px;background:var(--soil);transform:rotate(45deg)}
+
+/* ── מסך מפוצל: מה מחכה לך ── */
+.split{background:var(--soil-d);color:#fff;margin-top:20px;padding:40px var(--m) 60px;clip-path:polygon(0 26px,58% 0,100% 18px,100% 100%,0 100%)}
+.split h2{font-size:clamp(30px, 8.4vw, 54px);line-height:1.05;font-weight:900;letter-spacing:-.02em;text-wrap:balance;padding-top:10px}
+.split h2 .mk{color:#E6D7BB}
+.sgrid{display:grid;gap:0;margin-top:22px}
+.stage{position:sticky;top:44px;height:44svh;min-height:260px;border-radius:22px;overflow:hidden;z-index:1;background:var(--soil-d);box-shadow:0 20px 40px rgba(30,14,4,.35)}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05) sepia(.18)}
+.stage img+img{opacity:0}
+.stage .lbl{position:absolute;bottom:12px;right:12px;background:#fff;color:var(--ink);font-size:13px;font-weight:800;border-radius:9px;padding:4px 10px}
+.steps{position:relative;z-index:2}
+.step{min-height:62svh;display:flex;flex-direction:column;justify-content:flex-start;padding-top:22px}
+.step .in{background:var(--paper);color:var(--ink);border-radius:20px;padding:18px 18px 20px;box-shadow:0 16px 40px rgba(20,8,2,.28)}
+.step h3{font-size:24px;font-weight:900;line-height:1.15;display:flex;align-items:center}
+.step h3 .mk{color:var(--soil);flex:0 0 28px}
+.step p{font-size:16px;margin-top:8px;color:#2b2420}
+.step:nth-child(2) .in{margin-right:6%}.step:nth-child(3) .in{margin-left:6%}
+.quiet{margin-top:6px;font-size:16px;font-weight:700}
+.split .btn{background:#fff;color:var(--wine);margin-top:18px}
+.split .btn:hover{background:var(--sand)}
+
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@keyframes drift{from{transform:scale(1.08) translate(0,0)}to{transform:scale(1.18) translate(-2%,2%)}}
+
+@media (min-width:900px){
+  .shot{height:78vh;clip-path:polygon(0 0,100% 0,100% 80%,66% 100%,0 88%)}
+  .tom{left:6%;height:60%;bottom:0}
+  .body{max-width:1240px;margin:0 auto;padding-top:22px}
+  .body > *{max-width:640px}
+  .btn{width:auto;display:inline-flex;padding:0 34px}
+  .split{padding:80px max(var(--m), calc((100vw - 1240px)/2)) 90px}
+  .sgrid{grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .stage{top:90px;height:70vh;order:2}
+  .steps{order:1}
+  .step{min-height:70vh}
+  .step:nth-child(2) .in,.step:nth-child(3) .in{margin:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="pv" role="note"><span>כיוון 3 מתוך 3 · גבול המגרש · טיוטה לבחירה</span><a href="/rpage/k/">לכל הכיוונים</a></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="plot" viewBox="0 0 28 22"><path d="M2 4 L19 2 L26 9 L22 20 L5 18 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></symbol></svg>
+
+<header class="hero">
+  <div class="shotwrap">
+  <div class="shot">
+    <img src="/b/media/hero-land.webp" alt="השטח של מתחם H, צילום רחפן" width="1600" height="854">
+    <svg class="line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M100 78 L64 100 L0 86"/></svg>
+    <div class="top"><span class="lg"><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" width="44" height="44"></span><span>מתחם H · קדימה צורן</span></div>
+    <span class="tag">השטח של <b>מתחם H</b>, היום</span>
+    <div class="stamp" aria-label="קרקע פרטית בטאבו"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0"/></defs><circle cx="100" cy="100" r="94" fill="rgba(255,255,255,.12)" stroke="#fff" stroke-width="5"/><circle cx="100" cy="100" r="56" fill="none" stroke="#fff" stroke-width="3"/><text font-family="Heebo" font-weight="900" font-size="21" fill="#fff" letter-spacing="1"><textPath href="#ring" startOffset="50%" text-anchor="middle">קרקע פרטית בטאבו · קדימה צורן · </textPath></text><text x="100" y="124" text-anchor="middle" font-family="Heebo" font-weight="900" font-size="68" fill="#fff">H</text></svg></div>
+  </div>
+  <img class="tom" src="/rpage/k/img/tom-arms.webp" alt="תום הרוש" width="760" height="894">
+  </div>
+  <div class="body">
+    <p class="lead-in rv">אם חשבת להפיק יותר מההשקעה שלך בקרקעות, זו הקבוצה עבורך.</p>
+    <h1 class="rv">קהילת המשקיעים של<br>תום הרוש <span class="w">בוואטסאפ</span></h1>
+    <p class="l rv">כל הטיפים שאסור לפספס לפני שמשקיעים, כל מה שחייב לבדוק אחרי שכבר משלמים, ומה הכי חשוב לדעת אם רק התחלת להתעניין בהשקעה בקרקעות.</p>
+    <a class="btn rv" href="#what">להצטרפות לקבוצה ולעדכונים<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a>
+    <div class="facts rv"><span><i></i>עשרות משקיעים כבר בקבוצה</span><span><i></i>ללא עלות</span><span><i></i>אפשר לצאת בכל רגע</span></div>
+  </div>
+</header>
+
+<section class="split" id="what" aria-labelledby="wH">
+  <h2 id="wH" class="rv"><svg class="mk" aria-hidden="true"><use href="#plot"/></svg>מה מחכה לך בקבוצת המשקיעים</h2>
+  <div class="sgrid">
+    <div class="stage" aria-hidden="true">
+      <img class="i1" src="/b/media/place-rows.webp" alt="" width="1080" height="480">
+      <img class="i2" src="/b/media/future-h-1200.webp" alt="" width="1200" height="640">
+      <img class="i3" src="/rpage/k/img/tom-portrait.webp" alt="" width="1200" height="900" style="object-position:50% 20%">
+      <span class="lbl" id="lbl">לפני שקונים</span>
+    </div>
+    <div class="steps">
+      <div class="step s1"><div class="in"><h3><svg class="mk" aria-hidden="true"><use href="#plot"/></svg>קרקע או חרטא?</h3><p>איך מזהים קרקע שיכולה להיות שווה לנו הרבה כסף, איך למזער סיכונים ולהתנהל מול המשווקים שמציעים לנו "קרקעות מבטיחות".</p></div></div>
+      <div class="step s2"><div class="in"><h3><svg class="mk" aria-hidden="true"><use href="#plot"/></svg>עדכונים על מתחם H ועל התכנון</h3><p>נדבר על מתחם H בקדימה צורן, נשתף את הערכות השמאים, דוחות וסטטוס תכנוני בכל שלב, כדי שתוכלו לראות בעצמכם איך נראית קרקע לבנייה בכל שלב תכנוני ומה זה אומר לגבי הרווח שלכם.</p></div></div>
+      <div class="step s3"><div class="in"><h3><svg class="mk" aria-hidden="true"><use href="#plot"/></svg>שאלות ותשובות עם תום</h3><p>אחת לשבועיים תהיה לכם ההזדמנות לשאול מה שתרצו, ותום יענה בגובה העיניים על כל השאלות, באופן אישי או מרוכז.</p><p class="quiet">בשאר הזמן רק ההנהלה כותבת. קבוצה שקטה, בלי הצפה של הודעות.</p><a class="btn" href="#what">להצטרפות לקבוצה ולעדכונים<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a></div></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els=[].slice.call(document.querySelectorAll('.rv'));
+  if(!('IntersectionObserver' in window)||rm){els.forEach(function(e){e.classList.add('in')});}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){var sib=[].slice.call(x.target.parentNode.querySelectorAll(':scope > .rv'));x.target.style.transitionDelay=(Math.max(0,sib.indexOf(x.target))*70)+'ms';x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.15});els.forEach(function(e){io.observe(e)});}
+  /* המסך המפוצל (כמו ההדרכה של שיר עוזיאל): כשכרטיס טקסט מגיע לשליש העליון, התמונה שלו נכנסת והקודמת יוצאת. */
+  var L=['לפני שקונים','מתחם H','אחת לשבועיים'], lbl=document.getElementById('lbl');
+  var imgs=[document.querySelector('.i1'),document.querySelector('.i2'),document.querySelector('.i3')];
+  function show(i){imgs.forEach(function(im,k){im.style.opacity=k===i?1:0});lbl.textContent=L[i];}
+  if(window.gsap&&window.ScrollTrigger&&!rm){
+    gsap.registerPlugin(ScrollTrigger);
+    [2,3].forEach(function(n){
+      gsap.fromTo('.i'+n,{opacity:0},{opacity:1,ease:'none',scrollTrigger:{trigger:'.s'+n,start:'top 75%',end:'top 50%',scrub:1,onEnter:function(){lbl.textContent=L[n-1]},onLeaveBack:function(){lbl.textContent=L[n-2]}}});
+    });
+  } else if('IntersectionObserver' in window){
+    var so=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting)show(+x.target.className.match(/s(\d)/)[1]-1)})},{rootMargin:'-40% 0px -50% 0px'});
+    [].slice.call(document.querySelectorAll('.step')).forEach(function(s){so.observe(s)});
+  }
+})();
+</script>
+</body>
+</html>
