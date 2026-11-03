@@ -152,8 +152,9 @@ h1{font-size:var(--h1);line-height:1.18;font-weight:900;letter-spacing:-.02em;ma
 .inum span.on{width:22px;border-radius:5px;background:#fff}
 .fsteps{position:relative;z-index:1}
 .fstep{min-height:38svh;padding-top:14px}
-.fstep .in{background:#fff;color:var(--ink);border-radius:20px;padding:17px 18px 19px;border-right:6px solid var(--wine);opacity:.35;transition:opacity .4s, transform .4s;transform:scale(.97)}
-.fstep.on .in{opacity:1;transform:none}
+/* כל הכרטיסים קריאים תמיד (גל 03/11: האמצעי הוחשך מהר מדי). הכרטיס הפעיל מקבל רק פס בורדו מלא והילה עדינה */
+.fstep .in{background:#fff;color:var(--ink);border-radius:20px;padding:17px 18px 19px;border-right:6px solid rgba(127,2,36,.3);transition:border-color .4s ease, box-shadow .4s ease}
+.fstep.on .in{border-right-color:var(--wine);box-shadow:0 0 0 2px rgba(194,21,28,.55), 0 18px 40px rgba(194,21,28,.18)}
 .fstep h3{font-size:21px;font-weight:900;line-height:1.2}
 .fstep p{font-size:16px;margin-top:6px;color:#2b2420}
 
@@ -444,7 +445,7 @@ footer a{color:#fff}
       + '<input type="tel" name="phone" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="טלפון נייד" aria-label="טלפון נייד"></div>'
       + '<label class="ok"><input type="checkbox" name="c"><span>קראתי את <a href="/privacy-kadima/" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ואפשר ליצור איתי קשר בטלפון ובוואטסאפ.</span></label>'
       + '<p class="err" role="alert"></p>'
-      + '<button class="btn' + (j.dataset.light ? ' light' : '') + '" type="submit">' + WA + 'להצטרפות לקבוצה ולעדכונים' + ARROW + '</button>'
+      + '<button class="btn' + (j.dataset.light ? ' light' : '') + '" type="submit">' + WA + '<span class="lbl">להצטרפות לקבוצה ולעדכונים</span>' + ARROW + '</button>'
       + '<p class="micro">מיד אחרי השליחה עוברים לקבוצה בוואטסאפ. ללא עלות, ואפשר לצאת בכל רגע.</p></form>';
   });
   var toast = document.getElementById('toast'), tt;
