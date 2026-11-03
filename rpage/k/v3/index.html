@@ -17,7 +17,7 @@
   --ink:#0B0B0B; --paper:#FFFFFF; --muted:#4F4740;
   --grad:linear-gradient(100deg, #7F0224 0%, #C2151C 60%, #9E0A2A 100%);
   --m:max(18px, env(safe-area-inset-left, 0px));
-  --h1:min(6.8vw, 54px); --h2:min(7vw, 40px);
+  --h1:min(11vw, 54px); --h2:min(7vw, 40px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -73,10 +73,14 @@ h1,h2{text-wrap:balance}
 .top img{width:50px;height:50px}
 .top span{font-size:14px;font-weight:700;color:var(--wine)}
 .hgrid{display:grid}
-.lead-in{font-size:16.5px;font-weight:500;color:var(--muted);margin-top:16px;max-width:32ch}
+/* המשפט העליון במסגרת קטנה, בשורה אחת בכל רוחב (גל 03/11) */
+.lead-in{display:inline-block;max-width:100%;white-space:nowrap;margin-top:16px;font-size:min(3.3vw, 16px);font-weight:700;line-height:1.3;color:var(--wine);background:var(--earth-l);border:1.5px solid rgba(127,2,36,.28);border-radius:10px;padding:6px 10px}
 /* לוגו וואטסאפ בקו מתאר, בגרדיאנט הבורדו של תום (גל 03/11: "לא ירוק") */
 .wa{flex:0 0 auto}
-.h1wa{width:.8em;height:.8em;stroke:url(#waG);vertical-align:-.06em;margin-inline-start:.14em}
+/* לוגו וואטסאפ מרחף במסך הפתיחה (גל 03/11: "לא חייב ליהיות חלק מהמשפט") */
+.wabadge{position:absolute;z-index:3;top:2%;left:6%;width:60px;height:60px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 14px 30px rgba(50,8,20,.2);animation:bob 5.5s ease-in-out infinite;animation-delay:-2s}
+.wabadge svg{width:32px;height:32px;stroke:url(#waG)}
+br.dk{display:none}
 .btn .wa{width:22px;height:22px;stroke:currentColor}
 h1{font-size:var(--h1);line-height:1.18;font-weight:900;letter-spacing:-.02em;margin-top:8px;white-space:nowrap}
 .stage{position:relative;height:min(108vw, 600px);margin:4px calc(-1 * var(--m)) 0}
@@ -115,6 +119,13 @@ h1{font-size:var(--h1);line-height:1.18;font-weight:900;letter-spacing:-.02em;ma
 .wait{background:var(--paper);padding:40px var(--m) 44px}
 .wait .h2 .dot{display:inline-block;width:.4em;height:.4em;border-radius:50%;background:var(--red);margin-left:.25em;vertical-align:.08em}
 .wcards{display:grid;gap:14px;margin-top:20px}
+/* טיימליין עדין בבורדו שמתמלא בגלילה (גל 03/11). בטלפון אנכי בצד, במחשב אופקי מעל הכרטיסים */
+.wcards{position:relative;padding-right:30px}
+.tl{position:absolute;right:11px;top:0;width:2px;height:0;border-radius:2px;background:rgba(127,2,36,.14);pointer-events:none}
+.tl i{position:absolute;inset:0;border-radius:2px;background:linear-gradient(180deg, #C2151C, #7F0224);transform-origin:50% 0;transform:scaleY(var(--p, 0))}
+.wc{position:relative}
+.wc::before{content:"";position:absolute;right:-25px;top:59px;width:14px;height:14px;box-sizing:border-box;border-radius:50%;background:#fff;border:2px solid rgba(127,2,36,.3);transition:background .35s ease, border-color .35s ease, box-shadow .35s ease;z-index:1}
+.wc.lit::before{background:var(--wine);border-color:var(--wine);box-shadow:0 0 0 5px rgba(127,2,36,.12)}
 .wc{background:var(--earth-l);border-radius:22px;padding:16px 16px 18px;transition:transform .25s ease, box-shadow .25s ease}
 .wc:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(60,20,10,.10)}
 .wc .hd{display:flex;align-items:center;gap:18px}
@@ -249,6 +260,8 @@ footer a{color:#fff}
   .hgrid{grid-template-columns:1fr 1.05fr;grid-template-areas:"txt stage" "act stage";column-gap:48px;max-width:1180px;margin:0 auto}
   .txt{grid-area:txt;align-self:end}.act{grid-area:act;align-self:start;margin:0;padding:18px 0 0;box-shadow:none;border-radius:0;background:none}
   .stage{grid-area:stage;height:620px;margin:0}
+  br.mb{display:none}br.dk{display:inline}
+  .wabadge{width:76px;height:76px;top:5%;left:9%}.wabadge svg{width:40px;height:40px}
   .chip{max-width:none;gap:9px;padding:8px 12px 8px 14px;border-radius:15px}
   .chip i{flex-basis:32px;height:32px;border-radius:10px}.chip i svg{width:17px;height:17px}
   .chip b{font-size:15.5px}.chip small{font-size:12.5px}
@@ -256,7 +269,10 @@ footer a{color:#fff}
   .wait,.chat{padding-top:90px;padding-bottom:90px}
   .fit{padding-top:90px;padding-bottom:150px}
   .wait > *{max-width:1180px;margin-left:auto;margin-right:auto}
-  .wcards{grid-template-columns:repeat(3,1fr);margin-top:30px}
+  .wcards{grid-template-columns:repeat(3,1fr);margin-top:30px;padding-right:0;padding-top:34px}
+  .tl{right:auto;width:0;height:2px}
+  .tl i{background:linear-gradient(270deg, #C2151C, #7F0224);transform-origin:100% 50%;transform:scaleX(var(--p, 0))}
+  .wc::before{top:-31px;right:63px}
   .wc{padding:20px 20px 24px}
   .fgrid{grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start;max-width:1180px;margin:0 auto}
   .fl{display:block;position:sticky;top:110px}
@@ -293,13 +309,14 @@ footer a{color:#fff}
   <div class="top"><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" width="50" height="50"></div>
   <div class="hgrid">
     <div class="txt">
-      <p class="lead-in rv">למשקיעים שמחפשים להפיק את המיטב מהשקעה בקרקע.</p>
-      <h1 class="rv">קהילת המשקיעים של<br><span class="hl">תום הרוש</span> בוואטסאפ<svg class="wa h1wa" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg></h1>
+      <p class="lead-in rv">למשקיעים שמחפשים להפיק את המיטב מהשקעה בקרקע</p>
+      <h1 class="rv">קהילת המשקיעים<br class="mb"> של<br class="dk"> <span class="hl">תום הרוש</span><br class="mb"> בוואטסאפ</h1>
     </div>
     <div class="stage">
       <div class="ring" aria-hidden="true"></div>
       <div class="disc"><img src="/b/media/hero-land.webp" alt="השטח של מתחם H מלמעלה, צילום רחפן" width="1600" height="854"></div>
       <img class="tom" src="/rpage/k/img/tom-stand.webp" alt="תום הרוש" width="725" height="1400">
+      <div class="wabadge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg></div>
       <div class="chip c1"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.2c2.4.2 4 1.8 4.6 4.8"/></svg></i><span><b>עשרות</b><small>משקיעים כבר בקבוצה</small></span></div>
       <div class="chip c2"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M9.5 10a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5"/><path d="M12 16.5h.01"/></svg></i><span><b>אחת לשבועיים</b><small>שאלות ותשובות עם תום</small></span></div>
       <div class="chip c3"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></i><span><b>+15</b><small>שנים בעולם הנדל״ן</small></span></div>
@@ -315,7 +332,8 @@ footer a{color:#fff}
 <!-- 2. מה מחכה לך -->
 <section class="wait" aria-labelledby="wH">
   <h2 id="wH" class="h2 rv"><span class="dot" aria-hidden="true"></span>מה מחכה לך בקבוצת המשקיעים</h2>
-  <div class="wcards">
+  <div class="wcards" id="wcards">
+    <div class="tl" aria-hidden="true"><i></i></div>
     <article class="wc rv"><div class="hd"><div class="ci"><img src="/rpage/k/img/w1.webp" alt="" width="480" height="480" loading="lazy"></div><h3>קרקע או חרטא?</h3></div><p>איך מזהים קרקע שיכולה להיות שווה לנו הרבה כסף, איך למזער סיכונים ולהתנהל מול המשווקים שמציעים לנו "קרקעות מבטיחות".</p></article>
     <article class="wc rv"><div class="hd"><div class="ci"><img src="/rpage/k/img/w2.webp" alt="" width="480" height="480" loading="lazy"></div><h3>עדכונים על מתחם H ועל התכנון</h3></div><p>נדבר על מתחם H בקדימה צורן, נשתף את הערכות השמאים, דוחות וסטטוס תכנוני בכל שלב, כדי שתוכלו לראות בעצמכם איך נראית קרקע לבנייה בכל שלב תכנוני ומה זה אומר לגבי הרווח שלכם.</p></article>
     <article class="wc rv"><div class="hd"><div class="ci"><img src="/rpage/k/img/w3.webp" alt="" width="480" height="480" loading="lazy"></div><h3>שאלות ותשובות עם תום</h3></div><p>אחת לשבועיים תהיה לכם ההזדמנות לשאול מה שתרצו ולתום תהיה הזכות לענות לכם בגובה העיניים על כל השאלות שלכם באופן אישי או מרוכז. הקבוצה נפתחת לשאלות במטרה להעניק לכם מידע בצורה נגישה, ולחלוק את הידע של המתקדמים והמתחילים יחד.</p></article>
@@ -333,7 +351,6 @@ footer a{color:#fff}
           <svg class="ico on" data-i="0" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="32" cy="16" rx="16" ry="6"/><path d="M16 16v10c0 3.3 7.2 6 16 6s16-2.7 16-6V16"/><path d="M16 26v10c0 3.3 7.2 6 16 6s16-2.7 16-6V26"/><path d="M16 36v10c0 3.3 7.2 6 16 6s16-2.7 16-6V36"/></svg>
           <svg class="ico" data-i="1" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 56V30"/><path d="M32 34c0-9-7-14-16-14 0 9 7 14 16 14z"/><path d="M32 28c0-9 6-16 17-16 0 10-7 16-17 16z"/><path d="M14 56h36"/></svg>
           <svg class="ico" data-i="2" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="8" width="34" height="46" rx="4"/><path d="M20 20h18M20 28h12"/><path d="M20 46l7-8 6 5 8-10"/><circle cx="47" cy="47" r="9"/><path d="M53.5 53.5L58 58"/></svg>
-          <div class="inum"><span class="on"></span><span></span><span></span></div>
         </div>
       </div>
     </div>
@@ -460,6 +477,35 @@ footer a{color:#fff}
   [].slice.call(document.querySelectorAll('details')).forEach(function(d){
     d.addEventListener('toggle', function(){ var b = d.querySelector('.bub'); if (!d.open) { if (!rm) b.classList.remove('done'); return; } if (rm) { b.classList.add('done'); return; } setTimeout(function(){ b.classList.add('done'); }, 650); });
   });
+
+  /* הטיימליין של "מה מחכה לך": המסילה מתמלאת בגלילה, ונקודה נדלקת כשהמילוי מגיע אליה */
+  (function(){
+    var wrap = document.getElementById('wcards'); if (!wrap) return;
+    var rail = wrap.querySelector('.tl'), cards = [].slice.call(wrap.querySelectorAll('.wc')), pts = [], desk = false, tick = false;
+    function layout(){
+      desk = matchMedia('(min-width:900px)').matches;
+      /* offsetTop/offsetLeft ולא getBoundingClientRect: הכרטיסים נכנסים עם הזזה (rv), והמסילה צריכה את המקום הסופי שלהם */
+      pts = cards.map(function(c){ return desk ? c.offsetLeft + c.offsetWidth - 70 : c.offsetTop + 66; });
+      if (desk) { var a = Math.min.apply(null, pts), b = Math.max.apply(null, pts); rail.style.top = '9px'; rail.style.left = a + 'px'; rail.style.width = (b - a) + 'px'; rail.style.height = '2px'; }
+      else { rail.style.left = ''; rail.style.width = ''; rail.style.top = pts[0] + 'px'; rail.style.height = (pts[pts.length - 1] - pts[0]) + 'px'; }
+      update();
+    }
+    function update(){
+      tick = false;
+      var W = wrap.getBoundingClientRect(), p;
+      if (rm) p = 1;
+      else if (desk) p = (innerHeight * 0.85 - W.top) / (innerHeight * 0.45);
+      else p = (innerHeight * 0.6 - (W.top + pts[0])) / Math.max(1, pts[pts.length - 1] - pts[0]);
+      p = Math.max(0, Math.min(1, p));
+      rail.style.setProperty('--p', p.toFixed(4));
+      cards.forEach(function(c, k){ c.classList.toggle('lit', k ? p >= k / (cards.length - 1) - 0.002 : p > 0); });
+    }
+    addEventListener('scroll', function(){ if (!tick) { tick = true; requestAnimationFrame(update); } }, { passive: true });
+    addEventListener('resize', layout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+    addEventListener('load', layout);
+    layout();
+  })();
 
   /* למי זה מתאים: כרטיס שמגיע לאמצע המסך מחליף את האייקון */
   function ico(i){ [].slice.call(document.querySelectorAll('.ico')).forEach(function(m){ m.classList.toggle('on', +m.dataset.i === i); });
