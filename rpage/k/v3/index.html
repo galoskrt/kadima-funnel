@@ -17,7 +17,7 @@
   --ink:#0B0B0B; --paper:#FFFFFF; --muted:#4F4740;
   --grad:linear-gradient(100deg, #7F0224 0%, #C2151C 60%, #9E0A2A 100%);
   --m:max(18px, env(safe-area-inset-left, 0px));
-  --h1:min(7.6vw, 54px); --h2:min(7vw, 40px);
+  --h1:min(6.8vw, 54px); --h2:min(7vw, 40px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -74,6 +74,10 @@ h1,h2{text-wrap:balance}
 .top span{font-size:14px;font-weight:700;color:var(--wine)}
 .hgrid{display:grid}
 .lead-in{font-size:16.5px;font-weight:500;color:var(--muted);margin-top:16px;max-width:32ch}
+/* לוגו וואטסאפ בקו מתאר, בגרדיאנט הבורדו של תום (גל 03/11: "לא ירוק") */
+.wa{flex:0 0 auto}
+.h1wa{width:.8em;height:.8em;stroke:url(#waG);vertical-align:-.06em;margin-inline-start:.14em}
+.btn .wa{width:22px;height:22px;stroke:currentColor}
 h1{font-size:var(--h1);line-height:1.18;font-weight:900;letter-spacing:-.02em;margin-top:8px;white-space:nowrap}
 .stage{position:relative;height:min(108vw, 600px);margin:4px calc(-1 * var(--m)) 0}
 .disc{position:absolute;left:50%;bottom:7%;width:min(80vw, 450px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;overflow:hidden;background:var(--wine)}
@@ -99,6 +103,13 @@ h1{font-size:var(--h1);line-height:1.18;font-weight:900;letter-spacing:-.02em;ma
 .frame::before{top:-2px;right:-2px;border-left:0;border-bottom:0;border-radius:0 20px 0 0}
 .frame::after{bottom:-2px;left:-2px;border-right:0;border-top:0;border-radius:0 0 0 20px}
 .frame p{font-size:18px;font-weight:800;line-height:1.5;max-width:46ch;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--wine)}
+
+/* המשפט בפריים כשלושה בולטים עם אייקונים (גל 03/11: "בוא נבדוק") */
+.tips{list-style:none;display:grid;gap:12px}
+.tips li{display:flex;align-items:center;gap:12px}
+.tips i{flex:0 0 38px;height:38px;border-radius:50%;background:var(--grad);display:grid;place-items:center;box-shadow:0 6px 14px rgba(127,2,36,.25)}
+.tips i svg{width:19px;height:19px}
+.tips span{font-size:16.5px;font-weight:800;line-height:1.35;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--wine)}
 
 /* ── 2. מה מחכה לך: ממשיך לבן, התמונות מהפיגמה בתוך הכרטיסים ── */
 .wait{background:var(--paper);padding:40px var(--m) 44px}
@@ -156,7 +167,7 @@ h1{font-size:var(--h1);line-height:1.18;font-weight:900;letter-spacing:-.02em;ma
 .gstage::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(160deg, rgba(127,2,36,.62), rgba(40,16,6,.38) 55%, rgba(127,2,36,.5))}
 .blob{position:absolute;z-index:-1;border-radius:50%;animation:float 14s ease-in-out infinite alternate}
 .b1{width:150px;height:150px;top:-30px;right:12%;background:#9E0A2A;opacity:.8}
-.b2{width:120px;height:120px;bottom:-26px;left:8%;background:#F1E7D4;animation-delay:-5s}
+.b2{width:120px;height:120px;bottom:-26px;left:8%;background:#6B4529;animation-delay:-5s}
 .b3{width:80px;height:80px;top:42%;left:44%;background:#6B4529;animation-delay:-9s}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .glass{position:relative;overflow:hidden;border-radius:20px;padding:16px 14px 16px;color:#fff;
@@ -167,8 +178,8 @@ h1{font-size:var(--h1);line-height:1.18;font-weight:900;letter-spacing:-.02em;ma
   transition:transform .3s ease}
 .glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(90% 70% at var(--mx, 82%) var(--my, 0%), rgba(255,255,255,.5), transparent 60%);opacity:.75}
 .glass:hover{transform:translateY(-3px)}
-.glass b{position:relative;display:block;font-size:27px;font-weight:900;line-height:1.05;letter-spacing:-.02em;text-shadow:0 2px 14px rgba(40,0,10,.35)}
-.glass span{position:relative;display:block;font-size:13.5px;font-weight:600;line-height:1.35;margin-top:6px;color:rgba(255,255,255,.95)}
+.glass b{position:relative;display:block;font-size:27px;font-weight:900;line-height:1.05;letter-spacing:-.02em;text-shadow:0 1px 2px rgba(40,0,10,.35), 0 2px 14px rgba(40,0,10,.45)}
+.glass span{position:relative;display:block;font-size:13.5px;font-weight:600;line-height:1.35;margin-top:6px;color:#fff;text-shadow:0 1px 6px rgba(40,0,10,.55)}
 
 /* ── 5. הצ'אט (אחרון) ── */
 .chat{position:relative;background:var(--sand);padding:54px var(--m) 60px;overflow:hidden}
@@ -274,6 +285,7 @@ footer a{color:#fff}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="waG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C2151C"/><stop offset="1" stop-color="#7F0224"/></linearGradient></defs></svg>
 <div class="pv" role="note"><span>סבב 3 · טיוטה לאישור</span><nav aria-label="סבבים קודמים"><a href="/rpage/k/v2/">סבב 2</a><a href="/rpage/k/">הכיוונים</a></nav></div>
 
 <!-- 1. הפתיחה -->
@@ -281,8 +293,8 @@ footer a{color:#fff}
   <div class="top"><img src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" width="50" height="50"><span>מתחם H · קדימה צורן</span></div>
   <div class="hgrid">
     <div class="txt">
-      <p class="lead-in rv">אם חשבת להפיק יותר מההשקעה שלך בקרקעות, זו הקבוצה עבורך.</p>
-      <h1 class="rv">קהילת המשקיעים של<br><span class="hl">תום הרוש</span> בוואטסאפ</h1>
+      <p class="lead-in rv">למשקיעים שמחפשים להפיק את המיטב מהשקעה בקרקע.</p>
+      <h1 class="rv">קהילת המשקיעים של<br><span class="hl">תום הרוש</span> בוואטסאפ<svg class="wa h1wa" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg></h1>
     </div>
     <div class="stage">
       <div class="ring" aria-hidden="true"></div>
@@ -295,7 +307,7 @@ footer a{color:#fff}
     </div>
     <div class="act">
       <div class="join" data-n="1"></div>
-      <div class="frame rv"><p>כל הטיפים שאסור לפספס לפני שמשקיעים, כל מה שחייב לבדוק אחרי שכבר משלמים, ומה הכי חשוב לדעת אם רק התחלת להתעניין בהשקעה בקרקעות.</p></div>
+      <div class="frame rv"><ul class="tips"><li><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg></i><span>כל הטיפים שאסור לפספס לפני שמשקיעים</span></li><li><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg></i><span>כל מה שחייב לבדוק אחרי שכבר משלמים</span></li><li><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></i><span>מה הכי חשוב לדעת אם רק התחלת להתעניין בהשקעה בקרקעות</span></li></ul></div>
     </div>
   </div>
 </header>
@@ -397,7 +409,7 @@ footer a{color:#fff}
   </div>
 </footer>
 
-<div class="sticky hide" id="sticky"><a class="btn go" href="#">להצטרפות לקבוצה ולעדכונים<svg class="ar" viewBox="0 0 44 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M43 6H1.5M7 1L1.5 6 7 11"/></svg></a></div>
+<div class="sticky hide" id="sticky"><a class="btn go" href="#"><svg class="wa" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg>להצטרפות לקבוצה ולעדכונים<svg class="ar" viewBox="0 0 44 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M43 6H1.5M7 1L1.5 6 7 11"/></svg></a></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -405,6 +417,7 @@ footer a{color:#fff}
 <script>
 (function(){
   var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var WA = '<svg class="wa" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg>';
   var ARROW = '<svg class="ar" viewBox="0 0 44 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M43 6H1.5M7 1L1.5 6 7 11"/></svg>';
   /* טופס קטן: שם + טלפון, מתחת לפתיחה ובסוף הדף (גל 02/11, חזר לטופס) */
   [].slice.call(document.querySelectorAll('.join')).forEach(function(j){
@@ -414,7 +427,7 @@ footer a{color:#fff}
       + '<input type="tel" name="phone" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="טלפון נייד" aria-label="טלפון נייד"></div>'
       + '<label class="ok"><input type="checkbox" name="c"><span>קראתי את <a href="/privacy-kadima/" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ואפשר ליצור איתי קשר בטלפון ובוואטסאפ.</span></label>'
       + '<p class="err" role="alert"></p>'
-      + '<button class="btn' + (j.dataset.light ? ' light' : '') + '" type="submit">להצטרפות לקבוצה ולעדכונים' + ARROW + '</button>'
+      + '<button class="btn' + (j.dataset.light ? ' light' : '') + '" type="submit">' + WA + 'להצטרפות לקבוצה ולעדכונים' + ARROW + '</button>'
       + '<p class="micro">מיד אחרי השליחה עוברים לקבוצה בוואטסאפ. ללא עלות, ואפשר לצאת בכל רגע.</p></form>';
   });
   var toast = document.getElementById('toast'), tt;
