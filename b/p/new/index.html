@@ -753,6 +753,36 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 #cta .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:440px;margin:18px auto 0;box-sizing:border-box}
 .op-tom .sm{display:block;font-size:14px;font-weight:600;color:var(--muted);margin-top:2px}
 .op-tom .vals span{font-size:13px}
+/* ═══ "ניסינו להשיג אותך" (גל 05/11): ליד שסומן "אין מענה" נוחת על בחירת יום וחלון, בראש הדף ═══ */
+.miss{padding-top:var(--s4)}
+.miss .op-tag{background:#FFF4E5;color:#8A4B00;border-color:#F3D2A6}
+.miss-card{background:#fff;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:22px;padding:20px 16px;box-shadow:var(--sh-sm);margin-top:16px}
+.mstep{font-size:16px;font-weight:900;margin:2px 0 10px}
+.mstep b{color:var(--accent)}
+.mstep.s2{margin-top:18px}
+/* כל הימים גלויים בבת אחת (3 בשורה בטלפון), בלי גלילה הצידה שמסתירה ימים */
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0;margin:0;border:0}
+@media(min-width:600px){.days{grid-template-columns:repeat(5,1fr)}}
+.day{position:relative}
+.day input{position:absolute;opacity:0;pointer-events:none}
+.day label{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:64px;padding:8px 6px;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;font-weight:900;font-size:16px;line-height:1.2;box-sizing:border-box;text-align:center}
+.day label small{font-size:13px;font-weight:600;color:var(--muted);margin-top:3px}
+.day input:checked+label{border-color:var(--accent);background:var(--redsoft,#FBECEB);color:var(--accent)}
+.day input:checked+label small{color:var(--accent)}
+.day input:focus-visible+label{outline:3px solid var(--accent);outline-offset:2px}
+.miss .wins{margin:0;border:0;padding:0}
+.miss .win input:disabled+label{opacity:.38;cursor:not-allowed}
+/* הצבע של כל חלון גובר על מצב הבחירה של דף הנחיתה, אז כאן הבחירה חזקה יותר: מסגרת המותג ורקע */
+.miss .win input:checked+label{border-color:var(--accent)!important;background:var(--redsoft,#FBECEB);box-shadow:0 0 0 4px rgba(194,21,28,.14)}
+.miss .win input:checked+label .wn{color:var(--accent)}
+.mwhen{display:inline-block;background:var(--redsoft,#FBECEB);border:2px solid var(--accent);border-radius:16px;padding:12px 18px;margin-top:10px;font-weight:900;font-size:19px;line-height:1.45;color:var(--accent);white-space:pre-line}
+.miss .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:18px auto 0;box-sizing:border-box}
+.miss .alt{text-align:center;margin-top:12px}
+.miss .alt a{color:var(--ink);font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.miss-done{text-align:center}
+.miss-done .res-h{font-size:clamp(22px,5.6vw,28px)}
+.miss-done .sv{display:inline-flex;align-items:center;justify-content:center;margin-top:14px;padding:12px 18px;border:2px solid var(--accent);border-radius:999px;font-weight:800;color:var(--accent);text-decoration:none}
+.miss-back{display:block;text-align:center;margin-top:16px;font-weight:700;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -760,10 +790,34 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 <div class="pv" id="pv">
   <span><b>תצוגה מקדימה</b> · שום דבר לא נשלח</span>
   <span class="grp" id="pvM"><span>תשובה ראשונה:</span></span>
-  <span class="grp" id="pvS"><span>מצב:</span><button type="button" data-s="0">עוד לא בחר מועד</button><button type="button" data-s="1">כבר בחר מועד</button></span>
+  <span class="grp" id="pvS"><span>מצב:</span><button type="button" data-s="0">עוד לא בחר מועד</button><button type="button" data-s="1">כבר בחר מועד</button><button type="button" data-s="2">לא ענה לשיחה</button></span>
 </div>
 <main>
-<section class="sec bg-w op-hero"><div class="wrap">
+<section class="sec bg-w miss" id="miss" hidden><div class="wrap">
+  <span class="op-tag">ניסינו להשיג אותך</span>
+  <h1 class="op-h1" id="mH"></h1>
+  <p class="op-sub" id="mP"></p>
+  <div class="miss-card" id="mPick">
+    <form id="mform" novalidate>
+      <p class="mstep"><b>1.</b> באיזה יום נוח לך?</p>
+      <fieldset class="days" id="mDays"><legend class="vh">יום לשיחה</legend></fieldset>
+      <p class="mstep s2"><b>2.</b> ובאיזה חלון?</p>
+      <fieldset class="wins" id="mWins"><legend class="vh">חלון הזמן לשיחה</legend><div class="win w-m"><input type="radio" name="mw" id="mw1" value="morning"/><label for="mw1"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="wtx"><span class="wn">בבוקר</span><span class="wm">אני טיפוס של בוקר</span></span><span class="wt">09:00 עד 12:00</span></label></div><div class="win w-n"><input type="radio" name="mw" id="mw2" value="noon"/><label for="mw2"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></span><span class="wtx"><span class="wn">בצהריים</span><span class="wm">דברו איתי בצהריים</span></span><span class="wt">12:00 עד 16:00</span></label></div><div class="win w-e"><input type="radio" name="mw" id="mw3" value="evening"/><label for="mw3"><span class="wico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/><path d="M20 3v4M22 5h-4"/></svg></span><span class="wtx"><span class="wn">בערב</span><span class="wm">הכי טוב בערב</span></span><span class="wt">16:00 עד 20:00</span></label></div></fieldset>
+      <div class="jerr" id="mErr" aria-live="polite"></div>
+      <button class="btn sv-go" type="submit" id="mBtn"><span id="mBtnT">לשריין את השיחה</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
+    </form>
+    <p class="alt"><a id="mWa" href="https://wa.me/972533025464" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35m-5.42 7.4a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/></svg><span>מעדיפים לכתוב לנו בוואטסאפ</span></a></p>
+  </div>
+  <div class="miss-card miss-done" id="mDone" hidden>
+    <div class="done-box"><div class="big"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div></div>
+    <h2 class="res-h" id="mDH"></h2>
+    <p class="mwhen" id="mWhen"></p>
+    <p class="op-p" id="mDP"></p>
+    <a class="sv" href="/b/t/kadima-h.vcf">שמירת המספר באנשי הקשר</a>
+  </div>
+  <a class="miss-back" href="#ans">או לחזור לבדיקת ההתאמה שלך</a>
+</div></section>
+<section class="sec bg-w op-hero" id="hero"><div class="wrap">
   <span class="op-tag" id="hTag"></span>
   <h1 class="op-h1" id="hH1"></h1>
   <p class="op-sub" id="hSub"></p>
@@ -795,6 +849,11 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
       <button class="btn sv-go" type="submit" id="jBtn"><span id="pBtn"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></button>
     </form>
     <p class="alt"><a id="pWaA" href="https://wa.me/972533025464" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35m-5.42 7.4a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/></svg><span id="pWa"></span></a></p>
+  </div>
+  <div id="ctaMiss" hidden>
+    <h2 class="res-h">עוד לא הצלחנו <span class="hl">לדבר</span></h2>
+    <p class="op-p">שתי לחיצות למעלה, ונחזור אליך ביום ובחלון שנוחים לך.</p>
+    <a class="btn sv-go" href="#miss"><span>לבחור יום וחלון</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
   </div>
   <div id="ctaDone" hidden>
     <div class="done-box"><div class="big"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg></div></div>
@@ -839,6 +898,8 @@ function booked(){ if (WKEY.includes(Q.get('w8'))) return Q.get('w8'); if (!LIVE
 const S = { m: int('m', 0, D.qm.options.length), b: int('b', 0, 3), w: int('w', 1, D.qw.options.length), k: int('k', 1, D.qk.options.length),
   name: (Q.get('name') || (PREVIEW ? 'דנה' : '')).trim().split(/\s+/)[0], win: booked() };
 S.picked = !!S.win;
+/* גל 05/11: ליד שסומן "אין מענה" (na=1 מהשרת) נוחת על בחירת יום וחלון חדשים, בראש הדף */
+S.miss = Q.get('na') === '1'; S.missDone = false; S.when = '';
 const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' }, LBL = { ok:'מתאים', ask:'נסגר בשיחה', honest:'בודקים בכנות' };
 function winText(k){ const i = WKEY.indexOf(k); if (i < 0) return ''; const w = D.wins[i], hh = w[1].split(' עד '); return hh.length === 2 ? w[0] + ', בין ' + hh[0] + ' ל־' + hh[1] : w[0]; }
 
@@ -868,16 +929,51 @@ function render(){
   $('xH').innerHTML = rich(T['info.exit.h'].trim()); $('xP').innerHTML = rich(T['info.exit.p']);
   { const tp = T['info.tom'].split('·'); $('tomLine').innerHTML = esc(tp[0].trim()) + '<span class="sm">' + esc(tp.slice(1).map(x => x.trim()).join(' · ')) + '</span>'; } $('chips').innerHTML = T['info.chips'].split('·').map(c => '<span>' + esc(c.trim()) + '</span>').join('');
   // 4. הצעד הבא, לפי המצב
-  $('ctaPick').hidden = S.picked; $('ctaDone').hidden = !S.picked;
+  const missOpen = S.miss && !S.missDone;
+  $('miss').hidden = !S.miss; $('hero').hidden = S.miss;
+  if (S.miss) renderMiss();
+  $('ctaMiss').hidden = !missOpen;
+  $('ctaPick').hidden = S.picked || missOpen; $('ctaDone').hidden = !S.picked || missOpen;
   $('pH').innerHTML = rich(T['cta.pick.h']); $('pP').innerHTML = rich(T['cta.pick.p']); $('pBtn').textContent = T['cta.pick.btn']; $('pWa').textContent = ONE.jwa; $('jOk2T').textContent = ONE.jok2;
-  $('dH').innerHTML = rich(T['cta.done.h'].replace('{חלון}', winText(S.win || 'morning'))); $('dP').innerHTML = rich(T['cta.done.p']); $('dBtnT').textContent = T['cta.done.btn'];
+  $('dH').innerHTML = rich(T['cta.done.h'].replace('{חלון}', S.when || winText(S.win || 'morning'))); $('dP').innerHTML = rich(T['cta.done.p']); $('dBtnT').textContent = T['cta.done.btn'];
   // הפס העליון
   document.querySelectorAll('#pvM button').forEach(x => x.setAttribute('aria-pressed', String(+x.dataset.m === m)));
-  document.querySelectorAll('#pvS button').forEach(x => x.setAttribute('aria-pressed', String((x.dataset.s === '1') === S.picked)));
+  document.querySelectorAll('#pvS button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.s === (S.miss ? '2' : S.picked ? '1' : '0'))));
 }
+/* "ניסינו להשיג אותך" (גל 05/11): בחירת יום וחלון חדשים בשתי לחיצות.
+   הימים: היום (רק אם נשארה לפחות שעה בחלון כלשהו) ועוד ימים קדימה, עד 5 אפשרויות. בלי שבת, ובשישי רק בבוקר */
+const DAYN = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'], WEND = { morning: 12, noon: 16, evening: 20 };
+function ilParts(ts){ const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone:'Asia/Jerusalem', year:'numeric', month:'2-digit', day:'2-digit', hour:'numeric', minute:'2-digit', hourCycle:'h23', weekday:'short' }).formatToParts(new Date(ts)).map(x => [x.type, x.value]));
+  return { iso: p.year + '-' + p.month + '-' + p.day, d: +p.day, m: +p.month, h: +p.hour + (+p.minute) / 60, wd: { Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6 }[p.weekday] }; }
+function missDays(){ const out = [], now = Date.now(), t0 = ilParts(now);
+  for (let i = 0; out.length < 5 && i < 10; i++) { const p = ilParts(now + i * 864e5); if (p.wd === 6) continue;
+    let ok = p.wd === 5 ? ['morning'] : WKEY.slice(); if (i === 0) ok = ok.filter(k => t0.h < WEND[k] - 1);
+    if (!ok.length) continue;
+    // "היום" ו"מחר" מקבלים גם את שם היום מתחת, כדי שיהיה ברור למה בשישי יש רק בוקר
+    out.push({ iso: p.iso, ok, name: i === 0 ? 'היום' : i === 1 ? 'מחר' : 'יום ' + DAYN[p.wd], sub: (i <= 1 ? DAYN[p.wd] + ' · ' : '') + p.d + '.' + p.m, date: p.d + '.' + p.m, wd: p.wd, rel: i }); }
+  return out; }
+let MD = null;
+const dayText = x => x.rel === 0 ? 'היום' : x.rel === 1 ? 'מחר, ' + x.date : 'ביום ' + DAYN[x.wd] + ', ' + x.date;
+const dayShort = x => x.rel === 0 ? 'היום' : x.rel === 1 ? 'מחר' : 'ביום ' + DAYN[x.wd];
+function renderMiss(){
+  const prev = WKEY.includes(S.win) ? D.wins[WKEY.indexOf(S.win)][0] : '';
+  $('mH').innerHTML = rich((S.name ? S.name + ', ' : '') + 'ניסינו להשיג אותך ' + (prev || 'בטלפון') + ' [[ולא הצלחנו]]');
+  $('mP').innerHTML = rich('זה קורה. בוחרים יום וחלון שנוחים לך, ונחזור אליך בדיוק אז. שתי לחיצות וזה סגור.');
+  if (!MD) { MD = missDays(); $('mDays').innerHTML = '<legend class="vh">יום לשיחה</legend>' + MD.map((x, i) => '<div class="day"><input type="radio" name="md" id="md' + i + '" value="' + x.iso + '"/><label for="md' + i + '">' + esc(x.name) + '<small>' + esc(x.sub) + '</small></label></div>').join(''); }
+  $('mPick').hidden = S.missDone; $('mDone').hidden = !S.missDone;
+  missSync();
+}
+function missSel(){ const d = (document.querySelector('input[name="md"]:checked') || {}).value || '', w = (document.querySelector('input[name="mw"]:checked') || {}).value || '';
+  return { w, x: (MD || []).find(x => x.iso === d) }; }
+/* חלון שלא קיים ביום שנבחר (שישי אחרי הבוקר, או חלון שכבר עבר היום) לא ניתן לבחירה. הכפתור אומר בדיוק מה נשמר */
+function missSync(){ const s = missSel();
+  document.querySelectorAll('input[name="mw"]').forEach(inp => { const off = !!s.x && !s.x.ok.includes(inp.value); inp.disabled = off; if (off && inp.checked) inp.checked = false; });
+  const t = missSel();
+  $('mBtnT').textContent = t.x && t.w ? 'לשריין שיחה ' + dayShort(t.x) + ' ' + D.wins[WKEY.indexOf(t.w)][0] : 'לשריין את השיחה'; }
 if (PREVIEW) {
   ONE.d.qm.options.forEach((o, i) => { const bt = document.createElement('button'); bt.type = 'button'; bt.dataset.m = i; bt.textContent = o.t; bt.onclick = () => { S.m = i; render(); }; $('pvM').appendChild(bt); });
-  document.querySelectorAll('#pvS button').forEach(x => x.onclick = () => { S.picked = x.dataset.s === '1'; if (S.picked && !S.win) S.win = 'morning'; render(); scrollTo({ top: document.getElementById('cta').offsetTop - 60, behavior: 'smooth' }); });
+  document.querySelectorAll('#pvS button').forEach(x => x.onclick = () => { const s = x.dataset.s; S.miss = s === '2'; S.missDone = false; S.when = ''; S.picked = s !== '0'; if (S.picked && !S.win) S.win = 'noon';
+    render(); scrollTo({ top: s === '2' ? 0 : document.getElementById('cta').offsetTop - 60, behavior: 'smooth' }); });
 } else $('pv').remove();
 if (STAFF) {
   const sb = document.createElement('div');
@@ -905,6 +1001,30 @@ $('jform').addEventListener('submit', async e => {
   S.win = w; S.picked = true; render();
   const tq = new URLSearchParams({ w, lid: LID });
   setTimeout(() => { location.href = '/b/t/?' + tq.toString(); }, 350);
+});
+/* "ניסינו להשיג אותך": השליחה. ליד אמיתי: ל־/callback עם היום והחלון (השרת מחזיר את הליד ל"נבחר מועד", עוצר את רצף "אין מענה",
+   שולח אישור בוואטסאפ ומעדכן את תום). האישור מוצג כאן בדף, בלי מעבר, כדי שהליד יראה מיד מה נשמר */
+$('mform').addEventListener('change', () => { $('mErr').textContent = ''; missSync(); });
+$('mform').addEventListener('submit', async e => {
+  e.preventDefault();
+  const s = missSel();
+  if (!s.x) { $('mErr').textContent = 'צריך לבחור יום'; const f = document.querySelector('input[name="md"]'); if (f) f.focus(); return; }
+  if (!s.w) { $('mErr').textContent = 'צריך לבחור חלון'; const f = document.querySelector('input[name="mw"]:not(:disabled)'); if (f) f.focus(); return; }
+  const when = dayText(s.x) + ', ' + winText(s.w);
+  if (LIVE) {
+    $('mBtn').disabled = true; $('mBtnT').textContent = ONE.jsaving;
+    const body = JSON.stringify({ lead_id: LID, window: s.w, day: s.x.iso, rebook: 'no_answer', confirmed: true, at: new Date().toISOString() });
+    let sent = false;
+    try { const r = await fetch(WORKER + '/callback', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body }); sent = r.ok; } catch(err) {}
+    if (!sent) { try { navigator.sendBeacon && navigator.sendBeacon(WORKER + '/callback', new Blob([body], { type:'text/plain;charset=UTF-8' })); } catch(err) {} }
+    try { const c = JSON.stringify({ w: s.w, d: s.x.iso, alt: '', at: Date.now(), lid: LID }); sessionStorage.setItem('b_cb', c); localStorage.setItem('b_cb', c); } catch(err) {}
+    $('mBtn').disabled = false;
+  }
+  S.win = s.w; S.picked = true; S.missDone = true; S.when = when;
+  $('mDH').textContent = 'סגור, נחזור אליך';
+  $('mWhen').textContent = dayText(s.x) + '\n' + winText(s.w);
+  $('mDP').textContent = 'השיחה תגיע מהמספר 053-302-5464. כדאי לשמור אותו באנשי הקשר, כדי שיהיה קל לזהות אותנו כשנתקשר.';
+  render(); $('miss').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 /* כפתור הקהילה: רק אצל ליד אמיתי (דף הקהילה סופר הצטרפות למטא, צפייה של הצוות לא צריכה להיספר) */
 if (!LIVE) $('dBtn').addEventListener('click', e => e.preventDefault());
