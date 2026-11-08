@@ -784,6 +784,14 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
 .miss-done .res-h{font-size:clamp(22px,5.6vw,28px)}
 .miss-done .sv{display:inline-flex;align-items:center;justify-content:center;margin-top:14px;padding:12px 18px;border:2px solid var(--accent);border-radius:999px;font-weight:800;color:var(--accent);text-decoration:none}
 .miss-back{display:block;text-align:center;margin-top:16px;font-weight:700;color:var(--muted)}
+/* ═══ גל 08/11: "בחירת המועד נמצאת ממש למטה". מי שלא בחר: החלונות עולים מתחת לפתיחה. מי שבחר: שורה אחת עם המועד ═══ */
+.hcall{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin-top:18px;background:#F1F7F3;border:1px solid #CFE6D7;border-radius:16px;padding:12px 14px}
+.hcall .tk{flex:none;width:26px;height:26px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center}
+.hcall .tk svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.hcall b{flex:1 1 200px;font-size:17px;font-weight:800;line-height:1.45}
+.hcall a{font-weight:800;color:var(--accent);text-decoration:underline;text-underline-offset:3px;padding:6px 0}
+#ctaEnd{text-align:center}
+#ctaEnd .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:440px;margin:18px auto 0;box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -822,6 +830,7 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
   <span class="op-tag" id="hTag"></span>
   <h1 class="op-h1" id="hH1"></h1>
   <p class="op-sub" id="hSub"></p>
+  <div class="hcall" id="hCall" hidden><span class="tk"></span><b id="hCallT"></b><a href="#cta" id="hChange">לשנות מועד</a></div>
 </div></section>
 <section class="sec bg-g" id="ans"><div class="wrap">
   <h2 class="sec-t" id="aH2"></h2>
@@ -863,6 +872,10 @@ footer .flogo{height:48px;margin:0 auto 18px;background:#fff;padding:10px 16px;b
     <a class="btn sv-go" id="dBtn" href="/join/"><span id="dBtnT"></span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
   </div>
 </div></section>
+<section class="sec bg-p" id="ctaEnd" hidden><div class="wrap">
+  <h2 class="res-h" id="eH"></h2>
+  <a class="btn sv-go" href="#cta"><span>לבחירת מועד לשיחה</span><svg class="arw" viewBox="0 0 40 11"><path d="M39 5.5H3M10 1.5 3 5.5l7 4"/></svg></a>
+</div></section>
 </main>
 <footer>
   <img class="flogo" src="/logo.png" alt="הקרן להשבחת הון ונכסים בע&quot;מ מקבוצת תום הרוש" loading="lazy"/>
@@ -901,6 +914,7 @@ const S = { m: int('m', 0, D.qm.options.length), b: int('b', 0, 3), w: int('w', 
 S.picked = !!S.win;
 /* גל 05/11: ליד שסומן "אין מענה" (na=1 מהשרת) נוחת על בחירת יום וחלון חדשים, בראש הדף */
 S.miss = Q.get('na') === '1'; S.missDone = false; S.when = '';
+S.change = false;   // גל 08/11: "לשנות מועד" פותח את החלונות למעלה, עם החלון שכבר נבחר מסומן
 const ICON = { ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg>', ask:'?', honest:'!' }, LBL = { ok:'מתאים', ask:'נסגר בשיחה', honest:'בודקים בכנות' };
 function winText(k){ const i = WKEY.indexOf(k); if (i < 0) return ''; const w = D.wins[i], hh = w[1].split(' עד '); return hh.length === 2 ? w[0] + ', בין ' + hh[0] + ' ל־' + hh[1] : w[0]; }
 
@@ -934,7 +948,14 @@ function render(){
   $('miss').hidden = !S.miss; $('hero').hidden = S.miss;
   if (S.miss) renderMiss();
   $('ctaMiss').hidden = !missOpen;
-  $('ctaPick').hidden = S.picked || missOpen; $('ctaDone').hidden = !S.picked || missOpen;
+  $('ctaPick').hidden = (S.picked && !S.change) || missOpen; $('ctaDone').hidden = !S.picked || S.change || missOpen;
+  // גל 08/11: "בחירת המועד נמצאת ממש למטה". מי שעוד לא בחר (או לחץ "לשנות מועד"): החלונות עולים מתחת לפתיחה, ובסוף הדף כפתור שמחזיר אליהם.
+  // מי שכבר בחר: שורה אחת עם המועד מתחת לפתיחה, והקהילה נשארת בסוף. "אין מענה" לא משתנה (יש לו מסך משלו למעלה)
+  const up = !S.miss && (!S.picked || S.change);
+  if (up) $('hero').after($('cta')); else $('info').after($('cta'));
+  $('ctaEnd').hidden = !up; $('eH').innerHTML = rich(T['cta.pick.h']);
+  $('hCall').hidden = !S.picked || S.miss || S.change;
+  $('hCall').querySelector('.tk').innerHTML = ICON.ok; $('hCallT').textContent = glue(T['cta.done.h'].replace('{חלון}', winText(S.win || 'morning')));
   $('pH').innerHTML = rich(T['cta.pick.h']); $('pP').innerHTML = rich(T['cta.pick.p']); $('pBtn').textContent = T['cta.pick.btn']; $('pWa').textContent = ONE.jwa; $('jOk2T').textContent = ONE.jok2;
   $('dH').innerHTML = rich(T['cta.done.h'].replace('{חלון}', S.when || winText(S.win || 'morning'))); $('dP').innerHTML = rich(T['cta.done.p']); $('dBtnT').textContent = T['cta.done.btn'];
   // הפס העליון
@@ -973,8 +994,8 @@ function missSync(){ const s = missSel();
   $('mBtnT').textContent = t.x && t.w ? 'לשריין שיחה ' + dayShort(t.x) + ' ' + D.wins[WKEY.indexOf(t.w)][0] : 'לשריין את השיחה'; }
 if (PREVIEW) {
   ONE.d.qm.options.forEach((o, i) => { const bt = document.createElement('button'); bt.type = 'button'; bt.dataset.m = i; bt.textContent = o.t; bt.onclick = () => { S.m = i; render(); }; $('pvM').appendChild(bt); });
-  document.querySelectorAll('#pvS button').forEach(x => x.onclick = () => { const s = x.dataset.s; S.miss = s === '2'; S.missDone = false; S.when = ''; S.picked = s !== '0'; if (S.picked && !S.win) S.win = 'noon';
-    render(); scrollTo({ top: s === '2' ? 0 : document.getElementById('cta').offsetTop - 60, behavior: 'smooth' }); });
+  document.querySelectorAll('#pvS button').forEach(x => x.onclick = () => { const s = x.dataset.s; S.miss = s === '2'; S.missDone = false; S.when = ''; S.change = false; S.picked = s !== '0'; if (S.picked && !S.win) S.win = 'noon';
+    render(); scrollTo({ top: 0, behavior: 'smooth' }); });
 } else $('pv').remove();
 if (STAFF) {
   const sb = document.createElement('div');
@@ -992,14 +1013,14 @@ $('jform').addEventListener('submit', async e => {
   $('jEw').textContent = ''; $('jEo').textContent = '';
   if (!w) { $('jEw').textContent = ONE.jerr; const f = document.querySelector('input[name="w"]'); if (f) f.focus(); return; }
   if (useAlt && !validPhone(alt)) { $('jEo').textContent = ONE.jerra; $('jAlt').focus(); return; }
-  if (!LIVE) { S.win = w; S.picked = true; render(); return; }
+  if (!LIVE) { S.win = w; S.picked = true; S.change = false; render(); scrollTo({ top: 0, behavior: 'smooth' }); return; }
   $('jBtn').disabled = true; $('pBtn').textContent = ONE.jsaving;
   const body = JSON.stringify({ lead_id: LID, window: w, alt_phone: alt || '', confirmed: true, at: new Date().toISOString() });
   let sent = false;
   try { const r = await fetch(WORKER + '/callback', { method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body }); sent = r.ok; } catch(err) {}
   if (!sent) { try { navigator.sendBeacon && navigator.sendBeacon(WORKER + '/callback', new Blob([body], { type:'text/plain;charset=UTF-8' })); } catch(err) {} }
   try { const c = JSON.stringify({ w, alt: alt || '', at: Date.now(), lid: LID }); sessionStorage.setItem('b_cb', c); localStorage.setItem('b_cb', c); } catch(err) {}
-  S.win = w; S.picked = true; render();
+  S.win = w; S.picked = true; S.change = false; render();
   const tq = new URLSearchParams({ w, lid: LID });
   setTimeout(() => { location.href = '/b/t/?' + tq.toString(); }, 350);
 });
@@ -1027,6 +1048,10 @@ $('mform').addEventListener('submit', async e => {
   $('mDP').textContent = 'השיחה תגיע מהמספר 053-302-5464. כדאי לשמור אותו באנשי הקשר, כדי שיהיה קל לזהות אותנו כשנתקשר.';
   render(); $('miss').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
+/* "לשנות מועד": החלונות נפתחים מתחת לפתיחה, והחלון שכבר נבחר מסומן */
+$('hChange').addEventListener('click', e => { e.preventDefault(); S.change = true; render();
+  const r = document.querySelector('input[name="w"][value="' + S.win + '"]'); if (r) r.checked = true;
+  $('cta').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
 /* כפתור הקהילה: רק אצל ליד אמיתי (דף הקהילה סופר הצטרפות למטא, צפייה של הצוות לא צריכה להיספר) */
 if (!LIVE) $('dBtn').addEventListener('click', e => e.preventDefault());
 render();
