@@ -34,6 +34,7 @@
         var u = new URLSearchParams({ lid: id, m: a[0], b: a[1], w: a[2], k: a[3] });
         if (j.name) u.set('name', j.name);
         if (j.cb) u.set('w8', j.cb);
+        if (j.na) u.set('na', '1');   // גל 05/11: מסומן "אין מענה" = הדף נפתח על בחירת יום וחלון חדשים
         keep.forEach(function(v, k){ u.set(k, v); });
         if (q.get('staff') === '1') u.set('staff', '1');
         else if (j.cb) { try { var c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: id }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {} }
@@ -1031,6 +1032,7 @@ if (!LIVE) $('dBtn').addEventListener('click', e => e.preventDefault());
 render();
 /* ליד שהגיע בלי המועד בכתובת (למשל מהקישור שנשמר במכשיר): שואלים את השרת אם כבר בחר, כדי שהדף לא יבקש שוב */
 if (LIVE && !S.picked) fetch(WORKER + '/b/me?id=' + encodeURIComponent(LID), { cache:'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
+  if (j && j.ok && j.na && !S.miss) { S.miss = true; render(); }
   if (!j || !j.ok || !WKEY.includes(j.cb) || S.picked) return;
   try { const c = JSON.stringify({ w: j.cb, alt: '', at: Date.now(), lid: LID }); localStorage.setItem('b_cb', c); sessionStorage.setItem('b_cb', c); } catch(e) {}
   S.win = j.cb; S.picked = true; render();
