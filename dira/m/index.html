@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<script src="/tester.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>הדירות שבחרנו לך · קבוצת תום הרוש</title>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="referrer" content="no-referrer"/>
+<meta name="theme-color" content="#C2151C"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap">
+<link rel="icon" href="../img/logo.png">
+<!-- נכסי יד שנייה · הדף האישי של הקונה (גל 05/11/2026). הקישור יוצא בוואטסאפ ובדף התודה.
+     מציג רק את הדירות שהותאמו לו (לפי קוד אישי שאי אפשר לנחש). "אני רוצה לראות את הדירה" = מייל לרז ולמשרד,
+     סטטוס "ביקש סיור" בדשבורד, ואירוע Schedule לפיקסל של התיווך (מהדפדפן ומהשרת, אותו מזהה). -->
+<style>
+:root{--ink:#0f1216;--muted:rgba(15,18,22,.62);--line:rgba(15,18,22,.12);--red:#C2151C;--red2:#A20C22;--green:#157a3a;--tint:rgba(194,21,28,.055);
+  --grad:linear-gradient(135deg,#C2151C,#A20C22 55%,#7F0224);--bg:#F6F7F9}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.wrap{max-width:560px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))}
+.top{display:flex;align-items:center;gap:10px}
+.top img{width:40px;height:40px;border-radius:8px}
+.top span{font-size:14px;font-weight:700;color:var(--red2)}
+h1{font-size:27px;font-weight:900;line-height:1.18;margin-top:16px;text-wrap:balance}
+.sub{color:var(--muted);font-size:15.5px;margin-top:6px}
+.card{background:#fff;border-radius:18px;margin-top:18px;overflow:hidden;box-shadow:0 8px 28px rgba(16,16,16,.07)}
+.ph{position:relative;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;aspect-ratio:4/3;background:#E9EAEE}
+.ph::-webkit-scrollbar{display:none}
+.ph img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:center}
+.dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:5px;pointer-events:none}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55)}
+.dots i.on{background:#fff}
+.phw{position:relative}
+.cnt{padding:14px 16px 16px}
+.price{font-size:26px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--red)}
+.addr{font-size:17px;font-weight:800;margin-top:2px}
+.facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.facts span{font-size:13.5px;font-weight:600;background:#F2F3F5;border-radius:999px;padding:5px 11px}
+.facts span.no{color:var(--muted);font-weight:500}
+.hl{margin-top:10px;padding-inline-start:18px;font-size:15px;color:#2b2d33}
+.hl li{margin-top:3px}
+.want{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;margin-top:14px;border:0;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;font-size:17px;cursor:pointer}
+.want:focus-visible{outline:3px solid rgba(194,21,28,.45);outline-offset:2px}
+.want.done{background:var(--green);cursor:default}
+.want.busy{opacity:.7}
+.empty{background:#fff;border-radius:18px;margin-top:18px;padding:20px;font-size:16px;box-shadow:0 8px 28px rgba(16,16,16,.07)}
+.raz{display:flex;gap:12px;align-items:center;margin-top:22px;background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 6px 20px rgba(16,16,16,.06)}
+.raz img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.raz b{display:block;font-size:16px}
+.raz small{color:var(--muted);font-size:13.5px}
+.foot{text-align:center;font-size:12px;color:rgba(15,18,22,.5);margin-top:20px}
+.foot a{color:inherit}
+.err{color:var(--red2);font-weight:600;font-size:14px;margin-top:8px;min-height:1em}
+.sk{height:320px;border-radius:18px;margin-top:18px;background:linear-gradient(90deg,#eceef1,#f6f7f9,#eceef1);background-size:200% 100%;animation:sk 1.2s infinite}
+@keyframes sk{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+</style>
+</head>
+<body>
+<main class="wrap" id="root">
+  <div class="top"><img src="../img/logo.png" alt="קבוצת תום הרוש"><span>קבוצת תום הרוש</span></div>
+  <div id="view"><div class="sk" aria-hidden="true"></div></div>
+  <div class="raz"><img src="../img/raz.jpg" alt="רז מאיר כהן"><div><b>רז מאיר כהן</b><small>מטפל בפנייה שלך, וייצור איתך קשר לתיאום סיור</small></div></div>
+  <div class="foot"><a href="../privacy/">מדיניות פרטיות</a> · <a href="../accessibility/">הצהרת נגישות</a></div>
+</main>
+<script>
+var Y2_PIXEL = '';
+if (Y2_PIXEL) {
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', Y2_PIXEL); fbq('track', 'PageView');
+}
+</script>
+<script>
+(function(){
+var API = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? 'http://127.0.0.1:8799' : 'https://tom-funnel.tom-harush.workers.dev'   /* מקומי = בדיקה מול wrangler dev */;
+var c = new URLSearchParams(location.search).get('c') || '';
+var view = document.getElementById('view');
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(x){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[x]; }); }
+function nis(n){ return Number(n).toLocaleString('he-IL') + ' ₪'; }
+function step(s, key){
+  if (window.THG_TESTER) return;
+  var body = JSON.stringify({ step: s, prop: key || '', src: 'org' });
+  try { if (navigator.sendBeacon && navigator.sendBeacon(API + '/yad2/step', new Blob([body], { type: 'text/plain' }))) return; } catch (e) {}
+  try { fetch(API + '/yad2/step', { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: body, keepalive: true }); } catch (e) {}
+}
+function yes(v, t, nt){ return v === true ? '<span>' + t + '</span>' : v === false && nt ? '<span class="no">' + nt + '</span>' : ''; }
+function card(p){
+  var ph = (p.photos || []).map(function(src, k){ return '<img src="../' + esc(src) + '" alt="' + esc((p.street || '') + ' ' + (p.number || '')) + ', תמונה ' + (k + 1) + '" loading="' + (k ? 'lazy' : 'eager') + '">'; }).join('');
+  var dots = (p.photos || []).length > 1 ? '<div class="dots" aria-hidden="true">' + p.photos.map(function(_, k){ return '<i class="' + (k ? '' : 'on') + '"></i>'; }).join('') + '</div>' : '';
+  var floor = p.floor != null ? '<span>קומה ' + esc(p.floor) + (p.floorsTotal ? ' מתוך ' + esc(p.floorsTotal) : '') + '</span>' : '';
+  var facts = (p.rooms ? '<span>' + esc(p.rooms) + ' חדרים</span>' : '') + (p.sqm ? '<span>' + esc(p.sqm) + ' מ״ר</span>' : '') + floor
+    + yes(p.elevator, 'מעלית') + (p.parking ? '<span>' + (p.parking > 1 ? p.parking + ' חניות' : 'חניה') + '</span>' : '') + yes(p.mamad, 'ממ״ד', 'בלי ממ״ד') + (p.balcony ? '<span>מרפסת</span>' : '');
+  var hl = (p.highlights || []).length ? '<ul class="hl">' + p.highlights.map(function(h){ return '<li>' + esc(h) + '</li>'; }).join('') + '</ul>' : '';
+  return '<article class="card" data-key="' + esc(p.key) + '">' + (ph ? '<div class="phw"><div class="ph">' + ph + '</div>' + dots + '</div>' : '')
+    + '<div class="cnt">' + (p.price ? '<div class="price">' + nis(p.price) + '</div>' : '') + '<h2 class="addr">' + esc([p.street, p.number].filter(Boolean).join(' ')) + ', ' + esc(p.city || '') + '</h2>'
+    + '<div class="facts">' + facts + '</div>' + hl
+    + '<button type="button" class="want' + (p.requested ? ' done' : '') + '" data-key="' + esc(p.key) + '"' + (p.requested ? ' disabled' : '') + '>' + (p.requested ? 'קיבלנו. רז יחזור אליך לתאם סיור' : 'אני רוצה לראות את הדירה') + '</button>'
+    + '<div class="err" role="alert"></div></div></article>';
+}
+function render(d){
+  var n = (d.props || []).length;
+  var h = '<h1>' + (d.first ? 'היי ' + esc(d.first) + ', ' : '') + (n ? (n === 1 ? 'זו הדירה שבחרנו לך' : 'אלה הדירות שבחרנו לך') : 'כרגע אין דירה פנויה שמתאימה') + '</h1>'
+    + (d.search ? '<p class="sub">לפי מה שסימנת: ' + esc(d.search) + '</p>' : '');
+  h += n ? d.props.map(card).join('') : '<div class="empty">אנחנו לא רוצים לשלוח לך סתם דירות. רז יחזור אליך, ונשלח לך דירה ברגע שנכנסת אחת שמתאימה.</div>';
+  view.innerHTML = h;
+  [].slice.call(document.querySelectorAll('.ph')).forEach(function(el){
+    el.addEventListener('scroll', function(){ var i = Math.round(Math.abs(el.scrollLeft) / el.clientWidth); [].slice.call(el.parentNode.querySelectorAll('.dots i')).forEach(function(d, k){ d.classList.toggle('on', k === i); }); }, { passive: true });
+  });
+  step('m_view');
+}
+view.addEventListener('click', function(e){
+  var b = e.target.closest('.want'); if (!b || b.disabled || b.classList.contains('busy')) return;
+  var key = b.dataset.key, err = b.parentNode.querySelector('.err'), EID = 'y2t' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  b.classList.add('busy'); b.textContent = 'שולח...'; err.textContent = '';
+  fetch(API + '/yad2/tour', { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify({ c: c, key: key, event_id: EID }), keepalive: true })
+    .then(function(r){ return r.json().then(function(j){ if (!r.ok || !j.ok) throw new Error('x'); }); })
+    .then(function(){
+      b.classList.remove('busy'); b.classList.add('done'); b.disabled = true; b.textContent = 'קיבלנו. רז יחזור אליך לתאם סיור';
+      try { if (window.fbq) fbq('track', 'Schedule', { content_name: 'yad2_tour_' + key }, { eventID: EID }); } catch (x) {}
+      step('m_tour', key);
+    })
+    .catch(function(){ b.classList.remove('busy'); b.textContent = 'אני רוצה לראות את הדירה'; err.textContent = 'לא הצלחנו לשלוח כרגע. נסו שוב בעוד רגע.'; });
+});
+if (!/^[A-Za-z0-9]{12}$/.test(c)) { view.innerHTML = '<div class="empty">הקישור לא שלם. פתחו אותו שוב מההודעה בוואטסאפ.</div>'; return; }
+fetch(API + '/yad2/m?c=' + encodeURIComponent(c), { cache: 'no-store' })
+  .then(function(r){ return r.json(); })
+  .then(function(j){ if (!j.ok) throw new Error('x'); render(j); })
+  .catch(function(){ view.innerHTML = '<div class="empty">לא הצלחנו לטעון את הדירות. נסו לרענן את הדף בעוד רגע.</div>'; });
+})();
+</script>
+</body>
+</html>
