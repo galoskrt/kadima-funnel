@@ -87,14 +87,14 @@ function step(s, key){
 }
 function yes(v, t, nt){ return v === true ? '<span>' + t + '</span>' : v === false && nt ? '<span class="no">' + nt + '</span>' : ''; }
 function card(p){
-  var ph = (p.photos || []).map(function(src, k){ return '<img src="../' + esc(src) + '" alt="' + esc((p.street || '') + ' ' + (p.number || '')) + ', תמונה ' + (k + 1) + '" loading="' + (k ? 'lazy' : 'eager') + '">'; }).join('');
+  var ph = (p.photos || []).map(function(src, k){ return '<img src="../' + esc(src) + '" alt="' + esc(p.title || p.city || '') + ', תמונה ' + (k + 1) + '" loading="' + (k ? 'lazy' : 'eager') + '">'; }).join('');
   var dots = (p.photos || []).length > 1 ? '<div class="dots" aria-hidden="true">' + p.photos.map(function(_, k){ return '<i class="' + (k ? '' : 'on') + '"></i>'; }).join('') + '</div>' : '';
   var floor = p.floor != null ? '<span>קומה ' + esc(p.floor) + (p.floorsTotal ? ' מתוך ' + esc(p.floorsTotal) : '') + '</span>' : '';
   var facts = (p.rooms ? '<span>' + esc(p.rooms) + ' חדרים</span>' : '') + (p.sqm ? '<span>' + esc(p.sqm) + ' מ״ר</span>' : '') + floor
     + yes(p.elevator, 'מעלית') + (p.parking ? '<span>' + (p.parking > 1 ? p.parking + ' חניות' : 'חניה') + '</span>' : '') + yes(p.mamad, 'ממ״ד', 'בלי ממ״ד') + (p.balcony ? '<span>מרפסת</span>' : '');
   var hl = (p.highlights || []).length ? '<ul class="hl">' + p.highlights.map(function(h){ return '<li>' + esc(h) + '</li>'; }).join('') + '</ul>' : '';
   return '<article class="card" data-key="' + esc(p.key) + '">' + (ph ? '<div class="phw"><div class="ph">' + ph + '</div>' + dots + '</div>' : '')
-    + '<div class="cnt">' + (p.price ? '<div class="price">' + nis(p.price) + '</div>' : '') + '<h2 class="addr">' + esc([p.street, p.number].filter(Boolean).join(' ')) + ', ' + esc(p.city || '') + '</h2>'
+    + '<div class="cnt">' + (p.price ? '<div class="price">' + nis(p.price) + '</div>' : '') + '<h2 class="addr">' + esc(p.title || ((p.rooms ? p.rooms + ' חדרים, ' : '') + (p.city || ''))) + '</h2>'
     + '<div class="facts">' + facts + '</div>' + hl
     + '<button type="button" class="want' + (p.requested ? ' done' : '') + '" data-key="' + esc(p.key) + '"' + (p.requested ? ' disabled' : '') + '>' + (p.requested ? 'קיבלנו. רז יחזור אליך לתאם סיור' : 'אני רוצה לראות את הדירה') + '</button>'
     + '<div class="err" role="alert"></div></div></article>';
