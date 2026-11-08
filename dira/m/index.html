@@ -42,7 +42,7 @@ h1{font-size:27px;font-weight:900;line-height:1.18;margin-top:16px;text-wrap:bal
 .hl{margin-top:10px;padding-inline-start:18px;font-size:15px;color:#2b2d33}
 .hl li{margin-top:3px}
 .want{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;margin-top:14px;border:0;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;font-size:17px;cursor:pointer}
-.want:focus-visible{outline:3px solid rgba(194,21,28,.45);outline-offset:2px}
+.want:focus-visible,.ph:focus-visible{outline:3px solid rgba(194,21,28,.45);outline-offset:2px}
 .want.done{background:var(--green);cursor:default}
 .want.busy{opacity:.7}
 .empty{background:#fff;border-radius:18px;margin-top:18px;padding:20px;font-size:16px;box-shadow:0 8px 28px rgba(16,16,16,.07)}
@@ -50,7 +50,7 @@ h1{font-size:27px;font-weight:900;line-height:1.18;margin-top:16px;text-wrap:bal
 .raz img{width:56px;height:56px;border-radius:50%;object-fit:cover}
 .raz b{display:block;font-size:16px}
 .raz small{color:var(--muted);font-size:13.5px}
-.foot{text-align:center;font-size:12px;color:rgba(15,18,22,.5);margin-top:20px}
+.foot{text-align:center;font-size:12px;color:rgba(15,18,22,.68);margin-top:20px}
 .foot a{color:inherit}
 .err{color:var(--red2);font-weight:600;font-size:14px;margin-top:8px;min-height:1em}
 .sk{height:320px;border-radius:18px;margin-top:18px;background:linear-gradient(90deg,#eceef1,#f6f7f9,#eceef1);background-size:200% 100%;animation:sk 1.2s infinite}
@@ -93,7 +93,7 @@ function card(p){
   var facts = (p.rooms ? '<span>' + esc(p.rooms) + ' חדרים</span>' : '') + (p.sqm ? '<span>' + esc(p.sqm) + ' מ״ר</span>' : '') + floor
     + yes(p.elevator, 'מעלית') + (p.parking ? '<span>' + (p.parking > 1 ? p.parking + ' חניות' : 'חניה') + '</span>' : '') + yes(p.mamad, 'ממ״ד', 'בלי ממ״ד') + (p.balcony ? '<span>מרפסת</span>' : '');
   var hl = (p.highlights || []).length ? '<ul class="hl">' + p.highlights.map(function(h){ return '<li>' + esc(h) + '</li>'; }).join('') + '</ul>' : '';
-  return '<article class="card" data-key="' + esc(p.key) + '">' + (ph ? '<div class="phw"><div class="ph">' + ph + '</div>' + dots + '</div>' : '')
+  return '<article class="card" data-key="' + esc(p.key) + '">' + (ph ? '<div class="phw"><div class="ph" tabindex="0" role="group" aria-label="' + esc('תמונות: ' + (p.title || p.city || '')) + '">' + ph + '</div>' + dots + '</div>' : '')
     + '<div class="cnt">' + (p.price ? '<div class="price">' + nis(p.price) + '</div>' : '') + '<h2 class="addr">' + esc(p.title || ((p.rooms ? p.rooms + ' חדרים, ' : '') + (p.city || ''))) + '</h2>'
     + '<div class="facts">' + facts + '</div>' + hl
     + '<button type="button" class="want' + (p.requested ? ' done' : '') + '" data-key="' + esc(p.key) + '"' + (p.requested ? ' disabled' : '') + '>' + (p.requested ? 'קיבלנו. רז יחזור אליך לתאם סיור' : 'אני רוצה לראות את הדירה') + '</button>'

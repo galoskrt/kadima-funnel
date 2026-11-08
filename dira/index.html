@@ -65,7 +65,7 @@ button,input{font-family:inherit}
 .consent input{width:22px;height:22px;accent-color:#C2151C;flex:none;margin:1px 0 0}
 .consent.need{color:var(--red2);font-weight:600}
 .err{color:var(--red2);font-size:13.5px;min-height:20px;margin-top:6px;font-weight:600}
-.qfoot{flex:none;padding:6px 16px calc(10px + env(safe-area-inset-bottom));text-align:center;font-size:12px;color:rgba(15,18,22,.5)}
+.qfoot{flex:none;padding:6px 16px calc(10px + env(safe-area-inset-bottom));text-align:center;font-size:12px;color:rgba(15,18,22,.68)}
 .qfoot a{color:inherit}
 .out,.ty{text-align:center;align-items:center;justify-content:center;gap:6px}
 .out .ic,.ty .ok{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;margin-bottom:6px;flex:none}
@@ -183,7 +183,9 @@ function go(i, dir){
   $('#qbody').innerHTML = '<div class="q-step ' + (dir || '') + '">' + h + '</div>';
   var f = $('.q-ttl', $('#qbody')); if (f && dir) { f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
 }
-function next(){ J.hist.push(J.i); go(J.i + 1, 'fwd'); }
+/* אירוע פיקסל אחד כשעוברים את השאלה הראשונה, לקהל "התחילו ולא השאירו פרטים" (גל 05/11). במצב בדיקה fbq ריק */
+function started(){ if (sent._start) return; sent._start = 1; try { if (window.fbq) fbq('trackCustom', 'QuizStart', { content_name: 'yad2_' + (prop || 'direct') }); } catch (e) {} }
+function next(){ J.hist.push(J.i); if (J.i === 0) started(); go(J.i + 1, 'fwd'); }
 
 $('#qbody').addEventListener('click', function(e){
   var opt = e.target.closest('.opt');
