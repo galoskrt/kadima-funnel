@@ -39,6 +39,8 @@ h1{font-size:27px;font-weight:900;line-height:1.18;margin-top:16px;text-wrap:bal
 .facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .facts span{font-size:13.5px;font-weight:600;background:#F2F3F5;border-radius:999px;padding:5px 11px}
 .facts span.no{color:var(--muted);font-weight:500}
+.facts span.nt{background:#FFF4E5;color:#7a4a00}
+.nearnote{background:#FFF8EE;border:1px solid #F3DEC0;border-radius:12px;padding:10px 14px;font-size:14.5px;margin:10px 0 4px;color:#5c3a00}
 .hl{margin-top:10px;padding-inline-start:18px;font-size:15px;color:#2b2d33}
 .hl li{margin-top:3px}
 .want{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;margin-top:14px;border:0;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;font-size:17px;cursor:pointer}
@@ -91,7 +93,8 @@ function card(p){
   var dots = (p.photos || []).length > 1 ? '<div class="dots" aria-hidden="true">' + p.photos.map(function(_, k){ return '<i class="' + (k ? '' : 'on') + '"></i>'; }).join('') + '</div>' : '';
   var floor = p.floor != null ? '<span>קומה ' + esc(p.floor) + (p.floorsTotal ? ' מתוך ' + esc(p.floorsTotal) : '') + '</span>' : '';
   var facts = (p.rooms ? '<span>' + esc(p.rooms) + ' חדרים</span>' : '') + (p.sqm ? '<span>' + esc(p.sqm) + ' מ״ר</span>' : '') + floor
-    + yes(p.elevator, 'מעלית') + (p.parking ? '<span>' + (p.parking > 1 ? p.parking + ' חניות' : 'חניה') + '</span>' : '') + yes(p.mamad, 'ממ״ד', 'בלי ממ״ד') + (p.balcony ? '<span>מרפסת</span>' : '');
+    + yes(p.elevator, 'מעלית') + (p.parking ? '<span>' + (p.parking > 1 ? p.parking + ' חניות' : 'חניה') + '</span>' : '') + yes(p.mamad, 'ממ״ד', 'בלי ממ״ד') + (p.balcony ? '<span>מרפסת</span>' : '')
+    + (p.notes || []).map(function(t){ return '<span class="nt">' + esc(t) + '</span>'; }).join('');   // גל 09/11: במה הדירה שונה ממה שסימן, ומה לבדוק עם רז
   var hl = (p.highlights || []).length ? '<ul class="hl">' + p.highlights.map(function(h){ return '<li>' + esc(h) + '</li>'; }).join('') + '</ul>' : '';
   return '<article class="card" data-key="' + esc(p.key) + '">' + (ph ? '<div class="phw"><div class="ph" tabindex="0" role="group" aria-label="' + esc('תמונות: ' + (p.title || p.city || '')) + '">' + ph + '</div>' + dots + '</div>' : '')
     + '<div class="cnt">' + (p.price ? '<div class="price">' + nis(p.price) + '</div>' : '') + '<h2 class="addr">' + esc(p.title || ((p.rooms ? p.rooms + ' חדרים, ' : '') + (p.city || ''))) + '</h2>'
@@ -101,9 +104,10 @@ function card(p){
 }
 function render(d){
   var n = (d.props || []).length;
-  var h = '<h1>' + (d.first ? 'היי ' + esc(d.first) + ', ' : '') + (n ? (n === 1 ? 'זו הדירה שבחרנו לך' : 'אלה הדירות שבחרנו לך') : 'כרגע אין דירה פנויה שמתאימה') + '</h1>'
-    + (d.search ? '<p class="sub">לפי מה שסימנת: ' + esc(d.search) + '</p>' : '');
-  h += n ? d.props.map(card).join('') : '<div class="empty">אנחנו לא רוצים לשלוח לך סתם דירות. רז יחזור אליך, ונשלח לך דירה ברגע שנכנסת אחת שמתאימה.</div>';
+  var h = '<h1>' + (d.first ? 'היי ' + esc(d.first) + ', ' : '') + (n ? (d.near ? (n === 1 ? 'זו דירה שעשויה להתאים לך' : 'אלה דירות שעשויות להתאים לך') : (n === 1 ? 'זו הדירה שבחרנו לך' : 'אלה הדירות שבחרנו לך')) : 'רז מצליב בשבילך מאגרים נוספים') + '</h1>'
+    + (d.search ? '<p class="sub">לפי מה שסימנת: ' + esc(d.search) + '</p>' : '')
+    + (n && d.near ? '<p class="nearnote">לא מצאנו כרגע דירה שעונה על כל מה שסימנת. אלה הכי קרובות, ורז מצליב בשבילך גם מאגרי נכסים נוספים.</p>' : '');
+  h += n ? d.props.map(card).join('') : '<div class="empty">רז מצליב עכשיו את מה שחיפשת מול מאגרי נכסים נוספים, ויחזור אליך עם הדירות שהכי מתאימות לך.</div>';
   view.innerHTML = h;
   [].slice.call(document.querySelectorAll('.ph')).forEach(function(el){
     el.addEventListener('scroll', function(){ var i = Math.round(Math.abs(el.scrollLeft) / el.clientWidth); [].slice.call(el.parentNode.querySelectorAll('.dots i')).forEach(function(d, k){ d.classList.toggle('on', k === i); }); }, { passive: true });
