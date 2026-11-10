@@ -11,14 +11,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap">
 <link rel="icon" href="../img/logo.png">
-<!-- נכסי יד שנייה · הדף האישי של הקונה (גל 05/11/2026). הקישור יוצא בוואטסאפ ובדף התודה.
-     מציג רק את הדירות שהותאמו לו (לפי קוד אישי שאי אפשר לנחש). "אני רוצה לראות את הדירה" = מייל לרז ולמשרד,
-     סטטוס "ביקש סיור" בדשבורד, ואירוע Schedule לפיקסל של התיווך (מהדפדפן ומהשרת, אותו מזהה). -->
+<!-- נכסי יד שנייה · הדף האישי של הקונה (גל 05/11/2026). הקישור יוצא בוואטסאפ ובדף התודה, לפי קוד אישי שאי אפשר לנחש.
+     ★ 10/11 (זום עם רז, גל אישר): קונה שהגיע ממודעה של נכס מקבל עמוד של הנכס הזה בלבד (mode 'single' מהשרת):
+       גלריה, מחיר, הכותרת והשורה של המודעה, תגיות, הסיפור בנקודות, בשכונה, חשוב לדעת, כפתור לסיור, רז.
+       ליד בלי נכס ממשיך לראות את הקטלוג של עד 3 דירות (mode 'catalog'), כמו קודם.
+     הקופי של עמוד הנכס לא נכתב כאן ביד: הוא נבנה מעורך הקופי (קופי-הפרויקט) ע״י build_page_copy.py, בין הסמנים PAGE_COPY.
+     "אני רוצה לראות את הדירה" = /yad2/tour: מייל לרז ולמשרד, סטטוס "ביקש סיור", ואירוע Schedule לפיקסל של התיווך (אותו מזהה). -->
 <style>
-:root{--ink:#0f1216;--muted:rgba(15,18,22,.62);--line:rgba(15,18,22,.12);--red:#C2151C;--red2:#A20C22;--green:#157a3a;--tint:rgba(194,21,28,.055);
-  --grad:linear-gradient(135deg,#C2151C,#A20C22 55%,#7F0224);--bg:#F6F7F9}
+:root{--ink:#0f1216;--ink2:#2c2f36;--muted:rgba(15,18,22,.64);--line:rgba(15,18,22,.10);--red:#C2151C;--red2:#A20C22;--wine:#7F0224;--green:#157a3a;--tint:rgba(194,21,28,.07);
+  --grad:linear-gradient(135deg,#C2151C,#A20C22 55%,#7F0224);--bg:#F7F7F7;--frost:rgba(247,247,247,.86)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Heebo',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+button{font-family:inherit}
 .wrap{max-width:560px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))}
 .top{display:flex;align-items:center;gap:10px}
 .top img{width:40px;height:40px;border-radius:8px}
@@ -30,7 +34,7 @@ h1{font-size:27px;font-weight:900;line-height:1.18;margin-top:16px;text-wrap:bal
 .ph::-webkit-scrollbar{display:none}
 .ph img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:center}
 .dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:5px;pointer-events:none}
-.dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55)}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.08)}
 .dots i.on{background:#fff}
 .phw{position:relative}
 .cnt{padding:14px 16px 16px}
@@ -43,28 +47,128 @@ h1{font-size:27px;font-weight:900;line-height:1.18;margin-top:16px;text-wrap:bal
 .nearnote{background:#FFF8EE;border:1px solid #F3DEC0;border-radius:12px;padding:10px 14px;font-size:14.5px;margin:10px 0 4px;color:#5c3a00}
 .hl{margin-top:10px;padding-inline-start:18px;font-size:15px;color:#2b2d33}
 .hl li{margin-top:3px}
-.want{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;margin-top:14px;border:0;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;font-size:17px;cursor:pointer}
-.want:focus-visible,.ph:focus-visible{outline:3px solid rgba(194,21,28,.45);outline-offset:2px}
+.want{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:54px;margin-top:14px;border:0;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;font-size:17px;cursor:pointer;padding:0 16px}
+.want:focus-visible,.ph:focus-visible,.track:focus-visible,.gbtn:focus-visible,.th:focus-visible,.lbx:focus-visible{outline:3px solid rgba(194,21,28,.5);outline-offset:2px}
 .want.done{background:var(--green);cursor:default}
 .want.busy{opacity:.7}
 .empty{background:#fff;border-radius:18px;margin-top:18px;padding:20px;font-size:16px;box-shadow:0 8px 28px rgba(16,16,16,.07)}
 .raz{display:flex;gap:12px;align-items:center;margin-top:22px;background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 6px 20px rgba(16,16,16,.06)}
-.raz img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.raz img{width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:top;background:#E9EAEE;flex:none}
 .raz b{display:block;font-size:16px}
-.raz small{color:var(--muted);font-size:13.5px}
+.raz small{color:var(--muted);font-size:13.5px;display:block;line-height:1.4}
 .foot{text-align:center;font-size:12px;color:rgba(15,18,22,.68);margin-top:20px}
 .foot a{color:inherit}
 .err{color:var(--red2);font-weight:600;font-size:14px;margin-top:8px;min-height:1em}
 .sk{height:320px;border-radius:18px;margin-top:18px;background:linear-gradient(90deg,#eceef1,#f6f7f9,#eceef1);background-size:200% 100%;animation:sk 1.2s infinite}
 @keyframes sk{to{background-position:-200% 0}}
-@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+.ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── עמוד נכס אחד (10/11) ── */
+main.single{max-width:1180px}
+main.single>.raz{display:none}   /* כרטיס רז של הקטלוג. בעמוד הנכס הוא בתוך כרטיס הפעולה */
+.sp{display:flex;flex-direction:column;margin-top:12px}
+.side{display:contents}
+.g-gal{order:1}.head{order:2}.g-body{order:3}.act{order:4}
+.gal{position:relative;margin:0 -16px;aspect-ratio:4/3;background:#1b1d22;overflow:hidden}
+.track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.track::-webkit-scrollbar{display:none}
+.slide{position:relative;flex:0 0 100%;height:100%;scroll-snap-align:center;overflow:hidden;cursor:zoom-in}
+.slide img{display:block}
+.slide .bg{position:absolute;inset:-24px;width:calc(100% + 48px);height:calc(100% + 48px);object-fit:cover;filter:blur(22px) brightness(.78);display:none}
+.slide.tall .bg{display:block}
+.slide .fg{position:relative;width:100%;height:100%;object-fit:cover}
+.slide.tall .fg{object-fit:contain}
+.badge{position:absolute;z-index:2;background:var(--frost);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--red2);font-weight:700;font-size:12.5px;line-height:1;padding:7px 11px;border-radius:999px}
+.slide .badge{top:12px;inset-inline-start:12px}
+.gal .dots{bottom:30px}
+.gbtn{position:absolute;z-index:3;display:grid;place-items:center;border:0;cursor:pointer;background:var(--frost);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.gbtn .ic{width:20px;height:20px}
+.gnav{top:50%;width:44px;height:44px;margin-top:-22px;border-radius:50%;display:none}
+.gnav.prev{right:14px}.gnav.next{left:14px}
+.gnav[disabled]{opacity:0;pointer-events:none}
+.gfull{bottom:28px;left:12px;height:34px;border-radius:999px;padding:0 12px;display:flex;gap:6px;align-items:center;font-weight:700;font-size:13px}
+.gfull .ic{width:16px;height:16px}
+@media (min-width:700px) and (hover:hover){.gnav{display:grid}}
+.thumbs{display:none}
+.head{background:#fff;border-radius:22px 22px 18px 18px;margin-top:-18px;position:relative;z-index:2;padding:20px 18px 18px;box-shadow:0 8px 28px rgba(16,16,16,.07)}
+.head .price{font-size:32px;line-height:1.1;letter-spacing:-.5px}
+.place{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:15px;font-weight:600;color:var(--ink2)}
+.place .ic{width:17px;height:17px;color:var(--red)}
+.hook{font-size:29px;font-weight:900;line-height:1.14;margin-top:14px;color:var(--wine);text-wrap:balance}
+.hsub{font-size:16.5px;font-weight:500;color:var(--ink2);margin-top:8px;text-wrap:pretty}
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.chips li{display:flex;align-items:center;gap:6px;background:var(--bg);border:1px solid rgba(15,18,22,.07);border-radius:999px;padding:6px 12px 6px 11px;font-size:14px;font-weight:600;color:var(--ink2)}
+.chips .ic{width:16px;height:16px;color:var(--red)}
+.sec{background:#fff;border-radius:18px;margin-top:14px;padding:20px 18px;box-shadow:0 8px 28px rgba(16,16,16,.06)}
+.sec h2{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:800;color:var(--ink);margin-bottom:12px}
+.sec h2 .ic{width:20px;height:20px;color:var(--red)}
+.lead{font-size:19.5px;line-height:1.45;font-weight:600;color:var(--ink);border-inline-start:3px solid var(--red);padding-inline-start:13px;text-wrap:pretty}
+.pts{list-style:none;margin-top:6px}
+.pt{display:flex;gap:13px;padding:16px 0 2px;border-top:1px solid var(--line);margin-top:14px}
+.pt:first-child{border-top:0;margin-top:4px}
+.pti{flex:none;width:38px;height:38px;border-radius:12px;background:var(--tint);color:var(--red);display:grid;place-items:center}
+.pti .ic{width:20px;height:20px}
+.ptx{flex:1;min-width:0;font-size:16.5px;line-height:1.6;color:var(--ink2);text-wrap:pretty}
+.ptt{font-weight:700;color:var(--ink)}
+.ptx p+p,.ptt+p{margin-top:4px}
+.bl{list-style:none;margin-top:8px;display:grid;gap:6px}
+.bl li{display:flex;gap:8px;align-items:flex-start}
+.bl .ic{width:16px;height:16px;margin-top:5px;color:var(--red);stroke-width:2.6}
+strong{font-weight:700;color:var(--ink);background:linear-gradient(transparent 62%,rgba(194,21,28,.14) 62%);padding:0 1px}
+.hood ul{list-style:none;display:grid;gap:10px}
+.hood li{display:flex;gap:11px;align-items:center;font-size:16px;color:var(--ink2);line-height:1.45}
+.hood li .ic{width:20px;height:20px;color:var(--red)}
+.hood li span.i{flex:none;width:38px;height:38px;border-radius:12px;background:var(--bg);display:grid;place-items:center}
+.know{background:#FDF5F5;border:1px solid rgba(194,21,28,.16);box-shadow:none}
+.know ul{list-style:none;display:grid;gap:7px}
+.know li{display:flex;gap:9px;font-size:16px;color:var(--ink2);line-height:1.5}
+.know li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--red);margin-top:9px}
+.act{background:#fff;border-radius:18px;margin-top:14px;padding:18px;box-shadow:0 8px 28px rgba(16,16,16,.07)}
+.act .want{margin-top:0;min-height:58px;font-size:18px}
+.act .want .ic{width:21px;height:21px}
+.more{font-size:15px;color:var(--ink2);text-align:center;margin-top:12px;line-height:1.5;text-wrap:balance}
+.act .raz{margin-top:16px;box-shadow:none;background:var(--bg);padding:10px 12px}
+.bar{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 -6px 24px rgba(16,16,16,.10);transform:translateY(110%);transition:transform .25s ease;visibility:hidden}
+.bar.on{transform:none;visibility:visible}
+.bar .bp{font-weight:900;font-size:19px;color:var(--red);white-space:nowrap}
+.bar .want{margin:0;min-height:50px;font-size:15.5px;flex:1;white-space:nowrap;padding:0 12px}
+.bar .want .ic{display:none}
+.act .err:empty{min-height:0;margin:0}
+main.single{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+.lb{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;border:0;background:#0b0c0e;color:#fff;padding:0}
+.lb::backdrop{background:#0b0c0e}
+.lb .track{height:100%}
+.lb .slide{cursor:default}
+.lb .slide img{width:100%;height:100%;object-fit:contain}
+.lbx{position:absolute;z-index:3;top:calc(12px + env(safe-area-inset-top));left:12px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;display:grid;place-items:center;cursor:pointer}
+.lbc{position:absolute;z-index:3;top:calc(22px + env(safe-area-inset-top));right:18px;font-weight:700;font-size:14px;opacity:.9}
+.lb .gnav{background:rgba(255,255,255,.16);color:#fff}
+@media (min-width:980px){
+  main.single{padding:28px 32px 40px}
+  .sp{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(330px,1fr);grid-template-areas:"gal side" "body side";gap:22px 36px;align-items:start;margin-top:18px}
+  .side{display:block;grid-area:side;position:sticky;top:20px}
+  .g-gal{grid-area:gal}.g-body{grid-area:body}
+  .gal{margin:0;border-radius:20px;aspect-ratio:3/2}
+  .thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;scrollbar-width:none}
+  .th{flex:none;width:86px;height:62px;border-radius:10px;overflow:hidden;border:2px solid transparent;padding:0;cursor:pointer;background:#E9EAEE;opacity:.72}
+  .th img{width:100%;height:100%;object-fit:cover;display:block}
+  .th.on{border-color:var(--red);opacity:1}
+  .head{margin-top:0;border-radius:20px;padding:24px 24px 22px}
+  .act{padding:20px 22px}
+  .g-body .sec:first-child{margin-top:0}
+  .sec{padding:26px 28px}
+  .hood ul{grid-template-columns:1fr 1fr}
+  .bar{display:none}
+  main.single{padding-bottom:40px}
+}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}.bar{transition:none}.track{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <main class="wrap" id="root">
   <div class="top"><img src="../img/logo.png" alt="קבוצת תום הרוש"><span>קבוצת תום הרוש</span></div>
   <div id="view"><div class="sk" aria-hidden="true"></div></div>
-  <div class="raz"><img src="../img/raz.jpg" alt="רז מאיר כהן"><div><b>רז מאיר כהן</b><small>מטפל בפנייה שלך, וייצור איתך קשר לתיאום סיור</small></div></div>
+  <div class="raz"><img src="../img/raz.jpg" alt="רז מאיר כהן"><div><b id="razName">רז מאיר כהן</b><small id="razRole">מטפל בפנייה שלך, וייצור איתך קשר לתיאום סיור</small></div></div>
   <div class="foot"><a href="../privacy/">מדיניות פרטיות</a> · <a href="../accessibility/">הצהרת נגישות</a><br>נבנה על ידי דיוק דיגיטלי · © כל הזכויות שמורות</div>
 </main>
 <script>
@@ -75,10 +179,20 @@ if (Y2_PIXEL) {
 }
 </script>
 <script>
+/* ── הקופי של עמוד הנכס. נבנה מעורך הקופי בהרצה של build_page_copy.py. לא לערוך ביד בין הסמנים ── */
+/* PAGE_COPY:BEGIN */
+var PAGE_COPY = {"v":"10/11 · גרסה 3 · אחרי הסבב שלך","all":{"btn":"אני רוצה לראות את הדירה","done":"קיבלנו. רז יחזור אליך לתאם סיור","more":"מחפשים משהו קצת אחר? ספרו לרז. יש לו עוד כמה דירות בראש בשבילכם.","razName":"רז מאיר כהן","razRole":"מטפל בפנייה שלך, ויחזור אליך לתיאום סיור"},"props":{"kr":{"hook":"היום זו דירה. מחר זה הבית","sub":"לפי הסכם התמורה: 135 מ״ר עם ממ״ד, חניה ומרפסת","place":"רחוב קריניצי, מרכז רמת גן","story":"יש דירות שקונים בשביל מה שהן היום. את הדירה הזאת קונים גם בשביל העתיד.\n\nהבניין חלק ממתחם פינוי בינוי במרכז רמת גן. היום יש בו 42 דירות, ובמקומן מתוכננים שני בניינים חדשים, של 20 ושל 10 קומות, עם כ־132 דירות ומבנה לשימור לצרכי ציבור. הסכם התמורה מול היזם חתום ברוב הדרוש, והפרויקט בדרך לאישור תב״ע.\n\nלפי ההסכם, כשהפרויקט ייבנה, הבעלים מקבלים דירה חדשה של 135 מ״ר, עם ממ״ד, חניה ומרפסת, במקום 122 מ״ר היום.\n\nהיום קונים אותה ב־2,840,000 ₪. לפי הערכה של רז, דירה חדשה כמו דירת התמורה שווה בשוק של היום כ־4,000,000 ₪. זו הערכה של המשרד, לא התחייבות, והשווי בעתיד יכול להשתנות.\n\nועד אז, זו דירה ענקית של פעם: 4.5 חדרים שאפשר בקלות לחלק ל־5, שלושה כיווני אוויר, קומה שלישית ואחרונה, ומרפסת קטנה מול העצים.","facts":["4.5 חדרים","122 מ״ר","קומה 3 מתוך 3","3 כיווני אוויר","מרפסת","כ־23,300 ₪ למ״ר"],"hood":["הקו האדום (תחנת ביאליק) וקניון ביאליק קרובים","בתי ספר וגינה ציבורית במרחק הליכה"],"know":"אין מעלית ואין ממ״ד. יש מקלט ציבורי קרוב. ההדמיה להמחשה בלבד.","hoodT":"בשכונה","knowT":"חשוב לדעת","bold":["הסכם התמורה מול היזם חתום ברוב הדרוש","דירה חדשה של 135 מ״ר, עם ממ״ד, חניה ומרפסת","2,840,000 ₪","זו הערכה של המשרד, לא התחייבות","4.5 חדרים","קומה שלישית ואחרונה"],"render":{"src":"img/kr/render.jpg","tag":"הדמיה להמחשה בלבד","alt":"הדמיה להמחשה בלבד · מתחם פינוי בינוי · רמת גן"}},"bz":{"hook":"רק מביאים מזוודה","sub":"4 חדרים משופצים מהיסוד, צעד מפארק גבעתיים","place":"רחוב בן צבי, גבעתיים","story":"רק מביאים מזוודה. כל השאר כבר כאן.\n\nהדירה שופצה מהיסוד, בתכנון של אדריכלית: חשמל ואינסטלציה חדשים, מטבח חדש, סוויטת הורים, ארונות, מיזוג, מאווררי תקרה, אלומיניום ותריסים חשמליים. אין מה לשפץ ואין למה לחכות.\n\nשבת בבוקר יורדים במעלית, חוצים את הכביש ואתם בפארק גבעתיים. הקניון והקאנטרי באותו צד, שלושה בתי ספר במרחק הליכה, והיציאה לתל אביב קלה. ובערב תמיד מחכה מקום בחניון הגדול של הבניינים.\n\nועוד משהו לעתיד: לבניין יש זכויות להוסיף ממ״ד ומרפסת, אם הדיירים יתאגדו. הבניין הסמוך כבר בתהליך.","facts":["4 חדרים","90 מ״ר","קומה 3 מתוך 8","מעלית","2 חדרי רחצה","מקלט בבניין"],"hood":["פארק גבעתיים, הקניון והקאנטרי","שלושה בתי ספר במרחק הליכה","אוטובוסים ויציאה קלה לתל אביב","חניון משותף גדול"],"know":"אין ממ״ד ואין מרפסת. יש מקלט בבניין.","hoodT":"בשכונה","knowT":"חשוב לדעת","bold":["שופצה מהיסוד, בתכנון של אדריכלית","אין מה לשפץ ואין למה לחכות","בפארק גבעתיים","שלושה בתי ספר במרחק הליכה","מקום בחניון הגדול","זכויות להוסיף ממ״ד ומרפסת"]},"tz":{"hook":"62 מ״ר של פרטיות בגבעתיים","sub":"מושכרת 4 שנים לאותו דייר · לאחר מכרז יזמים","place":"רחוב הצנחנים, גבעתיים","story":"מי שגר כאן, לא עוזב. הדייר הנוכחי שוכר את הדירה כבר 4 שנים, והוא נשאר גם אחרי המכירה.\n\nמה זה אומר למי שקונה: שכירות שממשיכה מהיום הראשון, בלי חודש ריק, בלי לחפש שוכר ובלי שיפוץ בין דיירים. ודייר שנשאר 4 שנים מספר בעצמו על מצב הדירה.\n\nדירת קרקע בגבעת רמב״ם, השכונה בגבעתיים שהכי קרובה ליציאה לתל אביב. הסלון נפתח לחצר צמודה עם סוכך ועצים, האור נכנס משלושה כיווני אוויר, והמטבח פתוח לסלון.\n\nמושכרת היום ב־6,350 ₪ בחודש.\n\nוהשכונה כולה בדרך להתחדש: העירייה מקדמת התחדשות בכל גבעת רמב״ם, ובבניין כבר נערך מכרז יזמים.","facts":["2 חדרים","62 מ״ר","קומת קרקע","3 כיווני אוויר","חצר צמודה","מושכרת"],"hood":["השכונה הכי קרובה ליציאה לתל אביב","כל השכונה בתוכנית התחדשות של העירייה"],"know":"אין מעלית, אין חניה ואין ממ״ד (יש מקלט בקומה). החצר בשימוש הדירה ולא רשומה בטאבו.","hoodT":"בשכונה","knowT":"חשוב לדעת","bold":["כבר 4 שנים","נשאר גם אחרי המכירה","חצר צמודה עם סוכך ועצים","שלושה כיווני אוויר","6,350 ₪ בחודש","מכרז יזמים"]}}};
+/* PAGE_COPY:END */
+</script>
+<script>
 (function(){
 var API = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? 'http://127.0.0.1:8799' : 'https://tom-funnel.tom-harush.workers.dev'   /* מקומי = בדיקה מול wrangler dev */;
 var c = new URLSearchParams(location.search).get('c') || '';
-var view = document.getElementById('view');
+var root = document.getElementById('root'), view = document.getElementById('view');
+var PC = window.PAGE_COPY || { all: {}, props: {} }, ALL = PC.all || {};
+var BTN = ALL.btn || 'אני רוצה לראות את הדירה', DONE = ALL.done || 'קיבלנו. רז יחזור אליך לתאם סיור';
+if (ALL.razName) document.getElementById('razName').textContent = ALL.razName;
+if (ALL.razRole) document.getElementById('razRole').textContent = ALL.razRole;
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(x){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[x]; }); }
 function nis(n){ return Number(n).toLocaleString('he-IL') + ' ₪'; }
 function step(s, key){
@@ -87,6 +201,217 @@ function step(s, key){
   try { if (navigator.sendBeacon && navigator.sendBeacon(API + '/yad2/step', new Blob([body], { type: 'text/plain' }))) return; } catch (e) {}
   try { fetch(API + '/yad2/step', { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: body, keepalive: true }); } catch (e) {}
 }
+
+/* ── אייקונים: Lucide (ISC), inline SVG, בלי ספרייה ── */
+var ICON = {
+  bed: '<path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/>',
+  ruler: '<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/>',
+  layers: '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
+  wind: '<path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>',
+  updown: '<path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+  trees: '<path d="M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z"/><path d="M7 16v6"/><path d="M13 19v3"/><path d="M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5"/>',
+  shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+  bath: '<path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><line x1="10" x2="8" y1="5" y2="7"/><line x1="2" x2="22" y1="12" y2="12"/><line x1="7" x2="7" y1="19" y2="21"/><line x1="17" x2="17" y1="19" y2="21"/>',
+  key: '<path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/><path d="m21 2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/>',
+  tag: '<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',
+  parking: '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/>',
+  pin: '<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
+  train: '<rect width="16" height="16" x="4" y="3" rx="2"/><path d="M4 11h16"/><path d="M12 3v8"/><path d="m8 19-2 3"/><path d="m18 22-2-3"/><path d="M8 15h.01"/><path d="M16 15h.01"/>',
+  bag: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+  school: '<path d="M14 22v-4a2 2 0 1 0-4 0v4"/><path d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10"/><path d="M18 5v17"/><path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6"/><path d="M6 5v17"/><circle cx="12" cy="9" r="2"/>',
+  bus: '<path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/>',
+  renew: '<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',
+  nav: '<polygon points="3 11 22 2 13 21 11 13 3 11"/>',
+  building: '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>',
+  filecheck: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/>',
+  trend: '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+  roller: '<rect width="16" height="6" x="2" y="2" rx="2"/><path d="M10 16v-2a2 2 0 0 1 2-2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect width="4" height="6" x="8" y="16" rx="1"/>',
+  coins: '<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/>',
+  home: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  ccheck: '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+  alert: '<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>',
+  cal: '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/>',
+  left: '<path d="m15 18-6-6 6-6"/>',
+  right: '<path d="m9 18 6-6-6-6"/>',
+  x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  expand: '<path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/>'
+};
+function ico(n){ return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + (ICON[n] || ICON.ccheck) + '</svg>'; }
+/* איזה אייקון ליד איזו נקודה: לפי מילים בטקסט. הראשון שמתאים. בלי התאמה = וי בעיגול */
+var R_FACT = [[/חדרי רחצה/, 'bath'], [/₪ למ״ר/, 'tag'], [/חדרים/, 'bed'], [/מ״ר/, 'ruler'], [/קומ/, 'layers'], [/כיווני אוויר/, 'wind'], [/מעלית/, 'updown'],
+  [/מרפסת/, 'sun'], [/חצר/, 'trees'], [/מקלט|ממ״ד/, 'shield'], [/מושכרת/, 'key'], [/חני/, 'parking']];
+var R_HOOD = [[/קו האדום|תחנ|רכבת/, 'train'], [/בתי ספר|בית ספר/, 'school'], [/פארק|גינה/, 'trees'], [/קניון/, 'bag'], [/אוטובוס/, 'bus'], [/חניון|חניה/, 'parking'],
+  [/התחדשות/, 'renew'], [/תל אביב/, 'nav']];
+var R_STORY = [[/פינוי בינוי|מתחם/, 'building'], [/לפי ההסכם|הסכם התמורה/, 'filecheck'], [/הערכה|לעתיד|זכויות/, 'trend'], [/שופצ|מהיסוד/, 'roller'],
+  [/מושכרת היום|בחודש/, 'coins'], [/שכירות|שוכר|דייר/, 'key'], [/התחדש/, 'renew'], [/פארק|חצר|גינה/, 'trees'], [/חדרים|דירה ענקית/, 'home']];
+function pick(rules, t, d){ for (var i = 0; i < rules.length; i++) if (rules[i][0].test(t)) return rules[i][1]; return d; }
+
+/* הדגשה: הביטויים מ־build_page_copy.py (מילה במילה מהטקסט), בלי חפיפות */
+function rich(t, bolds){
+  var marks = [];
+  (bolds || []).forEach(function(b){ var i = t.indexOf(b); if (b && i >= 0) marks.push([i, i + b.length]); });
+  marks.sort(function(a, b){ return a[0] - b[0]; });
+  var out = '', pos = 0;
+  marks.forEach(function(m){ if (m[0] < pos) return; out += esc(t.slice(pos, m[0])) + '<strong>' + esc(t.slice(m[0], m[1])) + '</strong>'; pos = m[1]; });
+  return out + esc(t.slice(pos));
+}
+function sentences(p){ return p.split(/\.\s+/).map(function(s, i, a){ return i < a.length - 1 ? s + '.' : s; }).filter(function(s){ return s.trim(); }); }
+/* פסקה עם "מבוא: פריט, פריט, פריט. המשך" (3 פריטים ומעלה) = מבוא + רשימה. המילים נשארות כמו במקור */
+function listify(p){
+  var m = p.match(/^([^:]{3,90}):\s+(.+?)\.(?:\s+(.+))?$/);
+  if (!m) return null;
+  var items = m[2].split(/,\s+/);
+  if (items.length < 3) return null;
+  items[items.length - 1] = items[items.length - 1].replace(/^ו(?=\S)/, '');
+  return { intro: m[1] + ':', items: items, tail: m[3] || '' };
+}
+function bullets(arr, bolds){ return '<ul class="bl">' + arr.map(function(x){ return '<li>' + ico('check') + '<span>' + rich(x, bolds) + '</span></li>'; }).join('') + '</ul>'; }
+function point(p, bolds){
+  var L = listify(p), h;
+  if (L) h = '<p class="ptt">' + rich(L.intro, bolds) + '</p>' + bullets(L.items, bolds) + (L.tail ? '<p>' + rich(L.tail, bolds) + '</p>' : '');
+  else {
+    var s = sentences(p);
+    if (s.length >= 3) h = '<p class="ptt">' + rich(s[0], bolds) + '</p>' + bullets(s.slice(1), bolds);
+    else if (s.length === 2) h = '<p class="ptt">' + rich(s[0], bolds) + '</p><p>' + rich(s[1], bolds) + '</p>';
+    else h = '<p>' + rich(p, bolds) + '</p>';
+  }
+  return '<li class="pt"><span class="pti">' + ico(pick(R_STORY, p, 'ccheck')) + '</span><div class="ptx">' + h + '</div></li>';
+}
+function story(t, bolds){
+  var ps = String(t || '').split(/\n\s*\n/).map(function(x){ return x.replace(/\s*\n\s*/g, ' ').trim(); }).filter(Boolean);
+  if (!ps.length) return '';
+  return '<section class="sec story" aria-label="הסיפור של הדירה"><p class="lead">' + rich(ps[0], bolds) + '</p>'
+    + (ps.length > 1 ? '<ul class="pts">' + ps.slice(1).map(function(p){ return point(p, bolds); }).join('') + '</ul>' : '') + '</section>';
+}
+
+/* ── עמוד נכס אחד ── */
+function factsFromData(p){   // נכס בלי קופי בעורך (למשל נכס חדש): התגיות מנתוני המלאי
+  var f = [];
+  if (p.rooms) f.push(p.rooms + ' חדרים'); if (p.sqm) f.push(p.sqm + ' מ״ר');
+  if (p.floor != null) f.push(p.floor === 0 ? 'קומת קרקע' : 'קומה ' + p.floor + (p.floorsTotal ? ' מתוך ' + p.floorsTotal : ''));
+  if (p.elevator === true) f.push('מעלית'); if (p.parking) f.push(p.parking > 1 ? p.parking + ' חניות' : 'חניה');
+  if (p.mamad === true) f.push('ממ״ד'); if (p.balcony) f.push('מרפסת');
+  return f;
+}
+function single(d){
+  var p = d.prop, k = p.key, C = (PC.props || {})[k] || {};
+  var hook = C.hook || p.title || '', sub = C.sub || '', place = C.place || p.city || '';
+  var facts = (C.facts && C.facts.length) ? C.facts : factsFromData(p);
+  var shots = (p.photos || []).map(function(src, i){ return { src: '../' + src, alt: (p.title || hook) + ', תמונה ' + (i + 1) }; });
+  if (C.render) shots.splice(Math.min(1, shots.length), 0, { src: '../' + C.render.src, alt: C.render.alt || C.render.tag, tag: C.render.tag });
+  var N = shots.length;
+  document.title = hook + ' · קבוצת תום הרוש';
+  root.classList.add('single');
+
+  var slides = shots.map(function(s, i){
+    return '<div class="slide" role="group" aria-roledescription="שקף" aria-label="' + (i + 1) + ' מתוך ' + N + '" data-i="' + i + '">'
+      + '<img class="bg" src="' + esc(s.src) + '" alt="" aria-hidden="true" loading="' + (i ? 'lazy' : 'eager') + '">'
+      + '<img class="fg" src="' + esc(s.src) + '" alt="' + esc(s.alt) + '" loading="' + (i ? 'lazy' : 'eager') + '"' + (i ? '' : ' fetchpriority="high"') + '>'
+      + (s.tag ? '<span class="badge">' + esc(s.tag) + '</span>' : '') + '</div>';
+  }).join('');
+  var gal = N ? '<section class="g-gal" aria-label="התמונות של הדירה"><div class="gal" aria-roledescription="קרוסלה">'
+      + '<div class="track" tabindex="0" aria-label="התמונות של הדירה, להחליק לצדדים">' + slides + '</div>'
+      + (N > 1 ? '<button type="button" class="gbtn gnav prev" aria-label="התמונה הקודמת" disabled>' + ico('right') + '</button><button type="button" class="gbtn gnav next" aria-label="התמונה הבאה">' + ico('left') + '</button>'
+        + '<div class="dots" aria-hidden="true">' + shots.map(function(_, i){ return '<i class="' + (i ? '' : 'on') + '"></i>'; }).join('') + '</div>' : '')
+      + '<button type="button" class="gbtn gfull" aria-label="כל התמונות במסך מלא">' + ico('expand') + '<span dir="ltr" class="gcount">1/' + N + '</span></button></div>'
+      + (N > 1 ? '<div class="thumbs" aria-hidden="true">' + shots.map(function(s, i){ return '<button type="button" tabindex="-1" class="th' + (i ? '' : ' on') + '" data-i="' + i + '"><img src="' + esc(s.src) + '" alt="" loading="lazy"></button>'; }).join('') + '</div>' : '')
+      + '</section>' : '';
+
+  var head = '<section class="head" aria-label="פרטי הדירה">'
+    + (p.price ? '<div class="price">' + nis(p.price) + '</div>' : '')
+    + (place ? '<p class="place">' + ico('pin') + '<span>' + esc(place) + '</span></p>' : '')
+    + '<h1 class="hook">' + esc(hook) + '</h1>' + (sub ? '<p class="hsub">' + esc(sub) + '</p>' : '')
+    + (facts.length ? '<ul class="chips" aria-label="הפרטים">' + facts.map(function(f){ return '<li>' + ico(pick(R_FACT, f, 'ccheck')) + '<span>' + esc(f) + '</span></li>'; }).join('') + '</ul>' : '')
+    + '</section>';
+
+  var hl = (!C.story && (p.highlights || []).length) ? '<section class="sec story">' + bullets(p.highlights, []) + '</section>' : '';
+  var hood = (C.hood || []).length ? '<section class="sec hood"><h2>' + esc(C.hoodT || 'בשכונה') + '</h2><ul>'
+    + C.hood.map(function(h){ return '<li><span class="i">' + ico(pick(R_HOOD, h, 'pin')) + '</span><span>' + esc(h) + '</span></li>'; }).join('') + '</ul></section>' : '';
+  var know = C.know ? '<section class="sec know"><h2>' + ico('alert') + esc(C.knowT || 'חשוב לדעת') + '</h2><ul>'
+    + sentences(C.know).map(function(s){ return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></section>' : '';
+  var body = '<div class="g-body">' + story(C.story, C.bold) + hl + hood + know + '</div>';
+
+  var req = !!(p.requested || d.requested);
+  var act = '<section class="act" aria-label="תיאום סיור">'
+    + wantBtn(req, k)
+    + '<div class="err" role="alert"></div>'
+    + (ALL.more ? '<p class="more">' + esc(ALL.more) + '</p>' : '')
+    + '<div class="raz"><img src="../img/raz.jpg" alt="' + esc(ALL.razName || 'רז מאיר כהן') + '"><div><b>' + esc(ALL.razName || 'רז מאיר כהן') + '</b><small>' + esc(ALL.razRole || '') + '</small></div></div>'
+    + '</section>';
+
+  view.innerHTML = '<div class="sp">' + gal + '<div class="side">' + head + act + '</div>' + body + '</div>'
+    + '<div class="bar" id="bar">' + (p.price ? '<span class="bp">' + nis(p.price) + '</span>' : '') + wantBtn(req, k) + '</div>';
+  if (N) gallery(view.querySelector('.gal'), shots, view.querySelector('.thumbs'));
+  stickyBar();
+  step('m_view', k);
+}
+function wantBtn(req, k){
+  return '<button type="button" class="want' + (req ? ' done' : '') + '" data-key="' + esc(k) + '"' + (req ? ' disabled' : '') + '>'
+    + ico(req ? 'ccheck' : 'cal') + '<span>' + esc(req ? DONE : BTN) + '</span></button>';
+}
+
+/* גלריה: החלקה (scroll-snap), חצים במחשב, מקלדת, תמונה לאורך = מלאה על רקע מטושטש, מסך מלא בלחיצה */
+function idxOf(tr){ return Math.round(Math.abs(tr.scrollLeft) / Math.max(1, tr.clientWidth)); }
+function goTo(tr, i, smooth){ var rtl = getComputedStyle(tr).direction === 'rtl'; tr.scrollTo({ left: (rtl ? -1 : 1) * i * tr.clientWidth, behavior: smooth ? 'smooth' : 'auto' }); }
+function gallery(g, shots, thumbs){
+  var tr = g.querySelector('.track'), N = shots.length, prev = g.querySelector('.prev'), next = g.querySelector('.next'), cnt = g.querySelector('.gcount');
+  [].slice.call(g.querySelectorAll('.slide')).forEach(function(sl){
+    var im = sl.querySelector('.fg');
+    function chk(){ if (im.naturalWidth && im.naturalHeight > im.naturalWidth * 1.02) sl.classList.add('tall'); }
+    if (im.complete) chk(); else im.addEventListener('load', chk);
+  });
+  function sync(){
+    var i = idxOf(tr);
+    [].slice.call(g.querySelectorAll('.dots i')).forEach(function(d, k){ d.classList.toggle('on', k === i); });
+    if (thumbs) [].slice.call(thumbs.querySelectorAll('.th')).forEach(function(t, k){ t.classList.toggle('on', k === i); });
+    if (prev) prev.disabled = i <= 0; if (next) next.disabled = i >= N - 1;
+    if (cnt) cnt.textContent = (i + 1) + '/' + N;
+  }
+  tr.addEventListener('scroll', function(){ window.requestAnimationFrame(sync); }, { passive: true });
+  if (prev) prev.addEventListener('click', function(){ goTo(tr, Math.max(0, idxOf(tr) - 1), true); });
+  if (next) next.addEventListener('click', function(){ goTo(tr, Math.min(N - 1, idxOf(tr) + 1), true); });
+  tr.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(tr, Math.min(N - 1, idxOf(tr) + 1), true); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(tr, Math.max(0, idxOf(tr) - 1), true); }
+    if (e.key === 'Enter') lightbox(shots, idxOf(tr));
+  });
+  if (thumbs) thumbs.addEventListener('click', function(e){ var t = e.target.closest('.th'); if (t) goTo(tr, +t.dataset.i, true); });
+  tr.addEventListener('click', function(){ lightbox(shots, idxOf(tr)); });
+  g.querySelector('.gfull').addEventListener('click', function(){ lightbox(shots, idxOf(tr)); });
+  window.addEventListener('resize', function(){ goTo(tr, idxOf(tr), false); });
+}
+function lightbox(shots, start){
+  var N = shots.length, d = document.createElement('dialog');
+  if (typeof d.showModal !== 'function') return;
+  d.className = 'lb'; d.setAttribute('aria-label', 'התמונות של הדירה');
+  d.innerHTML = '<div class="track" tabindex="0">' + shots.map(function(s, i){ return '<div class="slide" role="group" aria-roledescription="שקף" aria-label="' + (i + 1) + ' מתוך ' + N + '"><img src="' + esc(s.src) + '" alt="' + esc(s.alt) + '">' + (s.tag ? '<span class="badge">' + esc(s.tag) + '</span>' : '') + '</div>'; }).join('') + '</div>'
+    + '<button type="button" class="lbx" aria-label="סגירה">' + ico('x') + '</button><span class="lbc" dir="ltr"></span>'
+    + (N > 1 ? '<button type="button" class="gbtn gnav prev" aria-label="התמונה הקודמת">' + ico('right') + '</button><button type="button" class="gbtn gnav next" aria-label="התמונה הבאה">' + ico('left') + '</button>' : '');
+  document.body.appendChild(d);
+  var tr = d.querySelector('.track'), lbc = d.querySelector('.lbc'), prev = d.querySelector('.prev'), next = d.querySelector('.next');
+  function sync(){ var i = idxOf(tr); lbc.textContent = (i + 1) + ' / ' + N; if (prev) prev.disabled = i <= 0; if (next) next.disabled = i >= N - 1; }
+  tr.addEventListener('scroll', function(){ window.requestAnimationFrame(sync); }, { passive: true });
+  tr.addEventListener('keydown', function(e){ if (e.key === 'ArrowLeft') goTo(tr, Math.min(N - 1, idxOf(tr) + 1), true); if (e.key === 'ArrowRight') goTo(tr, Math.max(0, idxOf(tr) - 1), true); });
+  if (prev) prev.addEventListener('click', function(){ goTo(tr, Math.max(0, idxOf(tr) - 1), true); });
+  if (next) next.addEventListener('click', function(){ goTo(tr, Math.min(N - 1, idxOf(tr) + 1), true); });
+  d.querySelector('.lbx').addEventListener('click', function(){ d.close(); });
+  d.addEventListener('close', function(){ d.remove(); });
+  d.showModal(); goTo(tr, start || 0, false); sync(); tr.focus({ preventScroll: true });
+}
+/* בטלפון: פס תחתון עם המחיר והכפתור, מופיע אחרי שעוברים את כרטיס הפרטים ונעלם כשכרטיס הפעולה על המסך */
+function stickyBar(){
+  var bar = document.getElementById('bar'), head = view.querySelector('.head'), act = view.querySelector('.act');
+  if (!bar || !head || !act || !('IntersectionObserver' in window)) return;
+  var pastHead = false, actIn = false;
+  function upd(){ var on = pastHead && !actIn && !act.querySelector('.want.done'); bar.classList.toggle('on', on); }
+  new IntersectionObserver(function(es){ es.forEach(function(e){ pastHead = !e.isIntersecting && e.boundingClientRect.top < 0; }); upd(); }).observe(head);
+  new IntersectionObserver(function(es){ es.forEach(function(e){ actIn = e.isIntersecting; }); upd(); }).observe(act);
+  bar._upd = upd;
+}
+
+/* ── קטלוג (ליד בלי נכס): כמו קודם ── */
 function yes(v, t, nt){ return v === true ? '<span>' + t + '</span>' : v === false && nt ? '<span class="no">' + nt + '</span>' : ''; }
 function card(p){
   var ph = (p.photos || []).map(function(src, k){ return '<img src="../' + esc(src) + '" alt="' + esc(p.title || p.city || '') + ', תמונה ' + (k + 1) + '" loading="' + (k ? 'lazy' : 'eager') + '">'; }).join('');
@@ -99,7 +424,7 @@ function card(p){
   return '<article class="card" data-key="' + esc(p.key) + '">' + (ph ? '<div class="phw"><div class="ph" tabindex="0" role="group" aria-label="' + esc('תמונות: ' + (p.title || p.city || '')) + '">' + ph + '</div>' + dots + '</div>' : '')
     + '<div class="cnt">' + (p.price ? '<div class="price">' + nis(p.price) + '</div>' : '') + '<h2 class="addr">' + esc(p.title || ((p.rooms ? p.rooms + ' חדרים, ' : '') + (p.city || ''))) + '</h2>'
     + '<div class="facts">' + facts + '</div>' + hl
-    + '<button type="button" class="want' + (p.requested ? ' done' : '') + '" data-key="' + esc(p.key) + '"' + (p.requested ? ' disabled' : '') + '>' + (p.requested ? 'קיבלנו. רז יחזור אליך לתאם סיור' : 'אני רוצה לראות את הדירה') + '</button>'
+    + '<button type="button" class="want' + (p.requested ? ' done' : '') + '" data-key="' + esc(p.key) + '"' + (p.requested ? ' disabled' : '') + '>' + esc(p.requested ? DONE : BTN) + '</button>'
     + '<div class="err" role="alert"></div></div></article>';
 }
 function render(d){
@@ -114,23 +439,35 @@ function render(d){
   });
   step('m_view');
 }
-view.addEventListener('click', function(e){
+
+/* ── הכפתור: /yad2/tour (מייל לרז, "ביקש סיור", Schedule). בעמוד נכס יש שני כפתורים (בכרטיס ובפס התחתון) והם מתעדכנים יחד ── */
+function setWant(key, state){
+  [].slice.call(document.querySelectorAll('.want[data-key="' + key + '"]')).forEach(function(b){
+    var withIcon = root.classList.contains('single');
+    b.classList.toggle('busy', state === 'busy'); b.classList.toggle('done', state === 'done'); b.disabled = state === 'done';
+    var t = state === 'busy' ? 'שולח...' : state === 'done' ? DONE : BTN;
+    b.innerHTML = withIcon ? ico(state === 'done' ? 'ccheck' : 'cal') + '<span>' + esc(t) + '</span>' : esc(t);
+  });
+  var bar = document.getElementById('bar'); if (bar && bar._upd) bar._upd();
+}
+document.addEventListener('click', function(e){
   var b = e.target.closest('.want'); if (!b || b.disabled || b.classList.contains('busy')) return;
-  var key = b.dataset.key, err = b.parentNode.querySelector('.err'), EID = 'y2t' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-  b.classList.add('busy'); b.textContent = 'שולח...'; err.textContent = '';
+  var key = b.dataset.key, errs = [].slice.call(document.querySelectorAll('.err')), EID = 'y2t' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  var err = root.classList.contains('single') ? view.querySelector('.act .err') : b.parentNode.querySelector('.err');
+  setWant(key, 'busy'); errs.forEach(function(x){ x.textContent = ''; });
   fetch(API + '/yad2/tour', { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify({ c: c, key: key, event_id: EID }), keepalive: true })
     .then(function(r){ return r.json().then(function(j){ if (!r.ok || !j.ok) throw new Error('x'); }); })
     .then(function(){
-      b.classList.remove('busy'); b.classList.add('done'); b.disabled = true; b.textContent = 'קיבלנו. רז יחזור אליך לתאם סיור';
+      setWant(key, 'done');
       try { if (window.fbq) fbq('track', 'Schedule', { content_name: 'yad2_tour_' + key }, { eventID: EID }); } catch (x) {}
       step('m_tour', key);
     })
-    .catch(function(){ b.classList.remove('busy'); b.textContent = 'אני רוצה לראות את הדירה'; err.textContent = 'לא הצלחנו לשלוח כרגע. נסו שוב בעוד רגע.'; });
+    .catch(function(){ setWant(key, 'idle'); if (err) err.textContent = 'לא הצלחנו לשלוח כרגע. נסו שוב בעוד רגע.'; });
 });
 if (!/^[A-Za-z0-9]{12}$/.test(c)) { view.innerHTML = '<div class="empty">הקישור לא שלם. פתחו אותו שוב מההודעה בוואטסאפ.</div>'; return; }
 fetch(API + '/yad2/m?c=' + encodeURIComponent(c), { cache: 'no-store' })
   .then(function(r){ return r.json(); })
-  .then(function(j){ if (!j.ok) throw new Error('x'); render(j); })
+  .then(function(j){ if (!j.ok) throw new Error('x'); if (j.mode === 'single' && j.prop) single(j); else render(j); })
   .catch(function(){ view.innerHTML = '<div class="empty">לא הצלחנו לטעון את הדירות. נסו לרענן את הדף בעוד רגע.</div>'; });
 })();
 </script>
