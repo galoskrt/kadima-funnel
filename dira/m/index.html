@@ -187,7 +187,8 @@ var PAGE_COPY = {"v":"10/11 · גרסה 3 · אחרי הסבב שלך","all":{"b
 <script>
 (function(){
 var API = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? 'http://127.0.0.1:8799' : 'https://tom-funnel.tom-harush.workers.dev'   /* מקומי = בדיקה מול wrangler dev */;
-var c = new URLSearchParams(location.search).get('c') || '';
+var Q = new URLSearchParams(location.search), c = Q.get('c') || '', PV = !c && /^[a-z0-9]{1,8}$/.test(Q.get('p') || '') ? Q.get('p') : '';
+if (PV) window.THG_TESTER = true;   /* תצוגה מקדימה לצוות: בלי רישום צעדים */
 var root = document.getElementById('root'), view = document.getElementById('view');
 var PC = window.PAGE_COPY || { all: {}, props: {} }, ALL = PC.all || {};
 var BTN = ALL.btn || 'אני רוצה לראות את הדירה', DONE = ALL.done || 'קיבלנו. רז יחזור אליך לתאם סיור';
@@ -452,6 +453,7 @@ function setWant(key, state){
 }
 document.addEventListener('click', function(e){
   var b = e.target.closest('.want'); if (!b || b.disabled || b.classList.contains('busy')) return;
+  if (PV) { var pe = view.querySelector('.act .err'); if (pe) pe.textContent = 'זו תצוגה מקדימה לצוות. הכפתור עובד רק מהקישור האישי שמגיע לקונה בוואטסאפ.'; return; }
   var key = b.dataset.key, errs = [].slice.call(document.querySelectorAll('.err')), EID = 'y2t' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
   var err = root.classList.contains('single') ? view.querySelector('.act .err') : b.parentNode.querySelector('.err');
   setWant(key, 'busy'); errs.forEach(function(x){ x.textContent = ''; });
@@ -464,8 +466,8 @@ document.addEventListener('click', function(e){
     })
     .catch(function(){ setWant(key, 'idle'); if (err) err.textContent = 'לא הצלחנו לשלוח כרגע. נסו שוב בעוד רגע.'; });
 });
-if (!/^[A-Za-z0-9]{12}$/.test(c)) { view.innerHTML = '<div class="empty">הקישור לא שלם. פתחו אותו שוב מההודעה בוואטסאפ.</div>'; return; }
-fetch(API + '/yad2/m?c=' + encodeURIComponent(c), { cache: 'no-store' })
+if (!PV && !/^[A-Za-z0-9]{12}$/.test(c)) { view.innerHTML = '<div class="empty">הקישור לא שלם. פתחו אותו שוב מההודעה בוואטסאפ.</div>'; return; }
+fetch(API + (PV ? '/yad2/m?p=' + encodeURIComponent(PV) : '/yad2/m?c=' + encodeURIComponent(c)), { cache: 'no-store' })
   .then(function(r){ return r.json(); })
   .then(function(j){ if (!j.ok) throw new Error('x'); if (j.mode === 'single' && j.prop) single(j); else render(j); })
   .catch(function(){ view.innerHTML = '<div class="empty">לא הצלחנו לטעון את הדירות. נסו לרענן את הדף בעוד רגע.</div>'; });
