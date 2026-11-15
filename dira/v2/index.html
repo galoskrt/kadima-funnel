@@ -19,7 +19,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 /* סרגל סקיצה */
 .sk{background:#111;color:#fff;font-size:12.5px;padding:8px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 .sk b{color:#ffd166}
-.sk .sw a{color:#fff;opacity:.75;margin-inline-start:10px;text-decoration:none;font-weight:700}
+.sk .sw{white-space:nowrap}.sk .sw a{color:#fff;opacity:.75;margin-inline-start:8px;text-decoration:none;font-weight:700;white-space:nowrap}
 .sk .sw a.on{opacity:1;text-decoration:underline}
 .sk button{color:#ffd166;font-weight:800;font-size:12.5px}
 /* כותרת */
@@ -122,7 +122,7 @@ h1.hook{font-size:30px;line-height:1.08;font-weight:900;margin:6px 0 6px;text-wr
 </head>
 <body>
 
-<div class="sk"><div><b>סקיצה</b> · דף זמני, לא שולח כלום ולא נספר. <span class="sw">נכס: <a href="?p=kr" data-k="kr">קריניצי</a><a href="?p=bz" data-k="bz">בן צבי</a><a href="?p=tz" data-k="tz">הצנחנים</a></span></div><button id="flowBtn" type="button">איך הפלואו עובד ▾</button></div>
+<div class="sk"><div><b>סקיצה</b> · לא שולח כלום. <span class="sw">נכס: <a href="?p=kr" data-k="kr">קריניצי</a><a href="?p=bz" data-k="bz">בן צבי</a><a href="?p=tz" data-k="tz">הצנחנים</a></span></div><button id="flowBtn" type="button">איך הפלואו עובד ▾</button></div>
 
 <section class="flow" id="flow"><div class="in">
   <h2>הפלואו החדש של הליד, צעד אחרי צעד</h2>
