@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <script src="/tester.js"></script>
+<script>/* 16/11 (גל): מודעה של נכס (?p=) נוחתת על עמוד הנכס עם שאלון פתוח בתחתית (dira/p/). quiz=1 = השאלון הזה (חזרה מ-p כשהנכס לא נמצא). */(function(){ var q = new URLSearchParams(location.search); if (/^[a-z0-9]{1,8}$/.test(q.get('p') || '') && !q.has('quiz')) location.replace('p/' + location.search + location.hash); })();</script>
 <script>if (window.THG_TESTER) document.documentElement.classList.add('tst');   /* פס "מצב בדיקה" מכסה 28px בראש המסך */</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>דירות למכירה ברמת גן, גבעתיים ותל אביב · קבוצת תום הרוש</title>
