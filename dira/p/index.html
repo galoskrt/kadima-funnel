@@ -169,6 +169,9 @@ main.single{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
 .head .want{margin-top:16px;min-height:58px;font-size:18px}
 .head .want .ic{width:21px;height:21px}
 .ctasub{text-align:center;font-size:13.5px;color:var(--muted);margin-top:8px;font-weight:600}
+.mc{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:14.5px;line-height:1.45;color:var(--ink2);font-weight:600}
+.mc .ic{width:18px;height:18px;color:var(--red);flex:none;margin-top:2px}
+.bar{flex-wrap:wrap}.bar .bmc{flex-basis:100%;order:3;text-align:center;font-size:12px;color:var(--muted);font-weight:600;margin-top:-4px}
 .bar{transform:none;visibility:visible}
 .bar.hide{transform:translateY(110%);visibility:hidden}
 .qcard{background:#fff;border-radius:18px;margin-top:14px;padding:20px 18px;box-shadow:0 8px 28px rgba(16,16,16,.07);border:2px solid rgba(194,21,28,.18);scroll-margin-top:12px}
@@ -386,6 +389,7 @@ function single(d){
     + '<h1 class="hook">' + esc(hook) + '</h1>' + (sub ? '<p class="hsub">' + esc(sub) + '</p>' : '')
     + (facts.length ? '<ul class="chips" aria-label="הפרטים">' + facts.map(function(f){ return '<li>' + ico(pick(R_FACT, f, 'ccheck')) + '<span>' + esc(f) + '</span></li>'; }).join('') + '</ul>' : '')
     + (C.know ? '<p class="kline">' + ico('alert') + '<span>' + esc(sentences(C.know)[0]) + '</span></p>' : '')
+    + '<p class="mc">' + ico('home') + '<span>' + esc(MC) + '</span></p>'
     + ctaBtn(k) + '<p class="ctasub">3 שאלות קצרות, ורז חוזר אליכם לתיאום סיור</p>'
     + '</section>';
 
@@ -398,7 +402,7 @@ function single(d){
 
   var req = !!(p.requested || d.requested);
   window.__P = p; window.__C = C; window.__IMG = shots.length ? shots[0].src : '';
-  var act = '<section class="qcard" id="quiz" aria-labelledby="qTitle"><div class="qtitle" id="qTitle">' + ico('cal') + '<span>תיאום סיור בדירה</span></div><p class="qlead">3 שאלות קצרות, כדי שרז יחזור אליכם מוכן</p><div id="qIn"></div>'
+  var act = '<section class="qcard" id="quiz" aria-labelledby="qTitle"><div class="qtitle" id="qTitle">' + ico('cal') + '<span>תיאום סיור בדירה</span></div><p class="qlead">3 שאלות קצרות, כדי שרז יחזור אליכם מוכן</p><p class="mc">' + ico('home') + '<span>' + esc(MC) + '</span></p><div id="qIn"></div>'
     + '<div class="raz"><img src="../img/raz.jpg" alt="' + esc(ALL.razName || 'רז מאיר כהן') + '"><div><b>' + esc(ALL.razName || 'רז מאיר כהן') + '</b><small>' + esc(ALL.razRole || '') + '</small></div></div></section>';
   var actOld = '<section class="act" aria-label="תיאום סיור">'
     + wantBtn(req, k)
@@ -409,7 +413,7 @@ function single(d){
 
   body = body.replace(/<\/div>$/, act + '</div>');
   view.innerHTML = '<div class="sp">' + gal + '<div class="side">' + head + '</div>' + body + '</div>'
-    + '<div class="bar" id="bar">' + (p.price ? '<span class="bp">' + nis(p.price) + '</span>' : '') + ctaBtn(k) + '</div>';
+    + '<div class="bar" id="bar">' + (p.price ? '<span class="bp">' + nis(p.price) + '</span>' : '') + ctaBtn(k) + '<span class="bmc">יש לנו עוד נכסים שעשויים להתאים לך. נתאים לך את המדויק.</span></div>';
   if (N) gallery(view.querySelector('.gal'), shots, view.querySelector('.thumbs'));
   quizBar(); qGo(0);
   step('p_view', k);
@@ -540,6 +544,7 @@ function ctaBtn(k){ return '<button type="button" class="want cta" data-key="' +
 var QR = [['r2', '2 עד 2.5 חדרים', 2, 2.5], ['r3', '3 עד 3.5 חדרים', 3, 3.5], ['r4', '4 עד 4.5 חדרים', 4, 4.5], ['r5', '5 עד 5.5 חדרים', 5, 5.5], ['r6', '6 חדרים ומעלה', 6, 99]];
 var QB = [['b1', 'עד 2.5 מיליון ₪', 0, 2500000], ['b2', '2.5 עד 3 מיליון ₪', 2500000, 3000000], ['b3', '3 עד 3.5 מיליון ₪', 3000000, 3500000], ['b4', '3.5 עד 4.5 מיליון ₪', 3500000, 4500000], ['b5', 'מעל 4.5 מיליון ₪', 4500000, 9e8]];
 var QM = [['mamad', 'ממ״ד', 'shield'], ['parking', 'חניה', 'parking'], ['elevator', 'מעלית', 'updown'], ['balcony', 'מרפסת', 'sun'], ['none', 'אין דרישה מיוחדת', '']];
+var MC = 'במשרד שלנו מגוון רחב של נכסים שעשויים להתאים לצורך שלך. השאירו פרטים, ונתאים לכם את הנכס המדויק.';
 var CONSENT = 'מאשר/ת לקבל מקבוצת תום הרוש בוואטסאפ את פרטי הדירה, ודירות נוספות שמתאימות לי. אפשר להסיר בכל רגע.';
 var QJ = { i: 0, a: { must: [] }, busy: false, done: false };
 function areaOf(p){ return { rg: 'rg', giv: 'giv', tlv: 'tlv' }[p.cityKey] || 'any'; }
@@ -580,7 +585,7 @@ function qGo(i, focus){
     + '<form id="qForm" novalidate autocomplete="on"><div class="qfld"><label for="qName">שם מלא</label><input id="qName" name="name" autocomplete="name" enterkeyhint="next" value="' + esc(a.name || '') + '"></div>'
     + '<div class="qfld"><label for="qPhone">טלפון נייד</label><input id="qPhone" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="send" dir="ltr" style="text-align:right" value="' + esc(a.phone || '') + '"></div>'
     + '<label class="qcons"><input type="checkbox" id="qCons"' + (a.cons ? ' checked' : '') + '><span>' + esc(CONSENT) + '</span></label></form>'
-    + '<div class="qerr" id="qErr" role="alert"></div><button type="button" class="want" id="qSend">' + ico('cal') + '<span>לתיאום סיור עם רז</span></button><button type="button" class="qback" data-to="2">← חזרה</button>';
+    + '<div class="qerr" id="qErr" role="alert"></div><button type="button" class="want" id="qSend">' + ico('cal') + '<span>לתיאום סיור עם רז</span></button><p class="ctasub">ואם הדירה הזאת לא בדיוק זה, רז יתאים לך נכס אחר מהמשרד.</p><button type="button" class="qback" data-to="2">← חזרה</button>';
   else h = qThanks();
   el.innerHTML = top + h;
   if (focus) { var t = document.getElementById('qH'); if (t) t.focus({ preventScroll: true }); }
