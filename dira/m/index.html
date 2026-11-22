@@ -161,6 +161,20 @@ main.single{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
   .bar{display:none}
   main.single{padding-bottom:40px}
 }
+/* ── 22/11: 3 השאלות לליד מטופס מטא ── */
+.qs .qq{border:0;min-width:0;padding:0}
+.qs .qq+.qq{border-top:1px solid var(--line);margin-top:18px;padding-top:16px}
+.qs legend{display:contents}
+.qs .qn{display:block;color:var(--red2);font-size:13px;font-weight:700}
+.qs .qt{display:block;font-size:18px;font-weight:800;line-height:1.35;margin:3px 0 9px;text-wrap:pretty}
+.qo{display:block;width:100%;min-height:48px;margin-top:7px;padding:10px 13px;border:1.5px solid rgba(15,18,22,.18);border-radius:11px;background:#fff;color:var(--ink);font-size:16px;line-height:1.35;text-align:right;cursor:pointer}
+.qo[aria-pressed="true"]{border-color:var(--red);background:var(--tint);font-weight:700}
+.qo:focus-visible,.qgo:focus-visible,.qend:focus{outline:3px solid rgba(194,21,28,.5);outline-offset:2px}
+.qgo{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;margin-top:18px;padding:0 16px;border:0;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;font-size:17px;cursor:pointer}
+.qgo[disabled]{opacity:.7;cursor:default}
+.qgo.done{background:var(--green);opacity:1}
+.qend p{white-space:pre-line;font-size:17px;line-height:1.55}
+.qend .qgo,.qend .want{margin-top:14px}
 @media (prefers-reduced-motion:reduce){.sk{animation:none}.bar{transition:none}.track{scroll-behavior:auto}}
 </style>
 </head>
@@ -287,6 +301,69 @@ function story(t, bolds){
     + (ps.length > 1 ? '<ul class="pts">' + ps.slice(1).map(function(p){ return point(p, bolds); }).join('') + '</ul>' : '') + '</section>';
 }
 
+/* ── 22/11 (גל, "מאשר הדמיה"): 3 שאלות לליד מטופס מטא. השרת מחזיר qual רק ללידים כאלה ── */
+var QQ = [
+  { k: 'price', many: false, o: [['in', 'בתוך התקציב'], ['near', 'קרוב, תלוי בדירה'], ['low', 'אני מכוון/ת למחיר נמוך יותר']] },
+  { k: 'must', many: true, t: 'על מה אין מצב להתפשר בבית שלך? אפשר לבחור כמה.', o: [['mamad', 'ממ״ד'], ['parking', 'חניה'], ['elevator', 'מעלית'], ['balcony', 'מרפסת'], ['none', 'יש את הרצוי ויש את המצוי, אין לי תנאי חובה.']] },
+  { k: 'money', many: false, t: 'איפה זה תופס אותך?', o: [['ready', 'יש לי הון עצמי ואפשר להתקדם'], ['sell', 'אני צריך/ה למכור דירה קודם'], ['check', 'עוד לא בדקתי מימון'], ['start', 'אני רק מתחיל/ה לחפש']] }
+];
+var QEND = { fit: 'תודה, התשובות אצל רז.\nהשלב הבא: לראות את הדירה מקרוב.',
+  low: 'תודה, התשובות אצל רז.\nמעל 15 שנים קבוצת תום הרוש מלווה אנשים בדרך ליעדים הנדל״ניים שלהם, עוד במשרדנו מאגר מרשים של נכסים שעשויים להתאים לך יותר, נבדוק איתך בשיחה מה הכי מתאים לך.',
+  fitBtn: 'לתיאום סיור בדירה', lowBtn: 'אשמח לשיחה עם רז :)', callDone: 'קיבלנו. רז יחזור אליך' };
+function qTitle(q, price){ return q.k === 'price' ? (price ? 'הדירה מוצעת ב-' + Number(price).toLocaleString('en-US') + ' ₪. איך זה יושב מול התקציב שלך?' : 'איך המחיר יושב מול התקציב שלך?') : q.t; }
+function qEnd(st, key, req){
+  var h = '<div class="qend" tabindex="-1"><p>' + esc(st.low ? QEND.low : QEND.fit) + '</p>';
+  if (st.low) h += '<button type="button" class="qgo qcall' + (st.call ? ' done' : '') + '"' + (st.call ? ' disabled' : '') + '>' + esc(st.call ? QEND.callDone : QEND.lowBtn) + '</button>';
+  else h += '<button type="button" class="want qwant' + (req ? ' done' : '') + '" data-key="' + esc(key) + '" data-label="' + esc(QEND.fitBtn) + '"' + (req ? ' disabled' : '') + '>' + ico(req ? 'ccheck' : 'cal') + '<span>' + esc(req ? DONE : QEND.fitBtn) + '</span></button>';
+  return h + '<div class="err" role="alert"></div></div>';
+}
+function qBox(d, key, req){
+  if (!d.qual) return '';
+  var inner = d.qual.done ? qEnd(d.qual, key, req) : QQ.map(function(q, i){
+    return '<fieldset class="qq" data-q="' + q.k + '"><legend><span class="qn">שאלה ' + (i + 1) + ' מתוך 3</span><span class="qt">' + esc(qTitle(q, d.prop.price)) + '</span></legend>'
+      + q.o.map(function(o){ return '<button type="button" class="qo" data-v="' + o[0] + '" aria-pressed="false">' + esc(o[1]) + '</button>'; }).join('') + '</fieldset>';
+  }).join('') + '<button type="button" class="qgo qsend">לשליחת התשובות לרז</button><div class="err" role="alert"></div>';
+  return '<section class="sec qs" id="qs" aria-label="3 שאלות קצרות">' + inner + '</section>';
+}
+function qPost(body){
+  if (PV) return Promise.resolve({ ok: true, done: true, low: body.price === 'low' });   /* תצוגה לצוות: לא נשלח */
+  body.c = c;
+  return fetch(API + '/yad2/qual', { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify(body), keepalive: true })
+    .then(function(r){ return r.json().then(function(j){ if (!r.ok || !j.ok) throw new Error('x'); return j; }); });
+}
+function qWire(key){
+  var box = document.getElementById('qs'); if (!box) return;
+  var A = { must: [] };
+  box.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b || b.disabled) return;
+    var err = box.querySelector('.err');
+    if (b.classList.contains('qo')) {
+      var f = b.closest('.qq'), k = f.getAttribute('data-q'), v = b.getAttribute('data-v');
+      if (k === 'must') {
+        var i = A.must.indexOf(v);
+        if (i >= 0) A.must.splice(i, 1);
+        else if (v === 'none') A.must = ['none'];
+        else { A.must = A.must.filter(function(x){ return x !== 'none'; }); A.must.push(v); }
+      } else A[k] = v;
+      [].slice.call(f.querySelectorAll('.qo')).forEach(function(o){ var x = o.getAttribute('data-v'); o.setAttribute('aria-pressed', String(k === 'must' ? A.must.indexOf(x) >= 0 : A[k] === x)); });
+      err.textContent = '';
+    } else if (b.classList.contains('qsend')) {
+      var miss = !A.price ? 'price' : !A.must.length ? 'must' : !A.money ? 'money' : '';
+      if (miss) { err.textContent = 'נשארה שאלה בלי תשובה.'; var first = box.querySelector('.qq[data-q="' + miss + '"] .qo'); if (first) first.focus(); return; }
+      b.disabled = true; err.textContent = '';
+      qPost({ price: A.price, must: A.must, money: A.money }).then(function(j){
+        var act = view.querySelector('.act .want');
+        box.innerHTML = qEnd({ low: !!j.low }, key, !!(act && act.classList.contains('done')));
+        var end = box.querySelector('.qend'); end.focus({ preventScroll: true }); box.scrollIntoView({ block: 'center' });
+      }).catch(function(){ b.disabled = false; err.textContent = 'לא הצלחנו לשלוח כרגע. נסו שוב בעוד רגע.'; });
+    } else if (b.classList.contains('qcall')) {
+      b.disabled = true; err.textContent = '';
+      qPost({ call: true }).then(function(){ b.classList.add('done'); b.textContent = QEND.callDone; })
+        .catch(function(){ b.disabled = false; err.textContent = 'לא הצלחנו לשלוח כרגע. נסו שוב בעוד רגע.'; });
+    }
+  });
+}
+
 /* ── עמוד נכס אחד ── */
 function factsFromData(p){   // נכס בלי קופי בעורך (למשל נכס חדש): התגיות מנתוני המלאי
   var f = [];
@@ -332,9 +409,9 @@ function single(d){
     + C.hood.map(function(h){ return '<li><span class="i">' + ico(pick(R_HOOD, h, 'pin')) + '</span><span>' + esc(h) + '</span></li>'; }).join('') + '</ul></section>' : '';
   var know = C.know ? '<section class="sec know"><h2>' + ico('alert') + esc(C.knowT || 'חשוב לדעת') + '</h2><ul>'
     + sentences(C.know).map(function(s){ return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></section>' : '';
-  var body = '<div class="g-body">' + story(C.story, C.bold) + hl + hood + know + '</div>';
-
   var req = !!(p.requested || d.requested);
+  var body = '<div class="g-body">' + qBox(d, k, req) + story(C.story, C.bold) + hl + hood + know + '</div>';
+
   var act = '<section class="act" aria-label="תיאום סיור">'
     + wantBtn(req, k)
     + '<div class="err" role="alert"></div>'
@@ -345,6 +422,7 @@ function single(d){
   view.innerHTML = '<div class="sp">' + gal + '<div class="side">' + head + act + '</div>' + body + '</div>'
     + '<div class="bar" id="bar">' + (p.price ? '<span class="bp">' + nis(p.price) + '</span>' : '') + wantBtn(req, k) + '</div>';
   if (N) gallery(view.querySelector('.gal'), shots, view.querySelector('.thumbs'));
+  qWire(k);
   stickyBar();
   step('m_view', k);
 }
@@ -446,16 +524,16 @@ function setWant(key, state){
   [].slice.call(document.querySelectorAll('.want[data-key="' + key + '"]')).forEach(function(b){
     var withIcon = root.classList.contains('single');
     b.classList.toggle('busy', state === 'busy'); b.classList.toggle('done', state === 'done'); b.disabled = state === 'done';
-    var t = state === 'busy' ? 'שולח...' : state === 'done' ? DONE : BTN;
+    var t = state === 'busy' ? 'שולח...' : state === 'done' ? DONE : (b.getAttribute('data-label') || BTN);
     b.innerHTML = withIcon ? ico(state === 'done' ? 'ccheck' : 'cal') + '<span>' + esc(t) + '</span>' : esc(t);
   });
   var bar = document.getElementById('bar'); if (bar && bar._upd) bar._upd();
 }
 document.addEventListener('click', function(e){
   var b = e.target.closest('.want'); if (!b || b.disabled || b.classList.contains('busy')) return;
-  if (PV) { var pe = view.querySelector('.act .err'); if (pe) pe.textContent = 'זו תצוגה מקדימה לצוות. הכפתור עובד רק מהקישור האישי שמגיע לקונה בוואטסאפ.'; return; }
+  if (PV) { var pe = b.classList.contains('qwant') ? b.parentNode.querySelector('.err') : view.querySelector('.act .err'); if (pe) pe.textContent = 'זו תצוגה מקדימה לצוות. הכפתור עובד רק מהקישור האישי שמגיע לקונה בוואטסאפ.'; return; }
   var key = b.dataset.key, errs = [].slice.call(document.querySelectorAll('.err')), EID = 'y2t' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-  var err = root.classList.contains('single') ? view.querySelector('.act .err') : b.parentNode.querySelector('.err');
+  var err = root.classList.contains('single') && !b.classList.contains('qwant') ? view.querySelector('.act .err') : b.parentNode.querySelector('.err');
   setWant(key, 'busy'); errs.forEach(function(x){ x.textContent = ''; });
   fetch(API + '/yad2/tour', { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify({ c: c, key: key, event_id: EID }), keepalive: true })
     .then(function(r){ return r.json().then(function(j){ if (!r.ok || !j.ok) throw new Error('x'); }); })
@@ -467,7 +545,7 @@ document.addEventListener('click', function(e){
     .catch(function(){ setWant(key, 'idle'); if (err) err.textContent = 'לא הצלחנו לשלוח כרגע. נסו שוב בעוד רגע.'; });
 });
 if (!PV && !/^[A-Za-z0-9]{12}$/.test(c)) { view.innerHTML = '<div class="empty">הקישור לא שלם. פתחו אותו שוב מההודעה בוואטסאפ.</div>'; return; }
-fetch(API + (PV ? '/yad2/m?p=' + encodeURIComponent(PV) : '/yad2/m?c=' + encodeURIComponent(c)), { cache: 'no-store' })
+fetch(API + (PV ? '/yad2/m?p=' + encodeURIComponent(PV) + (Q.get('form') === '1' ? '&form=1' : '') : '/yad2/m?c=' + encodeURIComponent(c)), { cache: 'no-store' })
   .then(function(r){ return r.json(); })
   .then(function(j){ if (!j.ok) throw new Error('x'); if (j.mode === 'single' && j.prop) single(j); else render(j); })
   .catch(function(){ view.innerHTML = '<div class="empty">לא הצלחנו לטעון את הדירות. נסו לרענן את הדף בעוד רגע.</div>'; });
